@@ -20,6 +20,21 @@ input {
   font: inherit;
 }
 
+.button {
+  align-items: center;
+  border: 1px solid var(--color-text);
+  border-radius: 999px;
+  display: inline-flex;
+  font-weight: 650;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.2rem;
+  text-decoration: none;
+}
+
+.button--dark { background: var(--color-text); color: var(--color-surface); }
+.eyebrow { color: var(--color-text-muted); font-size: 0.78rem; font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; }
+
 a {
   color: inherit;
 }
@@ -69,3 +84,16 @@ a {
   color: var(--color-text-muted);
   padding-block: 2rem;
 }
+
+.placeholder-page {
+  margin: 0 auto;
+  max-width: var(--container);
+  min-height: 70vh;
+  padding: clamp(2rem, 7vw, 7rem) var(--gutter);
+}
+
+.placeholder-page nav { display: flex; gap: 0.65rem; color: var(--color-text-muted); font-size: 0.9rem; }
+.placeholder-page__media { background: var(--color-placeholder-2); border-radius: var(--radius-lg); height: clamp(10rem, 25vw, 22rem); margin-block: 2rem; }
+.placeholder-page h1 { font-size: clamp(2.5rem, 7vw, 6rem); line-height: 0.95; margin: 0.5rem 0 1rem; }
+.placeholder-page p:not(.eyebrow) { color: var(--color-text-muted); max-width: 42rem; }
+.placeholder-page .button { margin-top: 1.5rem; }

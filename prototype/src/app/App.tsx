@@ -1,13 +1,11 @@
 import { BrowserRouter, useInRouterContext } from 'react-router-dom'
+import { Header } from '../features/header/Header'
 import { AppRoutes } from './routes'
 
 function AppContent() {
   return (
     <div className="app-shell">
-      <header className="prototype-bar">
-        <span className="prototype-mark" aria-hidden="true" />
-        <span>Интерактивный прототип</span>
-      </header>
+      <Header counts={{ favorites: 2, compare: 1, cart: 3 }} />
       <AppRoutes />
       <footer className="prototype-footer">Прототип интернет-магазина</footer>
     </div>

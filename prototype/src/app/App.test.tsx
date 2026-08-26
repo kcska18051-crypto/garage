@@ -6,6 +6,6 @@ describe('App shell', () => {
     render(<App />)
 
     expect(screen.getByRole('main')).toBeInTheDocument()
-    expect(screen.getByText('Интерактивный прототип')).toBeInTheDocument()
+    expect(screen.getAllByLabelText('Гараж, главная').length).toBeGreaterThan(0)
   })
 })

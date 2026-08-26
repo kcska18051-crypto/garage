@@ -1,0 +1,21 @@
+.hero { background: #2b2b28; color: white; margin: 1rem auto 0; max-width: calc(var(--container) - 2 * var(--gutter)); overflow: hidden; position: relative; }
+.hero, .hero__slide { border-radius: var(--radius-lg); }
+.hero__slide { display: grid; grid-template-columns: 1.12fr .88fr; min-height: clamp(31rem, 52vw, 42rem); }
+.hero__copy { align-self: end; max-width: 52rem; padding: clamp(2rem, 6vw, 6rem); position: relative; z-index: 2; }
+.hero__copy .eyebrow { color: #cfcfca; }
+.hero__copy h1, .hero__copy h2 { font-size: clamp(2.4rem, 5.3vw, 5.5rem); font-weight: 620; letter-spacing: -.055em; line-height: .94; margin: .8rem 0 1.4rem; }
+.hero__copy > p:not(.eyebrow) { color: #d5d5d0; font-size: clamp(1rem, 1.4vw, 1.2rem); max-width: 38rem; }
+.button--light { background: white; color: var(--color-text); gap: 1.4rem; margin-top: 1.3rem; }
+.hero__art { background: #b9b9b3; min-height: 100%; overflow: hidden; position: relative; }
+.hero__art span { background: #6f6f69; border-radius: 50%; height: 28rem; position: absolute; right: -6rem; top: 5rem; width: 28rem; }
+.hero__art i { background: #e2e2dd; bottom: 4rem; height: 18rem; left: 2rem; position: absolute; transform: rotate(-10deg); width: 11rem; }
+.hero__art b { bottom: 1rem; color: rgb(255 255 255 / .55); font-size: 8rem; line-height: 1; position: absolute; right: 1rem; }
+.hero__art--2 { background: #8f8f89; } .hero__art--2 span { border-radius: 1rem; transform: rotate(23deg); } .hero__art--3 { background: #d0d0cb; } .hero__art--3 i { background: #4f4f4b; width: 17rem; }
+.hero__controls { align-items: center; bottom: 1.3rem; display: flex; gap: .5rem; left: clamp(1.5rem, 5vw, 5rem); position: absolute; z-index: 4; }
+.hero__controls > button { background: rgb(255 255 255 / .13); border: 1px solid rgb(255 255 255 / .25); border-radius: 50%; color: white; cursor: pointer; height: 2.8rem; width: 2.8rem; }
+.hero__indicators { display: flex; gap: .3rem; }
+.hero__indicators button { background: transparent; border: 0; cursor: pointer; padding: .8rem .2rem; }
+.hero__indicators span { background: rgb(255 255 255 / .35); display: block; height: .14rem; transition: width .2s ease; width: 1.3rem; }
+.hero__indicators button[aria-current] span { background: white; width: 2.7rem; }
+@media (max-width: 767px) { .hero { border-radius: 0; margin-top: .5rem; } .hero__slide { grid-template-columns: 1fr; min-height: 38rem; } .hero__copy { align-self: auto; padding: 2rem var(--gutter) 6rem; } .hero__art { grid-row: 1; min-height: 14rem; } .hero__art span { height: 13rem; right: -2rem; top: 1rem; width: 13rem; } .hero__art i { bottom: 1rem; height: 8rem; width: 6rem; } .hero__art b { font-size: 5rem; } .hero__controls { bottom: 1rem; left: var(--gutter); } }
+@media (prefers-reduced-motion: reduce) { .hero__indicators span { transition: none; } }

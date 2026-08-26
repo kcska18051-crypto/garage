@@ -32,3 +32,26 @@ test('all hero slides keep the same outer dimensions', async ({ page }) => {
     }
   }
 })
+
+test('dark CTA outline buttons stay legible and copy is layered above decoration', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+
+  for (const selector of ['.business-section button.button', '.final-cta button.button:not(.button--light)']) {
+    const styles = await page.locator(selector).evaluate((element) => {
+      const computed = getComputedStyle(element)
+      return { background: computed.backgroundColor, color: computed.color }
+    })
+    expect(styles).toEqual({ background: 'rgba(0, 0, 0, 0)', color: 'rgb(255, 255, 255)' })
+  }
+
+  const layers = await page.locator('.final-cta').evaluate((section) => {
+    const copy = section.querySelector(':scope > div:last-child')!
+    const art = section.querySelector('.final-cta__art')!
+    return {
+      art: Number(getComputedStyle(art).zIndex),
+      copy: Number(getComputedStyle(copy).zIndex),
+    }
+  })
+  expect(layers.copy).toBeGreaterThan(layers.art)
+})

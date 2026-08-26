@@ -4,7 +4,7 @@
 .hero__slide[hidden] { display: none; }
 .hero__copy { align-self: end; max-width: 52rem; padding: clamp(2rem, 6vw, 6rem); position: relative; z-index: 2; }
 .hero__copy .eyebrow { color: #cfcfca; }
-.hero__copy h1, .hero__copy h2 { font-size: clamp(2.4rem, 5.3vw, 5.5rem); font-weight: 620; letter-spacing: -.055em; line-height: .94; margin: .8rem 0 1.4rem; }
+.hero__copy h1, .hero__copy h2 { font-size: clamp(2.25rem, 4.6vw, 4.25rem); font-weight: 620; letter-spacing: -.055em; line-height: .94; margin: .8rem 0 1.4rem; }
 .hero__copy > p:not(.eyebrow) { color: #d5d5d0; font-size: clamp(1rem, 1.4vw, 1.2rem); max-width: 38rem; }
 .button--light { background: white; color: var(--color-text); gap: 1.4rem; margin-top: 1.3rem; }
 .hero__art { background: #b9b9b3; min-height: 100%; overflow: hidden; position: relative; }

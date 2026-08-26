@@ -55,3 +55,16 @@ test('dark CTA outline buttons stay legible and copy is layered above decoration
   })
   expect(layers.copy).toBeGreaterThan(layers.art)
 })
+
+test('hero heading leaves a safe area for its CTA and slider controls', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/')
+
+  const headingSize = await page.locator('.hero__slide:not([hidden]) h1').evaluate((heading) => parseFloat(getComputedStyle(heading).fontSize))
+  const cta = await page.locator('.hero__slide:not([hidden]) .hero__copy .button').boundingBox()
+  const controls = await page.locator('.hero__controls').boundingBox()
+  expect(headingSize).toBeLessThanOrEqual(68)
+  expect(cta).not.toBeNull()
+  expect(controls).not.toBeNull()
+  expect(cta!.y + cta!.height + 12).toBeLessThanOrEqual(controls!.y)
+})

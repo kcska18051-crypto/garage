@@ -1,0 +1,27 @@
+.home-section, .benefits-strip { margin: 0 auto; max-width: var(--container); padding-inline: var(--gutter); }
+.home-section { padding-block: clamp(3.5rem, 8vw, 7rem); }
+.benefits-strip { display: grid; grid-template-columns: repeat(4, 1fr); padding-block: 1.4rem; }
+.benefits-strip article { align-items: flex-start; border-right: 1px solid var(--color-border); display: flex; gap: 1rem; padding: .7rem 1.4rem; }
+.benefits-strip article:first-child { padding-left: 0; } .benefits-strip article:last-child { border: 0; }
+.benefits-strip article > span { color: var(--color-placeholder-4); font-size: .7rem; font-weight: 800; }
+.benefits-strip h2 { font-size: .9rem; margin: 0 0 .2rem; } .benefits-strip p { color: var(--color-text-muted); font-size: .74rem; margin: 0; }
+.section-heading { align-items: flex-end; display: flex; justify-content: space-between; margin-bottom: 2rem; }
+.section-heading h2 { font-size: clamp(2rem, 4.5vw, 4rem); font-weight: 600; letter-spacing: -.04em; line-height: 1; margin: .45rem 0 0; }
+.section-heading > a { border-bottom: 1px solid currentColor; font-weight: 700; padding-bottom: .2rem; text-decoration: none; }
+.category-grid { display: grid; gap: .8rem; grid-template-columns: repeat(4, 1fr); }
+.category-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); min-height: 19rem; overflow: hidden; padding: 1.2rem; position: relative; text-decoration: none; transition: transform .2s ease, background .2s ease; }
+.category-card:hover { background: #efefec; transform: translateY(-.2rem); }
+.category-card__code { color: var(--color-text-muted); font-size: .72rem; }
+.category-card__art { height: 11rem; position: relative; }
+.category-card__art i { background: var(--color-placeholder-2); border-radius: 50%; height: 8rem; position: absolute; right: 1rem; top: 1rem; width: 8rem; }
+.category-card__art b { background: var(--color-placeholder-3); bottom: 1rem; height: 6.5rem; left: 1rem; position: absolute; transform: rotate(-13deg); width: 4rem; }
+.category-card strong { display: block; font-size: 1.05rem; line-height: 1.2; max-width: 12rem; }
+.category-card__arrow { bottom: 1rem; position: absolute; right: 1rem; }
+.home-section--brands { background: var(--color-surface); border-radius: var(--radius-lg); max-width: calc(var(--container) - 2 * var(--gutter)); padding-inline: clamp(1.2rem, 4vw, 4rem); }
+.brand-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+.brand-grid a { align-items: center; border-right: 1px solid var(--color-border); border-top: 1px solid var(--color-border); display: flex; font-size: 1rem; font-weight: 750; gap: 1rem; min-height: 7rem; padding: 1rem; text-decoration: none; }
+.brand-grid a:nth-child(4n) { border-right: 0; }
+.brand-symbol { background: var(--color-placeholder-3); border-radius: .2rem; display: block; height: 2.4rem; transform: rotate(5deg); width: 2.4rem; }
+.brand-symbol--1 { border-radius: 50%; } .brand-symbol--2 { clip-path: polygon(50% 0, 100% 100%, 0 100%); } .brand-symbol--3 { border-radius: 50% 0; transform: rotate(45deg); }
+@media (max-width: 1023px) { .benefits-strip { grid-template-columns: 1fr 1fr; } .benefits-strip article:nth-child(2) { border-right: 0; } .category-grid { grid-template-columns: 1fr 1fr; } .brand-grid { grid-template-columns: repeat(3, 1fr); } .brand-grid a:nth-child(4n) { border-right: 1px solid var(--color-border); } .brand-grid a:nth-child(3n) { border-right: 0; } }
+@media (max-width: 600px) { .benefits-strip { grid-template-columns: 1fr; } .benefits-strip article { border-bottom: 1px solid var(--color-border); border-right: 0; padding-inline: 0; } .section-heading { align-items: flex-start; gap: 1rem; } .section-heading > a { font-size: .78rem; white-space: nowrap; } .category-grid { grid-template-columns: 1fr 1fr; } .category-card { min-height: 13.5rem; padding: .9rem; } .category-card__art { height: 7rem; } .category-card__art i { height: 5rem; width: 5rem; } .category-card__art b { height: 4rem; width: 2.5rem; } .brand-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; } .brand-grid a { border-right: 1px solid var(--color-border); flex: 0 0 68%; scroll-snap-align: start; } }

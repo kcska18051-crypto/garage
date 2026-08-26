@@ -1,6 +1,7 @@
 # Codex scratch and generated deliverables
 work/
 outputs/
+.worktrees/
 
 # Local environment files
 .env

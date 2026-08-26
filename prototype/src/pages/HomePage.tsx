@@ -4,6 +4,7 @@ import { BenefitsStrip } from '../features/home/BenefitsStrip'
 import { BrandGrid } from '../features/home/BrandGrid'
 import { CategoryGrid } from '../features/home/CategoryGrid'
 import '../features/home/NavigationSections.css'
+import { ProductShowcase } from '../features/products/ProductShowcase'
 
 export function HomePage() {
   return (
@@ -12,6 +13,7 @@ export function HomePage() {
       <BenefitsStrip items={prototypeData.benefits} />
       <CategoryGrid items={prototypeData.categories} />
       <BrandGrid items={prototypeData.brands} />
+      <ProductShowcase products={prototypeData.products} />
     </main>
   )
 }

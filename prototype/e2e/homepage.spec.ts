@@ -11,3 +11,24 @@ test('homepage exposes the approved sections and working product actions', async
   await page.getByRole('button', { name: 'Получить консультацию' }).first().click()
   await expect(page.getByRole('dialog')).toBeVisible()
 })
+
+test('all hero slides keep the same outer dimensions', async ({ page }) => {
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+    const hero = page.locator('.hero')
+    const next = page.getByRole('button', { name: 'Следующий слайд' })
+    await hero.hover()
+
+    const baseline = await hero.boundingBox()
+    expect(baseline).not.toBeNull()
+
+    for (let index = 1; index < 3; index += 1) {
+      await next.click()
+      const current = await hero.boundingBox()
+      expect(current).not.toBeNull()
+      expect(Math.abs(current!.width - baseline!.width)).toBeLessThan(0.5)
+      expect(Math.abs(current!.height - baseline!.height)).toBeLessThan(0.5)
+    }
+  }
+})

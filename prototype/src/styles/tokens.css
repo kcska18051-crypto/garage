@@ -1,0 +1,22 @@
+:root {
+  color-scheme: light;
+  --color-background: #f4f4f2;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #ececea;
+  --color-border: #d7d7d3;
+  --color-text: #20201e;
+  --color-text-muted: #676763;
+  --color-placeholder-1: #e7e7e3;
+  --color-placeholder-2: #d5d5d0;
+  --color-placeholder-3: #a9a9a3;
+  --color-placeholder-4: #6c6c67;
+  --color-focus: #1f5eff;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.9rem;
+  --radius-lg: 1.4rem;
+  --container: 90rem;
+  --gutter: clamp(1rem, 3vw, 2.5rem);
+  --header-height: 8.25rem;
+  --mobile-nav-height: 4.5rem;
+  --shadow-float: 0 1rem 2.5rem rgb(32 32 30 / 0.1);
+}

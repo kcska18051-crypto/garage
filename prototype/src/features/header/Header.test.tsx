@@ -24,6 +24,12 @@ describe('responsive header', () => {
     expect(screen.getAllByText(/Краскопульт/).length).toBeGreaterThan(0)
   })
 
+  it('keeps search input identifiers unique across adaptive header variants', () => {
+    renderHeader()
+    const ids = screen.getAllByRole('searchbox', { hidden: true }).map((input) => input.id)
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+
   it('exposes the five approved mobile destinations and closes its menu with Escape', async () => {
     const user = userEvent.setup()
     renderHeader()

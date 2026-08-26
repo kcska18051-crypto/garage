@@ -15,6 +15,10 @@ dist/
 build/
 coverage/
 *.tsbuildinfo
+test-results/
+playwright-report/
+prototype/artifacts/*
+!prototype/artifacts/.gitkeep
 
 # IDE and OS files
 .idea/

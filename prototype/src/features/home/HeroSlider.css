@@ -1,6 +1,7 @@
 .hero { background: #2b2b28; color: white; margin: 1rem auto 0; max-width: calc(var(--container) - 2 * var(--gutter)); overflow: hidden; position: relative; }
 .hero, .hero__slide { border-radius: var(--radius-lg); }
 .hero__slide { display: grid; grid-template-columns: 1.12fr .88fr; min-height: clamp(31rem, 52vw, 42rem); }
+.hero__slide[hidden] { display: none; }
 .hero__copy { align-self: end; max-width: 52rem; padding: clamp(2rem, 6vw, 6rem); position: relative; z-index: 2; }
 .hero__copy .eyebrow { color: #cfcfca; }
 .hero__copy h1, .hero__copy h2 { font-size: clamp(2.4rem, 5.3vw, 5.5rem); font-weight: 620; letter-spacing: -.055em; line-height: .94; margin: .8rem 0 1.4rem; }

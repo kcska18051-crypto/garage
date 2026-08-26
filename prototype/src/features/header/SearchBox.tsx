@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { prototypeData } from '../../data/prototypeData'
 
 export function SearchBox({ compact = false }: { compact?: boolean }) {
   const [query, setQuery] = useState('')
+  const inputId = useId()
   const navigate = useNavigate()
   const suggestions = query.trim().length > 1
     ? prototypeData.products.filter((item) => item.name.toLowerCase().includes(query.toLowerCase())).slice(0, 3)
@@ -11,8 +12,8 @@ export function SearchBox({ compact = false }: { compact?: boolean }) {
 
   return (
     <form className={`search-box${compact ? ' search-box--compact' : ''}`} role="search" onSubmit={(event) => { event.preventDefault(); navigate(`/search?q=${encodeURIComponent(query)}`) }}>
-      <label className="sr-only" htmlFor={`site-search-${compact ? 'compact' : 'full'}`}>Поиск по товарам, брендам и артикулам</label>
-      <input id={`site-search-${compact ? 'compact' : 'full'}`} type="search" placeholder="Товары, бренды, артикулы" value={query} onChange={(event) => setQuery(event.target.value)} autoComplete="off" />
+      <label className="sr-only" htmlFor={inputId}>Поиск по товарам, брендам и артикулам</label>
+      <input id={inputId} type="search" placeholder="Товары, бренды, артикулы" value={query} onChange={(event) => setQuery(event.target.value)} autoComplete="off" />
       <button type="submit" aria-label="Найти">⌕</button>
       {query.trim().length > 1 && (
         <div className="search-box__suggestions">

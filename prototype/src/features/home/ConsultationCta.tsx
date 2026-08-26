@@ -1,0 +1,3 @@
+export function ConsultationCta({ onConsult, onCallback }: { onConsult(): void; onCallback(): void }) {
+  return <section className="final-cta"><div className="final-cta__art" aria-hidden="true"><span /><i /></div><div><p className="eyebrow">Помощь в выборе</p><h2>Не уверены, какое оборудование или материал выбрать?</h2><p>Опишите задачу — специалист поможет определить подходящее направление.</p><div><button className="button button--light" onClick={onConsult}>Получить консультацию</button><button className="button" onClick={onCallback}>Заказать обратный звонок</button></div></div></section>
+}

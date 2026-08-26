@@ -1,6 +1,7 @@
 import { BrowserRouter, useInRouterContext } from 'react-router-dom'
 import { Header } from '../features/header/Header'
 import { CommerceProvider, useCommerce } from '../state/CommerceState'
+import { Footer } from '../features/footer/Footer'
 import { AppRoutes } from './routes'
 
 function AppContent() {
@@ -9,7 +10,7 @@ function AppContent() {
     <div className="app-shell">
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartIds.size }} />
       <AppRoutes />
-      <footer className="prototype-footer">Прототип интернет-магазина</footer>
+      <Footer />
     </div>
   )
 }

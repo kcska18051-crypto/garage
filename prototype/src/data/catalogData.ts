@@ -40,7 +40,7 @@ export const fullFilterGroups: FilterGroup[] = [
   { id: 'brand', label: 'Бренд', type: 'brand', limit: 4, initiallyOpen: true, options: catalogBrands.map(({ id, name }) => option(id, name)) },
   { id: 'performance', label: 'Производительность', type: 'checkbox', options: ['10', '11', '15', '30'].map((value) => option(value, `${value} л/мин`)) },
   { id: 'voltage', label: 'Напряжение', type: 'checkbox', options: [option('220', '220 В'), option('380', '380 В')] },
-  { id: 'power', label: 'Мощность двигателя', type: 'checkbox', options: ['5.5', '7.5', '11', '15'].map((value) => option(value, `${value} кВт`)) },
+  { id: 'power', label: 'Мощность двигателя', type: 'checkbox', options: ['5.5', '7.5', '11', '15', '22'].map((value) => option(value, `${value} кВт`)) },
   { id: 'pressure', label: 'Максимальное давление', type: 'checkbox', options: ['8', '10', '12'].map((value) => option(value, `${value} бар`)) },
   { id: 'receiver', label: 'Объём ресивера', type: 'checkbox', options: ['0', '300', '500'].map((value) => option(value, value === '0' ? 'Без ресивера' : `${value} л`)) },
   { id: 'lubrication', label: 'Тип смазки', type: 'checkbox', options: [option('oil', 'Масляный'), option('oil-free', 'Безмасляный')] },

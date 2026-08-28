@@ -53,4 +53,10 @@ describe('catalog product listing', () => {
     fireEvent.click(addButton)
     expect(screen.getByRole('button', { name: /Товар в корзине:/ })).toBeInTheDocument()
   })
+
+  it('shows a price range and disables zero-count technical values', () => {
+    renderListing()
+    expect(screen.getByLabelText('Диапазон цены')).toHaveAttribute('type', 'range')
+    expect(screen.getByLabelText('22 кВт')).toBeDisabled()
+  })
 })

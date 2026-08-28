@@ -14,9 +14,15 @@
   --radius-sm: 0.5rem;
   --radius-md: 0.9rem;
   --radius-lg: 1.4rem;
-  --container: 90rem;
+  --container-default: 90rem;
+  --container-wide: 96rem;
+  --container: var(--container-default);
   --gutter: clamp(1rem, 3vw, 2.5rem);
   --header-height: 8.25rem;
   --mobile-nav-height: 4.5rem;
   --shadow-float: 0 1rem 2.5rem rgb(32 32 30 / 0.1);
+}
+
+@media (min-width: 1680px) {
+  :root { --container: var(--container-wide); }
 }

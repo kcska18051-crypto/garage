@@ -71,3 +71,4 @@ export type ListingState = {
 }
 
 export type PaginationResult<T> = { items: T[]; page: number; pages: number; total: number }
+export type ListingCriterion = { kind: 'filter' | 'tag' | 'price'; group: string; value?: string }

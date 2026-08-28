@@ -27,6 +27,14 @@ describe('prototype routes', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' })).toBeInTheDocument()
     expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Каталог' })).toHaveAttribute('href', '/catalog')
+    expect(screen.getByRole('heading', { name: 'Быстрый выбор по параметрам' })).toBeInTheDocument()
+  })
+
+  it('uses the same second-level template without reserving tag space', () => {
+    render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/oil-free-compressors']}><App /></MemoryRouter>)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Безмасляные компрессоры' })).toBeInTheDocument()
+    expect(document.querySelector('.catalog-tags')).toBeNull()
   })
 
   it('shows the prototype 404 page for an unknown route', () => {

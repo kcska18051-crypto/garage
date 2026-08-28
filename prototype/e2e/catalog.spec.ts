@@ -10,6 +10,20 @@ test('catalog result grid uses three columns at 1440 and four at 1920', async ({
   }
 })
 
+test('list view stays a single readable column at 1920', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 })
+  await page.goto('/catalog/compressor-equipment/screw-compressors')
+  await page.getByRole('button', { name: 'Список' }).click()
+
+  const results = page.getByTestId('catalog-results')
+  const layout = await results.evaluate((grid) => ({
+    columns: getComputedStyle(grid).gridTemplateColumns.split(' ').length,
+    overflow: grid.scrollWidth > grid.clientWidth,
+  }))
+
+  expect(layout).toEqual({ columns: 1, overflow: false })
+})
+
 test('mobile filter keeps a draft until the explicit apply action', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/catalog/compressor-equipment/screw-compressors')

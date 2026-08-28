@@ -29,6 +29,7 @@ export function useCatalogListing({ products, pageSize = 12 }: { products: Catal
     commit(withGroupValues(state, group, current.includes(value) ? current.filter((item) => item !== value) : [...current, value]))
   }
   const setPrice = (side: 'from' | 'to', value?: number) => commit({ ...state, [side === 'from' ? 'priceFrom' : 'priceTo']: value, page: 1 })
+  const clearPrice = () => commit({ ...state, priceFrom: undefined, priceTo: undefined, page: 1 })
   const applyTag = (group: string, value: string) => commit({ ...state, tag: state.tag?.group === group && state.tag.value === value ? undefined : { group, value }, page: 1 })
   const setSort = (sort: CatalogSort) => commit({ ...state, sort, page: 1 })
   const setView = (view: CatalogView) => commit({ ...state, view })
@@ -41,5 +42,5 @@ export function useCatalogListing({ products, pageSize = 12 }: { products: Catal
     commit(withGroupValues(state, criterion.group, current.filter((item) => item !== criterion.value)))
   }
 
-  return { state, results, pageItems: pagination.items, pagination, toggleFilter, setPrice, applyTag, setSort, setView, setPage, clearAll, removeCriterion, applyState: commit }
+  return { state, results, pageItems: pagination.items, pagination, toggleFilter, setPrice, clearPrice, applyTag, setSort, setView, setPage, clearAll, removeCriterion, applyState: commit }
 }

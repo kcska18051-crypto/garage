@@ -101,6 +101,7 @@
 .catalog-product-card__availability small { grid-column: 2; }
 .catalog-product-card__bottom { align-items: end; display: flex; gap: .5rem; justify-content: space-between; margin-top: auto; }
 .catalog-product-card__bottom > div { display: grid; }
+.catalog-product-card__price-label { display: none; }
 .catalog-product-card__bottom del { color: var(--color-text-muted); font-size: .68rem; }
 .catalog-product-card__bottom strong { font-size: 1.05rem; white-space: nowrap; }
 .catalog-product-card__cart, .catalog-product-card__quote { background: var(--color-text); border: 0; border-radius: .55rem; color: white; cursor: pointer; font-size: .72rem; min-height: 2.7rem; padding: .45rem .7rem; }
@@ -109,6 +110,32 @@
 .catalog-results--list .catalog-product-card__media { grid-row: 1 / 6; height: auto; margin: -1rem 0 -1rem -1rem; }
 .catalog-results--list .catalog-product-card__meta, .catalog-results--list .catalog-product-card__name, .catalog-results--list .catalog-product-card dl, .catalog-results--list .catalog-product-card__availability { grid-column: 2; }
 .catalog-results--list .catalog-product-card__bottom { grid-column: 3; grid-row: 1 / 5; }
+@media (min-width: 1024px) {
+  .catalog-results--list .catalog-product-card { grid-template-columns: 13rem minmax(0, 1fr) minmax(10rem, 12rem); }
+  .catalog-results--list .catalog-product-card__bottom {
+    align-items: stretch;
+    align-self: stretch;
+    background: var(--color-background);
+    border-left: 1px solid var(--color-border);
+    flex-direction: column;
+    grid-row: 1 / 6;
+    justify-content: center;
+    margin: -1rem -1rem -1rem 0;
+    padding: 3.5rem 1rem 1rem;
+  }
+  .catalog-results--list .catalog-product-card__bottom > div { width: 100%; }
+  .catalog-results--list .catalog-product-card__price-label {
+    color: var(--color-text-muted);
+    display: block;
+    font-size: .62rem;
+    font-weight: 750;
+    letter-spacing: .08em;
+    margin-bottom: .4rem;
+    text-transform: uppercase;
+  }
+  .catalog-results--list .catalog-product-card__bottom strong { font-size: 1.4rem; }
+  .catalog-results--list .catalog-product-card__bottom button { margin-top: .85rem; width: 100%; }
+}
 .catalog-pagination { align-items: center; display: flex; gap: 1rem; justify-content: space-between; padding-top: 1.5rem; }
 .catalog-pagination nav { display: flex; gap: .35rem; }
 .catalog-pagination button { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: .5rem; cursor: pointer; min-height: 2.7rem; padding: .5rem .85rem; }

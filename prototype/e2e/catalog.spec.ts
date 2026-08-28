@@ -16,12 +16,35 @@ test('list view stays a single readable column at 1920', async ({ page }) => {
   await page.getByRole('button', { name: 'Список' }).click()
 
   const results = page.getByTestId('catalog-results')
+  await expect(results).toHaveClass(/catalog-results--list/)
   const layout = await results.evaluate((grid) => ({
     columns: getComputedStyle(grid).gridTemplateColumns.split(' ').length,
     overflow: grid.scrollWidth > grid.clientWidth,
   }))
 
   expect(layout).toEqual({ columns: 1, overflow: false })
+})
+
+test('list cards expose a distinct readable price panel', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 })
+  await page.goto('/catalog/compressor-equipment/screw-compressors')
+  await page.getByRole('button', { name: 'Список' }).click()
+
+  const card = page.locator('.catalog-product-card').first()
+  await expect(card.getByText('Цена', { exact: true })).toBeVisible()
+  const metrics = await card.locator('.catalog-product-card__bottom').evaluate((panel) => {
+    const price = panel.querySelector('strong')!
+    const action = panel.querySelector('button')!
+    return {
+      panelWidth: panel.getBoundingClientRect().width,
+      actionWidth: action.getBoundingClientRect().width,
+      priceSize: Number.parseFloat(getComputedStyle(price).fontSize),
+    }
+  })
+
+  expect(metrics.panelWidth).toBeGreaterThanOrEqual(160)
+  expect(metrics.actionWidth).toBeGreaterThanOrEqual(metrics.panelWidth - 40)
+  expect(metrics.priceSize).toBeGreaterThanOrEqual(20)
 })
 
 test('mobile filter keeps a draft until the explicit apply action', async ({ page }) => {

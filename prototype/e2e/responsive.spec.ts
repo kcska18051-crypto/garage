@@ -41,3 +41,21 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 1024, height: 768
     expect(sizes.scroll).toBeLessThanOrEqual(sizes.client)
   })
 }
+
+for (const width of [768, 390, 360]) {
+  test(`catalog introduction does not overlap at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('/catalog')
+
+    const items = await page.locator('.catalog-page__header > *').evaluateAll((elements) => elements.map((element) => {
+      const box = element.getBoundingClientRect()
+      return { top: box.top, right: box.right, bottom: box.bottom, left: box.left }
+    }))
+
+    for (let index = 1; index < items.length; index += 1) {
+      expect(items[index].top).toBeGreaterThanOrEqual(items[index - 1].bottom)
+    }
+
+    expect(items.every((item) => item.left >= 0 && item.right <= width)).toBe(true)
+  })
+}

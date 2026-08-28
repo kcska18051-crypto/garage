@@ -30,8 +30,11 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 1024, height: 768
   test(`sticky header keeps all account actions at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport)
     await page.goto('/')
+    const expandedFlowHeight = await page.locator('.site-header').evaluate((header) => header.getBoundingClientRect().height)
     await page.evaluate(() => window.scrollTo(0, 240))
     await expect(page.locator('.desktop-header--compact')).toBeVisible()
+    const compactFlowHeight = await page.locator('.site-header').evaluate((header) => header.getBoundingClientRect().height)
+    expect(Math.abs(compactFlowHeight - expandedFlowHeight)).toBeLessThan(1)
 
     for (const label of ['Профиль', 'Сравнение', 'Избранное', 'Корзина']) {
       await expect(page.locator(`.desktop-header--compact .header-action[aria-label^="${label}"]`)).toBeVisible()

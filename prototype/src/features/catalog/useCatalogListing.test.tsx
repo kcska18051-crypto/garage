@@ -37,6 +37,7 @@ describe('catalog URL listing state', () => {
 
   it('expands long tag groups and renders no wrapper when tags are absent', () => {
     const { rerender } = render(<MemoryRouter><TagGroups groups={compressorSubcategories[0].tagGroups} onSelect={() => undefined} /></MemoryRouter>)
+    expect(screen.getByRole('button', { name: 'Тег Remeza' })).toHaveTextContent(/^Remeza$/)
     expect(screen.queryByRole('button', { name: 'Тег Comprag' })).not.toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Показать все: По бренду' }))
     expect(screen.getByRole('button', { name: 'Тег Comprag' })).toBeInTheDocument()

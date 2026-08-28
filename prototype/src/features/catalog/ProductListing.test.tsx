@@ -57,6 +57,7 @@ describe('catalog product listing', () => {
   it('shows a price range and disables zero-count technical values', () => {
     renderListing()
     expect(screen.getByLabelText('Диапазон цены')).toHaveAttribute('type', 'range')
+    expect(screen.getByLabelText('Remeza').closest('label')).toHaveTextContent('Remeza6')
     expect(screen.getByLabelText('22 кВт')).toBeDisabled()
   })
 })

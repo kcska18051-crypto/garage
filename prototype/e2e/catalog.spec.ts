@@ -75,6 +75,19 @@ test('second-level template removes the optional tag block without a gap', async
   await expect(page.getByRole('heading', { name: 'Подбор оборудования' })).toBeVisible()
 })
 
+test('counts appear only in filters and directly above product results', async ({ page }) => {
+  await page.goto('/catalog/compressor-equipment')
+  await expect(page.locator('.catalog-page__header').getByText(/\d+ товар/)).toHaveCount(0)
+  await expect(page.locator('.catalog-listing__toolbar').getByText('Найдено 32 товара')).toBeVisible()
+
+  await page.goto('/catalog/compressor-equipment/screw-compressors')
+  await expect(page.locator('.catalog-page__header').getByText(/\d+ товар/)).toHaveCount(0)
+  await expect(page.locator('.catalog-listing__toolbar').getByText(/Найдено \d+ товар/)).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Тег Remeza' })).toHaveText('Remeza')
+  const fullFilterBrand = page.locator('.catalog-listing__sidebar').getByLabel('Remeza', { exact: true })
+  await expect(fullFilterBrand.locator('xpath=..')).toContainText(/\d+/)
+})
+
 for (const viewport of [{ width: 768, height: 900 }, { width: 390, height: 844 }, { width: 360, height: 800 }]) {
   test(`catalog chain has no horizontal overflow at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport)

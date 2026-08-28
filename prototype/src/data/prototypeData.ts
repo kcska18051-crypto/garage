@@ -15,7 +15,7 @@ export const prototypeData: PrototypeData = {
   categories: [
     ['lifting', 'Подъёмное оборудование'], ['body', 'Кузовной ремонт'], ['paint', 'Покраска и подготовка'], ['compressor-equipment', 'Компрессорное оборудование'], ['tools', 'Инструмент'], ['welding', 'Сварочное оборудование'], ['cleaning', 'Мойка и уборка'], ['materials', 'Расходные материалы'],
   ].map(([id, name], index) => ({ id, name, href: `/catalog/${id}`, code: String(index + 1).padStart(2, '0') })),
-  brands: ['Nordberg', 'Русская техника', 'JTC', 'Rupes', 'WiederKraft', 'Jonnesway', 'Sivik', 'Car-Tool'].map((name) => ({ id: name.toLowerCase().replaceAll(' ', '-'), name, href: `/brands/${encodeURIComponent(name.toLowerCase())}` })),
+  brands: ['Nordberg', 'Trommelberg', 'JTC', 'Rupes', 'WiederKraft', 'Jonnesway', 'Sivik', 'Car-Tool'].map((name) => ({ id: name.toLowerCase().replaceAll(' ', '-'), name, href: `/brands/${encodeURIComponent(name.toLowerCase())}` })),
   products: Array.from({ length: 10 }, (_, index) => ({ id: `product-${index + 1}`, name: ['Домкрат подкатной профессиональный', 'Набор инструмента для мастерской', 'Краскопульт с верхним бачком', 'Компрессор поршневой', 'Стенд диагностический', 'Шлифовальная машинка', 'Тележка инструментальная', 'Сварочный аппарат', 'Осушитель рефрижераторный', 'Ресивер вертикальный'][index], price: `${(index + 2) * 9} 900 ₽`, availability: index % 3 === 0 ? 'Срок уточняется для вашего города' : 'Доступно к заказу', href: `/product/product-${index + 1}` })),
   services: [
     { id: 'paint-matching', name: 'Подбор автоэмали', text: 'Подберём цвет и подготовим решение для качественного ремонта покрытия.', cta: 'Узнать о подборе', href: '/services/paint-matching' },

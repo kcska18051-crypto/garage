@@ -6,6 +6,8 @@ test('homepage exposes the approved sections and working product actions', async
   await expect(page.locator('.hero__slide:visible')).toHaveCount(1)
   await expect(page.getByRole('heading', { name: 'Популярные категории' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Новинки' })).toBeVisible()
+  await expect(page.getByText('Trommelberg', { exact: true })).toBeVisible()
+  await expect(page.getByText('Русская техника', { exact: true })).toHaveCount(0)
   await page.getByRole('button', { name: /Добавить в корзину/ }).first().click()
   await expect(page.locator('[aria-label="Корзина: 1"]:visible')).toBeVisible()
   await page.getByRole('button', { name: 'Получить консультацию' }).first().click()

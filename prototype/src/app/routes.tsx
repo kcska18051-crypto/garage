@@ -2,6 +2,9 @@ import { Route, Routes } from 'react-router-dom'
 import { HomePage } from '../pages/HomePage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
+import { CatalogPage } from '../pages/CatalogPage'
+import { CatalogCategoryPage } from '../pages/CatalogCategoryPage'
+import { CatalogSubcategoryPage } from '../pages/CatalogSubcategoryPage'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -21,6 +24,9 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/catalog" element={<CatalogPage />} />
+      <Route path="/catalog/compressor-equipment" element={<CatalogCategoryPage />} />
+      <Route path="/catalog/compressor-equipment/:subcategorySlug" element={<CatalogSubcategoryPage />} />
       {prototypeRoutes.map((route) => <Route key={route.path} path={route.path} element={<PlaceholderPage title={route.label} />} />)}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

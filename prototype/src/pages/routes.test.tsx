@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
 
 describe('prototype routes', () => {
-  it('opens a linked prototype section as a real route', () => {
+  it('opens the catalog root with a real compressor category link', () => {
     render(
       <MemoryRouter initialEntries={['/catalog']}>
         <App />
@@ -11,7 +11,22 @@ describe('prototype routes', () => {
     )
 
     expect(screen.getByRole('heading', { name: 'Каталог' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Вернуться на главную' })).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: /Компрессорное оборудование/ })).toHaveAttribute('href', '/catalog/compressor-equipment')
+  })
+
+  it('opens the first-level compressor category', () => {
+    render(<MemoryRouter initialEntries={['/catalog/compressor-equipment']}><App /></MemoryRouter>)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Компрессорное оборудование' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Винтовые компрессоры/ })).toHaveAttribute('href', '/catalog/compressor-equipment/screw-compressors')
+  })
+
+  it('opens the reusable second-level category with catalog breadcrumbs', () => {
+    render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/screw-compressors']}><App /></MemoryRouter>)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' })).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Каталог' })).toHaveAttribute('href', '/catalog')
   })
 
   it('shows the prototype 404 page for an unknown route', () => {

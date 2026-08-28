@@ -15,7 +15,11 @@ function AppContent() {
   )
 }
 
+export function routerBasename(baseUrl: string) {
+  return baseUrl === '/' ? '/' : `/${baseUrl.replace(/^\/+|\/+$/g, '')}`
+}
+
 export function App() {
   const content = <CommerceProvider><AppContent /></CommerceProvider>
-  return useInRouterContext() ? content : <BrowserRouter>{content}</BrowserRouter>
+  return useInRouterContext() ? content : <BrowserRouter basename={routerBasename(import.meta.env.BASE_URL)}>{content}</BrowserRouter>
 }

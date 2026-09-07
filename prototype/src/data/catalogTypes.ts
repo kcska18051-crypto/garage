@@ -31,7 +31,10 @@ export type CatalogSubcategory = {
   count: number
   description: string
   tagGroups?: TagGroup[]
+  childSections?: CatalogChildSection[]
 }
+
+export type CatalogChildSection = { id: string; name: string; href: string; description: string }
 
 export type CatalogBrand = { id: string; name: string; count: number }
 

@@ -2,18 +2,24 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { Header } from './Header'
+import { RegionProvider, useRegion } from '../../state/RegionState'
 
 function renderHeader() {
-  return render(<MemoryRouter><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /></MemoryRouter>)
+  return render(<MemoryRouter><RegionProvider><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /></RegionProvider></MemoryRouter>)
+}
+
+function RegionEcho() {
+  const { region } = useRegion()
+  return <output aria-label="Регион страницы">{region}</output>
 }
 
 describe('responsive header', () => {
   it('changes the selected region from the region dialog', async () => {
     const user = userEvent.setup()
-    renderHeader()
+    render(<MemoryRouter><RegionProvider><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /><RegionEcho /></RegionProvider></MemoryRouter>)
     await user.click(screen.getByRole('button', { name: 'Выбрать город' }))
     await user.click(screen.getByRole('button', { name: 'Вологда' }))
-    expect(screen.getAllByText('Вологда').length).toBeGreaterThan(0)
+    expect(screen.getByRole('status', { name: 'Регион страницы' })).toHaveTextContent('Вологда')
   })
 
   it('shows useful search suggestions while typing', async () => {

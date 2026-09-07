@@ -21,7 +21,7 @@ test('homepage, catalog and category cards form one navigation chain', async ({ 
 })
 
 test('pages and dialogs do not render small labels above headings', async ({ page }) => {
-  for (const path of ['/', '/catalog', '/catalog/compressor-equipment', '/catalog/compressor-equipment/screw-compressors', '/about', '/not-in-map']) {
+  for (const path of ['/', '/catalog', '/catalog/compressor-equipment', '/catalog/compressor-equipment/screw-compressors', '/brands', '/product/remeza-vk-10-gr-0001', '/about', '/not-in-map']) {
     await page.goto(path)
     await expect(page.locator('.eyebrow + :is(h1, h2, h3)')).toHaveCount(0)
   }

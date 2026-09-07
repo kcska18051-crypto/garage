@@ -30,6 +30,20 @@ describe('prototype routes', () => {
     expect(screen.getByRole('heading', { name: 'Быстрый выбор по параметрам' })).toBeInTheDocument()
   })
 
+  it('orders child sections, quick tags, listing and SEO information', () => {
+    render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/screw-compressors']}><App /></MemoryRouter>)
+
+    const childSections = screen.getByRole('region', { name: 'Дочерние разделы' })
+    const tags = screen.getByRole('heading', { name: 'Быстрый выбор по параметрам' }).closest('section')!
+    const listing = screen.getByRole('heading', { name: 'Подбор оборудования' }).closest('section')!
+    const seo = screen.getByRole('region', { name: 'О винтовых компрессорах' })
+    expect(childSections.querySelectorAll('a')).toHaveLength(6)
+    expect(childSections).toHaveTextContent('Винтовые компрессоры на ресивере')
+    expect(childSections.compareDocumentPosition(tags) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(tags.compareDocumentPosition(listing) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(listing.compareDocumentPosition(seo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
   it('uses the same second-level template without reserving tag space', () => {
     render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/oil-free-compressors']}><App /></MemoryRouter>)
 

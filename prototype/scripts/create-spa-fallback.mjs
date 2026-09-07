@@ -7,6 +7,8 @@ const publicRoutes = [
   'catalog/compressor-equipment',
   'catalog/compressor-equipment/screw-compressors',
   'catalog/compressor-equipment/oil-free-compressors',
+  'product/remeza-vk-10-gr-0001',
+  'brands',
 ]
 
 await copyFile(entryFile, new URL('404.html', outputDirectory))

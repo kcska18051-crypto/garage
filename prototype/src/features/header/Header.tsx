@@ -4,10 +4,11 @@ import { DesktopHeader, type HeaderCounts } from './DesktopHeader'
 import { MobileBottomNav } from './MobileBottomNav'
 import { MobileHeader } from './MobileHeader'
 import { RegionDialog } from './RegionDialog'
+import { useRegion } from '../../state/RegionState'
 import './Header.css'
 
 export function Header({ counts }: { counts: HeaderCounts }) {
-  const [region, setRegion] = useState('Ярославль')
+  const { region, setRegion } = useRegion()
   const [regionOpen, setRegionOpen] = useState(false)
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)

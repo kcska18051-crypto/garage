@@ -24,7 +24,14 @@ const screwTags: TagGroup[] = [
 ]
 
 export const compressorSubcategories: CatalogSubcategory[] = [
-  { id: 'screw-compressors', name: 'Винтовые компрессоры', href: '/catalog/compressor-equipment/screw-compressors', count: 48, description: 'Для продолжительной работы в мастерских и производственных линиях.', tagGroups: screwTags },
+  { id: 'screw-compressors', name: 'Винтовые компрессоры', href: '/catalog/compressor-equipment/screw-compressors', count: 48, description: 'Для продолжительной работы в мастерских и производственных линиях.', tagGroups: screwTags, childSections: [
+    { id: 'receiver', name: 'Винтовые компрессоры на ресивере', href: '/catalog/compressor-equipment/screw-compressors/receiver', description: 'Компактное решение с накопительной ёмкостью для готового рабочего поста.' },
+    { id: 'dryer', name: 'Винтовые компрессоры с осушителем', href: '/catalog/compressor-equipment/screw-compressors/dryer', description: 'Подготовка сжатого воздуха в составе единой установки.' },
+    { id: 'stations', name: 'Компрессорные станции', href: '/catalog/compressor-equipment/screw-compressors/stations', description: 'Комплексные установки для мастерских и производственных линий.' },
+    { id: 'direct-drive', name: 'С прямым приводом', href: '/catalog/compressor-equipment/screw-compressors/direct-drive', description: 'Передача мощности без ременного узла для продолжительной нагрузки.' },
+    { id: 'belt-drive', name: 'С ременным приводом', href: '/catalog/compressor-equipment/screw-compressors/belt-drive', description: 'Конфигурации с ременной передачей для разных рабочих сценариев.' },
+    { id: 'turnkey', name: 'Комплектные компрессорные решения', href: '/catalog/compressor-equipment/screw-compressors/turnkey', description: 'Подбор связанных компонентов как единой рабочей системы.' },
+  ] },
   { id: 'piston-compressors', name: 'Поршневые компрессоры', href: '/catalog/compressor-equipment/piston-compressors', count: 62, description: 'Для периодических работ и небольших пневмосетей.' },
   { id: 'oil-free-compressors', name: 'Безмасляные компрессоры', href: '/catalog/compressor-equipment/oil-free-compressors', count: 18, description: 'Чистый воздух без частиц масла; тот же шаблон категории без блока тегов.' },
   { id: 'receivers', name: 'Ресиверы', href: '/catalog/compressor-equipment/receivers', count: 16, description: 'Вертикальные и горизонтальные накопители сжатого воздуха.' },
@@ -66,9 +73,9 @@ export const catalogProducts: CatalogProduct[] = Array.from({ length: 32 }, (_, 
   const subcategoryId = subcategories[index % subcategories.length]
   const price = 185000 + index * 23750
   return {
-    id: `compressor-${index + 1}`,
+    id: index === 0 ? 'remeza-vk-10-gr-0001' : `compressor-${index + 1}`,
     name: `${catalogBrands.find((brand) => brand.id === brandId)?.name} ${subcategoryId === 'screw-compressors' ? 'ВК' : 'Air'} ${10 + index}`,
-    slug: `compressor-${index + 1}`,
+    slug: index === 0 ? 'remeza-vk-10-gr-0001' : `compressor-${index + 1}`,
     sku: `GR-${String(index + 1).padStart(4, '0')}`,
     brandId,
     subcategoryId,

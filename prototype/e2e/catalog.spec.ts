@@ -104,3 +104,15 @@ test('catalog card actions update the shared header commerce counters', async ({
   await page.getByRole('button', { name: /Добавить в корзину:/ }).first().click()
   await expect(page.locator('[aria-label="Корзина: 1"]:visible')).toBeVisible()
 })
+
+test('screw-compressor page presents child sections before tags, listing and SEO text', async ({ page }) => {
+  await page.goto('/catalog/compressor-equipment/screw-compressors')
+  const children = page.getByRole('region', { name: 'Дочерние разделы' })
+  await expect(children.getByRole('link')).toHaveCount(6)
+  await expect(children).toContainText('Винтовые компрессоры на ресивере')
+  const order = await page.locator('.catalog-page').evaluate((root) => {
+    const selectors = ['.catalog-child-sections', '.catalog-tags', '.catalog-listing', '.catalog-seo-tail']
+    return selectors.map((selector) => Array.from(root.children).indexOf(root.querySelector(selector)!))
+  })
+  expect(order).toEqual([...order].sort((a, b) => a - b))
+})

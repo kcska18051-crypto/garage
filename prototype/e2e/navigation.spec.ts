@@ -39,3 +39,15 @@ test('pages and dialogs do not render small labels above headings', async ({ pag
   await page.getByRole('button', { name: 'Фильтры' }).click()
   await expect(page.getByRole('dialog').locator('.eyebrow + :is(h1, h2, h3)')).toHaveCount(0)
 })
+
+test('unapproved shop and business destinations are absent from navigation and routing', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.getByRole('link', { name: 'Магазины', exact: true })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Юридическим лицам', exact: true })).toHaveCount(0)
+  await expect(page.locator('a[href="/shops"], a[href="/business"]')).toHaveCount(0)
+
+  for (const path of ['/shops', '/business']) {
+    await page.goto(path)
+    await expect(page.getByRole('heading', { name: 'Страница не найдена' })).toBeVisible()
+  }
+})

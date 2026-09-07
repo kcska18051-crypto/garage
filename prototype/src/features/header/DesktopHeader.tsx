@@ -10,7 +10,7 @@ function ActionLink({ to, label, symbol, count }: { to: string; label: string; s
 export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, onCatalog }: { region: string; onRegion(): void; counts: HeaderCounts; compact: boolean; catalogOpen: boolean; onCatalog(): void }) {
   return (
     <div className={`desktop-header${compact ? ' desktop-header--compact' : ''}`}>
-      {!compact && <div className="service-row"><button onClick={onRegion} aria-label="Выбрать город">⌖ {region}</button><nav aria-label="Сервисная навигация"><Link to="/shops">Магазины</Link><Link to="/delivery">Доставка и оплата</Link><Link to="/about">О компании</Link><Link to="/contacts">Контакты</Link><Link to="/business">Юридическим лицам</Link></nav><a href="tel:+70000000000">+7 (000) 000-00-00 <small>Пн–Пт, 9:00–18:00</small></a></div>}
+      {!compact && <div className="service-row"><button onClick={onRegion} aria-label="Выбрать город">⌖ {region}</button><nav aria-label="Сервисная навигация"><Link to="/delivery">Доставка и оплата</Link><Link to="/about">О компании</Link><Link to="/contacts">Контакты</Link></nav><a href="tel:+70000000000">+7 (000) 000-00-00 <small>Пн–Пт, 9:00–18:00</small></a></div>}
       <div className="main-header-row">
         <Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link>
         <button className="catalog-button" onClick={onCatalog} aria-expanded={catalogOpen}>▦ <span>Каталог</span></button>

@@ -14,10 +14,10 @@ export const prototypeRoutes: RouteDefinition[] = [
   { path: '/brands/*', label: 'Бренды' }, { path: '/new', label: 'Новинки' },
   { path: '/product/:slug', label: 'Карточка товара' }, { path: '/favorites', label: 'Избранное' },
   { path: '/compare', label: 'Сравнение' }, { path: '/cart', label: 'Корзина' },
-  { path: '/profile', label: 'Личный кабинет' }, { path: '/shops', label: 'Магазины' },
+  { path: '/profile', label: 'Личный кабинет' },
   { path: '/delivery', label: 'Доставка и оплата' }, { path: '/about', label: 'О компании' },
   { path: '/contacts', label: 'Контакты' }, { path: '/articles/:slug', label: 'Статья' },
-  { path: '/news/:slug', label: 'Новость' }, { path: '/business', label: 'Юридическим лицам' },
+  { path: '/news/:slug', label: 'Новость' },
 ]
 
 export function AppRoutes() {

@@ -7,6 +7,7 @@ import { CatalogCategoryPage } from '../pages/CatalogCategoryPage'
 import { CatalogSubcategoryPage } from '../pages/CatalogSubcategoryPage'
 import { ProductDetailPage } from '../pages/ProductDetailPage'
 import { BrandsPage } from '../pages/BrandsPage'
+import { BrandDetailPage } from '../pages/BrandDetailPage'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -32,6 +33,7 @@ export function AppRoutes() {
       <Route path="/catalog/compressor-equipment/:subcategorySlug/:childSlug" element={<CatalogSubcategoryPage />} />
       <Route path="/product/remeza-vk-10-gr-0001" element={<ProductDetailPage />} />
       <Route path="/brands" element={<BrandsPage />} />
+      <Route path="/brand/remeza" element={<BrandDetailPage />} />
       {prototypeRoutes.map((route) => <Route key={route.path} path={route.path} element={<PlaceholderPage title={route.label} />} />)}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

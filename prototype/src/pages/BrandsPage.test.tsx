@@ -4,12 +4,12 @@ import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
 
 describe('brands directory', () => {
-  it('shows informational brand cards without detail links', () => {
+  it('links only the approved Remeza example to its brand page', () => {
     render(<MemoryRouter initialEntries={['/brands/']}><App /></MemoryRouter>)
     expect(screen.getByRole('heading', { level: 1, name: 'Бренды' })).toBeInTheDocument()
     const directory = screen.getByRole('region', { name: 'Все бренды' })
-    expect(within(directory).getByText('Remeza')).toBeInTheDocument()
-    expect(within(directory).queryByRole('link')).not.toBeInTheDocument()
+    expect(within(directory).getByRole('link', { name: /Remeza/ })).toHaveAttribute('href', '/brand/remeza/')
+    expect(within(directory).getByText('Rupes').closest('a')).toBeNull()
   })
 
   it('filters brands by search, category and alphabet', async () => {

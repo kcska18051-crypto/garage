@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 test('product detail supports gallery, commerce actions, anchors and request modes', async ({ page }) => {
   await page.goto('/product/remeza-vk-10-gr-0001/')
   await expect(page.getByRole('heading', { level: 1, name: 'Remeza ВК 10' })).toBeVisible()
-  await expect(page.getByText('Remeza', { exact: true })).not.toHaveAttribute('href')
+  await expect(page.getByRole('link', { name: 'Remeza', exact: true })).toHaveAttribute('href', '/brand/remeza/')
   await expect(page.locator('.product-purchase__notice:visible, .product-mobile-purchase small:visible')).toHaveText('Демонстрационные данные прототипа')
 
   await page.getByRole('button', { name: 'Добавить в сравнение' }).click()

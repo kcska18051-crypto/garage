@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { brandCategories, brandDirectory, type BrandDirectoryItem } from '../../data/brandDirectoryData'
 
 const ALL_CATEGORIES = 'Все направления'
 const ALL_LETTERS = 'Все'
 
 function BrandCard({ brand }: { brand: BrandDirectoryItem }) {
-  return <article className="brand-directory-card"><span aria-hidden="true" /><div><h3>{brand.name}</h3><p>{brand.categories.join(' · ')}</p></div></article>
+  const content = <><span aria-hidden="true" /><div><h3>{brand.name}</h3><p>{brand.categories.join(' · ')}</p></div></>
+  return brand.id === 'remeza' ? <Link className="brand-directory-card brand-directory-card--link" to="/brand/remeza/">{content}</Link> : <article className="brand-directory-card">{content}</article>
 }
 
 export function BrandsDirectory() {

@@ -1,6 +1,5 @@
 export type Slide = {
   id: string
-  eyebrow: string
   title: string
   text: string
   cta: string

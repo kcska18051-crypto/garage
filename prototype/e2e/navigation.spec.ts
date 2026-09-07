@@ -19,3 +19,23 @@ test('homepage, catalog and category cards form one navigation chain', async ({ 
   await page.goto('/not-in-map')
   await expect(page.getByRole('heading', { name: 'Страница не найдена' })).toBeVisible()
 })
+
+test('pages and dialogs do not render small labels above headings', async ({ page }) => {
+  for (const path of ['/', '/catalog', '/catalog/compressor-equipment', '/catalog/compressor-equipment/screw-compressors', '/about', '/not-in-map']) {
+    await page.goto(path)
+    await expect(page.locator('.eyebrow + :is(h1, h2, h3)')).toHaveCount(0)
+  }
+
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Получить консультацию' }).first().click()
+  await expect(page.getByRole('dialog').locator('.eyebrow + :is(h1, h2, h3)')).toHaveCount(0)
+
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Выбрать город' }).first().click()
+  await expect(page.getByRole('dialog').locator('.eyebrow + :is(h1, h2, h3)')).toHaveCount(0)
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/catalog/compressor-equipment/screw-compressors')
+  await page.getByRole('button', { name: 'Фильтры' }).click()
+  await expect(page.getByRole('dialog').locator('.eyebrow + :is(h1, h2, h3)')).toHaveCount(0)
+})

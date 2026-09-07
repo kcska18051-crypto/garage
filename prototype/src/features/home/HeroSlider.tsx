@@ -23,7 +23,7 @@ export function HeroSlider({ slides, intervalMs = 6500 }: { slides: Slide[]; int
       <div className="hero__stage">
         {slides.map((slide, index) => (
           <article className="hero__slide" key={slide.id} hidden={index !== active} aria-label={`Слайд ${index + 1} из ${slides.length}`}>
-            <div className="hero__copy"><p className="eyebrow">{slide.eyebrow}</p>{index === 0 ? <h1>{slide.title}</h1> : <h2>{slide.title}</h2>}<p>{slide.text}</p><Link className="button button--light" to={slide.href}>{slide.cta}<span aria-hidden="true">→</span></Link></div>
+            <div className="hero__copy">{index === 0 ? <h1>{slide.title}</h1> : <h2>{slide.title}</h2>}<p>{slide.text}</p><Link className="button button--light" to={slide.href}>{slide.cta}<span aria-hidden="true">→</span></Link></div>
             <div className={`hero__art hero__art--${index + 1}`} aria-hidden="true"><span /><i /><b>{String(index + 1).padStart(2, '0')}</b></div>
           </article>
         ))}

@@ -9,7 +9,7 @@ describe('lower homepage sections', () => {
     const user = userEvent.setup()
     render(<MemoryRouter><App /></MemoryRouter>)
     expect(screen.getByRole('heading', { name: 'Услуги' })).toBeVisible()
-    expect(screen.getByRole('heading', { name: 'Новости, статьи, обзоры' })).toBeVisible()
+    expect(screen.queryByRole('heading', { name: 'Новости, статьи, обзоры' })).not.toBeInTheDocument()
     expect(screen.getByRole('tab', { name: 'Новости' })).toHaveAttribute('aria-selected', 'true')
     expect(screen.queryByRole('heading', { name: 'Подписка' })).not.toBeInTheDocument()
     await user.click(screen.getAllByRole('button', { name: 'Получить консультацию' })[0])

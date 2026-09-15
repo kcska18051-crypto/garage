@@ -5,13 +5,57 @@ test('homepage exposes the approved sections and working product actions', async
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Оборудование и материалы')
   await expect(page.locator('.hero__slide:visible')).toHaveCount(1)
   await expect(page.getByRole('heading', { name: 'Популярные категории' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Новинки' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Подборки товаров' })).toBeVisible()
   await expect(page.getByText('Trommelberg', { exact: true })).toBeVisible()
   await expect(page.getByText('Русская техника', { exact: true })).toHaveCount(0)
   await page.getByRole('button', { name: /Добавить в корзину/ }).first().click()
   await expect(page.locator('[aria-label="Корзина: 1"]:visible')).toBeVisible()
-  await page.getByRole('button', { name: 'Получить консультацию' }).first().click()
+  await page.getByRole('button', { name: 'Получить консультацию' }).click()
   await expect(page.getByRole('dialog')).toBeVisible()
+})
+
+test('homepage compact sections expose product and content tabs, promotions and three services', async ({ page }) => {
+  await page.goto('/')
+
+  const productTabs = page.getByRole('tablist', { name: 'Подборка товаров' })
+  await expect(productTabs.getByRole('tab', { name: 'Новинки' })).toHaveAttribute('aria-selected', 'true')
+  await productTabs.getByRole('tab', { name: 'Хиты продаж' }).click()
+  await expect(productTabs.getByRole('tab', { name: 'Хиты продаж' })).toHaveAttribute('aria-selected', 'true')
+  await expect(page.locator('.product-showcase .product-card')).toHaveCount(5)
+
+  await expect(page.locator('.business-section')).toHaveCount(0)
+  await expect(page.locator('.promo-strip a')).toHaveCount(3)
+  await expect(page.getByRole('heading', { name: 'Акции' })).toBeVisible()
+  await expect(page.locator('.promotion-card')).toHaveCount(3)
+  await expect(page.locator('.promotion-card__deadline')).toHaveCount(3)
+
+  const services = page.getByRole('region', { name: 'Основные услуги' })
+  for (const name of ['Сервисный центр', 'Аренда оборудования', 'Подбор автоэмали']) {
+    await expect(services.getByRole('heading', { name })).toBeVisible()
+  }
+
+  const contentTabs = page.getByRole('tablist', { name: 'Материалы' })
+  for (const name of ['Новости', 'Статьи', 'Отзывы']) await expect(contentTabs.getByRole('tab', { name })).toBeVisible()
+  await contentTabs.getByRole('tab', { name: 'Отзывы' }).click()
+  await expect(page.getByRole('link', { name: 'Смотреть все отзывы' })).toBeVisible()
+})
+
+test('rail controls move brands and products without clipping card content', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 768 })
+  await page.goto('/')
+  const brandRail = page.locator('.brand-grid')
+  const before = await brandRail.evaluate((element) => element.scrollLeft)
+  await page.getByRole('button', { name: 'Следующие бренды' }).click()
+  await expect.poll(() => brandRail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before)
+
+  const productRail = page.locator('.product-grid')
+  const productBefore = await productRail.evaluate((element) => element.scrollLeft)
+  await page.getByRole('button', { name: 'Следующие товары' }).click()
+  await expect.poll(() => productRail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(productBefore)
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  const cardsFit = await page.locator('.category-card, .product-card, .promo-strip__item, .promotion-card, .service-cards article, .useful-grid > a').evaluateAll((cards) => cards.every((card) => card.scrollHeight <= card.clientHeight + 1))
+  expect(cardsFit).toBe(true)
 })
 
 test('all hero slides keep the same outer dimensions', async ({ page }) => {
@@ -39,7 +83,7 @@ test('dark CTA outline buttons stay legible and copy is layered above decoration
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
 
-  for (const selector of ['.business-section button.button', '.final-cta button.button:not(.button--light)']) {
+  for (const selector of ['.final-cta button.button:not(.button--light)']) {
     const styles = await page.locator(selector).evaluate((element) => {
       const computed = getComputedStyle(element)
       return { background: computed.backgroundColor, color: computed.color }

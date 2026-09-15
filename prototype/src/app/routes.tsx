@@ -13,14 +13,15 @@ export type RouteDefinition = { path: string; label: string }
 
 export const prototypeRoutes: RouteDefinition[] = [
   { path: '/catalog/*', label: 'Каталог' }, { path: '/search', label: 'Результаты поиска' },
-  { path: '/services/*', label: 'Услуги' }, { path: '/actions', label: 'Акции' },
+  { path: '/services/*', label: 'Услуги' }, { path: '/actions/*', label: 'Акции' },
   { path: '/new', label: 'Новинки' },
   { path: '/product/:slug', label: 'Карточка товара' }, { path: '/favorites', label: 'Избранное' },
   { path: '/compare', label: 'Сравнение' }, { path: '/cart', label: 'Корзина' },
   { path: '/profile', label: 'Личный кабинет' },
   { path: '/delivery', label: 'Доставка и оплата' }, { path: '/about', label: 'О компании' },
   { path: '/contacts', label: 'Контакты' }, { path: '/articles/:slug', label: 'Статья' },
-  { path: '/news/:slug', label: 'Новость' },
+  { path: '/news/*', label: 'Новости' }, { path: '/articles', label: 'Статьи' }, { path: '/reviews', label: 'Отзывы' },
+  { path: '/brands/*', label: 'Бренд' },
 ]
 
 export function AppRoutes() {

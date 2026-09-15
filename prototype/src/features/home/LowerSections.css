@@ -11,15 +11,16 @@
 .business-section h2, .final-cta h2 { font-size: clamp(1.8rem, 3vw, 3rem); letter-spacing: -.05em; line-height: 1; margin: .5rem 0 .8rem; }
 .business-section p, .final-cta p { color: #b7b7b1; } .business-section ul { align-self: center; line-height: 2.2; margin: 0; padding-left: 1.2rem; }
 .business-section__actions { align-self: center; display: flex; flex-direction: column; gap: .6rem; } .business-section .button:not(.button--light), .final-cta .button:not(.button--light) { background: transparent; border-color: #8b8b85; color: white; }
-.promo-strip { display: grid; gap: .7rem; grid-template-columns: repeat(3, 1fr); padding-block: .7rem; }
-.promo-strip__item { align-items: center; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); display: grid; gap: .8rem; grid-template-columns: auto 1fr auto; min-height: 7.5rem; padding: 1rem; text-decoration: none; }
-.promo-strip__item > span { color: var(--color-text-muted); font-size: .68rem; }
-.promo-strip__item h2 { font-size: 1rem; line-height: 1.15; margin: 0 0 .3rem; }
-.promo-strip__item p { color: var(--color-text-muted); font-size: .72rem; margin: 0; }
-.promo-strip__item--mid { background: var(--color-surface-subtle); }
-.promo-strip__item--dark { background: #4e4e4a; color: white; }
-.promo-strip__item--dark p, .promo-strip__item--dark > span { color: #d8d8d3; }
-.promo-strip__item:hover { transform: translateY(-2px); }
+.divider-banner { align-items: stretch; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); color: inherit; display: grid; grid-template-columns: minmax(0, 72%) minmax(0, 28%); margin: 0 auto; max-width: calc(var(--container) - 2 * var(--gutter)); min-height: 8rem; overflow: hidden; text-decoration: none; }
+.divider-banner__copy { align-self: center; padding: 1rem 1.5rem; position: relative; z-index: 1; }
+.divider-banner h2 { font-size: 1.35rem; letter-spacing: -.03em; line-height: 1.1; margin: 0 0 .25rem; }
+.divider-banner p { color: var(--color-text-muted); font-size: .78rem; margin: 0 0 .45rem; white-space: nowrap; }
+.divider-banner__copy > span { font-size: .78rem; font-weight: 750; }
+.divider-banner__art { background: var(--color-surface-subtle); overflow: hidden; position: relative; }
+.divider-banner__art i { background: var(--color-placeholder-3); border-radius: 50%; height: 7rem; position: absolute; right: .7rem; top: .5rem; width: 7rem; }
+.divider-banner__art b { background: white; bottom: -1.5rem; height: 6rem; left: 1rem; position: absolute; transform: rotate(-14deg); width: 4rem; }
+.divider-banner--mid { background: #e5e5e1; }
+.divider-banner:hover { background: #ecece8; }
 .promotions__grid { display: grid; gap: .8rem; grid-template-columns: repeat(3, 1fr); }
 .promotion-card { color: inherit; display: block; text-decoration: none; }
 .promotion-card__art { background: var(--color-placeholder-2); height: 7.5rem; overflow: hidden; position: relative; }
@@ -36,5 +37,5 @@
 .final-cta { align-items: center; grid-template-columns: .7fr 1.3fr; } .final-cta__art { min-height: 12rem; position: relative; z-index: 0; } .final-cta__art span { background: #d4d4ce; border-radius: 50%; height: 10rem; position: absolute; width: 10rem; } .final-cta__art i { background: #777771; height: 7rem; left: 4rem; position: absolute; top: 2.5rem; transform: rotate(18deg); width: 4.5rem; } .final-cta > div:last-child { position: relative; z-index: 1; } .final-cta > div:last-child > div { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
 .contact-dialog form { display: grid; gap: 1rem; } .form-field { display: grid; gap: .35rem; } .contact-dialog label { font-size: .78rem; font-weight: 700; } .contact-dialog input, .contact-dialog textarea { background: var(--color-background); border: 1px solid var(--color-border); border-radius: .6rem; padding: .8rem; resize: vertical; } .field-error { color: #9b2727; } .contact-success > span { align-items: center; background: var(--color-text); border-radius: 50%; color: white; display: flex; font-size: 2rem; height: 4rem; justify-content: center; width: 4rem; }
 @media (max-width: 900px) { .business-section { grid-template-columns: 1fr 1fr; } .business-section__actions { grid-column: 1 / -1; flex-direction: row; } .about-section { grid-template-columns: 1fr; } .about-facts { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 900px) { .promo-strip, .promotions__grid { grid-template-columns: 1fr; } .promo-strip__item { min-height: 6.5rem; } .service-cards { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 650px) { .service-cards { grid-template-columns: 1fr; } .service-cards article { display: grid; grid-template-columns: 8rem 1fr; } .service-cards__art { height: auto; min-height: 9rem; } .promotions__grid, .useful-grid { display: flex; overflow-x: auto; scroll-snap-type: x proximity; } .promotion-card, .useful-grid > a { flex: 0 0 82%; scroll-snap-align: start; } .business-section, .final-cta { border-radius: 0; grid-template-columns: 1fr; } .business-section__actions { flex-direction: column; grid-column: auto; } .about-section__art { min-height: 15rem; } .about-facts { grid-template-columns: 1fr; } .final-cta__art { min-height: 8rem; } .final-cta__art span { height: 7rem; width: 7rem; } }
+@media (max-width: 900px) { .promotions__grid { grid-template-columns: 1fr; } .service-cards { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 650px) { .divider-banner { grid-template-columns: minmax(0, 68%) minmax(0, 32%); margin-inline: var(--gutter); min-height: 9rem; } .divider-banner__copy { padding: .8rem; } .divider-banner h2 { font-size: 1rem; } .divider-banner p { font-size: .67rem; line-height: 1.25; white-space: normal; } .divider-banner__copy > span { font-size: .68rem; } .divider-banner__art i { height: 5rem; right: -1.5rem; top: 1.5rem; width: 5rem; } .divider-banner__art b { height: 5rem; left: .2rem; width: 2.5rem; } .service-cards { grid-template-columns: 1fr; } .service-cards article { display: grid; grid-template-columns: 8rem 1fr; } .service-cards__art { height: auto; min-height: 9rem; } .promotions__grid, .useful-grid { display: flex; overflow-x: auto; scroll-snap-type: x proximity; } .promotion-card, .useful-grid > a { flex: 0 0 82%; scroll-snap-align: start; } .business-section, .final-cta { border-radius: 0; grid-template-columns: 1fr; } .business-section__actions { flex-direction: column; grid-column: auto; } .about-section__art { min-height: 15rem; } .about-facts { grid-template-columns: 1fr; } .final-cta__art { min-height: 8rem; } .final-cta__art span { height: 7rem; width: 7rem; } }

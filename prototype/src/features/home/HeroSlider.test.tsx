@@ -9,9 +9,9 @@ describe('HeroSlider', () => {
   it('keeps the stable H1 and supports manual navigation and pause', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter><HeroSlider slides={prototypeData.slides} /></MemoryRouter>)
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Оборудование и материалы')
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Оборудование для автосервиса')
     await user.click(screen.getByRole('button', { name: 'Следующий слайд' }))
-    expect(screen.getByText('Подбор автоэмали под вашу задачу')).toBeVisible()
+    expect(screen.getByText('Подбор автоэмали')).toBeVisible()
     await user.click(screen.getByRole('button', { name: 'Остановить автопрокрутку' }))
     expect(screen.getByRole('button', { name: 'Запустить автопрокрутку' })).toBeVisible()
   })
@@ -21,10 +21,10 @@ describe('HeroSlider', () => {
     render(<MemoryRouter><HeroSlider slides={prototypeData.slides} /></MemoryRouter>)
 
     act(() => vi.advanceTimersByTime(4999))
-    expect(screen.getByText('Оборудование и материалы для тех, кто работает с автомобилями')).toBeVisible()
+    expect(screen.getByText('Оборудование для автосервиса')).toBeVisible()
 
     act(() => vi.advanceTimersByTime(1))
-    expect(screen.getByText('Подбор автоэмали под вашу задачу')).toBeVisible()
+    expect(screen.getByText('Подбор автоэмали')).toBeVisible()
     vi.useRealTimers()
   })
 })

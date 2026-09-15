@@ -9,7 +9,7 @@ import { useState } from 'react'
 import { ServicesSection } from '../features/home/ServicesSection'
 import { AboutSection } from '../features/home/AboutSection'
 import { UsefulSection } from '../features/home/UsefulSection'
-import { PromoStrip } from '../features/home/PromoStrip'
+import { DividerBanner } from '../features/home/DividerBanner'
 import { PromotionsSection } from '../features/home/PromotionsSection'
 import { ConsultationCta } from '../features/home/ConsultationCta'
 import { ContactDialog } from '../features/forms/ContactDialog'
@@ -20,11 +20,14 @@ export function HomePage() {
   return (
     <main>
       <HeroSlider slides={prototypeData.slides} />
-      <BenefitsStrip items={prototypeData.benefits} />
       <CategoryGrid items={prototypeData.categories} />
-      <ProductShowcase collections={prototypeData.productCollections} />
+      <ProductShowcase collection={prototypeData.productCollections[0]} />
+      <DividerBanner item={prototypeData.promoBanners[0]} index={0} />
+      <ProductShowcase collection={prototypeData.productCollections[1]} />
+      <DividerBanner item={prototypeData.promoBanners[1]} index={1} />
+      <ProductShowcase collection={prototypeData.productCollections[2]} />
+      <BenefitsStrip items={prototypeData.benefits} />
       <BrandGrid items={prototypeData.brands} />
-      <PromoStrip items={prototypeData.promoBanners} />
       <PromotionsSection items={prototypeData.promotions} />
       <ServicesSection items={prototypeData.services} />
       <AboutSection />

@@ -2,10 +2,10 @@ import { expect, test } from '@playwright/test'
 
 test('homepage exposes the approved sections and working product actions', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Оборудование и материалы')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Оборудование для автосервиса')
   await expect(page.locator('.hero__slide:visible')).toHaveCount(1)
   await expect(page.getByRole('heading', { name: 'Популярные категории' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Подборки товаров' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: 'Оборудование для автосервиса' })).toBeVisible()
   await expect(page.getByText('Trommelberg', { exact: true })).toBeVisible()
   await expect(page.getByText('Русская техника', { exact: true })).toHaveCount(0)
   await page.getByRole('button', { name: /Добавить в корзину/ }).first().click()
@@ -14,17 +14,19 @@ test('homepage exposes the approved sections and working product actions', async
   await expect(page.getByRole('dialog')).toBeVisible()
 })
 
-test('homepage compact sections expose product and content tabs, promotions and three services', async ({ page }) => {
+test('homepage alternates three product collections with two single divider banners', async ({ page }) => {
   await page.goto('/')
 
-  const productTabs = page.getByRole('tablist', { name: 'Подборка товаров' })
-  await expect(productTabs.getByRole('tab', { name: 'Новинки' })).toHaveAttribute('aria-selected', 'true')
-  await productTabs.getByRole('tab', { name: 'Хиты продаж' }).click()
-  await expect(productTabs.getByRole('tab', { name: 'Хиты продаж' })).toHaveAttribute('aria-selected', 'true')
-  await expect(page.locator('.product-showcase .product-card')).toHaveCount(5)
+  await expect(page.locator('main > .hero + .popular-categories')).toHaveCount(1)
+  await expect(page.locator('.popular-categories .category-card')).toHaveCount(6)
+  await expect(page.locator('.product-showcase')).toHaveCount(3)
+  await expect(page.locator('.product-showcase .product-card')).toHaveCount(15)
+  await expect(page.locator('.divider-banner')).toHaveCount(2)
+
+  const sequence = await page.locator('main > .product-showcase, main > .divider-banner').evaluateAll((items) => items.map((item) => item.classList.contains('divider-banner') ? 'banner' : 'products'))
+  expect(sequence).toEqual(['products', 'banner', 'products', 'banner', 'products'])
 
   await expect(page.locator('.business-section')).toHaveCount(0)
-  await expect(page.locator('.promo-strip a')).toHaveCount(3)
   await expect(page.getByRole('heading', { name: 'Акции' })).toBeVisible()
   await expect(page.locator('.promotion-card')).toHaveCount(3)
   await expect(page.locator('.promotion-card__deadline')).toHaveCount(3)
@@ -48,13 +50,13 @@ test('rail controls move brands and products without clipping card content', asy
   await page.getByRole('button', { name: 'Следующие бренды' }).click()
   await expect.poll(() => brandRail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before)
 
-  const productRail = page.locator('.product-grid')
+  const productRail = page.locator('.product-grid').first()
   const productBefore = await productRail.evaluate((element) => element.scrollLeft)
-  await page.getByRole('button', { name: 'Следующие товары' }).click()
+  await page.getByRole('button', { name: 'Следующие товары: Оборудование для автосервиса' }).click()
   await expect.poll(() => productRail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(productBefore)
 
   await page.setViewportSize({ width: 390, height: 844 })
-  const cardsFit = await page.locator('.category-card, .product-card, .promo-strip__item, .promotion-card, .service-cards article, .useful-grid > a').evaluateAll((cards) => cards.every((card) => card.scrollHeight <= card.clientHeight + 1))
+  const cardsFit = await page.locator('.category-card, .product-card, .divider-banner, .promotion-card, .service-cards article, .useful-grid > a').evaluateAll((cards) => cards.every((card) => card.scrollHeight <= card.clientHeight + 1))
   expect(cardsFit).toBe(true)
 })
 
@@ -109,11 +111,29 @@ test('hero heading leaves a safe area for its CTA and slider controls', async ({
   const headingSize = await page.locator('.hero__slide:not([hidden]) h1').evaluate((heading) => parseFloat(getComputedStyle(heading).fontSize))
   const cta = await page.locator('.hero__slide:not([hidden]) .hero__copy .button').boundingBox()
   const controls = await page.locator('.hero__controls').boundingBox()
-  expect(headingSize).toBeLessThanOrEqual(68)
+  expect(headingSize).toBeLessThanOrEqual(42)
   expect(cta).not.toBeNull()
   expect(controls).not.toBeNull()
-  expect(cta!.y + cta!.height + 12).toBeLessThanOrEqual(controls!.y)
+  expect(cta!.x + cta!.width).toBeLessThanOrEqual(controls!.x - 12)
 })
+
+for (const viewport of [{ width: 1440, height: 900, min: 200, max: 240 }, { width: 390, height: 844, min: 180, max: 220 }]) {
+  test(`hero and category rhythm follows the compact layout at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+
+    const hero = await page.locator('.hero').boundingBox()
+    expect(hero).not.toBeNull()
+    expect(hero!.height).toBeGreaterThanOrEqual(viewport.min)
+    expect(hero!.height).toBeLessThanOrEqual(viewport.max)
+
+    const copy = await page.locator('.hero__slide:visible .hero__copy').boundingBox()
+    const art = await page.locator('.hero__slide:visible .hero__art').boundingBox()
+    expect(copy).not.toBeNull()
+    expect(art).not.toBeNull()
+    expect(copy!.x + copy!.width).toBeLessThanOrEqual(art!.x + 1)
+  })
+}
 
 for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
   test(`homepage keeps promotional media compact at ${viewport.width}px`, async ({ page }) => {
@@ -121,8 +141,8 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     await page.goto('/')
 
     const limits = viewport.width < 768
-      ? { hero: 400, category: 190, productMedia: 170, service: 200, about: 320, useful: 170 }
-      : { hero: 500, category: 240, productMedia: 170, service: 220, about: 360, useful: 180 }
+      ? { hero: 220, category: 190, productMedia: 170, service: 200, about: 320, useful: 170 }
+      : { hero: 240, category: 240, productMedia: 170, service: 220, about: 360, useful: 180 }
     const selectors = {
       hero: '.hero',
       category: '.category-card',
@@ -145,6 +165,9 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     if (viewport.width < 768) {
       const columns = await page.locator('.category-grid').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length)
       expect(columns).toBe(2)
+    } else {
+      const columns = await page.locator('.category-grid').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length)
+      expect(columns).toBe(6)
     }
   })
 }

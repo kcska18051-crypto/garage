@@ -15,7 +15,7 @@ export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, 
         <Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link>
         <button className="catalog-button" onClick={onCatalog} aria-expanded={catalogOpen}>▦ <span>Каталог</span></button>
         <SearchBox compact={compact} />
-        {!compact && <><Link className="service-link" to="/services">Услуги</Link><Link className="header-text-link" to="/actions">Акции</Link></>}
+        {!compact && <Link className="service-link" to="/services">Услуги</Link>}
         <div className="header-actions"><ActionLink to="/profile" label="Профиль" symbol="○" /><ActionLink to="/compare" label="Сравнение" symbol="≡" count={counts.compare} /><ActionLink to="/favorites" label="Избранное" symbol="♡" count={counts.favorites} /><ActionLink to="/cart" label="Корзина" symbol="▱" count={counts.cart} /></div>
       </div>
       {catalogOpen && <nav className="catalog-panel" aria-label="Меню каталога"><p className="eyebrow">Основные направления</p>{[['Компрессорное оборудование', '/catalog/compressor-equipment'], ['Подъёмное оборудование', '/catalog/lifting'], ['Кузовной ремонт', '/catalog/body'], ['Покраска и подготовка', '/catalog/paint'], ['Инструмент', '/catalog/tools'], ['Все категории', '/catalog']].map(([name, href]) => <Link key={name} to={href} onClick={onCatalog}>{name}<span>→</span></Link>)}</nav>}

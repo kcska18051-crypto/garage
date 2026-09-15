@@ -4,9 +4,9 @@ const products: Product[] = Array.from({ length: 10 }, (_, index) => ({ id: `pro
 
 export const prototypeData: PrototypeData = {
   slides: [
-    { id: 'intro', title: 'Оборудование и материалы для тех, кто работает с автомобилями', text: 'Каталог для мастерских, автосервисов, производств и частных мастеров.', cta: 'Перейти в каталог', href: '/catalog' },
-    { id: 'paint', title: 'Подбор автоэмали под вашу задачу', text: 'Поможем определить решение и подготовить материалы для окраски.', cta: 'Подробнее об услуге', href: '/services/paint-matching' },
-    { id: 'service', title: 'Комплексное оснащение автосервиса', text: 'Соберём требования и предложим состав оборудования для проекта.', cta: 'Обсудить проект', href: '/services/workshop' },
+    { id: 'intro', title: 'Оборудование для автосервиса', text: 'Всё необходимое для рабочих постов и мастерских.', cta: 'В каталог', href: '/catalog' },
+    { id: 'paint', title: 'Подбор автоэмали', text: 'Материалы и помощь с подбором цвета под задачу.', cta: 'Об услуге', href: '/services/paint-matching', deadline: 'Условия уточняются' },
+    { id: 'service', title: 'Оснащение мастерской', text: 'Соберём комплект оборудования для вашего проекта.', cta: 'Обсудить проект', href: '/services/workshop' },
   ],
   benefits: [
     { id: 'delivery', title: 'Доставка по России', text: 'Условия и срок зависят от выбранного города.' },
@@ -15,18 +15,18 @@ export const prototypeData: PrototypeData = {
     { id: 'clients', title: 'Для бизнеса и частных клиентов', text: 'Розничные и профессиональные сценарии покупки.' },
   ],
   categories: [
-    ['lifting', 'Подъёмное оборудование'], ['body', 'Кузовной ремонт'], ['paint', 'Покраска и подготовка'], ['compressor-equipment', 'Компрессорное оборудование'], ['tools', 'Инструмент'], ['welding', 'Сварочное оборудование'], ['cleaning', 'Мойка и уборка'], ['materials', 'Расходные материалы'],
+    ['lifting', 'Подъёмное оборудование'], ['body', 'Кузовной ремонт'], ['paint', 'Покраска и подготовка'], ['compressor-equipment', 'Компрессорное оборудование'], ['tools', 'Инструмент'], ['welding', 'Сварочное оборудование'],
   ].map(([id, name], index) => ({ id, name, href: `/catalog/${id}`, code: String(index + 1).padStart(2, '0') })),
   brands: ['Nordberg', 'Trommelberg', 'JTC', 'Rupes', 'WiederKraft', 'Jonnesway', 'Sivik', 'Car-Tool'].map((name) => ({ id: name.toLowerCase().replaceAll(' ', '-'), name, href: `/brands/${encodeURIComponent(name.toLowerCase())}` })),
   products,
   productCollections: [
-    { id: 'new', label: 'Новинки', href: '/new', source: 'automatic-new', products: products.slice(0, 5) },
-    { id: 'hits', label: 'Хиты продаж', href: '/catalog?collection=hits', source: 'automatic-bestseller', products: [products[3], products[0], products[6], products[1], products[4]] },
+    { id: 'service', label: 'Оборудование для автосервиса', href: '/catalog?collection=service', source: 'category', products: [products[0], products[1], products[4], products[6], products[7]] },
+    { id: 'remeza', label: 'Товары Remeza', href: '/brand/remeza', source: 'brand', products: [products[3], products[8], products[9], products[1], products[4]] },
+    { id: 'new', label: 'Новинки', href: '/new', source: 'automatic-new', products: [products[2], products[5], products[0], products[7], products[6]] },
   ],
   promoBanners: [
-    { id: 'season', title: 'Подготовка мастерской к сезону', text: 'Тематическая подборка оборудования', href: '/actions/season-workshop', tone: 'light' },
-    { id: 'compressors', title: 'Компрессорное оборудование', text: 'Решения для разных рабочих задач', href: '/catalog/compressor-equipment', tone: 'mid' },
-    { id: 'paint', title: 'Подбор автоэмали', text: 'Материалы и помощь с подбором', href: '/services/paint-matching', tone: 'dark' },
+    { id: 'season', title: 'Подготовьте мастерскую к сезону', text: 'Оборудование для обновления рабочего поста.', cta: 'Смотреть подборку', href: '/actions/season-workshop', tone: 'light' },
+    { id: 'compressors', title: 'Компрессорное оборудование', text: 'Решения для разных рабочих задач.', cta: 'Перейти в категорию', href: '/catalog/compressor-equipment', tone: 'mid' },
   ],
   promotions: [
     { id: 'service-tools', title: 'Оборудование для сервисного поста', text: 'Демонстрационная подборка для главной страницы.', deadline: 'До 30 сентября · демонстрация', href: '/actions/service-tools', showOnHome: true },

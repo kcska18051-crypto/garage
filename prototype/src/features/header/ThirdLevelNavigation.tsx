@@ -24,7 +24,8 @@ export function ThirdLevelNavigation({ compact, config = headerQuickLinksConfig 
       const linkWidths = [...measure.querySelectorAll<HTMLElement>('[data-measure-link]')].map((link) => link.getBoundingClientRect().width)
       const moreWidth = measure.querySelector<HTMLElement>('[data-measure-more]')?.getBoundingClientRect().width ?? 0
       const gap = Number.parseFloat(getComputedStyle(measure).columnGap) || 0
-      const available = container.clientWidth
+      const containerStyle = getComputedStyle(container)
+      const available = container.clientWidth - Number.parseFloat(containerStyle.paddingLeft) - Number.parseFloat(containerStyle.paddingRight)
       const completeWidth = linkWidths.reduce((sum, width) => sum + width, 0) + Math.max(0, linkWidths.length - 1) * gap
 
       if (completeWidth <= available) {

@@ -58,4 +58,12 @@ describe('responsive header', () => {
     expect(mobileNav.querySelector('a[href="/actions"]')).toHaveTextContent('Акции')
     expect(screen.queryByRole('link', { name: 'Сварочное оборудование' })).not.toBeInTheDocument()
   })
+
+  it('keeps actions only in the third-level quick navigation', () => {
+    renderHeader()
+
+    expect(document.querySelector('.main-header-row a[href="/actions"]')).not.toBeInTheDocument()
+    const desktopNav = screen.getByRole('navigation', { name: 'Быстрые ссылки' })
+    expect(within(desktopNav).getByRole('link', { name: 'Акции' })).toHaveAttribute('href', '/actions')
+  })
 })

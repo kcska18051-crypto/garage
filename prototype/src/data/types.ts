@@ -4,6 +4,7 @@ export type Slide = {
   text: string
   cta: string
   href: string
+  deadline?: string
 }
 
 export type Category = { id: string; name: string; href: string; code: string }
@@ -17,7 +18,7 @@ export type Product = {
 }
 export type Service = { id: string; name: string; text: string; cta: string; href: string }
 export type ProductCollection = { id: string; label: string; href: string; source: 'automatic-new' | 'automatic-bestseller' | 'brand' | 'category' | 'curated'; products: Product[] }
-export type PromoBanner = { id: string; title: string; text: string; href: string; tone: 'light' | 'mid' | 'dark' }
+export type PromoBanner = { id: string; title: string; text: string; cta: string; href: string; tone: 'light' | 'mid' | 'dark' }
 export type Promotion = { id: string; title: string; text: string; deadline: string; href: string; showOnHome: boolean }
 export type UsefulItem = { id: string; kind: 'article' | 'news' | 'testimonial'; title: string; meta: string; href: string }
 export type Benefit = { id: string; title: string; text: string }

@@ -24,12 +24,12 @@ export function HomePage() {
       <CategoryGrid items={prototypeData.categories} />
       <ProductShowcase collection={prototypeData.productCollections[0]} />
       <DividerBanner item={prototypeData.promoBanners[0]} index={0} />
-      <ProductShowcase collection={prototypeData.productCollections[1]} />
-      <DividerBanner item={prototypeData.promoBanners[1]} index={1} />
       <ProductShowcase collection={prototypeData.productCollections[2]} />
+      <DividerBanner item={prototypeData.promoBanners[1]} index={1} />
       <BenefitsStrip items={prototypeData.benefits} />
       <BrandGrid items={prototypeData.brands} />
       <PromotionsSection items={prototypeData.promotions} />
+      <ProductShowcase collection={prototypeData.productCollections[1]} />
       <ServicesSection items={prototypeData.services} />
       <AboutSection />
       <UsefulSection items={prototypeData.useful.filter((item) => item.kind !== 'testimonial' || prototypeData.config.showTestimonials)} />

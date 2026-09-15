@@ -42,6 +42,15 @@ test('homepage alternates three product collections with two single divider bann
   await expect(page.getByRole('link', { name: 'Смотреть все отзывы' })).toBeVisible()
 })
 
+test('brand products appear once between promotions and services', async ({ page }) => {
+  await page.goto('/')
+
+  await expect(page.getByRole('heading', { level: 2, name: 'Товары Remeza' })).toHaveCount(1)
+  await expect(page.locator('main > .promotions + .product-showcase + [aria-label="Основные услуги"]')).toHaveCount(1)
+  await expect(page.locator('.promotions + .product-showcase .product-card')).toHaveCount(5)
+  await expect(page.locator('.promotions + .product-showcase').getByRole('link', { name: 'Смотреть все' })).toHaveAttribute('href', '/brand/remeza')
+})
+
 test('rail controls move brands and products without clipping card content', async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 768 })
   await page.goto('/')

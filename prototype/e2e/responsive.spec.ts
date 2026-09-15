@@ -62,3 +62,33 @@ for (const width of [768, 390, 360]) {
     expect(items.every((item) => item.left >= 0 && item.right <= width)).toBe(true)
   })
 }
+
+for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+  test(`catalog and detail imagery stays compact at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    const mobile = viewport.width < 768
+
+    await page.goto('/catalog')
+    const rootCategory = await page.locator('.catalog-category-card > a').first().boundingBox()
+    expect(rootCategory).not.toBeNull()
+    expect(rootCategory!.height).toBeLessThanOrEqual(mobile ? 230 : 300)
+
+    await page.goto('/catalog/compressor-equipment/screw-compressors/')
+    const childCategory = await page.locator('.catalog-child-sections__grid > a').first().boundingBox()
+    expect(childCategory).not.toBeNull()
+    expect(childCategory!.height).toBeLessThanOrEqual(mobile ? 190 : 220)
+
+    await page.goto('/product/remeza-vk-10-gr-0001/')
+    const productGallery = await page.locator('.product-gallery__main').boundingBox()
+    expect(productGallery).not.toBeNull()
+    expect(productGallery!.height).toBeLessThanOrEqual(mobile ? 330 : 460)
+
+    await page.goto('/brand/remeza/')
+    const brandHero = await page.locator('.brand-detail-hero__art').boundingBox()
+    const brandCategory = await page.locator('.brand-category-grid > *').first().boundingBox()
+    expect(brandHero).not.toBeNull()
+    expect(brandCategory).not.toBeNull()
+    expect(brandHero!.height).toBeLessThanOrEqual(mobile ? 280 : 400)
+    expect(brandCategory!.height).toBeLessThanOrEqual(mobile ? 210 : 230)
+  })
+}

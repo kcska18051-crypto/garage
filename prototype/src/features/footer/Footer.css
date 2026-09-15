@@ -1,4 +1,4 @@
-.site-footer { background: #20201e; color: white; margin-top: clamp(3rem, 8vw, 7rem); padding: clamp(2rem, 5vw, 4rem) max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))) 1.5rem; }
+.site-footer { background: #20201e; color: white; margin-top: var(--space-section); padding: clamp(2rem, 4vw, 3.5rem) max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))) 1.5rem; }
 .site-footer__top { align-items: flex-start; border-bottom: 1px solid #4a4a46; display: grid; gap: 1.5rem; grid-template-columns: 1fr 2fr 1fr; padding-bottom: 2.5rem; }
 .site-footer__top .logo > span { background: white; } .site-footer__top p { color: #aaa9a4; margin: 0; max-width: 28rem; } .site-footer__top > a:last-child { font-size: 1.2rem; font-weight: 750; justify-self: end; text-decoration: none; }
 .footer-groups { display: grid; grid-template-columns: repeat(3, 1fr); padding-block: 2.5rem; }

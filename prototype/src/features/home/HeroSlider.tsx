@@ -4,7 +4,7 @@ import type { Slide } from '../../data/types'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import './HeroSlider.css'
 
-export function HeroSlider({ slides, intervalMs = 6500 }: { slides: Slide[]; intervalMs?: number }) {
+export function HeroSlider({ slides, intervalMs = 5000 }: { slides: Slide[]; intervalMs?: number }) {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
   const [engaged, setEngaged] = useState(false)

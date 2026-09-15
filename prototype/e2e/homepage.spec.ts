@@ -70,3 +70,37 @@ test('hero heading leaves a safe area for its CTA and slider controls', async ({
   expect(controls).not.toBeNull()
   expect(cta!.y + cta!.height + 12).toBeLessThanOrEqual(controls!.y)
 })
+
+for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+  test(`homepage keeps promotional media compact at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+
+    const limits = viewport.width < 768
+      ? { hero: 400, category: 190, productMedia: 170, service: 200, about: 320, useful: 170 }
+      : { hero: 500, category: 240, productMedia: 170, service: 220, about: 360, useful: 180 }
+    const selectors = {
+      hero: '.hero',
+      category: '.category-card',
+      productMedia: '.product-card__media',
+      service: '.service-cards__art',
+      about: '.about-section__art',
+      useful: '.useful-grid__art',
+    }
+
+    for (const [name, selector] of Object.entries(selectors)) {
+      const box = await page.locator(selector).first().boundingBox()
+      expect(box, `${name} is rendered`).not.toBeNull()
+      expect(box!.height, `${name} height at ${viewport.width}px`).toBeLessThanOrEqual(limits[name as keyof typeof limits])
+    }
+
+    const categoryHeading = await page.getByRole('heading', { name: 'Популярные категории' }).boundingBox()
+    expect(categoryHeading).not.toBeNull()
+    expect(categoryHeading!.y, 'the next navigation section starts within the first viewport').toBeLessThan(viewport.height)
+
+    if (viewport.width < 768) {
+      const columns = await page.locator('.category-grid').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length)
+      expect(columns).toBe(2)
+    }
+  })
+}

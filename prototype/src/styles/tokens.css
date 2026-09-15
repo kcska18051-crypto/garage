@@ -18,6 +18,9 @@
   --container-wide: 96rem;
   --container: var(--container-default);
   --gutter: clamp(1rem, 3vw, 2.5rem);
+  --space-section: clamp(2.75rem, 5vw, 4.5rem);
+  --space-section-compact: clamp(2rem, 3.5vw, 3.25rem);
+  --media-card-height: clamp(8.5rem, 11vw, 10rem);
   --header-height: 8.25rem;
   --mobile-nav-height: 4.5rem;
   --shadow-float: 0 1rem 2.5rem rgb(32 32 30 / 0.1);

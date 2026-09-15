@@ -44,8 +44,8 @@ export const prototypeData: PrototypeData = {
     { id: 'news-2', kind: 'news', title: 'Новые решения для рабочих постов', meta: 'Новости компании · демонстрация', href: '/news/workshop-solutions' },
     { id: 'article-1', kind: 'article', title: 'Как выбрать оборудование для новой рабочей зоны', meta: 'Практическое руководство', href: '/articles/work-area' },
     { id: 'article-2', kind: 'article', title: 'Что учесть при подборе материалов для окраски', meta: 'Подбор и применение', href: '/articles/paint-materials' },
-    { id: 'review-1', kind: 'testimonial', title: 'Отзыв о подборе оборудования', meta: 'Текст и источник будут добавлены после согласования', href: '/reviews' },
-    { id: 'review-2', kind: 'testimonial', title: 'Отзыв о сервисном обслуживании', meta: 'Текст и источник будут добавлены после согласования', href: '/reviews' },
+    { id: 'review-1', kind: 'review', title: 'Обзор решений для оснащения рабочего поста', meta: 'Обзор оборудования · демонстрация', href: '/reviews' },
+    { id: 'review-2', kind: 'review', title: 'Сравнение типов компрессорного оборудования', meta: 'Обзор категории · демонстрация', href: '/reviews' },
   ],
-  config: { showTestimonials: true, showNewsletter: false },
+  config: { showReviews: true, showNewsletter: false },
 }

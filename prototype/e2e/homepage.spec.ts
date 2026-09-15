@@ -37,10 +37,25 @@ test('homepage alternates three product collections with two single divider bann
   }
 
   const contentTabs = page.getByRole('tablist', { name: 'Материалы' })
-  for (const name of ['Новости', 'Статьи', 'Отзывы']) await expect(contentTabs.getByRole('tab', { name })).toBeVisible()
-  await contentTabs.getByRole('tab', { name: 'Отзывы' }).click()
-  await expect(page.getByRole('link', { name: 'Смотреть все отзывы' })).toBeVisible()
+  for (const [tab, link] of [['Новости', 'Все новости'], ['Статьи', 'Все статьи'], ['Обзоры', 'Все обзоры']] as const) {
+    await contentTabs.getByRole('tab', { name: tab }).click()
+    await expect(page.getByRole('link', { name: link })).toBeVisible()
+  }
 })
+
+for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+  test(`divider banners use the approved taller height at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+
+    const heights = await page.locator('.divider-banner').evaluateAll((banners) =>
+      banners.map((banner) => banner.getBoundingClientRect().height),
+    )
+
+    expect(heights).toHaveLength(2)
+    expect(heights.every((height) => Math.abs(height - 160) < 1)).toBe(true)
+  })
+}
 
 test('brand products appear once between promotions and services', async ({ page }) => {
   await page.goto('/')

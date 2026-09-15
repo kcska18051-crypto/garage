@@ -20,7 +20,7 @@ export const prototypeRoutes: RouteDefinition[] = [
   { path: '/profile', label: 'Личный кабинет' },
   { path: '/delivery', label: 'Доставка и оплата' }, { path: '/about', label: 'О компании' },
   { path: '/contacts', label: 'Контакты' }, { path: '/articles/:slug', label: 'Статья' },
-  { path: '/news/*', label: 'Новости' }, { path: '/articles', label: 'Статьи' }, { path: '/reviews', label: 'Отзывы' },
+  { path: '/news/*', label: 'Новости' }, { path: '/articles', label: 'Статьи' }, { path: '/reviews', label: 'Обзоры' },
   { path: '/brands/*', label: 'Бренд' },
 ]
 

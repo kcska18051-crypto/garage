@@ -32,7 +32,7 @@ export function HomePage() {
       <ProductShowcase collection={prototypeData.productCollections[1]} />
       <ServicesSection items={prototypeData.services} />
       <AboutSection />
-      <UsefulSection items={prototypeData.useful.filter((item) => item.kind !== 'testimonial' || prototypeData.config.showTestimonials)} />
+      <UsefulSection items={prototypeData.useful.filter((item) => item.kind !== 'review' || prototypeData.config.showReviews)} />
       <ConsultationCta onConsult={() => setDialog('consultation')} onCallback={() => setDialog('callback')} />
       {dialog && <ContactDialog mode={dialog} onClose={() => setDialog(null)} />}
     </main>

@@ -24,9 +24,9 @@ describe('lower homepage sections', () => {
   it('switches the section action together with news, article and review tabs', async () => {
     const user = userEvent.setup()
     const items = [
-      { id: 'news', kind: 'news' as const, title: 'Новость', meta: 'Демо', href: '/news/item' },
-      { id: 'article', kind: 'article' as const, title: 'Статья', meta: 'Демо', href: '/articles/item' },
-      { id: 'review', kind: 'review' as const, title: 'Обзор', meta: 'Демо', href: '/reviews' },
+      { id: 'news', kind: 'news' as const, title: 'Новость', text: 'Описание', meta: 'Демо', href: '/news/item' },
+      { id: 'article', kind: 'article' as const, title: 'Статья', text: 'Описание', meta: 'Демо', href: '/articles/item' },
+      { id: 'review', kind: 'review' as const, title: 'Обзор', text: 'Описание', meta: 'Демо', href: '/reviews' },
     ]
     render(<MemoryRouter><UsefulSection items={items} /></MemoryRouter>)
 

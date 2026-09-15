@@ -12,7 +12,7 @@ test('homepage, catalog and category cards form one navigation chain', async ({ 
 
   await page.getByRole('link', { name: /Винтовые компрессоры, 48 товаров/ }).click()
   await expect(page).toHaveURL(/\/catalog\/compressor-equipment\/screw-compressors$/)
-  await expect(page.getByRole('heading', { name: 'Винтовые компрессоры' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: 'Винтовые компрессоры', exact: true })).toBeVisible()
 
   await page.getByRole('navigation', { name: 'Хлебные крошки' }).getByRole('link', { name: 'Каталог' }).click()
   await expect(page).toHaveURL(/\/catalog$/)

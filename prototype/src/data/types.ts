@@ -20,7 +20,7 @@ export type Service = { id: string; name: string; text: string; cta: string; hre
 export type ProductCollection = { id: string; label: string; href: string; source: 'automatic-new' | 'automatic-bestseller' | 'brand' | 'category' | 'curated'; products: Product[] }
 export type PromoBanner = { id: string; title: string; text: string; cta: string; href: string; tone: 'light' | 'mid' | 'dark' }
 export type Promotion = { id: string; title: string; text: string; deadline: string; href: string; showOnHome: boolean }
-export type UsefulItem = { id: string; kind: 'article' | 'news' | 'review'; title: string; meta: string; href: string }
+export type UsefulItem = { id: string; kind: 'article' | 'news' | 'review'; title: string; text: string; meta: string; href: string }
 export type Benefit = { id: string; title: string; text: string }
 export type HomeConfig = { showReviews: boolean; showNewsletter: boolean }
 

@@ -43,6 +43,30 @@ test('homepage alternates three product collections with two single divider bann
   }
 })
 
+test('materials section presents four cards and working side navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/')
+
+  const section = page.locator('.useful-section')
+  const rail = section.locator('.useful-grid')
+  await expect(rail.locator(':scope > a')).toHaveCount(5)
+  await expect(section.getByRole('button', { name: 'Предыдущие материалы' })).toBeVisible()
+  await expect(section.getByRole('button', { name: 'Следующие материалы' })).toBeVisible()
+
+  const visibleCards = await rail.evaluate((element) => {
+    const railBox = element.getBoundingClientRect()
+    return Array.from(element.children).filter((card) => {
+      const cardBox = card.getBoundingClientRect()
+      return cardBox.left >= railBox.left && cardBox.right <= railBox.right + 1
+    }).length
+  })
+  expect(visibleCards).toBe(4)
+
+  const before = await rail.evaluate((element) => element.scrollLeft)
+  await section.getByRole('button', { name: 'Следующие материалы' }).click()
+  await expect.poll(() => rail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before)
+})
+
 for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
   test(`divider banners use the approved taller height at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport)

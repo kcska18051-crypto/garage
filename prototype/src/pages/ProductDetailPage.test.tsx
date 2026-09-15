@@ -8,8 +8,9 @@ describe('Remeza VK 10 product detail', () => {
     render(<MemoryRouter initialEntries={['/product/remeza-vk-10-gr-0001/']}><App /></MemoryRouter>)
 
     expect(screen.getByRole('heading', { level: 1, name: 'Remeza ВК 10' })).toBeInTheDocument()
-    expect(screen.getByText('Remeza', { selector: '.product-identity__brand' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Remeza' })).toHaveAttribute('href', '/brand/remeza/')
+    const productBrand = screen.getByText('Remeza', { selector: '.product-identity__brand' })
+    expect(productBrand).toBeInTheDocument()
+    expect(productBrand).toHaveAttribute('href', '/brand/remeza/')
     expect(screen.getAllByText(/демонстрацион/i).length).toBeGreaterThan(0)
     expect(screen.getByRole('navigation', { name: 'Разделы товара' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Технические характеристики' })).toBeInTheDocument()

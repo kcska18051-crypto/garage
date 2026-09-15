@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { Header } from './Header'
@@ -45,5 +45,17 @@ describe('responsive header', () => {
     expect(document.querySelector('[aria-label="Мобильное меню"]')).toBeInTheDocument()
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('navigation', { name: 'Мобильное меню' })).not.toBeInTheDocument()
+  })
+
+  it('renders configured quick links while excluding hidden demonstration items', () => {
+    renderHeader()
+
+    const desktopNav = screen.getByRole('navigation', { name: 'Быстрые ссылки' })
+    const mobileNav = document.querySelector<HTMLElement>('[aria-label="Быстрые ссылки на мобильных"]')!
+
+    expect(within(desktopNav).getByRole('link', { name: 'Компрессоры' })).toHaveAttribute('href', '/catalog/compressor-equipment')
+    expect(within(desktopNav).getByRole('link', { name: 'Remeza' })).toHaveAttribute('href', '/brand/remeza')
+    expect(mobileNav.querySelector('a[href="/actions"]')).toHaveTextContent('Акции')
+    expect(screen.queryByRole('link', { name: 'Сварочное оборудование' })).not.toBeInTheDocument()
   })
 })

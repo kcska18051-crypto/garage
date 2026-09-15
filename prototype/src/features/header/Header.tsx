@@ -5,6 +5,7 @@ import { MobileBottomNav } from './MobileBottomNav'
 import { MobileHeader } from './MobileHeader'
 import { RegionDialog } from './RegionDialog'
 import { useRegion } from '../../state/RegionState'
+import { ThirdLevelNavigation } from './ThirdLevelNavigation'
 import './Header.css'
 
 export function Header({ counts }: { counts: HeaderCounts }) {
@@ -18,6 +19,7 @@ export function Header({ counts }: { counts: HeaderCounts }) {
     <header className="site-header">
       <DesktopHeader region={region} onRegion={() => setRegionOpen(true)} counts={counts} compact={compact} catalogOpen={catalogOpen} onCatalog={() => setCatalogOpen((value) => !value)} />
       <MobileHeader region={region} onRegion={() => setRegionOpen(true)} menuOpen={menuOpen} onMenu={toggleMenu} />
+      <ThirdLevelNavigation compact={compact} />
     </header>
     <MobileBottomNav favorites={counts.favorites} cart={counts.cart} />
     {regionOpen && <RegionDialog onClose={() => setRegionOpen(false)} onSelect={(city) => { setRegion(city); setRegionOpen(false) }} />}

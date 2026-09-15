@@ -33,6 +33,6 @@ describe('Remeza brand detail page', () => {
 
   it('links the product brand field to the approved brand page', () => {
     render(<MemoryRouter initialEntries={['/product/remeza-vk-10-gr-0001/']}><App /></MemoryRouter>)
-    expect(screen.getByRole('link', { name: 'Remeza' })).toHaveAttribute('href', '/brand/remeza/')
+    expect(screen.getByText('Remeza', { selector: '.product-identity__brand' })).toHaveAttribute('href', '/brand/remeza/')
   })
 })

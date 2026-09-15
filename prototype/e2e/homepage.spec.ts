@@ -67,6 +67,42 @@ test('materials section presents four cards and working side navigation', async 
   await expect.poll(() => rail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before)
 })
 
+test('all mobile homepage card collections use a sideways rail with a next-card preview', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+
+  const collections = page.locator([
+    '.popular-categories .category-grid',
+    '.benefits-strip',
+    '.product-showcase .product-grid',
+    '.home-section--brands .brand-grid',
+    '.promotions__grid',
+    '.service-cards',
+    '.about-facts',
+    '.useful-grid',
+  ].join(', '))
+
+  await expect(collections).toHaveCount(10)
+  const layouts = await collections.evaluateAll((items) => items.map((item) => {
+    const first = item.children[0]?.getBoundingClientRect()
+    const second = item.children[1]?.getBoundingClientRect()
+    const styles = getComputedStyle(item)
+    const contentWidth = item.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight)
+    return {
+      canScrollSideways: item.scrollWidth > item.clientWidth + 1,
+      firstCardRatio: first ? first.width / contentWidth : 0,
+      cardsShareRow: Boolean(first && second && Math.abs(first.top - second.top) < 1),
+    }
+  }))
+
+  for (const layout of layouts) {
+    expect(layout.canScrollSideways).toBe(true)
+    expect(layout.cardsShareRow).toBe(true)
+    expect(layout.firstCardRatio).toBeGreaterThan(.78)
+    expect(layout.firstCardRatio).toBeLessThan(.86)
+  }
+})
+
 for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
   test(`divider banners use the approved taller height at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport)

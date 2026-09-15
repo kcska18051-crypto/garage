@@ -16,5 +16,5 @@
 .product-card__bottom strong { font-size: 1.25rem; }
 .product-card__cart { background: var(--color-text); border: 0; border-radius: .65rem; color: white; cursor: pointer; font-size: 1.3rem; height: 3rem; width: 3rem; }
 @media (max-width: 1023px) { .product-grid { grid-auto-columns: calc((100% - var(--space-grid)) / 2); } }
-@media (max-width: 519px) { .product-grid { grid-auto-columns: 82%; } .product-card { min-height: 20rem; } }
+@media (max-width: 519px) { .product-grid { grid-auto-columns: 82%; scroll-snap-type: x mandatory; } .product-card { min-height: 20rem; scroll-snap-align: start; } }
 @media (min-width: 1680px) { .product-grid { grid-auto-columns: calc((100% - 4 * var(--space-grid)) / 5); } }

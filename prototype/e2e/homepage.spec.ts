@@ -65,14 +65,13 @@ test('all hero slides keep the same outer dimensions', async ({ page }) => {
     await page.setViewportSize(viewport)
     await page.goto('/')
     const hero = page.locator('.hero')
-    const next = page.getByRole('button', { name: 'Следующий слайд' })
-    await hero.hover()
+    const dots = page.getByRole('button', { name: /Перейти к слайду/ })
 
     const baseline = await hero.boundingBox()
     expect(baseline).not.toBeNull()
 
     for (let index = 1; index < 3; index += 1) {
-      await next.click()
+      await dots.nth(index).click()
       const current = await hero.boundingBox()
       expect(current).not.toBeNull()
       expect(Math.abs(current!.width - baseline!.width)).toBeLessThan(0.5)
@@ -104,18 +103,31 @@ test('dark CTA outline buttons stay legible and copy is layered above decoration
   expect(layers.copy).toBeGreaterThan(layers.art)
 })
 
-test('hero heading leaves a safe area for its CTA and slider controls', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/')
+for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+  test(`hero keeps copy out and shows subtle pagination below at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
 
-  const headingSize = await page.locator('.hero__slide:not([hidden]) h1').evaluate((heading) => parseFloat(getComputedStyle(heading).fontSize))
-  const cta = await page.locator('.hero__slide:not([hidden]) .hero__copy .button').boundingBox()
-  const controls = await page.locator('.hero__controls').boundingBox()
-  expect(headingSize).toBeLessThanOrEqual(42)
-  expect(cta).not.toBeNull()
-  expect(controls).not.toBeNull()
-  expect(cta!.x + cta!.width).toBeLessThanOrEqual(controls!.x - 12)
-})
+    await expect(page.locator('.hero__stage .hero__copy, .hero__stage a')).toHaveCount(0)
+    await expect(page.getByRole('button', { name: 'Предыдущий слайд' })).toHaveCount(0)
+    await expect(page.getByRole('button', { name: 'Следующий слайд' })).toHaveCount(0)
+    await expect(page.getByRole('button', { name: /автопрокрутку/ })).toHaveCount(0)
+    await expect(page.getByRole('button', { name: /Перейти к слайду/ })).toHaveCount(3)
+
+    const stage = await page.locator('.hero__stage').boundingBox()
+    const pagination = await page.locator('.hero__pagination').boundingBox()
+    expect(stage).not.toBeNull()
+    expect(pagination).not.toBeNull()
+    expect(pagination!.y).toBeGreaterThanOrEqual(stage!.y + stage!.height + 6)
+
+    const dots = await page.locator('.hero__pagination button').evaluateAll((buttons) => buttons.map((button) => {
+      const box = button.getBoundingClientRect()
+      const style = getComputedStyle(button)
+      return { width: box.width, height: box.height, radius: style.borderRadius }
+    }))
+    expect(dots.every((dot) => dot.width <= 14 && dot.height <= 14 && dot.radius === '50%')).toBe(true)
+  })
+}
 
 for (const viewport of [{ width: 1440, height: 900, min: 200, max: 240 }, { width: 390, height: 844, min: 180, max: 220 }]) {
   test(`hero and category rhythm follows the compact layout at ${viewport.width}px`, async ({ page }) => {
@@ -127,11 +139,9 @@ for (const viewport of [{ width: 1440, height: 900, min: 200, max: 240 }, { widt
     expect(hero!.height).toBeGreaterThanOrEqual(viewport.min)
     expect(hero!.height).toBeLessThanOrEqual(viewport.max)
 
-    const copy = await page.locator('.hero__slide:visible .hero__copy').boundingBox()
-    const art = await page.locator('.hero__slide:visible .hero__art').boundingBox()
-    expect(copy).not.toBeNull()
-    expect(art).not.toBeNull()
-    expect(copy!.x + copy!.width).toBeLessThanOrEqual(art!.x + 1)
+    const stage = await page.locator('.hero__stage').boundingBox()
+    expect(stage).not.toBeNull()
+    expect(stage!.width).toBeLessThanOrEqual(viewport.width - (viewport.width < 768 ? 32 : 64))
   })
 }
 

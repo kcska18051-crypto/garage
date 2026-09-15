@@ -1,22 +1,14 @@
-.hero { background: linear-gradient(105deg, #efefec 0%, #deded9 100%); color: var(--color-text); margin: 1rem auto 0; max-width: calc(var(--container) - 2 * var(--gutter)); overflow: hidden; position: relative; }
-.hero, .hero__slide { border-radius: var(--radius-lg); }
-.hero__slide { display: grid; grid-template-columns: minmax(0, 68%) minmax(0, 32%); height: 14rem; }
+.hero { margin: 1rem auto 0; max-width: calc(var(--container) - 2 * var(--gutter)); position: relative; }
+.hero__stage { background: linear-gradient(105deg, #efefec 0%, #deded9 100%); border-radius: var(--radius-lg); overflow: hidden; }
+.hero__slide { display: grid; height: 13rem; }
 .hero__slide[hidden] { display: none; }
-.hero__copy { align-self: center; max-width: 42rem; padding: 1.35rem 2rem; position: relative; z-index: 2; }
-.hero__copy small { color: var(--color-accent); display: block; font-size: .68rem; font-weight: 750; margin-bottom: .25rem; }
-.hero__copy h1, .hero__copy h2 { font-size: clamp(1.8rem, 2.4vw, 2.55rem); font-weight: 650; letter-spacing: -.045em; line-height: 1; margin: 0 0 .45rem; }
-.hero__copy > p { color: var(--color-text-muted); font-size: .84rem; margin: 0; max-width: 30rem; }
-.hero__copy .button { gap: .8rem; margin-top: .75rem; min-height: 2.5rem; padding: .5rem 1rem; }
 .hero__art { min-height: 100%; overflow: hidden; position: relative; }
-.hero__art span { background: #85857f; border-radius: 50%; height: 12rem; position: absolute; right: -1rem; top: 1rem; width: 12rem; }
-.hero__art i { background: #f7f7f4; bottom: -1.5rem; height: 9rem; left: 1rem; position: absolute; transform: rotate(-13deg); width: 6rem; }
+.hero__art span { background: #85857f; border-radius: 50%; height: 12rem; position: absolute; right: 5%; top: 1rem; width: 12rem; }
+.hero__art i { background: #f7f7f4; bottom: -1.5rem; height: 9rem; left: 58%; position: absolute; transform: rotate(-13deg); width: 6rem; }
 .hero__art b { bottom: .25rem; color: rgb(255 255 255 / .7); font-size: 3.7rem; line-height: 1; position: absolute; right: .6rem; }
-.hero__art--2 span { border-radius: 1rem; transform: rotate(23deg); } .hero__art--2 i { background: #ababA5; } .hero__art--3 span { background: #656560; } .hero__art--3 i { width: 8rem; }
-.hero__controls { align-items: center; bottom: .75rem; display: flex; gap: .35rem; left: clamp(15rem, 37vw, 32rem); position: absolute; z-index: 4; }
-.hero__controls > button { background: rgb(255 255 255 / .72); border: 1px solid rgb(32 32 30 / .18); border-radius: 50%; color: var(--color-text); cursor: pointer; height: 2.25rem; width: 2.25rem; }
-.hero__indicators { display: flex; gap: .3rem; }
-.hero__indicators button { background: transparent; border: 0; cursor: pointer; padding: .8rem .2rem; }
-.hero__indicators span { background: rgb(32 32 30 / .28); display: block; height: .14rem; transition: width .2s ease; width: 1.1rem; }
-.hero__indicators button[aria-current] span { background: var(--color-text); width: 2rem; }
-@media (max-width: 767px) { .hero { margin-top: .5rem; max-width: calc(100% - 2 * var(--gutter)); } .hero__slide { grid-template-columns: minmax(0, 62%) minmax(0, 38%); height: 12.5rem; } .hero__copy { padding: .8rem .65rem .8rem .85rem; } .hero__copy small { font-size: .58rem; } .hero__copy h1, .hero__copy h2 { font-size: clamp(1.25rem, 5.6vw, 1.45rem); margin-bottom: .3rem; } .hero__copy > p { font-size: .68rem; line-height: 1.25; } .hero__copy .button { font-size: .68rem; margin-top: .55rem; min-height: 2.1rem; padding: .35rem .7rem; } .hero__art span { height: 8rem; right: -2.25rem; top: 1.2rem; width: 8rem; } .hero__art i { bottom: -.75rem; height: 6rem; left: .2rem; width: 3rem; } .hero__art b { font-size: 2.7rem; } .hero__controls { bottom: .45rem; left: 42%; } .hero__controls > button { height: 1.85rem; width: 1.85rem; } .hero__indicators button { padding-inline: .1rem; } .hero__indicators span { width: .65rem; } .hero__indicators button[aria-current] span { width: 1.1rem; } }
-@media (prefers-reduced-motion: reduce) { .hero__indicators span { transition: none; } }
+.hero__art--2 span { border-radius: 1rem; transform: rotate(23deg); } .hero__art--2 i { background: #ababa5; } .hero__art--3 span { background: #656560; } .hero__art--3 i { width: 8rem; }
+.hero__pagination { align-items: center; display: flex; gap: .45rem; justify-content: center; margin-top: .5rem; min-height: .9rem; }
+.hero__pagination button { background: transparent; border: 1px solid var(--color-placeholder-4); border-radius: 50%; cursor: pointer; height: .65rem; padding: 0; transition: background .2s ease; width: .65rem; }
+.hero__pagination button[aria-current] { background: var(--color-text); border-color: var(--color-text); }
+@media (max-width: 767px) { .hero { margin-top: .5rem; max-width: calc(100% - 2 * var(--gutter)); } .hero__slide { height: 11.5rem; } .hero__art span { height: 8rem; right: 5%; top: 1.2rem; width: 8rem; } .hero__art i { bottom: -.75rem; height: 6rem; left: 38%; width: 3rem; } .hero__art b { font-size: 2.7rem; } }
+@media (prefers-reduced-motion: reduce) { .hero__pagination button { transition: none; } }

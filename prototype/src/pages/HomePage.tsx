@@ -19,6 +19,7 @@ export function HomePage() {
   const [dialog, setDialog] = useState<'consultation' | 'callback' | null>(null)
   return (
     <main>
+      <h1 className="sr-only">Оборудование для автосервиса — Гараж</h1>
       <HeroSlider slides={prototypeData.slides} />
       <CategoryGrid items={prototypeData.categories} />
       <ProductShowcase collection={prototypeData.productCollections[0]} />

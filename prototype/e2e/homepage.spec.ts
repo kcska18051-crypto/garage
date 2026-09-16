@@ -14,17 +14,14 @@ test('homepage exposes the approved sections and working product actions', async
   await expect(page.getByRole('dialog')).toBeVisible()
 })
 
-test('homepage alternates three product collections with two single divider banners', async ({ page }) => {
+test('homepage keeps approved informational sections after the merchandising stream', async ({ page }) => {
   await page.goto('/')
 
   await expect(page.locator('main > .hero + .popular-categories')).toHaveCount(1)
   await expect(page.locator('.popular-categories .category-card')).toHaveCount(6)
-  await expect(page.locator('.product-showcase')).toHaveCount(3)
-  await expect(page.locator('.product-showcase .product-card')).toHaveCount(15)
-  await expect(page.locator('.divider-banner')).toHaveCount(2)
-
-  const sequence = await page.locator('main > .product-showcase, main > .divider-banner').evaluateAll((items) => items.map((item) => item.classList.contains('divider-banner') ? 'banner' : 'products'))
-  expect(sequence).toEqual(['products', 'banner', 'products', 'banner', 'products'])
+  await expect(page.locator('.product-showcase')).toHaveCount(4)
+  await expect(page.locator('.product-showcase .product-card')).toHaveCount(20)
+  await expect(page.locator('.divider-banner')).toHaveCount(4)
 
   await expect(page.locator('.business-section')).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Акции' })).toBeVisible()
@@ -106,9 +103,10 @@ test('all mobile homepage card collections use a sideways rail with a next-card 
     '.service-cards',
     '.about-facts',
     '.useful-grid',
+    '.compact-banner-group--2',
   ].join(', '))
 
-  await expect(collections).toHaveCount(10)
+  await expect(collections).toHaveCount(12)
   const layouts = await collections.evaluateAll((items) => items.map((item) => {
     const first = item.children[0]?.getBoundingClientRect()
     const second = item.children[1]?.getBoundingClientRect()
@@ -138,18 +136,45 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       banners.map((banner) => banner.getBoundingClientRect().height),
     )
 
-    expect(heights).toHaveLength(2)
+    expect(heights).toHaveLength(4)
     expect(heights.every((height) => Math.abs(height - 160) < 1)).toBe(true)
   })
 }
 
-test('brand products appear once between promotions and services', async ({ page }) => {
+test('brand products appear once at the end of the merchandising stream', async ({ page }) => {
   await page.goto('/')
 
   await expect(page.getByRole('heading', { level: 2, name: 'Товары Remeza' })).toHaveCount(1)
-  await expect(page.locator('main > .promotions + .product-showcase + [aria-label="Основные услуги"]')).toHaveCount(1)
-  await expect(page.locator('.promotions + .product-showcase .product-card')).toHaveCount(5)
-  await expect(page.locator('.promotions + .product-showcase').getByRole('link', { name: 'Смотреть все' })).toHaveAttribute('href', '/brand/remeza')
+  const brandShelf = page.locator('.home-merchandising-stream > .product-showcase').last()
+  await expect(brandShelf.getByRole('heading', { name: 'Товары Remeza' })).toBeVisible()
+  await expect(brandShelf.locator('.product-card')).toHaveCount(5)
+  await expect(brandShelf.getByRole('link', { name: 'Смотреть все' })).toHaveAttribute('href', '/brand/remeza')
+  await expect(page.locator('main > .home-merchandising-stream + .benefits-strip')).toHaveCount(1)
+})
+
+test('compact banner groups use two columns on desktop and a mobile sideways rail', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/')
+
+  const pair = page.locator('.compact-banner-group--2')
+  const desktopBoxes = await pair.locator('.divider-banner').evaluateAll((items) => items.map((item) => item.getBoundingClientRect()))
+  expect(desktopBoxes).toHaveLength(2)
+  expect(Math.abs(desktopBoxes[0].top - desktopBoxes[1].top)).toBeLessThan(1)
+  expect(Math.abs(desktopBoxes[0].width - desktopBoxes[1].width)).toBeLessThan(1)
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  const mobileLayout = await pair.evaluate((element) => {
+    const first = element.children[0].getBoundingClientRect()
+    return { ratio: first.width / element.clientWidth, scrollable: element.scrollWidth > element.clientWidth + 1 }
+  })
+  expect(mobileLayout.scrollable).toBe(true)
+  expect(mobileLayout.ratio).toBeGreaterThan(.78)
+  expect(mobileLayout.ratio).toBeLessThan(.86)
+
+  const singleGroupsFit = await page.locator('.compact-banner-group--1').evaluateAll((groups) =>
+    groups.every((group) => group.scrollWidth <= group.clientWidth + 1),
+  )
+  expect(singleGroupsFit).toBe(true)
 })
 
 test('rail controls move brands and products without clipping card content', async ({ page }) => {

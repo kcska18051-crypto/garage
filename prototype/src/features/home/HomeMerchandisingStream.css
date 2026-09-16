@@ -1,0 +1,12 @@
+.compact-banner-group { display: grid; gap: var(--space-grid); margin: 0 auto; max-width: calc(var(--container) - 2 * var(--gutter)); }
+.compact-banner-group--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.compact-banner-group--1 { grid-template-columns: minmax(0, 1fr); }
+.compact-banner-group .divider-banner { margin: 0; max-width: none; width: 100%; }
+
+@media (max-width: 650px) {
+  .compact-banner-group { margin-inline: var(--gutter); }
+  .compact-banner-group--2 { display: flex; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; scroll-snap-type: x mandatory; }
+  .compact-banner-group--2::-webkit-scrollbar { display: none; }
+  .compact-banner-group--2 .divider-banner { flex: 0 0 82%; scroll-snap-align: start; }
+  .compact-banner-group .divider-banner { margin-inline: 0; }
+}

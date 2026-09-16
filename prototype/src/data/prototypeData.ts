@@ -23,10 +23,20 @@ export const prototypeData: PrototypeData = {
     { id: 'service', label: 'Оборудование для автосервиса', href: '/catalog?collection=service', source: 'category', products: [products[0], products[1], products[4], products[6], products[7]] },
     { id: 'remeza', label: 'Товары Remeza', href: '/brand/remeza', source: 'brand', products: [products[3], products[8], products[9], products[1], products[4]] },
     { id: 'new', label: 'Новинки', href: '/new', source: 'automatic-new', products: [products[2], products[5], products[0], products[7], products[6]] },
+    { id: 'bestsellers', label: 'Хиты продаж', href: '/catalog?collection=bestsellers', source: 'automatic-bestseller', products: [products[1], products[3], products[4], products[6], products[8]] },
   ],
   promoBanners: [
     { id: 'season', title: 'Подготовьте мастерскую к сезону', text: 'Оборудование для обновления рабочего поста.', cta: 'Смотреть подборку', href: '/actions/season-workshop', tone: 'light' },
     { id: 'compressors', title: 'Компрессорное оборудование', text: 'Решения для разных рабочих задач.', cta: 'Перейти в категорию', href: '/catalog/compressor-equipment', tone: 'mid' },
+    { id: 'paint', title: 'Материалы для кузовных работ', text: 'Подборка для подготовки и окраски.', cta: 'Перейти в категорию', href: '/catalog/paint', tone: 'mid' },
+    { id: 'workshop', title: 'Решения для рабочего поста', text: 'Компактная подборка оборудования и инструмента.', cta: 'Смотреть подборку', href: '/catalog?collection=service', tone: 'light' },
+  ],
+  homeMerchandising: [
+    { id: 'service-row', collectionId: 'service', bannerIds: ['season', 'paint'], visible: true },
+    { id: 'new-row', collectionId: 'new', bannerIds: ['compressors'], visible: true },
+    { id: 'bestseller-row', collectionId: 'bestsellers', bannerIds: ['workshop'], visible: true },
+    { id: 'remeza-row', collectionId: 'remeza', bannerIds: [], visible: true },
+    { id: 'hidden-service-row', collectionId: 'service', bannerIds: [], visible: false },
   ],
   promotions: [
     { id: 'service-tools', title: 'Оборудование для сервисного поста', text: 'Демонстрационная подборка для главной страницы.', deadline: 'До 30 сентября · демонстрация', href: '/actions/service-tools', showOnHome: true },

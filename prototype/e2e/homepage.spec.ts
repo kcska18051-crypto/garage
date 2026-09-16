@@ -43,6 +43,32 @@ test('homepage alternates three product collections with two single divider bann
   }
 })
 
+test('homepage renders the configured merchandising stream in the approved order', async ({ page }) => {
+  await page.goto('/')
+
+  await expect(page.locator('main > .hero + .popular-categories')).toHaveCount(1)
+  await expect(page.locator('.popular-categories .category-card')).toHaveCount(6)
+  await expect(page.locator('.home-merchandising-stream > .product-showcase')).toHaveCount(4)
+  await expect(page.locator('.home-merchandising-stream .product-card')).toHaveCount(20)
+  await expect(page.locator('.compact-banner-group')).toHaveCount(3)
+  await expect(page.locator('.compact-banner-group .divider-banner')).toHaveCount(4)
+
+  const sequence = await page.locator('.home-merchandising-stream > *').evaluateAll((items) =>
+    items.map((item) => item.classList.contains('product-showcase')
+      ? item.querySelector('h2')?.textContent
+      : `banners:${item.childElementCount}`),
+  )
+  expect(sequence).toEqual([
+    'Оборудование для автосервиса',
+    'banners:2',
+    'Новинки',
+    'banners:1',
+    'Хиты продаж',
+    'banners:1',
+    'Товары Remeza',
+  ])
+})
+
 test('materials section presents four cards and working side navigation', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('/')

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
 
@@ -11,14 +11,38 @@ describe('prototype routes', () => {
     )
 
     expect(screen.getByRole('heading', { name: 'Каталог' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Компрессорное оборудование/ })).toHaveAttribute('href', '/catalog/compressor-equipment')
+    const desktopCatalog = document.querySelector('.catalog-root-desktop')!
+    expect(within(desktopCatalog).getByRole('link', { name: 'Компрессоры' })).toHaveAttribute('href', '/catalog/compressor-equipment')
+  })
+
+  it('renders the catalog root from the normalized six-category model', () => {
+    render(<MemoryRouter initialEntries={['/catalog']}><App /></MemoryRouter>)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Каталог' })).toBeInTheDocument()
+    expect(screen.getAllByTestId('catalog-mobile-row')).toHaveLength(6)
+    expect(screen.getAllByTestId('catalog-root-card')).toHaveLength(6)
+  })
+
+  it('uses one category landing template for a generic first-level section', () => {
+    render(<MemoryRouter initialEntries={['/catalog/lifting-equipment']}><App /></MemoryRouter>)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Подъёмное оборудование' })).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument()
+    expect(screen.getAllByTestId('catalog-section-row').length).toBeGreaterThan(5)
+  })
+
+  it('shows 404 for an unknown first-level catalog slug', () => {
+    render(<MemoryRouter initialEntries={['/catalog/not-a-category']}><App /></MemoryRouter>)
+
+    expect(screen.getByRole('heading', { name: 'Страница не найдена' })).toBeInTheDocument()
   })
 
   it('opens the first-level compressor category', () => {
     render(<MemoryRouter initialEntries={['/catalog/compressor-equipment']}><App /></MemoryRouter>)
 
     expect(screen.getByRole('heading', { level: 1, name: 'Компрессорное оборудование' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Винтовые компрессоры/ })).toHaveAttribute('href', '/catalog/compressor-equipment/screw-compressors')
+    const desktopDetail = document.querySelector('.catalog-category-detail')!
+    expect(within(desktopDetail).getByRole('link', { name: /Винтовые компрессоры/ })).toHaveAttribute('href', '/catalog/compressor-equipment/screw-compressors')
   })
 
   it('opens the reusable second-level category with catalog breadcrumbs', () => {

@@ -8,6 +8,7 @@ import { CatalogSubcategoryPage } from '../pages/CatalogSubcategoryPage'
 import { ProductDetailPage } from '../pages/ProductDetailPage'
 import { BrandsPage } from '../pages/BrandsPage'
 import { BrandDetailPage } from '../pages/BrandDetailPage'
+import { CatalogSectionPage } from '../pages/CatalogSectionPage'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -32,6 +33,7 @@ export function AppRoutes() {
       <Route path="/catalog/compressor-equipment" element={<CatalogCategoryPage />} />
       <Route path="/catalog/compressor-equipment/:subcategorySlug" element={<CatalogSubcategoryPage />} />
       <Route path="/catalog/compressor-equipment/:subcategorySlug/:childSlug" element={<CatalogSubcategoryPage />} />
+      <Route path="/catalog/:categorySlug" element={<CatalogSectionPage />} />
       <Route path="/product/remeza-vk-10-gr-0001" element={<ProductDetailPage />} />
       <Route path="/brands" element={<BrandsPage />} />
       <Route path="/brand/remeza" element={<BrandDetailPage />} />

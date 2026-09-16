@@ -4,7 +4,7 @@ test('uses the approved widescreen container and product grid at 1920px', async 
   await page.setViewportSize({ width: 1920, height: 1080 })
   await page.goto('/')
 
-  await expect(page.locator('.product-card:visible')).toHaveCount(15)
+  await expect(page.locator('.product-card:visible')).toHaveCount(20)
   const layout = await page.locator('.product-showcase').first().evaluate((section) => ({
     width: section.getBoundingClientRect().width,
     columns: getComputedStyle(section.querySelector('.product-grid')!).gridTemplateColumns.split(' ').length,

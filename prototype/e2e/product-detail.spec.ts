@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('product detail supports gallery, commerce actions, anchors and request modes', async ({ page }) => {
+test('product detail supports gallery, commerce actions, anchors and commercial states', async ({ page }) => {
   await page.goto('/product/remeza-vk-10-gr-0001/')
   await expect(page.getByRole('heading', { level: 1, name: 'Remeza ВК 10' })).toBeVisible()
   await expect(page.getByRole('main').getByRole('link', { name: 'Remeza', exact: true })).toHaveAttribute('href', '/brand/remeza/')
@@ -20,8 +20,12 @@ test('product detail supports gallery, commerce actions, anchors and request mod
   await expect(page.getByRole('dialog', { name: 'Увеличенное изображение товара' })).toBeVisible()
   await page.getByRole('button', { name: 'Закрыть изображение' }).click()
 
-  await page.getByRole('button', { name: 'Получить коммерческое предложение' }).click()
-  await expect(page.getByRole('status')).toContainText('коммерческого предложения')
+  await page.getByRole('button', { name: 'Цена по запросу' }).click()
+  await expect(page).toHaveURL(/remeza-vk-10-gr-0001\/$/)
+  await expect(page.getByRole('button', { name: 'Запросить цену' })).toBeVisible()
+  await expect(page.getByText('Менеджер подтвердит цену и срок поставки после обращения.')).toBeVisible()
+  await page.getByRole('button', { name: 'Запросить цену' }).click()
+  await expect(page.getByRole('status')).toContainText('подтвердит цену и срок поставки')
 })
 
 test('mobile product detail keeps the purchase action above bottom navigation', async ({ page }) => {

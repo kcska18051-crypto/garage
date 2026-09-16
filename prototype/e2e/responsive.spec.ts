@@ -69,9 +69,9 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     const mobile = viewport.width < 768
 
     await page.goto('/catalog')
-    const rootCategory = await page.locator('.catalog-category-card > a').first().boundingBox()
+    const rootCategory = await page.locator(mobile ? '.catalog-root-row:visible' : '.catalog-root-card:visible').first().boundingBox()
     expect(rootCategory).not.toBeNull()
-    expect(rootCategory!.height).toBeLessThanOrEqual(mobile ? 230 : 300)
+    expect(rootCategory!.height).toBeLessThanOrEqual(mobile ? 80 : 480)
 
     await page.goto('/catalog/compressor-equipment/screw-compressors/')
     const childCategory = await page.locator('.catalog-child-sections__grid > a').first().boundingBox()

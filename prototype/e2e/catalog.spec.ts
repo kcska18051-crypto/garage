@@ -142,7 +142,13 @@ test('second-level template removes the optional tag block without a gap', async
 test('counts appear only in filters and directly above product results', async ({ page }) => {
   await page.goto('/catalog/compressor-equipment')
   await expect(page.locator('.catalog-page__header').getByText(/\d+ товар/)).toHaveCount(0)
-  await expect(page.locator('.catalog-listing__toolbar').getByText('Найдено 32 товара')).toBeVisible()
+  const firstLevelListingCount = page.locator('.catalog-listing__toolbar').getByText('Найдено 32 товара')
+  if (await page.locator('.catalog-section-list--mobile-only').isVisible()) {
+    await expect(page.getByTestId('catalog-section-row')).toHaveCount(6)
+    await expect(firstLevelListingCount).toBeHidden()
+  } else {
+    await expect(firstLevelListingCount).toBeVisible()
+  }
 
   await page.goto('/catalog/compressor-equipment/screw-compressors')
   await expect(page.locator('.catalog-page__header').getByText(/\d+ товар/)).toHaveCount(0)

@@ -11,7 +11,7 @@ describe('prototype routes', () => {
     )
 
     expect(screen.getByRole('heading', { name: 'Каталог' })).toBeInTheDocument()
-    const desktopCatalog = document.querySelector('.catalog-root-desktop')!
+    const desktopCatalog = document.querySelector<HTMLElement>('.catalog-root-desktop')!
     expect(within(desktopCatalog).getByRole('link', { name: 'Компрессоры' })).toHaveAttribute('href', '/catalog/compressor-equipment')
   })
 
@@ -41,7 +41,7 @@ describe('prototype routes', () => {
     render(<MemoryRouter initialEntries={['/catalog/compressor-equipment']}><App /></MemoryRouter>)
 
     expect(screen.getByRole('heading', { level: 1, name: 'Компрессорное оборудование' })).toBeInTheDocument()
-    const desktopDetail = document.querySelector('.catalog-category-detail')!
+    const desktopDetail = document.querySelector<HTMLElement>('.catalog-category-detail')!
     expect(within(desktopDetail).getByRole('link', { name: /Винтовые компрессоры/ })).toHaveAttribute('href', '/catalog/compressor-equipment/screw-compressors')
   })
 

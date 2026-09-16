@@ -90,12 +90,11 @@ test('materials section presents four cards and working side navigation', async 
   await expect.poll(() => rail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(before)
 })
 
-test('all mobile homepage card collections use a sideways rail with a next-card preview', async ({ page }) => {
+test('mobile homepage card collections except popular categories use a sideways rail with a next-card preview', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
 
   const collections = page.locator([
-    '.popular-categories .category-grid',
     '.benefits-strip',
     '.product-showcase .product-grid',
     '.home-section--brands .brand-grid',
@@ -106,7 +105,7 @@ test('all mobile homepage card collections use a sideways rail with a next-card 
     '.compact-banner-group--2',
   ].join(', '))
 
-  await expect(collections).toHaveCount(12)
+  await expect(collections).toHaveCount(11)
   const layouts = await collections.evaluateAll((items) => items.map((item) => {
     const first = item.children[0]?.getBoundingClientRect()
     const second = item.children[1]?.getBoundingClientRect()
@@ -126,6 +125,32 @@ test('all mobile homepage card collections use a sideways rail with a next-card 
     expect(layout.firstCardRatio).toBeLessThan(.86)
   }
 })
+
+for (const viewport of [{ width: 1440, columns: 6 }, { width: 390, columns: 3 }]) {
+  test(`popular categories stay a static ${viewport.columns}-column grid at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: 900 })
+    await page.goto('/')
+
+    const grid = page.locator('.popular-categories .category-grid')
+    const cards = grid.locator('.category-card')
+    await expect(cards).toHaveCount(6)
+
+    const layout = await grid.evaluate((element, columns) => {
+      const boxes = Array.from(element.children).map((card) => card.getBoundingClientRect())
+      return {
+        canScrollSideways: element.scrollWidth > element.clientWidth + 1,
+        firstRow: boxes.slice(0, columns).every((box) => Math.abs(box.top - boxes[0].top) < 1),
+        nextRowStartsBelow: columns === boxes.length || boxes[columns].top > boxes[0].top + 1,
+        animation: getComputedStyle(boxes.length ? element.children[0] : element).animationName,
+      }
+    }, viewport.columns)
+
+    expect(layout.canScrollSideways).toBe(false)
+    expect(layout.firstRow).toBe(true)
+    expect(layout.nextRowStartsBelow).toBe(true)
+    expect(layout.animation).toBe('none')
+  })
+}
 
 for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
   test(`divider banners use the approved taller height at ${viewport.width}px`, async ({ page }) => {
@@ -309,7 +334,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
 
     if (viewport.width < 768) {
       const columns = await page.locator('.category-grid').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length)
-      expect(columns).toBe(2)
+      expect(columns).toBe(3)
     } else {
       const columns = await page.locator('.category-grid').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length)
       expect(columns).toBe(6)

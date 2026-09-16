@@ -1,20 +1,104 @@
-import type { CatalogBrand, CatalogCategory, CatalogProduct, CatalogSubcategory, FilterGroup, TagGroup } from './catalogTypes'
+import type { CatalogBrand, CatalogProduct, CatalogRootCategory, CatalogRootSubcategory, CatalogSubcategory, FilterGroup, TagGroup } from './catalogTypes'
 
 export const catalogBrands: CatalogBrand[] = [
   { id: 'remeza', name: 'Remeza', count: 8 }, { id: 'berg', name: 'Berg', count: 6 }, { id: 'dali', name: 'Dali', count: 5 },
   { id: 'comprag', name: 'Comprag', count: 4 }, { id: 'fiac', name: 'Fiac', count: 3 }, { id: 'garage-pro', name: 'Garage Pro', count: 4 },
 ]
 
-export const catalogCategories: CatalogCategory[] = [
-  { id: 'compressor-equipment', name: 'Компрессорное оборудование', href: '/catalog/compressor-equipment', count: 164, description: 'Компрессоры, подготовка воздуха и комплектующие для мастерских и производств.', childNames: ['Винтовые компрессоры', 'Поршневые компрессоры', 'Осушители'] },
-  { id: 'lifting', name: 'Подъёмное оборудование', href: '/catalog/lifting', count: 238, description: 'Подъёмники, домкраты и оборудование рабочих постов.', childNames: ['Автоподъёмники', 'Домкраты', 'Стойки'] },
-  { id: 'body', name: 'Кузовной ремонт', href: '/catalog/body', count: 412, description: 'Стапели, споттеры и инструмент для восстановления кузова.', childNames: ['Стапели', 'Споттеры', 'Рихтовка'] },
-  { id: 'paint', name: 'Покраска и подготовка', href: '/catalog/paint', count: 527, description: 'Оборудование и материалы для подготовки и окраски.', childNames: ['Краскопульты', 'Камеры', 'Материалы'] },
-  { id: 'diagnostics', name: 'Диагностическое оборудование', href: '/catalog/diagnostics', count: 296, description: 'Сканеры, стенды и измерительные приборы.', childNames: ['Сканеры', 'Стенды', 'Тестеры'] },
-  { id: 'tools', name: 'Инструмент', href: '/catalog/tools', count: 1184, description: 'Ручной, пневматический и специальный инструмент.', childNames: ['Наборы', 'Пневмоинструмент', 'Тележки'] },
-  { id: 'welding', name: 'Сварочное оборудование', href: '/catalog/welding', count: 184, description: 'Аппараты, расходные материалы и защита.', childNames: ['Полуавтоматы', 'Инверторы', 'Расходники'] },
-  { id: 'cleaning', name: 'Мойка и уборка', href: '/catalog/cleaning', count: 231, description: 'Аппараты высокого давления и уборочная техника.', childNames: ['АВД', 'Пылесосы', 'Химия'] },
+const createSubcategories = (parent: string, names: Array<[string, string]>): CatalogRootSubcategory[] => names.map(([id, name], index) => ({
+  id,
+  name,
+  href: `/catalog/${parent}/${id}`,
+  artVariant: index % 4,
+}))
+
+const createCategory = (
+  slug: string,
+  name: string,
+  count: number,
+  description: string,
+  artVariant: number,
+  subcategoryNames: Array<[string, string]>,
+): CatalogRootCategory => {
+  const subcategories = createSubcategories(slug, subcategoryNames)
+  return {
+    id: slug,
+    slug,
+    name,
+    href: `/catalog/${slug}`,
+    count,
+    description,
+    artVariant,
+    subcategories,
+    childNames: subcategories.map((subcategory) => subcategory.name),
+  }
+}
+
+export const catalogCategories: CatalogRootCategory[] = [
+  createCategory('compressor-equipment', 'Компрессоры', 164, 'Компрессоры, подготовка воздуха и комплектующие для мастерских и производств.', 0, [
+    ['screw-compressors', 'Винтовые компрессоры'],
+    ['piston-compressors', 'Поршневые компрессоры'],
+    ['oil-free-compressors', 'Безмасляные компрессоры'],
+    ['receivers', 'Ресиверы'],
+    ['dryers', 'Осушители'],
+    ['compressor-accessories', 'Комплектующие'],
+  ]),
+  createCategory('lifting-equipment', 'Подъёмное оборудование', 238, 'Подъёмники, домкраты и оборудование рабочих постов.', 1, [
+    ['car-lifts', 'Автоподъёмники'],
+    ['jacks', 'Домкраты'],
+    ['stands', 'Стойки'],
+    ['cranes', 'Краны'],
+    ['presses', 'Прессы'],
+    ['wheel-lifters', 'Колёсные подъёмники'],
+  ]),
+  createCategory('body-repair', 'Кузовной ремонт', 412, 'Оборудование и инструмент для восстановления геометрии кузова.', 2, [
+    ['frame-machines', 'Стапели'],
+    ['spotters', 'Споттеры'],
+    ['straightening-tools', 'Рихтовочный инструмент'],
+    ['welding', 'Сварочное оборудование'],
+    ['measuring', 'Измерительные системы'],
+    ['body-clamps', 'Зажимы и захваты'],
+  ]),
+  createCategory('painting', 'Покраска', 527, 'Оборудование и материалы для подготовки и окраски.', 3, [
+    ['spray-guns', 'Краскопульты'],
+    ['paint-booths', 'Покрасочные камеры'],
+    ['sanders', 'Шлифовальные машинки'],
+    ['preparation', 'Подготовка поверхности'],
+    ['drying', 'Сушка'],
+    ['painting-accessories', 'Малярные принадлежности'],
+  ]),
+  createCategory('tools', 'Инструмент', 1184, 'Ручной, пневматический и специальный инструмент.', 0, [
+    ['hand-tools', 'Ручной инструмент'],
+    ['pneumatic-tools', 'Пневмоинструмент'],
+    ['power-tools', 'Электроинструмент'],
+    ['tool-sets', 'Наборы инструментов'],
+    ['storage', 'Тележки и хранение'],
+    ['special-tools', 'Специальный инструмент'],
+  ]),
+  createCategory('service-station-equipment', 'Оснащение автосервиса', 296, 'Рабочие посты, диагностика и оснащение сервисных зон.', 1, [
+    ['diagnostics', 'Диагностика'],
+    ['tire-service', 'Шиномонтаж'],
+    ['oil-service', 'Замена масла'],
+    ['cleaning', 'Мойка и уборка'],
+    ['workbenches', 'Верстаки'],
+    ['service-furniture', 'Мебель для сервиса'],
+  ]),
 ]
+
+export function formatProductCount(count: number) {
+  const lastTwo = count % 100
+  const last = count % 10
+  const word = lastTwo >= 11 && lastTwo <= 14
+    ? 'товаров'
+    : last === 1
+      ? 'товар'
+      : last >= 2 && last <= 4
+        ? 'товара'
+        : 'товаров'
+  return `${count} ${word}`
+}
+
+export const getCatalogCategory = (slug: string | undefined) => catalogCategories.find((category) => category.slug === slug)
 
 const screwTags: TagGroup[] = [
   { id: 'brand', label: 'По бренду', limit: 3, seoIndexable: false, values: [{ value: 'remeza', label: 'Remeza', count: 6 }, { value: 'berg', label: 'Berg', count: 4 }, { value: 'dali', label: 'Dali', count: 3 }, { value: 'comprag', label: 'Comprag', count: 2 }] },

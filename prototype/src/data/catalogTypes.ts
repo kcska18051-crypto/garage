@@ -15,14 +15,26 @@ export type CatalogProduct = {
   specs: Record<string, string>
 }
 
-export type CatalogCategory = {
+export type CatalogRootSubcategory = {
   id: string
   name: string
   href: string
+  artVariant: number
+}
+
+export type CatalogRootCategory = {
+  id: string
+  slug: string
+  name: string
+  href: string
   count: number
+  artVariant: number
   description: string
+  subcategories: CatalogRootSubcategory[]
   childNames: string[]
 }
+
+export type CatalogCategory = CatalogRootCategory
 
 export type CatalogSubcategory = {
   id: string

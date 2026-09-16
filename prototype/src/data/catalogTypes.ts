@@ -36,10 +36,7 @@ export type CatalogRootCategory = {
 
 export type CatalogCategory = CatalogRootCategory
 
-export type CatalogSubcategory = {
-  id: string
-  name: string
-  href: string
+export type CatalogSubcategory = CatalogRootSubcategory & {
   count: number
   description: string
   tagGroups?: TagGroup[]

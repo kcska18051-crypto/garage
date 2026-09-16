@@ -19,16 +19,19 @@ function moreCategoriesLabel(count: number) {
 export function CatalogRootCard({ category }: { category: CatalogRootCategory }) {
   const [expanded, setExpanded] = useState(false)
   const extraId = useId()
+  const titleId = useId()
   const primary = category.subcategories.slice(0, 5)
   const extra = category.subcategories.slice(5)
 
   return (
-    <article className="catalog-root-card" data-testid="catalog-root-card">
+    <article className="catalog-root-card" data-testid="catalog-root-card" aria-labelledby={titleId}>
       <div className={`catalog-root-card__art catalog-art--${category.artVariant}`} aria-hidden="true">
         <i />
         <b />
       </div>
-      <Link className="catalog-root-card__title" to={category.href}>{category.name}</Link>
+      <h2 className="catalog-root-card__heading" id={titleId}>
+        <Link className="catalog-root-card__title" to={category.href}>{category.name}</Link>
+      </h2>
       <p className="catalog-root-card__count">{formatProductCount(category.count)}</p>
       <ul className="catalog-root-card__links">
         {primary.map((item) => <li key={item.id}><Link to={item.href}>{item.name}</Link></li>)}
@@ -43,6 +46,7 @@ export function CatalogRootCard({ category }: { category: CatalogRootCategory })
             type="button"
             aria-expanded={expanded}
             aria-controls={extraId}
+            aria-label={`${expanded ? 'Свернуть' : moreCategoriesLabel(extra.length)} — ${category.name}`}
             onClick={() => setExpanded((value) => !value)}
           >
             {expanded ? 'Свернуть' : moreCategoriesLabel(extra.length)}

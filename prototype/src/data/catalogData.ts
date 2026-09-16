@@ -18,9 +18,11 @@ const createCategory = (
   count: number,
   description: string,
   artVariant: number,
-  subcategoryNames: Array<[string, string]>,
+  source: Array<[string, string]> | CatalogRootSubcategory[],
 ): CatalogRootCategory => {
-  const subcategories = createSubcategories(slug, subcategoryNames)
+  const subcategories = Array.isArray(source[0])
+    ? createSubcategories(slug, source as Array<[string, string]>)
+    : source as CatalogRootSubcategory[]
   return {
     id: slug,
     slug,
@@ -34,15 +36,7 @@ const createCategory = (
   }
 }
 
-export const catalogCategories: CatalogRootCategory[] = [
-  createCategory('compressor-equipment', 'Компрессоры', 164, 'Компрессоры, подготовка воздуха и комплектующие для мастерских и производств.', 0, [
-    ['screw-compressors', 'Винтовые компрессоры'],
-    ['piston-compressors', 'Поршневые компрессоры'],
-    ['oil-free-compressors', 'Безмасляные компрессоры'],
-    ['receivers', 'Ресиверы'],
-    ['dryers', 'Осушители'],
-    ['compressor-accessories', 'Комплектующие'],
-  ]),
+const otherCatalogCategories: CatalogRootCategory[] = [
   createCategory('lifting-equipment', 'Подъёмное оборудование', 238, 'Подъёмники, домкраты и оборудование рабочих постов.', 1, [
     ['car-lifts', 'Автоподъёмники'],
     ['jacks', 'Домкраты'],
@@ -108,7 +102,7 @@ const screwTags: TagGroup[] = [
 ]
 
 export const compressorSubcategories: CatalogSubcategory[] = [
-  { id: 'screw-compressors', name: 'Винтовые компрессоры', href: '/catalog/compressor-equipment/screw-compressors', count: 48, description: 'Для продолжительной работы в мастерских и производственных линиях.', tagGroups: screwTags, childSections: [
+  { id: 'screw-compressors', name: 'Винтовые компрессоры', href: '/catalog/compressor-equipment/screw-compressors', artVariant: 0, count: 48, description: 'Для продолжительной работы в мастерских и производственных линиях.', tagGroups: screwTags, childSections: [
     { id: 'receiver', name: 'Винтовые компрессоры на ресивере', href: '/catalog/compressor-equipment/screw-compressors/receiver', description: 'Компактное решение с накопительной ёмкостью для готового рабочего поста.' },
     { id: 'dryer', name: 'Винтовые компрессоры с осушителем', href: '/catalog/compressor-equipment/screw-compressors/dryer', description: 'Подготовка сжатого воздуха в составе единой установки.' },
     { id: 'stations', name: 'Компрессорные станции', href: '/catalog/compressor-equipment/screw-compressors/stations', description: 'Комплексные установки для мастерских и производственных линий.' },
@@ -116,11 +110,16 @@ export const compressorSubcategories: CatalogSubcategory[] = [
     { id: 'belt-drive', name: 'С ременным приводом', href: '/catalog/compressor-equipment/screw-compressors/belt-drive', description: 'Конфигурации с ременной передачей для разных рабочих сценариев.' },
     { id: 'turnkey', name: 'Комплектные компрессорные решения', href: '/catalog/compressor-equipment/screw-compressors/turnkey', description: 'Подбор связанных компонентов как единой рабочей системы.' },
   ] },
-  { id: 'piston-compressors', name: 'Поршневые компрессоры', href: '/catalog/compressor-equipment/piston-compressors', count: 62, description: 'Для периодических работ и небольших пневмосетей.' },
-  { id: 'oil-free-compressors', name: 'Безмасляные компрессоры', href: '/catalog/compressor-equipment/oil-free-compressors', count: 18, description: 'Чистый воздух без частиц масла; тот же шаблон категории без блока тегов.' },
-  { id: 'receivers', name: 'Ресиверы', href: '/catalog/compressor-equipment/receivers', count: 16, description: 'Вертикальные и горизонтальные накопители сжатого воздуха.' },
-  { id: 'dryers', name: 'Осушители', href: '/catalog/compressor-equipment/dryers', count: 12, description: 'Подготовка воздуха и удаление конденсата.' },
-  { id: 'compressor-accessories', name: 'Комплектующие', href: '/catalog/compressor-equipment/compressor-accessories', count: 8, description: 'Фильтры, магистрали и сервисные наборы.' },
+  { id: 'piston-compressors', name: 'Поршневые компрессоры', href: '/catalog/compressor-equipment/piston-compressors', artVariant: 1, count: 62, description: 'Для периодических работ и небольших пневмосетей.' },
+  { id: 'oil-free-compressors', name: 'Безмасляные компрессоры', href: '/catalog/compressor-equipment/oil-free-compressors', artVariant: 2, count: 18, description: 'Чистый воздух без частиц масла; тот же шаблон категории без блока тегов.' },
+  { id: 'receivers', name: 'Ресиверы', href: '/catalog/compressor-equipment/receivers', artVariant: 3, count: 16, description: 'Вертикальные и горизонтальные накопители сжатого воздуха.' },
+  { id: 'dryers', name: 'Осушители', href: '/catalog/compressor-equipment/dryers', artVariant: 0, count: 12, description: 'Подготовка воздуха и удаление конденсата.' },
+  { id: 'compressor-accessories', name: 'Комплектующие', href: '/catalog/compressor-equipment/compressor-accessories', artVariant: 1, count: 8, description: 'Фильтры, магистрали и сервисные наборы.' },
+]
+
+export const catalogCategories: CatalogRootCategory[] = [
+  createCategory('compressor-equipment', 'Компрессоры', 164, 'Компрессоры, подготовка воздуха и комплектующие для мастерских и производств.', 0, compressorSubcategories),
+  ...otherCatalogCategories,
 ]
 
 const option = (value: string, label: string): { value: string; label: string } => ({ value, label })

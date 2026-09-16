@@ -57,7 +57,9 @@ for (const category of [
 ]) {
   test(`first-level category route opens ${category.path}`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 })
-    await page.goto(category.path)
+    await page.goto('/catalog')
+    await page.locator(`.catalog-root-mobile a[href="${category.path}"]`).click()
+    await expect(page).toHaveURL(new RegExp(`${category.path}$`))
     await expect(page.getByRole('heading', { level: 1, name: category.heading })).toBeVisible()
     await expect(page.getByTestId('catalog-section-row')).toHaveCount(6)
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)

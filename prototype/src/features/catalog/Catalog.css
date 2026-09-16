@@ -24,7 +24,8 @@
 .catalog-root-mobile { display: none; }
 .catalog-root-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); min-height: 25rem; min-width: 0; overflow: hidden; padding: 1.35rem 42% 9rem 1.35rem; position: relative; }
 .catalog-root-card:focus-within { border-color: var(--color-text); box-shadow: 0 0 0 1px var(--color-text); }
-.catalog-root-card__title { display: inline-block; font-size: clamp(1.4rem, 1.8vw, 2rem); font-weight: 750; letter-spacing: -.03em; line-height: 1.05; margin-bottom: .55rem; position: relative; text-decoration: none; z-index: 2; }
+.catalog-root-card__heading { font: inherit; margin: 0 0 .55rem; position: relative; z-index: 2; }
+.catalog-root-card__title { display: inline-block; font-size: clamp(1.4rem, 1.8vw, 2rem); font-weight: 750; letter-spacing: -.03em; line-height: 1.05; text-decoration: none; }
 .catalog-root-card__title::after { content: '↗'; font-size: .7em; margin-left: .45rem; }
 .catalog-root-card__count { color: var(--color-text-muted); font-size: .78rem; margin: 0 0 1.25rem; position: relative; z-index: 2; }
 .catalog-root-card__links { display: grid; gap: .5rem; list-style: none; margin: 0; padding: 0; position: relative; z-index: 2; }

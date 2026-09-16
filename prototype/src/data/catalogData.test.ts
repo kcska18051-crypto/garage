@@ -1,4 +1,4 @@
-import { catalogCategories, formatProductCount, getCatalogCategory } from './catalogData'
+import { catalogCategories, compressorSubcategories, formatProductCount, getCatalogCategory } from './catalogData'
 
 describe('first-level catalog data', () => {
   it('contains six routable categories with more than five linked subcategories', () => {
@@ -33,5 +33,9 @@ describe('first-level catalog data', () => {
   it('finds a category by slug without inventing an unknown category', () => {
     expect(getCatalogCategory('tools')?.name).toBe('Инструмент')
     expect(getCatalogCategory('missing')).toBeUndefined()
+  })
+
+  it('uses the detailed compressor sections as the root category source', () => {
+    expect(getCatalogCategory('compressor-equipment')?.subcategories).toBe(compressorSubcategories)
   })
 })

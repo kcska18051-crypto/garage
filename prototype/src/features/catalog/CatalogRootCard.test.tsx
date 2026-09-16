@@ -8,11 +8,12 @@ describe('CatalogRootCard', () => {
   it('shows five links and exposes the remaining links with an accessible button', async () => {
     render(<MemoryRouter><CatalogRootCard category={catalogCategories[0]} /></MemoryRouter>)
 
-    const button = screen.getByRole('button', { name: /Ещё \d+ категорий/ })
+    const button = screen.getByRole('button', { name: /Ещё \d+ катег/ })
     const extraLink = screen.getByRole('link', { name: catalogCategories[0].subcategories[5].name, hidden: true })
     const extraListId = button.getAttribute('aria-controls')
 
     expect(button).toHaveAttribute('aria-expanded', 'false')
+    expect(button).toHaveTextContent('Ещё 1 категория')
     expect(extraListId).toBeTruthy()
     expect(document.getElementById(extraListId!)).toHaveAttribute('hidden')
     expect(extraLink).not.toBeVisible()
@@ -32,7 +33,7 @@ describe('CatalogRootCard', () => {
       </MemoryRouter>,
     )
 
-    const buttons = screen.getAllByRole('button', { name: /Ещё \d+ категорий/ })
+    const buttons = screen.getAllByRole('button', { name: /Ещё \d+ катег/ })
     await userEvent.click(buttons[0])
 
     expect(buttons[0]).toHaveAttribute('aria-expanded', 'true')

@@ -3,6 +3,19 @@ import { Link } from 'react-router-dom'
 import { formatProductCount } from '../../data/catalogData'
 import type { CatalogRootCategory } from '../../data/catalogTypes'
 
+function moreCategoriesLabel(count: number) {
+  const lastTwo = count % 100
+  const last = count % 10
+  const word = lastTwo >= 11 && lastTwo <= 14
+    ? 'категорий'
+    : last === 1
+      ? 'категория'
+      : last >= 2 && last <= 4
+        ? 'категории'
+        : 'категорий'
+  return `Ещё ${count} ${word}`
+}
+
 export function CatalogRootCard({ category }: { category: CatalogRootCategory }) {
   const [expanded, setExpanded] = useState(false)
   const extraId = useId()
@@ -32,7 +45,7 @@ export function CatalogRootCard({ category }: { category: CatalogRootCategory })
             aria-controls={extraId}
             onClick={() => setExpanded((value) => !value)}
           >
-            {expanded ? 'Свернуть' : `Ещё ${extra.length} категорий`}
+            {expanded ? 'Свернуть' : moreCategoriesLabel(extra.length)}
           </button>
         </>
       ) : null}

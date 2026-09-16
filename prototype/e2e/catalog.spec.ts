@@ -1,5 +1,69 @@
 import { expect, test } from '@playwright/test'
 
+for (const viewport of [
+  { width: 1920, height: 1080, columns: 3 },
+  { width: 1440, height: 900, columns: 3 },
+  { width: 1024, height: 900, columns: 2 },
+  { width: 768, height: 900, columns: 2 },
+]) {
+  test(`catalog root uses ${viewport.columns} columns at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    await page.goto('/catalog')
+
+    await expect(page.locator('.catalog-root-desktop')).toBeVisible()
+    const columns = await page.locator('.catalog-root-grid').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length)
+    expect(columns).toBe(viewport.columns)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+  })
+}
+
+for (const width of [390, 360]) {
+  test(`catalog root is a compact list at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 })
+    await page.goto('/catalog')
+
+    await expect(page.locator('.catalog-root-desktop')).toBeHidden()
+    await expect(page.getByTestId('catalog-mobile-row')).toHaveCount(6)
+    await expect(page.locator('.catalog-root-mobile')).not.toContainText(/\d+ товар/)
+    await expect(page.locator('.catalog-root-mobile').getByRole('button')).toHaveCount(0)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+  })
+}
+
+test('one catalog card expands independently and a category opens its landing page', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/catalog')
+
+  const cards = page.getByTestId('catalog-root-card')
+  const firstButton = cards.nth(0).getByRole('button')
+  const secondButton = cards.nth(1).getByRole('button')
+  await firstButton.click()
+  await expect(firstButton).toHaveAttribute('aria-expanded', 'true')
+  await expect(secondButton).toHaveAttribute('aria-expanded', 'false')
+
+  await cards.nth(1).locator('.catalog-root-card__title').click()
+  await expect(page).toHaveURL(/\/catalog\/lifting-equipment$/)
+  await expect(page.getByRole('heading', { level: 1, name: 'Подъёмное оборудование' })).toBeVisible()
+  await expect(page.getByTestId('catalog-section-row')).toHaveCount(6)
+})
+
+for (const category of [
+  { path: '/catalog/compressor-equipment', heading: 'Компрессорное оборудование' },
+  { path: '/catalog/lifting-equipment', heading: 'Подъёмное оборудование' },
+  { path: '/catalog/body-repair', heading: 'Кузовной ремонт' },
+  { path: '/catalog/painting', heading: 'Покраска' },
+  { path: '/catalog/tools', heading: 'Инструмент' },
+  { path: '/catalog/service-station-equipment', heading: 'Оснащение автосервиса' },
+]) {
+  test(`first-level category route opens ${category.path}`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto(category.path)
+    await expect(page.getByRole('heading', { level: 1, name: category.heading })).toBeVisible()
+    await expect(page.getByTestId('catalog-section-row')).toHaveCount(6)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+  })
+}
+
 test('catalog result grid uses three columns at 1440 and four at 1920', async ({ page }) => {
   for (const viewport of [{ width: 1440, height: 900, columns: 3 }, { width: 1920, height: 1080, columns: 4 }]) {
     await page.setViewportSize(viewport)

@@ -1,5 +1,7 @@
 # Homepage Reference Refinement Implementation Plan
 
+> **Superseded on 2026-09-16:** The approved merchandising-stream iteration replaces the compact-offers approach. Use `docs/superpowers/plans/2026-09-16-homepage-merchandising-stream.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Перестроить первый экран и блок «О компании» главной страницы по утверждённой UX-логике референса, не дублируя существующие акции и товарные подборки.

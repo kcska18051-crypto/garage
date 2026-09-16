@@ -19,6 +19,7 @@ describe('prototype routes', () => {
     render(<MemoryRouter initialEntries={['/catalog']}><App /></MemoryRouter>)
 
     expect(screen.getByRole('heading', { level: 1, name: 'Каталог' })).toBeInTheDocument()
+    expect(document.querySelector('.catalog-page__header p')).toBeNull()
     expect(screen.getAllByTestId('catalog-mobile-row')).toHaveLength(6)
     expect(screen.getAllByTestId('catalog-root-card')).toHaveLength(6)
   })

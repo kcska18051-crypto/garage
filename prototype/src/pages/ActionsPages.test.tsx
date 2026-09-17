@@ -22,7 +22,10 @@ describe('actions routes', () => {
   it('renders the hybrid detail with shared catalog listing', () => {
     render(<MemoryRouter initialEntries={['/actions/professional-workshop']}><App /></MemoryRouter>)
     expect(screen.getByRole('heading', { level: 1, name: 'Оснащение мастерской: выгода на комплект' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Условия участия' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Условия участия' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Описание акции' })).not.toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Описание и условия акции' })).toBeInTheDocument()
+    expect(document.querySelector('.action-detail-status p')).toBeNull()
     expect(screen.getByRole('group', { name: 'Группы товаров акции' })).toBeInTheDocument()
     expect(document.querySelector('.catalog-tags')).toBeInTheDocument()
     expect(document.querySelector('.catalog-listing__sidebar')).toBeInTheDocument()

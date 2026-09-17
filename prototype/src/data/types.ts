@@ -12,6 +12,7 @@ export type Brand = { id: string; name: string; href: string }
 export type Product = {
   id: string
   name: string
+  sku: string
   price: string
   availability: string
   href: string

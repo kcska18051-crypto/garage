@@ -43,7 +43,7 @@ export type CatalogSubcategory = CatalogRootSubcategory & {
   childSections?: CatalogChildSection[]
 }
 
-export type CatalogChildSection = { id: string; name: string; href: string; description: string }
+export type CatalogChildSection = { id: string; name: string; href: string; description: string; count?: number }
 
 export type CatalogBrand = { id: string; name: string; count: number }
 

@@ -145,13 +145,13 @@ test('list view stays a single readable column at 1920', async ({ page }) => {
   expect(layout).toEqual({ columns: 1, overflow: false })
 })
 
-test('list cards expose a distinct readable price panel', async ({ page }) => {
+test('list cards keep a compact readable price panel', async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 })
   await page.goto('/catalog/compressor-equipment/screw-compressors')
   await page.getByRole('button', { name: 'Список' }).click()
 
   const card = page.locator('.catalog-product-card').first()
-  await expect(card.getByText('Цена', { exact: true })).toBeVisible()
+  await expect(card.locator('.product-teaser__bottom strong')).toContainText('₽')
   const metrics = await card.locator('.catalog-product-card__bottom').evaluate((panel) => {
     const price = panel.querySelector('strong')!
     const action = panel.querySelector('button')!
@@ -162,9 +162,9 @@ test('list cards expose a distinct readable price panel', async ({ page }) => {
     }
   })
 
-  expect(metrics.panelWidth).toBeGreaterThanOrEqual(160)
-  expect(metrics.actionWidth).toBeGreaterThanOrEqual(metrics.panelWidth - 40)
-  expect(metrics.priceSize).toBeGreaterThanOrEqual(20)
+  expect(metrics.panelWidth).toBeGreaterThanOrEqual(120)
+  expect(metrics.actionWidth).toBeLessThanOrEqual(120)
+  expect(metrics.priceSize).toBeGreaterThanOrEqual(18)
 })
 
 test('mobile filter keeps a draft until the explicit apply action', async ({ page }) => {
@@ -203,7 +203,7 @@ test('counts appear on first-level section links and beside product results on t
   await expect(page.locator('.catalog-listing')).toHaveCount(0)
 
   await page.goto('/catalog/compressor-equipment/screw-compressors')
-  await expect(page.locator('.catalog-page__header').getByText(/\d+ товар/)).toHaveCount(0)
+  await expect(page.locator('.catalog-page__header').getByText('Показано 12 из 48')).toBeVisible()
   await expect(page.locator('.catalog-listing__toolbar').getByText(/Найдено \d+ товар/)).toBeVisible()
   await expect(page.getByRole('button', { name: 'Тег Remeza' })).toHaveText('Remeza')
   const fullFilterBrand = page.locator('.catalog-listing__sidebar').getByLabel('Remeza', { exact: true })
@@ -227,9 +227,20 @@ test('catalog card actions update the shared header commerce counters', async ({
   await expect(page.locator('[aria-label="Корзина: 1"]:visible')).toBeVisible()
 })
 
+test('list view becomes a readable vertical card on tablet', async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 900 })
+  await page.goto('/catalog/compressor-equipment/screw-compressors')
+  await page.getByRole('button', { name: 'Список' }).click()
+  const card = page.locator('.catalog-product-card').first()
+  await expect(card.locator('.product-teaser__name')).toBeVisible()
+  expect(await card.evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true)
+})
+
 test('screw-compressor page presents child sections before tags, listing and SEO text', async ({ page }) => {
   await page.goto('/catalog/compressor-equipment/screw-compressors')
   const children = page.getByRole('region', { name: 'Дочерние разделы' })
+  await expect(children.getByRole('link')).toHaveCount(4)
+  await children.getByRole('button', { name: 'Показать ещё 2' }).click()
   await expect(children.getByRole('link')).toHaveCount(6)
   await expect(children).toContainText('Винтовые компрессоры на ресивере')
   const order = await page.locator('.catalog-page').evaluate((root) => {
@@ -237,4 +248,27 @@ test('screw-compressor page presents child sections before tags, listing and SEO
     return selectors.map((selector) => Array.from(root.children).indexOf(root.querySelector(selector)!))
   })
   expect(order).toEqual([...order].sort((a, b) => a - b))
+})
+
+test('shared product teaser offers hover frames and explicit mobile controls', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/catalog/compressor-equipment/screw-compressors')
+  const card = page.locator('.catalog-product-card').first()
+  const gallery = card.getByTestId('product-gallery')
+  const media = card.locator('.product-teaser__media')
+  await media.scrollIntoViewIfNeeded()
+  const box = await media.boundingBox()
+  if (!box) throw new Error('Product media is not visible')
+  await page.mouse.move(box.x + box.width * .85, box.y + box.height / 2)
+  await expect(gallery).toHaveAttribute('data-frame', '2')
+  await page.mouse.move(1, 1)
+  await expect(gallery).toHaveAttribute('data-frame', '0')
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  const secondFrame = card.getByRole('button', { name: /Показать кадр 2:/ })
+  const tapTarget = await secondFrame.boundingBox()
+  expect(tapTarget?.width).toBeGreaterThanOrEqual(44)
+  expect(tapTarget?.height).toBeGreaterThanOrEqual(44)
+  await secondFrame.click()
+  await expect(gallery).toHaveAttribute('data-frame', '1')
 })

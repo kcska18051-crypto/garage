@@ -4,6 +4,17 @@ import { MemoryRouter } from 'react-router-dom'
 import { App } from '../../app/App'
 
 describe('new products showcase', () => {
+  it('uses the compact shared product teaser contract', () => {
+    render(<MemoryRouter><App /></MemoryRouter>)
+    const card = document.querySelector<HTMLElement>('.product-card')!
+
+    expect(card).toHaveClass('product-teaser')
+    expect(card.querySelector('[data-testid="product-gallery"]')).toBeInTheDocument()
+    expect(card.querySelectorAll('[data-testid="product-gallery-dot"]')).toHaveLength(3)
+    expect(card).toHaveTextContent('Артикул:')
+    expect(card.querySelector('.product-card__availability')).toBeNull()
+  })
+
   it('updates shared header badges from real product actions', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter><App /></MemoryRouter>)

@@ -26,6 +26,23 @@ test('active, hybrid detail and completed routes form one action journey', async
   await expect(page.getByText(/Акция завершена/)).toHaveCount(2)
 })
 
+test('action detail follows the approved content hierarchy without duplicated description', async ({ page }) => {
+  await page.goto('/actions/professional-workshop')
+  const main = page.locator('main')
+  const title = main.getByRole('heading', { level: 1 })
+  const hero = main.locator('.action-hero')
+  const features = main.locator('.action-feature-grid')
+  const content = main.locator('.action-content')
+  const status = main.locator('.action-detail-status')
+
+  await expect(status).toBeVisible()
+  await expect(main.getByText('Описание акции', { exact: true })).toHaveCount(0)
+  await expect(main.getByText('Условия участия', { exact: true })).toHaveCount(0)
+  expect(await title.evaluate((node, other) => Boolean(node.compareDocumentPosition(other) & Node.DOCUMENT_POSITION_FOLLOWING), await hero.elementHandle())).toBeTruthy()
+  expect(await hero.evaluate((node, other) => Boolean(node.compareDocumentPosition(other) & Node.DOCUMENT_POSITION_FOLLOWING), await features.elementHandle())).toBeTruthy()
+  expect(await features.evaluate((node, other) => Boolean(node.compareDocumentPosition(other) & Node.DOCUMENT_POSITION_FOLLOWING), await content.elementHandle())).toBeTruthy()
+})
+
 for (const width of [1440, 1024, 390]) {
   test(`action pages have no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })

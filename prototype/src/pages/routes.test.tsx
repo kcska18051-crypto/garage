@@ -77,11 +77,25 @@ describe('prototype routes', () => {
     const tags = screen.getByRole('heading', { name: 'Быстрый выбор по параметрам' }).closest('section')!
     const listing = screen.getByRole('heading', { name: 'Подбор оборудования' }).closest('section')!
     const seo = screen.getByRole('region', { name: 'О винтовых компрессорах' })
-    expect(childSections.querySelectorAll('a')).toHaveLength(6)
+    expect(screen.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' }).parentElement).toHaveTextContent('Показано 12 из 48')
+    expect(childSections.querySelectorAll('a')).toHaveLength(4)
     expect(childSections).toHaveTextContent('Винтовые компрессоры на ресивере')
+    expect(screen.getByRole('button', { name: 'Показать ещё 2' })).toHaveAttribute('aria-controls', 'catalog-child-sections-grid')
     expect(childSections.compareDocumentPosition(tags) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(tags.compareDocumentPosition(listing) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(listing.compareDocumentPosition(seo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('uses compact shared product teasers on the third catalog level', () => {
+    render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/screw-compressors']}><App /></MemoryRouter>)
+    const card = document.querySelector<HTMLElement>('.catalog-product-card')!
+
+    expect(card).toHaveClass('product-teaser')
+    expect(card.querySelector('[data-testid="product-gallery"]')).toBeInTheDocument()
+    expect(card.querySelectorAll('[data-testid="product-gallery-dot"]')).toHaveLength(3)
+    expect(card.querySelector('dl')).toBeNull()
+    expect(card.querySelector('.catalog-product-card__availability')).toBeNull()
+    expect(card).toHaveTextContent('Артикул:')
   })
 
   it('uses the same second-level template without reserving tag space', () => {

@@ -3,7 +3,6 @@ import { HomePage } from '../pages/HomePage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
 import { CatalogPage } from '../pages/CatalogPage'
-import { CatalogCategoryPage } from '../pages/CatalogCategoryPage'
 import { CatalogSubcategoryPage } from '../pages/CatalogSubcategoryPage'
 import { ProductDetailPage } from '../pages/ProductDetailPage'
 import { BrandsPage } from '../pages/BrandsPage'
@@ -30,7 +29,6 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/catalog" element={<CatalogPage />} />
-      <Route path="/catalog/compressor-equipment" element={<CatalogCategoryPage />} />
       <Route path="/catalog/compressor-equipment/:subcategorySlug" element={<CatalogSubcategoryPage />} />
       <Route path="/catalog/compressor-equipment/:subcategorySlug/:childSlug" element={<CatalogSubcategoryPage />} />
       <Route path="/catalog/:categorySlug" element={<CatalogSectionPage />} />

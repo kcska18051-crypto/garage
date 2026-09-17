@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
 
@@ -28,6 +29,8 @@ describe('prototype routes', () => {
     render(<MemoryRouter initialEntries={['/catalog/lifting-equipment']}><App /></MemoryRouter>)
 
     expect(screen.getByRole('heading', { level: 1, name: 'Подъёмное оборудование' })).toBeInTheDocument()
+    expect(document.querySelector('.catalog-page__header p')).toHaveTextContent('Подъёмники, домкраты и оборудование рабочих постов.')
+    expect(document.querySelector('.catalog-subcategory-grid')).toBeNull()
     expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument()
     expect(screen.getAllByTestId('catalog-section-row').length).toBeGreaterThan(5)
   })
@@ -38,12 +41,24 @@ describe('prototype routes', () => {
     expect(screen.getByRole('heading', { name: 'Страница не найдена' })).toBeInTheDocument()
   })
 
-  it('opens the first-level compressor category', () => {
+  it('shows only linked subcategories on the first-level compressor page', async () => {
     render(<MemoryRouter initialEntries={['/catalog/compressor-equipment']}><App /></MemoryRouter>)
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Компрессорное оборудование' })).toBeInTheDocument()
-    const desktopDetail = document.querySelector<HTMLElement>('.catalog-category-detail')!
-    expect(within(desktopDetail).getByRole('link', { name: /Винтовые компрессоры/ })).toHaveAttribute('href', '/catalog/compressor-equipment/screw-compressors')
+    expect(screen.getByRole('heading', { level: 1, name: 'Компрессоры' })).toBeInTheDocument()
+    expect(document.querySelector('.catalog-page__header p')).toBeNull()
+    const sectionGrid = document.querySelector<HTMLElement>('.catalog-subcategory-grid')!
+    expect(within(sectionGrid).getAllByTestId('catalog-subcategory-card')).toHaveLength(6)
+    expect(within(sectionGrid).getByRole('link', { name: 'Винтовые компрессоры, 48 товаров' })).toHaveAttribute('href', '/catalog/compressor-equipment/screw-compressors')
+    expect(within(sectionGrid).getByText('48 товаров')).toBeInTheDocument()
+    expect(sectionGrid.querySelectorAll('.catalog-subcategory-card__art')).toHaveLength(6)
+    expect(document.querySelector('.catalog-listing')).toBeNull()
+    expect(document.querySelector('.catalog-related-brands')).toBeNull()
+    expect(screen.queryByRole('heading', { name: 'Бренды категории' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Подбор оборудования' })).not.toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('link', { name: 'Винтовые компрессоры, 48 товаров' }))
+    expect(screen.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Подбор оборудования' })).toBeInTheDocument()
   })
 
   it('opens the reusable second-level category with catalog breadcrumbs', () => {

@@ -8,7 +8,7 @@ test('homepage, catalog and category cards form one navigation chain', async ({ 
 
   await page.locator('.catalog-page a[href="/catalog/compressor-equipment"]:visible').first().click()
   await expect(page).toHaveURL(/\/catalog\/compressor-equipment$/)
-  await expect(page.getByRole('heading', { name: 'Компрессорное оборудование', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Компрессоры', exact: true })).toBeVisible()
 
   await page.locator('.catalog-page a[href="/catalog/compressor-equipment/screw-compressors"]:visible').first().click()
   await expect(page).toHaveURL(/\/catalog\/compressor-equipment\/screw-compressors$/)

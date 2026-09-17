@@ -47,8 +47,62 @@ test('one catalog card expands independently and a category opens its landing pa
   await expect(page.getByTestId('catalog-section-row')).toHaveCount(6)
 })
 
+test('first-level compressor page contains only compact linked subcategories', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/catalog/compressor-equipment')
+
+  await expect(page.getByRole('heading', { level: 1, name: 'Компрессоры' })).toBeVisible()
+  await expect(page.getByTestId('catalog-subcategory-card')).toHaveCount(6)
+  await expect(page.locator('.catalog-subcategory-card__art')).toHaveCount(6)
+  await expect(page.locator('.catalog-listing')).toHaveCount(0)
+  await expect(page.locator('.catalog-related-brands')).toHaveCount(0)
+  await expect(page.getByLabel('Сортировка')).toHaveCount(0)
+
+  const layout = await page.locator('.catalog-subcategory-grid').evaluate((grid) => ({
+    columns: getComputedStyle(grid).gridTemplateColumns.split(' ').length,
+    cardHeight: grid.querySelector('a')!.getBoundingClientRect().height,
+  }))
+  expect(layout.columns).toBe(4)
+  expect(layout.cardHeight).toBeLessThan(180)
+
+  await page.getByRole('link', { name: 'Винтовые компрессоры, 48 товаров' }).click()
+  await expect(page).toHaveURL(/\/catalog\/compressor-equipment\/screw-compressors$/)
+  await expect(page.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' })).toBeVisible()
+})
+
+for (const viewport of [
+  { width: 1440, height: 900, columns: 4 },
+  { width: 1024, height: 900, columns: 3 },
+  { width: 768, height: 900, columns: 2 },
+]) {
+  test(`first-level subcategories stay compact in ${viewport.columns} columns at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    await page.goto('/catalog/compressor-equipment')
+
+    const grid = page.locator('.catalog-subcategory-grid')
+    const layout = await grid.evaluate((element) => ({
+      columns: getComputedStyle(element).gridTemplateColumns.split(' ').length,
+      heights: Array.from(element.querySelectorAll('a')).map((card) => card.getBoundingClientRect().height),
+    }))
+    expect(layout.columns).toBe(viewport.columns)
+    expect(new Set(layout.heights).size).toBe(1)
+    expect(Math.max(...layout.heights)).toBeLessThan(180)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+  })
+}
+
+test('mobile first-level category uses the compact vertical list', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/catalog/compressor-equipment')
+
+  await expect(page.locator('.catalog-subcategory-grid')).toBeHidden()
+  await expect(page.getByTestId('catalog-section-row')).toHaveCount(6)
+  await expect(page.locator('.catalog-section-list--mobile-only .catalog-row-art')).toHaveCount(6)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+})
+
 for (const category of [
-  { path: '/catalog/compressor-equipment', heading: 'Компрессорное оборудование' },
+  { path: '/catalog/compressor-equipment', heading: 'Компрессоры' },
   { path: '/catalog/lifting-equipment', heading: 'Подъёмное оборудование' },
   { path: '/catalog/body-repair', heading: 'Кузовной ремонт' },
   { path: '/catalog/painting', heading: 'Покраска' },
@@ -141,16 +195,12 @@ test('second-level template removes the optional tag block without a gap', async
   await expect(page.getByRole('heading', { name: 'Подбор оборудования' })).toBeVisible()
 })
 
-test('counts appear only in filters and directly above product results', async ({ page }) => {
+test('counts appear on first-level section links and beside product results on the next level', async ({ page }) => {
   await page.goto('/catalog/compressor-equipment')
   await expect(page.locator('.catalog-page__header').getByText(/\d+ товар/)).toHaveCount(0)
-  const firstLevelListingCount = page.locator('.catalog-listing__toolbar').getByText('Найдено 32 товара')
-  if (await page.locator('.catalog-section-list--mobile-only').isVisible()) {
-    await expect(page.getByTestId('catalog-section-row')).toHaveCount(6)
-    await expect(firstLevelListingCount).toBeHidden()
-  } else {
-    await expect(firstLevelListingCount).toBeVisible()
-  }
+  await expect(page.getByTestId('catalog-section-row')).toHaveCount(6)
+  await expect(page.getByText('48 товаров')).toHaveCount(2)
+  await expect(page.locator('.catalog-listing')).toHaveCount(0)
 
   await page.goto('/catalog/compressor-equipment/screw-compressors')
   await expect(page.locator('.catalog-page__header').getByText(/\d+ товар/)).toHaveCount(0)

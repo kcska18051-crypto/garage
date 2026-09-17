@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { getCatalogCategory } from '../data/catalogData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
-import { CatalogSectionList } from '../features/catalog/CatalogSectionList'
+import { CatalogSectionGrid, CatalogSectionList } from '../features/catalog/CatalogSectionList'
 import { NotFoundPage } from './NotFoundPage'
 import '../features/catalog/Catalog.css'
 
@@ -11,16 +11,20 @@ export function CatalogSectionPage() {
 
   if (!category) return <NotFoundPage />
 
+  const usesCompactGrid = category.slug === 'compressor-equipment'
+
   return (
     <main className="catalog-page catalog-section-page">
       <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: 'Каталог', to: '/catalog' }, { label: category.name }]} />
       <header className="catalog-page__header catalog-page__header--category">
-        <div>
-          <h1>{category.name}</h1>
-          <p>{category.description}</p>
-        </div>
+        {usesCompactGrid ? <h1>{category.name}</h1> : <div><h1>{category.name}</h1><p>{category.description}</p></div>}
       </header>
-      <CatalogSectionList items={category.subcategories} />
+      {usesCompactGrid ? (
+        <>
+          <CatalogSectionGrid items={category.subcategories} />
+          <CatalogSectionList className="catalog-section-list--mobile-only" items={category.subcategories} />
+        </>
+      ) : <CatalogSectionList items={category.subcategories} />}
     </main>
   )
 }

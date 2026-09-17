@@ -81,7 +81,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     await page.goto('/product/remeza-vk-10-gr-0001/')
     const productGallery = await page.locator('.product-gallery__main').boundingBox()
     expect(productGallery).not.toBeNull()
-    expect(productGallery!.height).toBeLessThanOrEqual(mobile ? 330 : 460)
+    expect(productGallery!.height).toBeLessThanOrEqual(mobile ? 330 : 480)
 
     await page.goto('/brand/remeza/')
     const brandHero = await page.locator('.brand-detail-hero__art').boundingBox()

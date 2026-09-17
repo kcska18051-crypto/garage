@@ -1,69 +1,101 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
 
-describe('Remeza VK 10 product detail', () => {
-  it('renders the independent product route with informational brand and prototype commercial data', () => {
-    render(<MemoryRouter initialEntries={['/product/remeza-vk-10-gr-0001/']}><App /></MemoryRouter>)
+const route = '/product/remeza-vk-10-gr-0001/'
+const longName = 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом, 380 В, 7,5 кВт'
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Remeza ВК 10' })).toBeInTheDocument()
-    const productBrand = screen.getByText('Remeza', { selector: '.product-identity__brand' })
-    expect(productBrand).toBeInTheDocument()
-    expect(productBrand).toHaveAttribute('href', '/brand/remeza/')
-    expect(screen.getAllByText(/демонстрацион/i).length).toBeGreaterThan(0)
-    expect(screen.getByRole('navigation', { name: 'Разделы товара' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Технические характеристики' })).toBeInTheDocument()
+const renderPage = () => render(<MemoryRouter initialEntries={[route]}><App /></MemoryRouter>)
+
+describe('Remeza product detail redesign', () => {
+  it('places the long product heading and compact metadata above the three-column hero', () => {
+    const { container } = renderPage()
+    const heading = screen.getByRole('heading', { level: 1, name: longName })
+    const hero = container.querySelector('.product-hero')
+
+    expect(hero).toBeInTheDocument()
+    expect(heading.compareDocumentPosition(hero as Node) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(screen.getByText(/Артикул GR-0001/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'В избранное' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Сравнить' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Поделиться' })).toBeInTheDocument()
   })
 
-  it('updates shared commerce counters and opens the gallery enlargement', async () => {
+  it('selects a complete product offer and keeps unavailable combinations disabled', async () => {
     const user = userEvent.setup()
-    render(<MemoryRouter initialEntries={['/product/remeza-vk-10-gr-0001/']}><App /></MemoryRouter>)
+    renderPage()
 
-    await user.click(screen.getByRole('button', { name: 'Добавить в сравнение' }))
-    await user.click(screen.getByRole('button', { name: 'Добавить в избранное' }))
-    await user.click(screen.getAllByRole('button', { name: 'В корзину' })[0])
-    expect(screen.getAllByRole('link', { name: 'Сравнение: 1' }).length).toBeGreaterThan(0)
-    expect(screen.getAllByRole('link', { name: 'Избранное: 1' }).length).toBeGreaterThan(0)
-    expect(screen.getAllByRole('link', { name: 'Корзина: 1' }).length).toBeGreaterThan(0)
+    const variants = screen.getByRole('group', { name: 'Варианты товара' })
+    expect(within(variants).getByText((_, element) => element?.tagName === 'P' && element.textContent === 'Напряжение: 380 В')).toBeInTheDocument()
+    expect(within(variants).getByText((_, element) => element?.tagName === 'P' && element.textContent === 'Мощность: 7,5 кВт')).toBeInTheDocument()
+    expect(within(variants).getByRole('button', { name: '11 кВт' })).toBeDisabled()
 
-    await user.click(screen.getByRole('button', { name: 'Увеличить изображение' }))
-    expect(screen.getByRole('dialog', { name: 'Увеличенное изображение товара' })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Закрыть изображение' }))
-    expect(screen.queryByRole('dialog', { name: 'Увеличенное изображение товара' })).not.toBeInTheDocument()
+    await user.click(within(variants).getByRole('button', { name: '220 В' }))
+
+    expect(within(variants).getByText((_, element) => element?.tagName === 'P' && element.textContent === 'Напряжение: 220 В')).toBeInTheDocument()
+    expect(screen.getByText(/Артикул GR-220-55/)).toBeInTheDocument()
+    expect(screen.getAllByText('169 000 ₽').length).toBeGreaterThan(0)
   })
 
-  it('switches between purchase and price-request states without changing the product URL', async () => {
+  it('moves through gallery frames and keeps a purchase panel in enlarged view', async () => {
     const user = userEvent.setup()
-    render(<MemoryRouter initialEntries={['/product/remeza-vk-10-gr-0001/']}><App /></MemoryRouter>)
+    renderPage()
 
-    expect(screen.getByRole('group', { name: 'Демонстрация коммерческого состояния' })).toBeInTheDocument()
-    expect(screen.getByText('185 000 ₽')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Уменьшить количество' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Увеличить количество' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Купить в один клик' })).toBeInTheDocument()
-    expect(screen.getByText(/Доставка в городе/i)).toBeInTheDocument()
+    const gallery = screen.getByRole('region', { name: 'Галерея товара' })
+    expect(within(gallery).getByRole('button', { name: 'Предыдущее изображение' })).toBeInTheDocument()
+    await user.click(within(gallery).getByRole('button', { name: 'Следующее изображение' }))
+    expect(within(gallery).getByText(/2 из 5/)).toBeInTheDocument()
+    expect(within(gallery).getByRole('button', { name: 'Видео о товаре' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Цена по запросу' }))
-
-    expect(screen.getAllByText('Цена по запросу').length).toBeGreaterThan(0)
-    expect(screen.getByRole('button', { name: 'Запросить цену' })).toBeInTheDocument()
-    expect(screen.getByText(/менеджер подтвердит цену и срок поставки/i)).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Купить в один клик' })).not.toBeInTheDocument()
-    expect(window.location.pathname).not.toContain('purchase')
-    expect(window.location.search).toBe('')
+    await user.click(within(gallery).getByRole('button', { name: 'Увеличить изображение' }))
+    const modal = screen.getByRole('dialog', { name: 'Увеличенный просмотр товара' })
+    expect(within(modal).getByRole('complementary', { name: 'Покупка в увеличенном просмотре' })).toBeInTheDocument()
+    expect(within(modal).getByRole('button', { name: 'В корзину' })).toBeInTheDocument()
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog', { name: 'Увеличенный просмотр товара' })).not.toBeInTheDocument()
   })
 
-  it('shows the complete first-screen product information and gallery video entry', () => {
-    render(<MemoryRouter initialEntries={['/product/remeza-vk-10-gr-0001/']}><App /></MemoryRouter>)
+  it.each([
+    ['В наличии', 'В корзину'],
+    ['Под заказ', 'Запросить срок'],
+    ['Нет в наличии', 'Уведомить о поступлении'],
+    ['Снят с производства', 'Показать аналоги'],
+  ])('maps commercial state %s to the correct primary action', async (state, action) => {
+    const user = userEvent.setup()
+    renderPage()
 
-    expect(screen.getByText('Хит')).toBeInTheDocument()
-    expect(screen.getByText('Новинка')).toBeInTheDocument()
-    expect(screen.getByText('Акция')).toBeInTheDocument()
-    expect(screen.getByText('Официальная гарантия')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: '5 вопросов · демо' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Видео о товаре' })).toBeInTheDocument()
-    expect(screen.getByText('Объём ресивера')).toBeInTheDocument()
-    expect(screen.getByText(/Физическим лицам и организациям/i)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: state }))
+
+    expect(screen.getAllByText(state).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('button', { name: action }).length).toBeGreaterThan(0)
+    expect(screen.getByText('Ярославль', { selector: '.product-stock__city' })).toBeInTheDocument()
+    expect(screen.getByText('Вологда', { selector: '.product-stock__city' })).toBeInTheDocument()
+  })
+
+  it('opens a commercial proposal for the selected offer and reports prototype actions', async () => {
+    const user = userEvent.setup()
+    renderPage()
+
+    await user.click(screen.getByRole('button', { name: 'Коммерческое предложение' }))
+    const modal = screen.getByRole('dialog', { name: 'Коммерческое предложение' })
+    expect(within(modal).getByText(/GR-0001/)).toBeInTheDocument()
+    expect(within(modal).getByText(/380 В · 7,5 кВт/)).toBeInTheDocument()
+
+    await user.click(within(modal).getByRole('button', { name: 'Скачать PDF' }))
+    expect(within(modal).getByRole('status')).toHaveTextContent('PDF подготовлен')
+    await user.click(within(modal).getByRole('button', { name: 'Отправить на e-mail' }))
+    expect(within(modal).getByRole('status')).toHaveTextContent('Отправка показана в демонстрационном режиме')
+  })
+
+  it('shares the product with visible feedback and keeps separate financing actions', async () => {
+    const user = userEvent.setup()
+    renderPage()
+
+    await user.click(screen.getByRole('button', { name: 'Поделиться' }))
+    expect(screen.getByText('Ссылка на товар скопирована', { selector: '[role="status"]' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Купить в кредит' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'В рассрочку' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'В лизинг' })).toBeInTheDocument()
   })
 })

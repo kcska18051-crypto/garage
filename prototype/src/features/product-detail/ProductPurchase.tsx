@@ -1,66 +1,63 @@
 import { useState } from 'react'
-import { productDetail, money } from '../../data/productDetailData'
+import { money, productDetail, type ProductOffer } from '../../data/productDetailData'
 import { useCommerce } from '../../state/CommerceState'
-import { useRegion } from '../../state/RegionState'
+import { CommercialProposal } from './CommercialProposal'
 
-export type CommercialState = 'available' | 'request'
+export type CommercialState = 'available' | 'order' | 'unavailable' | 'discontinued'
 
-const requestCopy = {
-  price: 'Запрос цены подготовлен. Менеджер подтвердит цену и срок поставки.',
-  oneClick: 'Заказ в один клик подготовлен. Менеджер свяжется для подтверждения.',
-  finance: 'Запрос условий финансирования подготовлен. Доступность уточняется отдельно.',
+const stateMap: Record<CommercialState, { label: string; action: string; tone: string; stocks: Array<[string, string]> }> = {
+  available: { label: 'В наличии', action: 'В корзину', tone: 'positive', stocks: [['Ярославль', '3 шт. · самовывоз сегодня'], ['Вологда', 'Получение ориентировочно завтра']] },
+  order: { label: 'Под заказ', action: 'Запросить срок', tone: 'warning', stocks: [['Ярославль', 'Поставка ориентировочно 5–7 дней'], ['Вологда', 'Поставка ориентировочно 6–8 дней']] },
+  unavailable: { label: 'Нет в наличии', action: 'Уведомить о поступлении', tone: 'negative', stocks: [['Ярославль', 'Нет в наличии'], ['Вологда', 'Нет в наличии']] },
+  discontinued: { label: 'Снят с производства', action: 'Показать аналоги', tone: 'neutral', stocks: [['Ярославль', 'Поставка прекращена'], ['Вологда', 'Поставка прекращена']] },
 }
 
-type ProductPurchaseProps = {
-  state: CommercialState
-  onStateChange: (state: CommercialState) => void
-}
+type Props = { offer: ProductOffer; state: CommercialState; onStateChange(state: CommercialState): void }
 
-export function ProductPurchase({ state, onStateChange }: ProductPurchaseProps) {
+export function GalleryPurchasePanel({ offer, state }: { offer: ProductOffer; state: CommercialState }) {
   const commerce = useCommerce()
-  const { region } = useRegion()
-  const [request, setRequest] = useState<keyof typeof requestCopy | null>(null)
-  const [quantity, setQuantity] = useState(1)
-  const inCart = commerce.cartIds.has(productDetail.id)
-  const saving = productDetail.oldPrice - productDetail.price
-  const isAvailable = state === 'available'
-
-  return <aside className="product-purchase" aria-label="Покупка товара">
-    <p className="product-purchase__notice">Демонстрационные данные прототипа</p>
-    <div className="product-state-switch" role="group" aria-label="Демонстрация коммерческого состояния">
-      <span>Состояние товара</span>
-      <div>
-        <button type="button" aria-pressed={isAvailable} onClick={() => { onStateChange('available'); setRequest(null) }}>Доступен</button>
-        <button type="button" aria-pressed={!isAvailable} onClick={() => { onStateChange('request'); setRequest(null) }}>Цена по запросу</button>
-      </div>
-    </div>
-
-    {isAvailable ? <>
-      <div className="product-purchase__price"><del>{money(productDetail.oldPrice)}</del><strong>{money(productDetail.price)}</strong><span>Скидка {money(saving)}</span></div>
-      <p className="product-purchase__status"><span />{productDetail.status}<small>Данные о наличии зависят от выбранного города</small></p>
-      <div className="product-purchase__buy-row">
-        <div className="product-quantity" aria-label="Количество товара"><button type="button" aria-label="Уменьшить количество" onClick={() => setQuantity((value) => Math.max(1, value - 1))}>−</button><output>{quantity}</output><button type="button" aria-label="Увеличить количество" onClick={() => setQuantity((value) => value + 1)}>+</button></div>
-        <button className="button button--dark" type="button" onClick={() => commerce.addToCart(productDetail.id)}>{inCart ? 'В корзине' : 'В корзину'}</button>
-      </div>
-      <button className="button" type="button" onClick={() => setRequest('oneClick')}>Купить в один клик</button>
-      <button className="product-purchase__finance" type="button" onClick={() => setRequest('finance')}>Рассрочка · сплит · лизинг <span>условия уточняются</span></button>
-    </> : <>
-      <div className="product-purchase__request-price"><strong>Цена по запросу</strong><p>Менеджер подтвердит цену и срок поставки после обращения.</p></div>
-      <button className="button button--dark" type="button" onClick={() => setRequest('price')}>Запросить цену</button>
-    </>}
-
-    <div className="product-fulfillment">
-      <div><strong>Доставка в городе {region}</strong><span>{isAvailable ? 'Ориентировочный срок уточняется' : 'Доступность и срок подтвердит менеджер'}</span></div>
-      <div><strong>Самовывоз</strong><span>{isAvailable ? 'Из доступного пункта после подтверждения' : 'Возможные пункты сообщит менеджер'}</span></div>
-    </div>
-    <div className="product-purchase__assurances"><span>Гарантия</span><span>Возврат</span><span>Оплата</span></div>
-    <p className="product-purchase__audience">Физическим лицам и организациям</p>
-    {request && <p className="product-purchase__feedback" role="status">{requestCopy[request]}</p>}
+  const current = stateMap[state]
+  return <aside className="gallery-purchase" aria-label="Покупка в увеличенном просмотре">
+    <small>Артикул {offer.sku}</small><h3>{productDetail.name}</h3><strong>{money(offer.price)}</strong>
+    <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" />{current.label}</p>
+    <button className="button button--dark" type="button" disabled={state !== 'available'} onClick={() => commerce.addToCart(offer.id)}>{state === 'available' ? 'В корзину' : current.action}</button>
   </aside>
 }
 
-export function ProductMobilePurchase({ state }: { state: CommercialState }) {
+export function ProductPurchase({ offer, state, onStateChange }: Props) {
   const commerce = useCommerce()
-  const isAvailable = state === 'available'
-  return <div className="product-mobile-purchase"><div><small>Демонстрационные данные прототипа</small><strong>{isAvailable ? `${money(productDetail.price)} · цена` : 'Цена по запросу'}</strong></div><button className="button button--dark" type="button" onClick={() => isAvailable && commerce.addToCart(productDetail.id)}>{isAvailable ? (commerce.cartIds.has(productDetail.id) ? 'В корзине' : 'В корзину') : 'Запросить'}</button></div>
+  const [feedback, setFeedback] = useState('')
+  const [quantity, setQuantity] = useState(1)
+  const [proposalOpen, setProposalOpen] = useState(false)
+  const current = stateMap[state]
+  const saving = offer.oldPrice - offer.price
+  const inCart = commerce.cartIds.has(offer.id)
+  const primaryAction = () => {
+    if (state === 'available') commerce.addToCart(offer.id)
+    else if (state === 'order') setFeedback('Запрос срока подготовлен. Менеджер уточнит поставку.')
+    else if (state === 'unavailable') setFeedback('Уведомление о поступлении включено в демонстрационном режиме.')
+    else document.querySelector('#analogs')?.scrollIntoView()
+  }
+  return <aside className="product-purchase" aria-label="Покупка товара">
+    <div className="product-state-switch" role="group" aria-label="Демонстрация статуса товара">
+      <span>Показать состояние</span><div>{(Object.keys(stateMap) as CommercialState[]).map((key) => <button type="button" key={key} aria-label={stateMap[key].label} aria-pressed={state === key} onClick={() => { onStateChange(key); setFeedback('') }}>{stateMap[key].label}</button>)}</div>
+    </div>
+    <div className="product-purchase__price"><del>{money(offer.oldPrice)}</del><strong>{money(offer.price)}</strong><span>Выгода {money(saving)}</span></div>
+    <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" /><strong>{current.label}</strong></p>
+    <div className="product-stock" aria-label="Наличие по городам">{current.stocks.map(([city, note]) => <div key={city}><strong className="product-stock__city">{city}</strong><span>{note}</span></div>)}</div>
+    {state === 'available' && <div className="product-purchase__buy-row"><div className="product-quantity" aria-label="Количество товара"><button type="button" aria-label="Уменьшить количество" onClick={() => setQuantity((value) => Math.max(1, value - 1))}>−</button><output>{quantity}</output><button type="button" aria-label="Увеличить количество" onClick={() => setQuantity((value) => value + 1)}>+</button></div><button className="button button--dark" type="button" onClick={primaryAction}>{inCart ? 'В корзине' : current.action}</button></div>}
+    {state !== 'available' && <button className="button button--dark" type="button" onClick={primaryAction}>{current.action}</button>}
+    {(state === 'available' || state === 'order') && <button className="button" type="button" onClick={() => setFeedback('Быстрый заказ подготовлен. Менеджер свяжется для подтверждения.')}>Купить в один клик</button>}
+    <button className="product-purchase__proposal" type="button" onClick={() => setProposalOpen(true)}>Коммерческое предложение</button>
+    <div className="product-finance" aria-label="Способы финансирования">{['Купить в кредит', 'В рассрочку', 'В лизинг'].map((label) => <button type="button" key={label} aria-label={label} onClick={() => setFeedback(`${label}: условия будут рассчитаны после подтверждения данных.`)}><span aria-hidden="true">○</span>{label}<small>Условия уточняются</small></button>)}</div>
+    <div className="product-help"><strong>Нужна помощь?</strong><p>Специалист поможет подобрать комплектацию.</p><div><button type="button" aria-label="Написать в Telegram" onClick={() => setFeedback('Telegram показан в демонстрационном режиме.')}>TG</button><button type="button" aria-label="Написать в WhatsApp" onClick={() => setFeedback('WhatsApp показан в демонстрационном режиме.')}>WA</button><button type="button" aria-label="Заказать звонок" onClick={() => setFeedback('Обратный звонок подготовлен.')}>☎</button></div></div>
+    {feedback && <p className="product-feedback" role="status">{feedback}</p>}
+    {proposalOpen && <CommercialProposal offer={offer} quantity={quantity} onClose={() => setProposalOpen(false)} />}
+  </aside>
+}
+
+export function ProductMobilePurchase({ offer, state }: { offer: ProductOffer; state: CommercialState }) {
+  const commerce = useCommerce()
+  const current = stateMap[state]
+  return <div className="product-mobile-purchase"><div><small>{current.label}</small><strong>{money(offer.price)}</strong></div><button className="button button--dark" type="button" onClick={() => state === 'available' ? commerce.addToCart(offer.id) : document.querySelector('.product-purchase')?.scrollIntoView()}>{state === 'available' && commerce.cartIds.has(offer.id) ? 'В корзине' : current.action}</button></div>
 }

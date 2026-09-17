@@ -291,12 +291,15 @@ test('shared product teaser keeps a compact vertical rhythm', async ({ page }) =
   const metrics = await card.evaluate((node) => {
     const name = node.querySelector('.product-teaser__name')!.getBoundingClientRect()
     const sku = node.querySelector('.product-teaser__sku')!.getBoundingClientRect()
+    const priceRow = node.querySelector('.product-teaser__bottom')!.getBoundingClientRect()
     return {
       height: node.getBoundingClientRect().height,
       nameToSku: sku.top - name.bottom,
+      skuToPrice: priceRow.top - sku.bottom,
     }
   })
 
   expect(metrics.height).toBeLessThanOrEqual(330)
-  expect(metrics.nameToSku).toBeLessThanOrEqual(6)
+  expect(metrics.nameToSku).toBeLessThanOrEqual(4)
+  expect(metrics.skuToPrice).toBeLessThanOrEqual(5)
 })

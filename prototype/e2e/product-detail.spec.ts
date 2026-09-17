@@ -1,31 +1,33 @@
 import { expect, test } from '@playwright/test'
 
-test('product detail supports gallery, commerce actions, anchors and commercial states', async ({ page }) => {
+test('product detail keeps the approved hierarchy and interactive buying flow', async ({ page }) => {
   await page.goto('/product/remeza-vk-10-gr-0001/')
-  await expect(page.getByRole('heading', { level: 1, name: 'Remeza ВК 10' })).toBeVisible()
+  const heading = page.getByRole('heading', { level: 1, name: 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом, 380 В, 7,5 кВт' })
+  await expect(heading).toBeVisible()
+  const headingBox = await heading.boundingBox()
+  const heroBox = await page.locator('.product-hero').boundingBox()
+  expect(headingBox!.y + headingBox!.height).toBeLessThan(heroBox!.y)
   await expect(page.getByRole('main').getByRole('link', { name: 'Remeza', exact: true })).toHaveAttribute('href', '/brand/remeza/')
-  await expect(page.locator('.product-purchase__notice:visible, .product-mobile-purchase small:visible')).toHaveText('Демонстрационные данные прототипа')
 
-  await page.getByRole('button', { name: 'Добавить в сравнение' }).click()
-  await page.getByRole('button', { name: 'Добавить в избранное' }).click()
+  await page.getByRole('button', { name: 'Сравнить' }).click()
+  await page.getByRole('button', { name: 'В избранное' }).click()
   await page.getByRole('button', { name: 'В корзину' }).first().click()
   if (page.viewportSize()!.width >= 768) await expect(page.getByRole('link', { name: 'Сравнение: 1' })).toBeVisible()
-  else await expect(page.getByRole('button', { name: 'Убрать из сравнения' })).toHaveAttribute('aria-pressed', 'true')
+  else await expect(page.getByRole('button', { name: 'Сравнить' })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('link', { name: 'Избранное: 1' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Корзина: 1' })).toBeVisible()
 
-  await page.getByRole('button', { name: 'Миниатюра 2' }).click()
-  await expect(page.locator('.product-gallery__main')).toHaveAttribute('data-image', '2')
+  await page.getByRole('button', { name: 'Следующее изображение' }).first().click()
+  await expect(page.getByText('2 из 5').first()).toBeVisible()
   await page.getByRole('button', { name: 'Увеличить изображение' }).click()
-  await expect(page.getByRole('dialog', { name: 'Увеличенное изображение товара' })).toBeVisible()
-  await page.getByRole('button', { name: 'Закрыть изображение' }).click()
+  const galleryDialog = page.getByRole('dialog', { name: 'Увеличенный просмотр товара' })
+  await expect(galleryDialog.getByRole('complementary', { name: 'Покупка в увеличенном просмотре' })).toBeVisible()
+  await galleryDialog.getByRole('button', { name: 'Закрыть изображение' }).click()
 
-  await page.getByRole('button', { name: 'Цена по запросу' }).click()
-  await expect(page).toHaveURL(/remeza-vk-10-gr-0001\/$/)
-  await expect(page.getByRole('button', { name: 'Запросить цену' })).toBeVisible()
-  await expect(page.getByText('Менеджер подтвердит цену и срок поставки после обращения.')).toBeVisible()
-  await page.getByRole('button', { name: 'Запросить цену' }).click()
-  await expect(page.getByRole('status')).toContainText('подтвердит цену и срок поставки')
+  await page.getByRole('button', { name: '220 В' }).click()
+  await expect(page.getByText(/Артикул GR-220-55/)).toBeVisible()
+  await page.getByRole('button', { name: 'Коммерческое предложение' }).click()
+  await expect(page.getByRole('dialog', { name: 'Коммерческое предложение' })).toContainText('GR-220-55')
 })
 
 test('mobile product detail keeps the purchase action above bottom navigation', async ({ page }) => {
@@ -40,3 +42,11 @@ test('mobile product detail keeps the purchase action above bottom navigation', 
   expect(navBox).not.toBeNull()
   expect(purchaseBox!.y + purchaseBox!.height).toBeLessThanOrEqual(navBox!.y + 1)
 })
+
+for (const width of [1440, 1024, 768, 390, 360]) {
+  test(`product detail has no horizontal overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('/product/remeza-vk-10-gr-0001/')
+    expect(await page.locator('body').evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true)
+  })
+}

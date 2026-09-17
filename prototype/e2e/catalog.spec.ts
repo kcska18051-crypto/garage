@@ -272,3 +272,22 @@ test('shared product teaser offers hover frames and explicit mobile controls', a
   await secondFrame.click()
   await expect(gallery).toHaveAttribute('data-frame', '1')
 })
+
+test('shared product teaser keeps a compact vertical rhythm', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 })
+  await page.goto('/catalog/compressor-equipment/screw-compressors')
+  const card = page.locator('.catalog-product-card').first()
+  await card.scrollIntoViewIfNeeded()
+
+  const metrics = await card.evaluate((node) => {
+    const name = node.querySelector('.product-teaser__name')!.getBoundingClientRect()
+    const sku = node.querySelector('.product-teaser__sku')!.getBoundingClientRect()
+    return {
+      height: node.getBoundingClientRect().height,
+      nameToSku: sku.top - name.bottom,
+    }
+  })
+
+  expect(metrics.height).toBeLessThanOrEqual(330)
+  expect(metrics.nameToSku).toBeLessThanOrEqual(6)
+})

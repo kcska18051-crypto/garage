@@ -299,7 +299,7 @@ test('shared product teaser keeps a compact vertical rhythm', async ({ page }) =
     }
   })
 
-  expect(metrics.height).toBeLessThanOrEqual(330)
-  expect(metrics.nameToSku).toBeLessThanOrEqual(4)
-  expect(metrics.skuToPrice).toBeLessThanOrEqual(5)
+  expect(metrics.height).toBeLessThanOrEqual(310)
+  expect(metrics.nameToSku).toBeLessThanOrEqual(2)
+  expect(metrics.skuToPrice).toBeLessThanOrEqual(3)
 })

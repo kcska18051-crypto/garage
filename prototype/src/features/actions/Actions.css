@@ -4,5 +4,5 @@
 .action-detail-page h1{font-size:clamp(2.5rem,4.2vw,4.5rem);line-height:1}.action-detail-status{align-self:start}
 @media(max-width:767px){.action-detail-page h1{font-size:2.7rem}}
 .action-product-tabs button[aria-pressed="true"]{background:var(--color-text);color:var(--color-surface)}
-.action-detail-heading{margin:1.5rem 0 2rem}.action-detail-status{align-items:center;border-radius:999px;display:inline-flex;gap:.8rem;margin:0 0 1.1rem;padding:.5rem .8rem}.action-detail-status span{color:var(--color-text-muted);font-size:.76rem}.action-content{margin:2.5rem 0;max-width:56rem}.action-content>p:not(.action-legal){color:var(--color-text-muted);font-size:1.05rem;line-height:1.55}.action-content li{margin:.7rem 0}
+.action-detail-heading{margin:.75rem 0 2rem}.action-detail-status{align-items:center;border-radius:999px;display:inline-flex;margin:1rem 0 0;padding:.45rem .75rem}.action-content{margin:2.5rem 0;max-width:56rem}.action-content>p:not(.action-legal){color:var(--color-text-muted);font-size:1.05rem;line-height:1.55}.action-content li{margin:.7rem 0}
 @media(max-width:767px){.action-detail-status{align-items:flex-start;border-radius:var(--radius-md);flex-direction:column;gap:.2rem}}

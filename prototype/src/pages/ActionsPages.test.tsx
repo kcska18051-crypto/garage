@@ -32,6 +32,18 @@ describe('actions routes', () => {
     expect(document.querySelector('[data-testid="catalog-results"]')).toBeInTheDocument()
   })
 
+  it('places only the action deadline between breadcrumbs and the title', () => {
+    render(<MemoryRouter initialEntries={['/actions/professional-workshop']}><App /></MemoryRouter>)
+    const breadcrumbs = screen.getByRole('navigation', { name: 'Хлебные крошки' })
+    const deadline = document.querySelector<HTMLElement>('.action-detail-status')!
+    const title = screen.getByRole('heading', { level: 1, name: 'Оснащение мастерской: выгода на комплект' })
+
+    expect(deadline).toHaveTextContent('До 16 декабря 2026 года')
+    expect(deadline).not.toHaveTextContent('Физическим и юридическим лицам')
+    expect(breadcrumbs.compareDocumentPosition(deadline) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(deadline.compareDocumentPosition(title) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
   it('removes the whole product area for an informational action', () => {
     render(<MemoryRouter initialEntries={['/actions/seven-days']}><App /></MemoryRouter>)
     expect(screen.getByRole('heading', { level: 1, name: 'Неделя профессионального инструмента' })).toBeInTheDocument()

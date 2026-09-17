@@ -10,6 +10,9 @@ const publicRoutes = [
   'product/remeza-vk-10-gr-0001',
   'brands',
   'brand/remeza',
+  'actions',
+  'actions/professional-workshop',
+  'actions/completed',
 ]
 
 await copyFile(entryFile, new URL('404.html', outputDirectory))

@@ -35,8 +35,9 @@
 .third-level-nav__link:hover { background: var(--color-background); }
 .third-level-nav__link:focus-visible, .third-level-nav__more > button:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .third-level-nav__link.active { box-shadow: inset 0 -2px var(--color-text); }
-.third-level-nav__link--accent { color: var(--color-accent); }
-.third-level-nav__link--accent.active { box-shadow: inset 0 -2px var(--color-accent); }
+.third-level-nav__link--accent { background: var(--color-background); border: 1px solid var(--color-border); padding-inline: .65rem; }
+.third-level-nav__link--accent:hover { background: var(--color-placeholder-1); border-color: var(--color-text-muted); }
+.third-level-nav__link--accent.active { background: var(--color-placeholder-1); border-color: var(--color-text); box-shadow: inset 0 -2px var(--color-text); }
 .third-level-nav__more { margin-left: auto; position: relative; }
 .third-level-nav__more > button { align-items: center; background: transparent; border: 0; border-radius: .4rem; cursor: pointer; display: flex; font-size: .78rem; font-weight: 750; gap: .25rem; min-height: 2rem; padding: .25rem .15rem; white-space: nowrap; }
 .third-level-nav__more > button:hover { background: var(--color-background); }
@@ -44,6 +45,7 @@
 .third-level-nav__more nav .third-level-nav__link { min-height: 2.6rem; padding-inline: .65rem; }
 .third-level-nav__measure { align-items: center; display: flex; gap: 1.1rem; left: -10000px; pointer-events: none; position: absolute; top: 0; visibility: hidden; white-space: nowrap; width: max-content; }
 .third-level-nav__measure span { font-size: .78rem; font-weight: 650; padding-inline: .15rem; }
+.third-level-nav__measure span:first-child { border: 1px solid transparent; padding-inline: .65rem; }
 .third-level-nav__measure [data-measure-more] { font-weight: 750; }
 .third-level-nav__mobile { display: none; }
 .catalog-panel { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-float); display: grid; gap: .25rem; left: var(--gutter); max-width: 28rem; padding: 1.1rem; position: absolute; top: calc(100% + .4rem); width: calc(100% - 2 * var(--gutter)); }

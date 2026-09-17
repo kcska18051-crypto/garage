@@ -8,6 +8,9 @@ import { ProductDetailPage } from '../pages/ProductDetailPage'
 import { BrandsPage } from '../pages/BrandsPage'
 import { BrandDetailPage } from '../pages/BrandDetailPage'
 import { CatalogSectionPage } from '../pages/CatalogSectionPage'
+import { ActionsPage } from '../pages/ActionsPage'
+import { CompletedActionsPage } from '../pages/CompletedActionsPage'
+import { ActionDetailPage } from '../pages/ActionDetailPage'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -35,6 +38,9 @@ export function AppRoutes() {
       <Route path="/product/remeza-vk-10-gr-0001" element={<ProductDetailPage />} />
       <Route path="/brands" element={<BrandsPage />} />
       <Route path="/brand/remeza" element={<BrandDetailPage />} />
+      <Route path="/actions" element={<ActionsPage />} />
+      <Route path="/actions/completed" element={<CompletedActionsPage />} />
+      <Route path="/actions/:slug" element={<ActionDetailPage />} />
       {prototypeRoutes.map((route) => <Route key={route.path} path={route.path} element={<PlaceholderPage title={route.label} />} />)}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

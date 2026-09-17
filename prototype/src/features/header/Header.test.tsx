@@ -64,6 +64,10 @@ describe('responsive header', () => {
 
     expect(document.querySelector('.main-header-row a[href="/actions"]')).not.toBeInTheDocument()
     const desktopNav = screen.getByRole('navigation', { name: 'Быстрые ссылки' })
-    expect(within(desktopNav).getByRole('link', { name: 'Акции' })).toHaveAttribute('href', '/actions')
+    const links = within(desktopNav).getAllByRole('link')
+    expect(links[0]).toHaveTextContent('Акции')
+    expect(links[0]).toHaveClass('third-level-nav__link--accent')
+    const mobileNav = document.querySelector<HTMLElement>('[aria-label="Быстрые ссылки на мобильных"]')!
+    expect(mobileNav.querySelector('a')?.textContent).toBe('Акции')
   })
 })

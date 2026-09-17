@@ -60,4 +60,10 @@ describe('catalog product listing', () => {
     expect(screen.getByLabelText('Remeza').closest('label')).toHaveTextContent('Remeza6')
     expect(screen.getByLabelText('22 кВт')).toBeDisabled()
   })
+
+  it('removes the complete filter interface when filters are disabled', () => {
+    render(<MemoryRouter><CommerceProvider><ProductListing products={catalogProducts} filterGroups={fullFilterGroups} mode="full" showFilters={false} /></CommerceProvider></MemoryRouter>)
+    expect(screen.queryByRole('button', { name: 'Фильтры' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('complementary', { name: 'Фильтры' })).not.toBeInTheDocument()
+  })
 })

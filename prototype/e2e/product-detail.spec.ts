@@ -43,6 +43,36 @@ test('mobile product detail keeps the purchase action above bottom navigation', 
   expect(purchaseBox!.y + purchaseBox!.height).toBeLessThanOrEqual(navBox!.y + 1)
 })
 
+for (const [device, width, height] of [['desktop', 1440, 900], ['mobile', 390, 844]] as const) {
+  test(`${device} copies the selected sku and opens sharing options before copying the product URL`, async ({ page, context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'http://127.0.0.1:43991' })
+    await page.setViewportSize({ width, height })
+    await page.goto('/product/remeza-vk-10-gr-0001/')
+
+    await page.getByRole('button', { name: '220 В' }).click()
+    const skuControl = page.getByRole('button', { name: 'Скопировать артикул GR-220-55' })
+    await expect(skuControl).toHaveAttribute('title', 'Скопировать артикул')
+    await skuControl.click()
+    await expect(page.getByRole('status').filter({ hasText: 'Артикул скопирован' })).toBeVisible()
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('GR-220-55')
+
+    const share = page.getByRole('button', { name: 'Поделиться' })
+    await expect(share).toHaveAttribute('title', 'Поделиться')
+    await share.click()
+    await expect(page.getByRole('status').filter({ hasText: 'Ссылка на товар скопирована' })).toHaveCount(0)
+    const menu = page.getByRole('menu', { name: 'Способы поделиться' })
+    await expect(menu.getByRole('menuitem', { name: 'Отправить в Telegram' })).toBeVisible()
+    await expect(menu.getByRole('menuitem', { name: 'Отправить в WhatsApp' })).toBeVisible()
+    if (width === 390) {
+      const copyItem = await menu.getByRole('menuitem', { name: 'Скопировать ссылку' }).boundingBox()
+      expect(copyItem?.width).toBeGreaterThanOrEqual(180)
+    }
+    await menu.getByRole('menuitem', { name: 'Скопировать ссылку' }).click()
+    await expect(page.getByRole('status').filter({ hasText: 'Ссылка на товар скопирована' })).toBeVisible()
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('/product/remeza-vk-10-gr-0001/')
+  })
+}
+
 for (const width of [1440, 1024, 768, 390, 360]) {
   test(`product detail has no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })

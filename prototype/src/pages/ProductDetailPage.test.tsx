@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
+import { vi } from 'vitest'
 import { App } from '../app/App'
 
 const route = '/product/remeza-vk-10-gr-0001/'
@@ -90,12 +91,33 @@ describe('Remeza product detail redesign', () => {
 
   it('shares the product with visible feedback and keeps separate financing actions', async () => {
     const user = userEvent.setup()
+    const writeText = vi.fn().mockResolvedValue(undefined)
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } })
     renderPage()
 
     await user.click(screen.getByRole('button', { name: 'Поделиться' }))
+    expect(writeText).not.toHaveBeenCalled()
+    const shareMenu = screen.getByRole('menu', { name: 'Способы поделиться' })
+    expect(within(shareMenu).getByRole('menuitem', { name: 'Отправить в Telegram' })).toBeInTheDocument()
+    expect(within(shareMenu).getByRole('menuitem', { name: 'Отправить в WhatsApp' })).toBeInTheDocument()
+    await user.click(within(shareMenu).getByRole('menuitem', { name: 'Скопировать ссылку' }))
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining(route))
     expect(screen.getByText('Ссылка на товар скопирована', { selector: '[role="status"]' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Купить в кредит' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'В рассрочку' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'В лизинг' })).toBeInTheDocument()
+  })
+
+  it('copies only the selected offer sku from the interactive article control', async () => {
+    const user = userEvent.setup()
+    const writeText = vi.fn().mockResolvedValue(undefined)
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } })
+    renderPage()
+
+    await user.click(screen.getByRole('button', { name: '220 В' }))
+    await user.click(screen.getByRole('button', { name: 'Скопировать артикул GR-220-55' }))
+
+    expect(writeText).toHaveBeenCalledWith('GR-220-55')
+    expect(screen.getByText('Артикул скопирован', { selector: '[role="status"]' })).toBeInTheDocument()
   })
 })

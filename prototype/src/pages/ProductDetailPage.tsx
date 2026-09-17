@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { defaultOffer, findOffer, offerSelections, productDetail, type ProductOffer } from '../data/productDetailData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ProductGallery } from '../features/product-detail/ProductGallery'
+import { ProductHeadingTools } from '../features/product-detail/ProductHeadingTools'
 import { ProductMobilePurchase, ProductPurchase, type CommercialState } from '../features/product-detail/ProductPurchase'
 import { ProductSections } from '../features/product-detail/ProductSections'
 import { ProductVariants } from '../features/product-detail/ProductVariants'
@@ -13,7 +14,6 @@ export function ProductDetailPage() {
   const [commercialState, setCommercialState] = useState<CommercialState>('available')
   const [offer, setOffer] = useState<ProductOffer>(defaultOffer)
   const [selections, setSelections] = useState(offerSelections(defaultOffer))
-  const [shareFeedback, setShareFeedback] = useState('')
   const commerce = useCommerce()
   const favorite = commerce.favoriteIds.has(productDetail.id)
   const compared = commerce.compareIds.has(productDetail.id)
@@ -29,8 +29,9 @@ export function ProductDetailPage() {
     <header className="product-heading">
       <div className="product-labels">{productDetail.labels.map((label) => <span key={label}>{label}</span>)}</div>
       <h1>{productDetail.name}</h1>
-      <div className="product-heading__bar"><div className="product-heading__meta"><span>Артикул {offer.sku}</span><strong>★ {productDetail.rating}</strong><button type="button" onClick={() => document.querySelector('#reviews')?.scrollIntoView()}>{productDetail.reviewCount}</button><button type="button" onClick={() => document.querySelector('#questions')?.scrollIntoView()}>{productDetail.questionCount}</button><span>{productDetail.warranty}</span></div><div className="product-heading__actions"><button type="button" title="В избранное" aria-label="В избранное" aria-pressed={favorite} onClick={() => commerce.toggleFavorite(productDetail.id)}><span aria-hidden="true">♡</span></button><button type="button" title="Сравнить" aria-label="Сравнить" aria-pressed={compared} onClick={() => commerce.toggleCompare(productDetail.id)}><span aria-hidden="true">≡</span></button><button type="button" title="Поделиться" aria-label="Поделиться" onClick={() => setShareFeedback('Ссылка на товар скопирована')}><span aria-hidden="true">↗</span></button></div></div>
-      {shareFeedback && <p className="product-heading__feedback" role="status">{shareFeedback}</p>}
+      <ProductHeadingTools sku={offer.sku} favorite={favorite} compared={compared} onToggleFavorite={() => commerce.toggleFavorite(productDetail.id)} onToggleCompare={() => commerce.toggleCompare(productDetail.id)} productPath={`/product/${productDetail.id}/`}>
+        <strong>★ {productDetail.rating}</strong><button type="button" onClick={() => document.querySelector('#reviews')?.scrollIntoView()}>{productDetail.reviewCount}</button><button type="button" onClick={() => document.querySelector('#questions')?.scrollIntoView()}>{productDetail.questionCount}</button><span>{productDetail.warranty}</span>
+      </ProductHeadingTools>
     </header>
     <section className="product-hero">
       <ProductGallery images={productDetail.gallery} name={productDetail.name} offer={offer} state={commercialState} />

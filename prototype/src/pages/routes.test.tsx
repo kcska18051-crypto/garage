@@ -58,7 +58,7 @@ describe('prototype routes', () => {
 
     await userEvent.click(screen.getByRole('link', { name: 'Винтовые компрессоры, 48 товаров' }))
     expect(screen.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Подбор оборудования' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Подбор оборудования' })).not.toBeInTheDocument()
   })
 
   it('opens the reusable second-level category with catalog breadcrumbs', () => {
@@ -67,22 +67,24 @@ describe('prototype routes', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' })).toBeInTheDocument()
     expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Каталог' })).toHaveAttribute('href', '/catalog')
-    expect(screen.getByRole('heading', { name: 'Быстрый выбор по параметрам' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Быстрые параметры' })).toBeInTheDocument()
   })
 
   it('orders child sections, quick tags, listing and SEO information', () => {
     render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/screw-compressors']}><App /></MemoryRouter>)
 
     const childSections = screen.getByRole('region', { name: 'Дочерние разделы' })
-    const tags = screen.getByRole('heading', { name: 'Быстрый выбор по параметрам' }).closest('section')!
-    const listing = screen.getByRole('heading', { name: 'Подбор оборудования' }).closest('section')!
+    const listing = screen.getByRole('region', { name: 'Товарная выдача' })
+    const tags = screen.getByRole('region', { name: 'Быстрые параметры' })
     const seo = screen.getByRole('region', { name: 'О винтовых компрессорах' })
-    expect(screen.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' }).parentElement).toHaveTextContent('Показано 12 из 48')
+    expect(screen.getByRole('heading', { level: 1, name: 'Винтовые компрессоры' }).parentElement).not.toHaveTextContent('Показано 12 из 48')
+    expect(screen.queryByRole('heading', { name: 'Выберите тип оборудования' })).not.toBeInTheDocument()
     expect(childSections.querySelectorAll('a')).toHaveLength(4)
+    expect(childSections.querySelectorAll(':scope > div > a > span')).toHaveLength(0)
     expect(childSections).toHaveTextContent('Винтовые компрессоры на ресивере')
     expect(screen.getByRole('button', { name: 'Показать ещё 2' })).toHaveAttribute('aria-controls', 'catalog-child-sections-grid')
-    expect(childSections.compareDocumentPosition(tags) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
-    expect(tags.compareDocumentPosition(listing) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(childSections.compareDocumentPosition(listing) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(listing).toContainElement(tags)
     expect(listing.compareDocumentPosition(seo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
   })
 

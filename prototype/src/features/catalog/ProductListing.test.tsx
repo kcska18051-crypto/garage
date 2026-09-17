@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { catalogProducts, fullFilterGroups, reducedFilterGroups } from '../../data/catalogData'
+import { catalogProducts, compressorSubcategories, fullFilterGroups, reducedFilterGroups } from '../../data/catalogData'
 import { CommerceProvider } from '../../state/CommerceState'
 import { ProductListing } from './ProductListing'
 
@@ -65,5 +65,23 @@ describe('catalog product listing', () => {
     render(<MemoryRouter><CommerceProvider><ProductListing products={catalogProducts} filterGroups={fullFilterGroups} mode="full" showFilters={false} /></CommerceProvider></MemoryRouter>)
     expect(screen.queryByRole('button', { name: 'Фильтры' })).not.toBeInTheDocument()
     expect(screen.queryByRole('complementary', { name: 'Фильтры' })).not.toBeInTheDocument()
+  })
+
+  it('keeps compact quick parameters inside the listing work area', () => {
+    render(<MemoryRouter><CommerceProvider><ProductListing products={catalogProducts} filterGroups={fullFilterGroups} mode="full" title={null} tagGroups={compressorSubcategories[0].tagGroups} /></CommerceProvider></MemoryRouter>)
+
+    const listing = screen.getByRole('region', { name: 'Товарная выдача' })
+    const filters = screen.getByRole('complementary', { name: 'Фильтры' })
+    const tags = screen.getByRole('region', { name: 'Быстрые параметры' })
+    expect(screen.queryByRole('heading', { name: 'Подбор оборудования' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Быстрый выбор по параметрам' })).not.toBeInTheDocument()
+    expect(tags).toHaveTextContent('По бренду')
+    expect(tags).not.toHaveTextContent('По рабочему давлению')
+    expect(filters.compareDocumentPosition(tags) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(listing).toContainElement(tags)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ещё параметры' }))
+    expect(tags).toHaveTextContent('По рабочему давлению')
+    expect(screen.getByRole('button', { name: 'Свернуть параметры' })).toBeInTheDocument()
   })
 })

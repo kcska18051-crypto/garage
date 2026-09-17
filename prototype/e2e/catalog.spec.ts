@@ -192,7 +192,8 @@ test('mobile tag groups use one readable column', async ({ page }) => {
 test('second-level template removes the optional tag block without a gap', async ({ page }) => {
   await page.goto('/catalog/compressor-equipment/oil-free-compressors')
   await expect(page.locator('.catalog-tags')).toHaveCount(0)
-  await expect(page.getByRole('heading', { name: 'Подбор оборудования' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Подбор оборудования' })).toHaveCount(0)
+  await expect(page.getByText(/Найдено \d+ товар/)).toBeVisible()
 })
 
 test('counts appear on first-level section links and beside product results on the next level', async ({ page }) => {
@@ -203,7 +204,7 @@ test('counts appear on first-level section links and beside product results on t
   await expect(page.locator('.catalog-listing')).toHaveCount(0)
 
   await page.goto('/catalog/compressor-equipment/screw-compressors')
-  await expect(page.locator('.catalog-page__header').getByText('Показано 12 из 48')).toBeVisible()
+  await expect(page.locator('.catalog-page__header').getByText('Показано 12 из 48')).toHaveCount(0)
   await expect(page.locator('.catalog-listing__toolbar').getByText(/Найдено \d+ товар/)).toBeVisible()
   await expect(page.getByRole('button', { name: 'Тег Remeza' })).toHaveText('Remeza')
   const fullFilterBrand = page.locator('.catalog-listing__sidebar').getByLabel('Remeza', { exact: true })
@@ -233,21 +234,29 @@ test('list view becomes a readable vertical card on tablet', async ({ page }) =>
   await page.getByRole('button', { name: 'Список' }).click()
   const card = page.locator('.catalog-product-card').first()
   await expect(card.locator('.product-teaser__name')).toBeVisible()
-  expect(await card.evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true)
+  await expect.poll(() => card.evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true)
 })
 
-test('screw-compressor page presents child sections before tags, listing and SEO text', async ({ page }) => {
+test('screw-compressor page presents compact child navigation before one catalog work area', async ({ page }) => {
   await page.goto('/catalog/compressor-equipment/screw-compressors')
   const children = page.getByRole('region', { name: 'Дочерние разделы' })
+  const listing = page.getByRole('region', { name: 'Товарная выдача' })
   await expect(children.getByRole('link')).toHaveCount(4)
+  await expect(children.getByRole('heading')).toHaveCount(4)
+  await expect(page.getByRole('heading', { name: 'Выберите тип оборудования' })).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: 'Подбор оборудования' })).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: 'Быстрый выбор по параметрам' })).toHaveCount(0)
   await children.getByRole('button', { name: 'Показать ещё 2' }).click()
   await expect(children.getByRole('link')).toHaveCount(6)
   await expect(children).toContainText('Винтовые компрессоры на ресивере')
   const order = await page.locator('.catalog-page').evaluate((root) => {
-    const selectors = ['.catalog-child-sections', '.catalog-tags', '.catalog-listing', '.catalog-seo-tail']
+    const selectors = ['.catalog-child-sections', '.catalog-listing', '.catalog-seo-tail']
     return selectors.map((selector) => Array.from(root.children).indexOf(root.querySelector(selector)!))
   })
   expect(order).toEqual([...order].sort((a, b) => a - b))
+  await expect(listing.locator('.catalog-listing__content > .catalog-tags')).toHaveCount(1)
+  const firstCard = await page.locator('.catalog-product-card').first().boundingBox()
+  expect(firstCard?.y).toBeLessThan((page.viewportSize()?.width ?? 1440) < 768 ? 1100 : 920)
 })
 
 test('shared product teaser offers hover frames and explicit mobile controls', async ({ page }) => {

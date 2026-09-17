@@ -76,7 +76,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     await page.goto('/catalog/compressor-equipment/screw-compressors/')
     const childCategory = await page.locator('.catalog-child-sections__grid > a').first().boundingBox()
     expect(childCategory).not.toBeNull()
-    expect(childCategory!.height).toBeLessThanOrEqual(mobile ? 190 : 220)
+    expect(childCategory!.height).toBeLessThanOrEqual(mobile ? 130 : 130)
 
     await page.goto('/product/remeza-vk-10-gr-0001/')
     const productGallery = await page.locator('.product-gallery__main').boundingBox()

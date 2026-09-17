@@ -2,6 +2,8 @@
 work/
 outputs/
 .worktrees/
+.codex-docs/
+tmp/
 
 # Local environment files
 .env

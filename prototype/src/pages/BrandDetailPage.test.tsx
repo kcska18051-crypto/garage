@@ -1,5 +1,4 @@
 import { render, screen, within } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
 
@@ -14,18 +13,20 @@ describe('Remeza brand detail page', () => {
     const popular = screen.getByRole('region', { name: 'Популярные товары Remeza' })
     expect(within(popular).getAllByRole('article').length).toBeGreaterThanOrEqual(4)
     expect(screen.getByRole('heading', { name: 'Все товары бренда' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Быстрый выбор по параметрам' })).not.toBeInTheDocument()
+    expect(screen.queryByText(/Поможем подобрать оборудование Remeza/)).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Подбор оборудования' })).not.toBeInTheDocument()
+    expect(document.querySelector('.catalog-listing__sidebar')).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'О бренде Remeza' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Преимущества покупки Remeza в Гараже' })).toHaveTextContent('требует согласования')
     expect(screen.getByRole('region', { name: 'Документы и материалы' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Полезные материалы о Remeza' })).toBeInTheDocument()
   })
 
-  it('opens the existing consultation form and exposes brand metadata', async () => {
-    const user = userEvent.setup()
+  it('exposes brand metadata without a consultation block', () => {
     render(<MemoryRouter initialEntries={['/brand/remeza/']}><App /></MemoryRouter>)
 
-    await user.click(screen.getByRole('button', { name: 'Получить консультацию' }))
-    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Получить консультацию' })).not.toBeInTheDocument()
     expect(document.title).toContain('Remeza')
     expect(document.querySelector('meta[name="description"]')?.getAttribute('content')).toContain('Remeza')
     expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://kcska18051-crypto.github.io/garage/brand/remeza/')

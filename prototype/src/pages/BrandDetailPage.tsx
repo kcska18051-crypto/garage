@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { remezaCategories, remezaFilterGroups, remezaProducts, remezaQuickTags } from '../data/brandDetailData'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { remezaCategories, remezaFilterGroups, remezaProducts } from '../data/brandDetailData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { CatalogProductCard } from '../features/catalog/CatalogProductCard'
 import { ProductListing } from '../features/catalog/ProductListing'
-import { ContactDialog } from '../features/forms/ContactDialog'
 import '../features/brands/BrandDetail.css'
 
 const canonicalUrl = 'https://kcska18051-crypto.github.io/garage/brand/remeza/'
@@ -30,21 +29,7 @@ function useBrandMetadata() {
   }, [])
 }
 
-function BrandQuickTags() {
-  const [params, setParams] = useSearchParams()
-  const active = params.get('tag')
-  const toggle = (group: string, value: string) => {
-    const next = new URLSearchParams(params)
-    const selected = `${group}:${value}`
-    if (active === selected) next.delete('tag'); else next.set('tag', selected)
-    next.delete('page')
-    setParams(next)
-  }
-  return <section className="catalog-tags brand-quick-tags" aria-labelledby="brand-tags-title"><div className="catalog-tags__heading"><h2 id="brand-tags-title">Быстрый выбор по параметрам</h2></div><div className="catalog-tags__groups">{remezaQuickTags.map((group) => <div className="catalog-tag-group" key={group.id}><h3>{group.label}</h3><div>{group.values.map((tag) => <button type="button" key={tag.value} aria-label={`Тег ${tag.label}`} aria-pressed={active === `${group.id}:${tag.value}`} onClick={() => toggle(group.id, tag.value)}>{tag.label}</button>)}</div></div>)}</div></section>
-}
-
 export function BrandDetailPage() {
-  const [consultationOpen, setConsultationOpen] = useState(false)
   useBrandMetadata()
   return <main className="brand-detail-page">
     <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: 'Бренды', to: '/brands' }, { label: 'Remeza' }]} />
@@ -57,7 +42,7 @@ export function BrandDetailPage() {
 
     <section className="brand-detail-section brand-popular-products" aria-label="Популярные товары Remeza"><div className="brand-detail-heading brand-detail-heading--row"><h2>Популярные товары Remeza</h2><a href="#brand-products">Смотреть все товары Remeza</a></div><p className="brand-detail-note">Ассортимент, цены и наличие приведены для демонстрации структуры прототипа.</p><div className="brand-popular-products__grid">{remezaProducts.slice(0, 6).map((product, index) => <CatalogProductCard key={product.id} product={product} index={index} />)}</div></section>
 
-    <section id="brand-products" className="brand-products" aria-label="Все товары Remeza"><div className="brand-detail-heading"><h2>Все товары бренда</h2><p>Для примера показана контекстная выдача компрессорного оборудования Remeza. Параметры других товарных групп будут подключаться отдельно.</p></div><BrandQuickTags /><ProductListing products={remezaProducts} filterGroups={remezaFilterGroups} mode="full" /></section>
+    <section id="brand-products" className="brand-products" aria-label="Все товары Remeza"><div className="brand-detail-heading"><h2>Все товары бренда</h2><p>Для примера показана контекстная выдача компрессорного оборудования Remeza. Параметры других товарных групп будут подключаться отдельно.</p></div><ProductListing products={remezaProducts} filterGroups={remezaFilterGroups} mode="full" title={null} /></section>
 
     <section className="brand-about" aria-label="О бренде Remeza"><div><h2>О бренде Remeza</h2><p>Remeza представлен в прототипе как производитель компрессорного оборудования и решений для подготовки сжатого воздуха. Такой ассортимент применяется в мастерских, сервисных центрах и производственных системах.</p><p>Краткая история, страна производства отдельных серий, технологии и фактические преимущества будут уточнены по официальным материалам. До проверки этот текст не является утверждением о производителе.</p></div><dl><div><dt>Специализация</dt><dd>Компрессорное оборудование</dd></div><div><dt>Направления</dt><dd>Компрессоры, ресиверы, подготовка воздуха</dd></div><div><dt>Применение</dt><dd>Сервисные и производственные задачи</dd></div><div><dt>Страна и история</dt><dd>Данные требуют подтверждения</dd></div></dl></section>
 
@@ -67,7 +52,5 @@ export function BrandDetailPage() {
 
     <section className="brand-detail-section brand-useful" aria-label="Полезные материалы о Remeza"><div className="brand-detail-heading"><h2>Полезные материалы о Remeza</h2><p>Скрываемый раздел для статей, обзоров и рекомендаций.</p></div><div>{['Как подобрать компрессор под рабочую задачу', 'Что учитывать при проектировании пневмосети', 'Подготовка воздуха: базовые компоненты'].map((item, index) => <Link key={item} to={`/articles/remeza-guide-${index + 1}`}><span>Материал · прототип</span><h3>{item}</h3><strong>Читать →</strong></Link>)}</div></section>
 
-    <section className="brand-final-cta"><div><h2>Поможем подобрать оборудование Remeza под ваши задачи</h2><p>Опишите рабочий сценарий — специалист поможет определить подходящую конфигурацию.</p></div><button className="button" type="button" onClick={() => setConsultationOpen(true)}>Получить консультацию</button></section>
-    {consultationOpen && <ContactDialog mode="consultation" onClose={() => setConsultationOpen(false)} />}
   </main>
 }

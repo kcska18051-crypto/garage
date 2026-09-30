@@ -27,4 +27,4 @@ export const actions: StoreAction[] = [
 ]
 export const activeActions = () => actions.filter((action) => action.published && getActionState(action) === 'active')
 export const completedActions = () => actions.filter((action) => action.published && getActionState(action) === 'completed')
-export const getActionBySlug = (slug?: string) => actions.find((action) => action.slug === slug && action.published && getActionState(action) === 'active')
+export const getActionBySlug = (slug?: string) => actions.find((action) => action.slug === slug && action.published)

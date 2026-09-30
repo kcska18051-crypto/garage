@@ -11,19 +11,27 @@ test('actions are first in quick navigation and use a neutral accent', async ({ 
   expect(await first.evaluate((link) => getComputedStyle(link).borderStyle)).toBe('solid')
 })
 
-test('active, hybrid detail and completed routes form one action journey', async ({ page }) => {
+test('active, hybrid detail and embedded archive form one action journey', async ({ page }) => {
   await page.goto('/actions')
   await expect(page.getByTestId('active-action-card')).toHaveCount(4)
   await page.getByTestId('active-action-card').first().click()
   await expect(page).toHaveURL(/\/actions\/professional-workshop$/)
   await expect(page.getByRole('heading', { name: 'Товары по акции' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Все товары' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.locator('.catalog-listing__sidebar')).toHaveCount(0)
+  await expect(page.locator('.catalog-tags')).toHaveCount(0)
   const initialCount = await page.locator('[data-testid="catalog-results"] article').count()
   await page.getByRole('button', { name: 'Инструмент' }).click()
   expect(await page.locator('[data-testid="catalog-results"] article').count()).toBeLessThan(initialCount)
-  await page.goto('/actions/completed')
+  await page.goto('/actions')
   await expect(page.getByTestId('completed-action-card')).toHaveCount(2)
   await expect(page.getByText(/Акция завершена/)).toHaveCount(2)
+  await page.getByTestId('completed-action-card').first().click()
+  await expect(page).toHaveURL(/\/actions\/archive-one$/)
+  await expect(page.getByText(/Акция завершена/)).toBeVisible()
+  await expect(page.getByRole('link', { name: /Перейти к товарам|Купить/ })).toHaveCount(0)
+  await page.goto('/actions/completed')
+  await expect(page).toHaveURL(/\/actions#archive$/)
 })
 
 test('action detail follows the approved content hierarchy without duplicated description', async ({ page }) => {
@@ -46,7 +54,7 @@ test('action detail follows the approved content hierarchy without duplicated de
 for (const width of [1440, 1024, 390]) {
   test(`action pages have no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
-    for (const path of ['/actions', '/actions/professional-workshop', '/actions/completed']) {
+    for (const path of ['/actions', '/actions/professional-workshop', '/actions/archive-one', '/actions/completed']) {
       await page.goto(path)
       const sizes = await page.evaluate(() => ({ client: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth }))
       expect(sizes.scroll).toBeLessThanOrEqual(sizes.client)

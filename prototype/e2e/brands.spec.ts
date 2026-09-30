@@ -18,7 +18,7 @@ test('brand directory links Remeza and keeps unapproved brands informational', a
   await expect(directory.getByText('Berg', { exact: true })).toHaveCount(0)
 })
 
-test('Remeza brand detail supports navigation, filters and consultation', async ({ page }) => {
+test('Remeza brand detail flows directly into the filtered catalog', async ({ page }) => {
   await page.goto('/brand/remeza/')
   await expect(page.getByRole('heading', { level: 1, name: 'Оборудование Remeza' })).toBeVisible()
   await expect(page.getByRole('navigation', { name: 'Хлебные крошки' })).toContainText('ГлавнаяБрендыRemeza')
@@ -30,14 +30,12 @@ test('Remeza brand detail supports navigation, filters and consultation', async 
   const popular = page.getByRole('region', { name: 'Популярные товары Remeza' })
   expect(await popular.getByRole('article').count()).toBeGreaterThanOrEqual(4)
 
-  await page.getByRole('button', { name: 'Тег 380 В', exact: true }).click()
-  await expect(page).toHaveURL(/tag=voltage%3A380/)
-  await expect(page.getByRole('button', { name: 'Тег 380 В', exact: true })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('heading', { name: 'Быстрый выбор по параметрам' })).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: 'Подбор оборудования' })).toHaveCount(0)
+  await expect(page.locator('.catalog-listing__sidebar')).toBeVisible()
   await page.getByLabel('Сортировка').selectOption('price-asc')
   await expect(page).toHaveURL(/sort=price-asc/)
-
-  await page.getByRole('button', { name: 'Получить консультацию' }).click()
-  await expect(page.getByRole('dialog')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Получить консультацию' })).toHaveCount(0)
 })
 
 test('Remeza brand detail has no horizontal overflow at control widths', async ({ page }) => {

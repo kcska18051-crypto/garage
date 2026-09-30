@@ -9,7 +9,6 @@ import { BrandsPage } from '../pages/BrandsPage'
 import { BrandDetailPage } from '../pages/BrandDetailPage'
 import { CatalogSectionPage } from '../pages/CatalogSectionPage'
 import { ActionsPage } from '../pages/ActionsPage'
-import { CompletedActionsPage } from '../pages/CompletedActionsPage'
 import { ActionDetailPage } from '../pages/ActionDetailPage'
 import { ProfileShell } from '../features/profile/ProfileShell'
 import { ProfileAuthPage, ProfileDataPage, ProfileFavoritesPage, ProfileOrderDetailPage, ProfileOrdersPage, ProfileOrganizationsPage, ProfileOverviewPage, ProfileRecentlyViewedPage, ProfileReviewsPage, ProfileServicesPage } from '../pages/ProfilePages'
@@ -40,7 +39,7 @@ export function AppRoutes() {
       <Route path="/brands" element={<BrandsPage />} />
       <Route path="/brand/remeza" element={<BrandDetailPage />} />
       <Route path="/actions" element={<ActionsPage />} />
-      <Route path="/actions/completed" element={<CompletedActionsPage />} />
+      <Route path="/actions/completed" element={<Navigate to="/actions#archive" replace />} />
       <Route path="/actions/:slug" element={<ActionDetailPage />} />
       <Route path="/favorites" element={<Navigate to="/profile/favorites" replace />} />
       <Route path="/profile" element={<ProfileShell />}>

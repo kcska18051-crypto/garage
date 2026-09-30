@@ -12,6 +12,8 @@ const publicRoutes = [
   'brand/remeza',
   'actions',
   'actions/professional-workshop',
+  'actions/archive-one',
+  'actions/archive-two',
   'actions/completed',
 ]
 

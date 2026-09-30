@@ -11,6 +11,7 @@ export type ProductTeaser = {
   price: string
   oldPrice?: string
   purchaseMode?: 'cart' | 'quote'
+  availability?: string
 }
 
 export function ProductTeaserCard({ product, index, className = '' }: { product: ProductTeaser; index: number; className?: string }) {
@@ -35,6 +36,7 @@ export function ProductTeaserCard({ product, index, className = '' }: { product:
     <div className="product-teaser__dots" aria-label="Кадры товара">{frames.map((item) => <button key={item} type="button" data-testid="product-gallery-dot" aria-label={`Показать кадр ${item + 1}: ${product.name}`} aria-pressed={frame === item} onClick={() => setFrame(item)} />)}</div>
     <Link className="product-teaser__name" to={product.href}>{product.name}</Link>
     <p className="product-teaser__sku">Артикул: {product.sku}</p>
+    {product.availability ? <p className="product-teaser__availability"><i aria-hidden="true" />{product.availability}</p> : null}
     <div className="product-teaser__bottom catalog-product-card__bottom"><div>{product.oldPrice ? <del>{product.oldPrice}</del> : null}<strong>{product.price}</strong></div>{product.purchaseMode === 'quote' ? <button className="product-teaser__quote" type="button">Запросить цену</button> : <button className="product-teaser__cart" type="button" aria-label={`${commerce.cartIds.has(product.id) ? 'Товар в корзине' : 'Добавить в корзину'}: ${product.name}`} onClick={() => commerce.addToCart(product.id)}>{commerce.cartIds.has(product.id) ? '✓' : '＋'}</button>}</div>
   </article>
 }

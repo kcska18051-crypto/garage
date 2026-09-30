@@ -21,6 +21,8 @@ describe('Remeza product detail redesign', () => {
     expect(screen.getByRole('button', { name: 'В избранное' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Сравнить' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Поделиться' })).toBeInTheDocument()
+    expect(screen.getAllByText('В наличии в 2 магазинах').length).toBeGreaterThan(0)
+    expect(container).not.toHaveTextContent(/\d+\s*шт\./)
   })
 
   it('selects a complete product offer and keeps unavailable combinations disabled', async () => {
@@ -68,7 +70,7 @@ describe('Remeza product detail redesign', () => {
 
     await user.click(screen.getByRole('button', { name: state }))
 
-    expect(screen.getAllByText(state).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(state === 'В наличии' ? /В наличии в 2 магазинах/ : state).length).toBeGreaterThan(0)
     expect(screen.getAllByRole('button', { name: action }).length).toBeGreaterThan(0)
     expect(screen.getByText('Ярославль', { selector: '.product-stock__city' })).toBeInTheDocument()
     expect(screen.getByText('Вологда', { selector: '.product-stock__city' })).toBeInTheDocument()

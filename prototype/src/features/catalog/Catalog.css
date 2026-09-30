@@ -123,7 +123,7 @@
 .catalog-active-filters .catalog-active-filters__clear { background: transparent; border: 0; text-decoration: underline; }
 .catalog-listing__layout { display: grid; gap: clamp(1.2rem, 2.2vw, 2rem); grid-template-columns: minmax(15rem, 18rem) minmax(0, 1fr); padding-top: 1.5rem; }
 .catalog-listing--untitled .catalog-listing__layout { padding-top: 0; }
-.catalog-listing__sidebar { align-self: start; position: sticky; top: 5.2rem; }
+.catalog-listing__sidebar { align-self: start; position: static; }
 .catalog-listing__content > .catalog-tags { background: transparent; border-bottom: 1px solid var(--color-border); border-radius: 0; color: var(--color-text); display: block; margin: 0 0 .35rem; padding: 0 0 .75rem; }
 .catalog-listing__content > .catalog-tags .catalog-tags__groups { display: grid; gap: .55rem; grid-template-columns: 1fr; }
 .catalog-listing__content > .catalog-tags .catalog-tag-group { align-items: center; display: grid; gap: .45rem .7rem; grid-template-columns: 9.5rem minmax(0, 1fr) auto; }

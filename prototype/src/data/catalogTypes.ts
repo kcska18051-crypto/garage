@@ -8,6 +8,8 @@ export type CatalogProduct = {
   price: number
   oldPrice?: number
   availability: string[]
+  storeCount: number
+  availabilityLabel: 'available' | 'Под заказ' | 'Нет в наличии' | 'Снят с производства'
   delivery: string
   purchaseMode: 'cart' | 'quote'
   popularity: number

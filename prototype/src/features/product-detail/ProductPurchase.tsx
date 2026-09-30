@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { money, productDetail, type ProductOffer } from '../../data/productDetailData'
 import { useCommerce } from '../../state/CommerceState'
 import { CommercialProposal } from './CommercialProposal'
+import { formatAvailability } from '../../utils/availability'
 
 export type CommercialState = 'available' | 'order' | 'unavailable' | 'discontinued'
 
-const stateMap: Record<CommercialState, { label: string; action: string; tone: string; stocks: Array<[string, string]> }> = {
-  available: { label: 'В наличии', action: 'В корзину', tone: 'positive', stocks: [['Ярославль', '3 шт. · самовывоз сегодня'], ['Вологда', 'Получение ориентировочно завтра']] },
+const stateMap: Record<CommercialState, { label: string; switchLabel?: string; action: string; tone: string; stocks: Array<[string, string]> }> = {
+  available: { label: formatAvailability('available', 2), switchLabel: 'В наличии', action: 'В корзину', tone: 'positive', stocks: [['Ярославль', 'Самовывоз сегодня'], ['Вологда', 'Получение ориентировочно завтра']] },
   order: { label: 'Под заказ', action: 'Запросить срок', tone: 'warning', stocks: [['Ярославль', 'Поставка ориентировочно 5–7 дней'], ['Вологда', 'Поставка ориентировочно 6–8 дней']] },
   unavailable: { label: 'Нет в наличии', action: 'Уведомить о поступлении', tone: 'negative', stocks: [['Ярославль', 'Нет в наличии'], ['Вологда', 'Нет в наличии']] },
   discontinued: { label: 'Снят с производства', action: 'Показать аналоги', tone: 'neutral', stocks: [['Ярославль', 'Поставка прекращена'], ['Вологда', 'Поставка прекращена']] },
@@ -40,7 +41,7 @@ export function ProductPurchase({ offer, state, onStateChange }: Props) {
   }
   return <aside className="product-purchase" aria-label="Покупка товара">
     <div className="product-state-switch" role="group" aria-label="Демонстрация статуса товара">
-      <span>Показать состояние</span><div>{(Object.keys(stateMap) as CommercialState[]).map((key) => <button type="button" key={key} aria-label={stateMap[key].label} aria-pressed={state === key} onClick={() => { onStateChange(key); setFeedback('') }}>{stateMap[key].label}</button>)}</div>
+      <span>Показать состояние</span><div>{(Object.keys(stateMap) as CommercialState[]).map((key) => <button type="button" key={key} aria-label={stateMap[key].switchLabel ?? stateMap[key].label} aria-pressed={state === key} onClick={() => { onStateChange(key); setFeedback('') }}>{stateMap[key].switchLabel ?? stateMap[key].label}</button>)}</div>
     </div>
     <div className="product-purchase__price"><del>{money(offer.oldPrice)}</del><strong>{money(offer.price)}</strong><span>Выгода {money(saving)}</span></div>
     <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" /><strong>{current.label}</strong></p>

@@ -5,12 +5,12 @@ import { filterCatalogProducts, paginateProducts, parseListingState, serializeLi
 const products: CatalogProduct[] = [
   {
     id: 'remeza-10', name: 'Remeza ВК10', slug: 'remeza-vk10', sku: 'RM-10', brandId: 'remeza', subcategoryId: 'screw-compressors',
-    price: 420000, oldPrice: 450000, availability: ['in-stock', 'delivery'], delivery: 'Доставка от 2 дней', purchaseMode: 'cart', popularity: 90, isNew: false,
+    price: 420000, oldPrice: 450000, availability: ['in-stock', 'delivery'], storeCount: 2, availabilityLabel: 'available', delivery: 'Доставка от 2 дней', purchaseMode: 'cart', popularity: 90, isNew: false,
     specs: { voltage: '380', performance: '10', pressure: '10', power: '7.5', receiver: '500', lubrication: 'oil', drive: 'belt', noise: '68', country: 'belarus' },
   },
   {
     id: 'berg-15', name: 'Berg ВК15', slug: 'berg-vk15', sku: 'BG-15', brandId: 'berg', subcategoryId: 'screw-compressors',
-    price: 510000, availability: ['to-order'], delivery: 'Срок по запросу', purchaseMode: 'quote', popularity: 70, isNew: true,
+    price: 510000, availability: ['to-order'], storeCount: 0, availabilityLabel: 'Под заказ', delivery: 'Срок по запросу', purchaseMode: 'quote', popularity: 70, isNew: true,
     specs: { voltage: '220', performance: '15', pressure: '8', power: '11', receiver: '300', lubrication: 'oil-free', drive: 'direct', noise: '64', country: 'china' },
   },
 ]

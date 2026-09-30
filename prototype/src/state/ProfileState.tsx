@@ -11,6 +11,7 @@ type ProfileContextValue = {
   organizations: ProfileOrganization[]
   recentProductIds: string[]
   notification: string
+  profileDeleted: boolean
   requestCancellation(id: string): void
   updateRecipient(id: string, recipient: Recipient): void
   updateAddress(id: string, address: string): void
@@ -18,6 +19,8 @@ type ProfileContextValue = {
   clearRecentlyViewed(): void
   updateUser(user: UserData): void
   notify(message: string): void
+  deleteProfile(): void
+  restoreProfile(): void
 }
 
 const ProfileContext = createContext<ProfileContextValue | null>(null)
@@ -29,6 +32,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [organizations, setOrganizations] = useState<ProfileOrganization[]>(profileData.organizations)
   const [recentProductIds, setRecentProductIds] = useState(profileData.recentlyViewedProductIds)
   const [notification, setNotification] = useState('')
+  const [profileDeleted, setProfileDeleted] = useState(false)
 
   useEffect(() => {
     profileData.favoriteProductIds.forEach(commerce.addFavorite)
@@ -40,6 +44,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     organizations,
     recentProductIds,
     notification,
+    profileDeleted,
     requestCancellation: (id) => setOrders((current) => current.map((order) => order.id === id ? { ...order, status: 'Заявка на отмену отправлена', canCancel: false } : order)),
     updateRecipient: (id, recipient) => setOrders((current) => current.map((order) => order.id === id ? { ...order, recipient } : order)),
     updateAddress: (id, address) => setOrders((current) => current.map((order) => order.id === id ? { ...order, address } : order)),
@@ -47,7 +52,9 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     clearRecentlyViewed: () => setRecentProductIds([]),
     updateUser: setUser,
     notify: setNotification,
-  }), [notification, orders, organizations, recentProductIds, user])
+    deleteProfile: () => setProfileDeleted(true),
+    restoreProfile: () => setProfileDeleted(false),
+  }), [notification, orders, organizations, profileDeleted, recentProductIds, user])
 
   return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
 }

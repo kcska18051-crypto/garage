@@ -30,6 +30,12 @@ describe('profile secondary sections', () => {
     expect(screen.getByText('История просмотров пуста')).toBeInTheDocument()
   })
 
+  it('renders recently viewed as a compact responsive grid', () => {
+    open('/profile/recently-viewed')
+    expect(document.querySelector('.profile-product-grid--recent')).toBeInTheDocument()
+    expect(document.querySelectorAll('.profile-product--compact')).toHaveLength(5)
+  })
+
   it('shows service and review lifecycle states', () => {
     const { unmount } = open('/profile/services')
     for (const status of ['Принята', 'В работе', 'Требуется уточнение', 'Завершена']) expect(screen.getByText(status)).toBeInTheDocument()
@@ -43,5 +49,18 @@ describe('profile secondary sections', () => {
     await user.click(screen.getByRole('button', { name: 'Сохранить данные' }))
     expect(screen.getByRole('status')).toHaveTextContent('Данные профиля сохранены')
     expect(screen.getByText('Ярославль, ул. Промышленная, 12')).toBeInTheDocument()
+    expect(screen.getByLabelText('Телефон')).toHaveAttribute('readonly')
+  })
+
+  it('deletes and restores the profile through separate confirmations', async () => {
+    const user = userEvent.setup(); open('/profile/data')
+    await user.click(screen.getByRole('button', { name: 'Удалить профиль' }))
+    await user.click(within(screen.getByRole('dialog', { name: 'Удаление профиля' })).getByRole('button', { name: 'Продолжить удаление' }))
+    await user.click(screen.getByLabelText('Я понимаю, что профиль будет удалён'))
+    await user.click(screen.getByRole('button', { name: 'Подтвердить удаление' }))
+    expect(screen.getByRole('heading', { name: 'Профиль удалён' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Восстановить профиль' }))
+    await user.click(within(screen.getByRole('dialog', { name: 'Восстановление профиля' })).getByRole('button', { name: 'Подтвердить восстановление' }))
+    expect(screen.getByRole('status')).toHaveTextContent('Профиль восстановлен')
   })
 })

@@ -28,7 +28,7 @@ test('active, hybrid detail and embedded archive form one action journey', async
   await expect(page.getByText(/Акция завершена/)).toHaveCount(2)
   await page.getByTestId('completed-action-card').first().click()
   await expect(page).toHaveURL(/\/actions\/archive-one$/)
-  await expect(page.getByText(/Акция завершена/)).toBeVisible()
+  await expect(page.locator('.action-detail-page').getByText(/Акция завершена/)).toBeVisible()
   await expect(page.getByRole('link', { name: /Перейти к товарам|Купить/ })).toHaveCount(0)
   await page.goto('/actions/completed')
   await expect(page).toHaveURL(/\/actions#archive$/)

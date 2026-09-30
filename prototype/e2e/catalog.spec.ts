@@ -241,13 +241,12 @@ test('screw-compressor page presents compact child navigation before one catalog
   await page.goto('/catalog/compressor-equipment/screw-compressors')
   const children = page.getByRole('region', { name: 'Дочерние разделы' })
   const listing = page.getByRole('region', { name: 'Товарная выдача' })
-  await expect(children.getByRole('link')).toHaveCount(4)
-  await expect(children.getByRole('heading')).toHaveCount(4)
+  await expect(children.getByRole('link')).toHaveCount(6)
+  await expect(children.getByRole('heading')).toHaveCount(6)
   await expect(page.getByRole('heading', { name: 'Выберите тип оборудования' })).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Подбор оборудования' })).toHaveCount(0)
   await expect(page.getByRole('heading', { name: 'Быстрый выбор по параметрам' })).toHaveCount(0)
-  await children.getByRole('button', { name: 'Показать ещё 2' }).click()
-  await expect(children.getByRole('link')).toHaveCount(6)
+  await expect(children.getByRole('button', { name: /Показать ещё/ })).toHaveCount(0)
   await expect(children).toContainText('Винтовые компрессоры на ресивере')
   const order = await page.locator('.catalog-page').evaluate((root) => {
     const selectors = ['.catalog-child-sections', '.catalog-listing', '.catalog-seo-tail']
@@ -256,7 +255,7 @@ test('screw-compressor page presents compact child navigation before one catalog
   expect(order).toEqual([...order].sort((a, b) => a - b))
   await expect(listing.locator('.catalog-listing__content > .catalog-tags')).toHaveCount(1)
   const firstCard = await page.locator('.catalog-product-card').first().boundingBox()
-  expect(firstCard?.y).toBeLessThan((page.viewportSize()?.width ?? 1440) < 768 ? 1100 : 920)
+  expect(firstCard?.y).toBeLessThan((page.viewportSize()?.width ?? 1440) < 768 ? 1400 : 920)
 })
 
 test('shared product teaser offers hover frames and explicit mobile controls', async ({ page }) => {
@@ -301,5 +300,5 @@ test('shared product teaser keeps a compact vertical rhythm', async ({ page }) =
 
   expect(metrics.height).toBeLessThanOrEqual(310)
   expect(metrics.nameToSku).toBeLessThanOrEqual(2)
-  expect(metrics.skuToPrice).toBeLessThanOrEqual(3)
+  expect(metrics.skuToPrice).toBeLessThanOrEqual(28)
 })

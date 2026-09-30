@@ -19,6 +19,7 @@ test('brand directory links Remeza and keeps unapproved brands informational', a
 })
 
 test('Remeza brand detail flows directly into the filtered catalog', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('/brand/remeza/')
   await expect(page.getByRole('heading', { level: 1, name: 'Оборудование Remeza' })).toBeVisible()
   await expect(page.getByRole('navigation', { name: 'Хлебные крошки' })).toContainText('ГлавнаяБрендыRemeza')

@@ -9,7 +9,7 @@ function AppContent() {
   const commerce = useCommerce()
   return (
     <div className="app-shell">
-      <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartIds.size }} />
+      <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />
       <Footer />
     </div>

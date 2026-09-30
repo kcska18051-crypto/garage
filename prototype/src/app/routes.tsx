@@ -12,6 +12,9 @@ import { ActionsPage } from '../pages/ActionsPage'
 import { ActionDetailPage } from '../pages/ActionDetailPage'
 import { ProfileShell } from '../features/profile/ProfileShell'
 import { ProfileAuthPage, ProfileDataPage, ProfileFavoritesPage, ProfileOrderDetailPage, ProfileOrdersPage, ProfileOrganizationsPage, ProfileOverviewPage, ProfileRecentlyViewedPage, ProfileReviewsPage, ProfileServicesPage } from '../pages/ProfilePages'
+import { CartPage } from '../pages/CartPage'
+import { CheckoutDeliveryPage, CheckoutReviewPage, CheckoutSuccessPage } from '../pages/CheckoutPages'
+import { SearchResultsPage } from '../pages/SearchResultsPage'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -41,6 +44,11 @@ export function AppRoutes() {
       <Route path="/actions" element={<ActionsPage />} />
       <Route path="/actions/completed" element={<Navigate to="/actions#archive" replace />} />
       <Route path="/actions/:slug" element={<ActionDetailPage />} />
+      <Route path="/cart" element={<CartPage />} />
+      <Route path="/checkout/review" element={<CheckoutReviewPage />} />
+      <Route path="/checkout/delivery" element={<CheckoutDeliveryPage />} />
+      <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
+      <Route path="/search" element={<SearchResultsPage />} />
       <Route path="/favorites" element={<Navigate to="/profile/favorites" replace />} />
       <Route path="/profile" element={<ProfileShell />}>
         <Route index element={<ProfileOverviewPage />} />

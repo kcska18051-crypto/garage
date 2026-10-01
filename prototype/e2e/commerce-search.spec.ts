@@ -30,6 +30,39 @@ test('cart uses a centered two-column workspace with selection, totals and recom
   await expect(page.getByRole('status')).toContainText('Промокод применён')
 })
 
+test('checkout review uses the header container and compact interactive cards at 2560px', async ({ page }) => {
+  await page.setViewportSize({ width: 2560, height: 1440 })
+  await page.goto('/checkout/review')
+  const header = await page.locator('.desktop-header').boundingBox()
+  const main = await page.locator('main.checkout-page').boundingBox()
+  expect(header).not.toBeNull()
+  expect(main).not.toBeNull()
+  expect(main!.width).toBeLessThanOrEqual(1440)
+  expect(Math.abs(main!.x - header!.x)).toBeLessThanOrEqual(1)
+  expect(Math.abs(main!.width - header!.width)).toBeLessThanOrEqual(1)
+  expect(Math.abs(main!.x - (2560 - main!.x - main!.width))).toBeLessThanOrEqual(1)
+  await page.getByLabel('Оформляет организация').click()
+  await expect(page.getByText('Реквизиты и ИНН загружены из профиля')).toBeVisible()
+  await page.getByLabel('Оформить как гость').check()
+  await expect(page.getByLabel('Имя покупателя')).toBeVisible()
+  await page.getByLabel('Другой получатель').check()
+  await expect(page.getByLabel('Фамилия получателя')).toBeVisible()
+})
+
+for (const width of [2560, 1920, 1440, 1024, 390, 360]) {
+  test(`checkout review is centered without document overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width <= 390 ? 844 : 1000 })
+    await page.goto('/checkout/review')
+    const box = await page.locator('main.checkout-page').boundingBox()
+    expect(box).not.toBeNull()
+    const viewport = await page.evaluate(() => document.documentElement.clientWidth)
+    const left = box!.x
+    const right = viewport - box!.x - box!.width
+    expect(Math.abs(left - right)).toBeLessThanOrEqual(1)
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+  })
+}
+
 for (const width of [2560, 1920, 1440, 1024, 390, 360]) {
   test(`cart main container is centered without overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width <= 390 ? 844 : 1000 })

@@ -11,7 +11,48 @@ const useDemoCart = () => { const { ensureDemoCart } = useCommerce(); useEffect(
 export function CheckoutReviewPage() {
   useDemoCart()
   const { checkout, updateCheckout } = useCommerce()
-  return <main className="checkout-page container"><Stepper current={1}/><h1>Проверка заказа</h1><div className="checkout-layout"><section className="checkout-form"><fieldset><legend>Кто оформляет заказ</legend><label><input type="radio" checked={checkout.customerType === 'personal'} onChange={() => updateCheckout({ customerType: 'personal', payment: 'card' })}/>Покупатель — физическое лицо</label><label><input type="radio" aria-label="Оформляет организация" checked={checkout.customerType === 'organization'} onChange={() => updateCheckout({ customerType: 'organization', payment: 'invoice' })}/>Оформляет организация</label>{checkout.customerType === 'organization' && <label>Организация<select aria-label="Организация" value={checkout.organization} onChange={(event) => updateCheckout({ organization: event.target.value })}><option>ООО «Гараж»</option></select></label>}</fieldset><fieldset><legend>Контактные данные</legend><label><input type="checkbox" checked={checkout.guest} onChange={(event) => updateCheckout({ guest: event.target.checked, phoneVerified: false })}/>Оформить как гость</label>{checkout.guest && <div className="inline-control"><input aria-label="Телефон" defaultValue="+7 (900) 000-00-00"/><button type="button" onClick={() => updateCheckout({ phoneVerified: true })}>Получить код</button>{checkout.phoneVerified && <span role="status">Код подтверждён</span>}</div>}<label><input type="checkbox" checked={checkout.otherRecipient} onChange={(event) => updateCheckout({ otherRecipient: event.target.checked })}/>Другой получатель</label>{checkout.otherRecipient && <div className="field-grid"><label>Имя получателя<input aria-label="Имя получателя" value={checkout.recipientName} onChange={(event) => updateCheckout({ recipientName: event.target.value })}/></label><label>Телефон получателя<input aria-label="Телефон получателя" value={checkout.recipientPhone} onChange={(event) => updateCheckout({ recipientPhone: event.target.value })}/></label></div>}</fieldset></section><OrderSummary action={<Link className="button checkout-sticky" to="/checkout/delivery">Продолжить оформление</Link>}/></div></main>
+  return <main className="checkout-page checkout-review-page">
+    <nav className="checkout-breadcrumbs" aria-label="Хлебные крошки"><Link to="/">Главная</Link><span>/</span><Link to="/cart">Корзина</Link><span>/</span><span>Проверка заказа</span></nav>
+    <Stepper current={1}/>
+    <header className="checkout-heading"><h1>Проверка заказа</h1><span>Уточните данные покупателя и получателя перед выбором доставки.</span></header>
+    <div className="checkout-layout">
+      <section className="checkout-form">
+        <fieldset className="checkout-card">
+          <legend>Кто оформляет заказ</legend>
+          <div className="checkout-choice-grid">
+            <label className={`checkout-choice${checkout.customerType === 'personal' ? ' is-selected' : ''}`}><input type="radio" name="customer-type" checked={checkout.customerType === 'personal'} onChange={() => updateCheckout({ customerType: 'personal', payment: 'card' })}/><span><strong>Физическое лицо</strong><small>Покупка для себя</small></span></label>
+            <label className={`checkout-choice${checkout.customerType === 'organization' ? ' is-selected' : ''}`}><input type="radio" name="customer-type" aria-label="Оформляет организация" checked={checkout.customerType === 'organization'} onChange={() => updateCheckout({ customerType: 'organization', payment: 'invoice' })}/><span><strong>Организация</strong><small>Заказ по реквизитам компании</small></span></label>
+          </div>
+          {checkout.customerType === 'organization' && <div className="checkout-organization"><label>Организация<select aria-label="Организация" value={checkout.organization} onChange={(event) => updateCheckout({ organization: event.target.value })}><option>ООО «Гараж»</option></select></label><p>Реквизиты и ИНН загружены из профиля</p></div>}
+        </fieldset>
+
+        <fieldset className="checkout-card">
+          <legend>Контактные данные</legend>
+          <div className="checkout-toggle-row">
+            <label><input type="checkbox" aria-label="Оформить как гость" checked={checkout.guest} onChange={(event) => updateCheckout({ guest: event.target.checked, phoneVerified: false })}/><span><strong>Оформить как гость</strong><small>Заполнить контакты без данных профиля</small></span></label>
+            <label><input type="checkbox" aria-label="Другой получатель" checked={checkout.otherRecipient} onChange={(event) => updateCheckout({ otherRecipient: event.target.checked })}/><span><strong>Другой получатель</strong><small>Заказ заберёт другой человек</small></span></label>
+          </div>
+
+          {!checkout.guest && <div className="checkout-account-contact"><label>Телефон аккаунта<input aria-label="Телефон аккаунта" value="+7 (900) 000-00-00" readOnly/></label><span>Подтверждён в профиле</span></div>}
+
+          {checkout.guest && <div className="checkout-fields checkout-fields--guest">
+            <label>Имя покупателя<input aria-label="Имя покупателя" required value={checkout.guestName} onChange={(event) => updateCheckout({ guestName: event.target.value })}/></label>
+            <label>Электронная почта<input aria-label="Электронная почта" type="email" required value={checkout.guestEmail} onChange={(event) => updateCheckout({ guestEmail: event.target.value })}/></label>
+            <label>Телефон покупателя<input aria-label="Телефон покупателя" type="tel" required value={checkout.guestPhone} onChange={(event) => updateCheckout({ guestPhone: event.target.value, phoneVerified: false })}/></label>
+            <div className="checkout-verification"><button type="button" onClick={() => updateCheckout({ phoneVerified: true })}>Получить код</button>{checkout.phoneVerified && <span role="status">Код подтверждён</span>}</div>
+          </div>}
+
+          {checkout.otherRecipient && <div className="checkout-fields checkout-fields--recipient">
+            <label>Имя получателя<input aria-label="Имя получателя" required value={checkout.recipientName} onChange={(event) => updateCheckout({ recipientName: event.target.value })}/></label>
+            <label>Фамилия получателя<input aria-label="Фамилия получателя" required value={checkout.recipientLastName} onChange={(event) => updateCheckout({ recipientLastName: event.target.value })}/></label>
+            <label>Телефон получателя<input aria-label="Телефон получателя" type="tel" required value={checkout.recipientPhone} onChange={(event) => updateCheckout({ recipientPhone: event.target.value })}/></label>
+          </div>}
+          {(checkout.guest || checkout.otherRecipient) && <p className="checkout-required-note">Поля, отмеченные как обязательные, нужны для связи по заказу.</p>}
+        </fieldset>
+      </section>
+      <OrderSummary action={<Link className="button checkout-sticky" to="/checkout/delivery">Продолжить оформление</Link>}/>
+    </div>
+  </main>
 }
 
 export function CheckoutDeliveryPage() {

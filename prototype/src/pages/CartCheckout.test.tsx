@@ -58,10 +58,23 @@ describe('cart and checkout', () => {
   it('offers guest phone verification and another recipient', async () => {
     const user = userEvent.setup(); open('/checkout/review')
     await user.click(screen.getByLabelText('Оформить как гость'))
+    expect(screen.getByLabelText('Имя покупателя')).toBeRequired()
+    expect(screen.getByLabelText('Электронная почта')).toBeRequired()
+    expect(screen.getByLabelText('Телефон покупателя')).toBeRequired()
     expect(screen.getByRole('button', { name: 'Получить код' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Получить код' }))
     expect(screen.getByRole('status')).toHaveTextContent('Код подтверждён')
     await user.click(screen.getByLabelText('Другой получатель'))
     expect(screen.getByLabelText('Имя получателя')).toBeInTheDocument()
+    expect(screen.getByLabelText('Фамилия получателя')).toBeInTheDocument()
+    expect(screen.getByLabelText('Телефон получателя')).toBeInTheDocument()
+  })
+
+  it('shows compact account data for personal and organization checkout', async () => {
+    const user = userEvent.setup(); open('/checkout/review')
+    expect(screen.getByLabelText('Телефон аккаунта')).toHaveAttribute('readonly')
+    await user.click(screen.getByLabelText('Оформляет организация'))
+    expect(screen.getByText('Реквизиты и ИНН загружены из профиля')).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toHaveTextContent('Главная/Корзина/Проверка заказа')
   })
 })

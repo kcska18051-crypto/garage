@@ -3,6 +3,7 @@ import { checkoutProducts, money } from '../data/checkoutData'
 import { useCommerce } from '../state/CommerceState'
 import './CartCheckout.css'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { formatProfileAddress, useProfile } from '../state/ProfileState'
 
 const useDemoCart = () => { const { ensureDemoCart } = useCommerce(); useEffect(() => ensureDemoCart(), []) }
 
@@ -17,6 +18,7 @@ export function CheckoutReviewPage() {
   useDemoCart()
   const navigate = useNavigate()
   const { cartItems, checkout, updateCheckout } = useCommerce()
+  const { addresses } = useProfile()
   const [courierEditor, setCourierEditor] = useState(Boolean(checkout.address))
   const [transportEditor, setTransportEditor] = useState(Boolean(checkout.transportAddress))
   const [validationMessage, setValidationMessage] = useState('')
@@ -76,7 +78,7 @@ export function CheckoutReviewPage() {
           </div>
           <div className="checkout-delivery-panel">
             {checkout.delivery === 'pickup' && <><div><b>Ярославль</b><p>Выберите удобный пункт выдачи заказа.</p></div>{checkout.store ? <div className="checkout-location"><div><strong>{checkout.store}</strong><span>Адрес демонстрационный · ориентировочно завтра · бесплатно</span></div><div className="checkout-map" aria-label="Место для карты">Карта пункта выдачи</div><div className="checkout-location__actions"><button type="button">Показать на карте</button><button type="button" onClick={() => updateCheckout({ store: '' })}>Изменить магазин</button></div></div> : <button className="checkout-secondary-button" type="button" onClick={() => updateCheckout({ store: 'Пункт выдачи в выбранном городе' })}>Выбрать пункт выдачи</button>}</>}
-            {checkout.delivery === 'courier' && <><p>Укажите адрес — подсказки и загрузка адресов с карты предусмотрены визуально.</p>{!courierEditor && !checkout.address ? <button className="checkout-secondary-button" type="button" onClick={() => setCourierEditor(true)}>Указать адрес доставки</button> : <div className="checkout-address"><label>Адрес доставки<input aria-label="Адрес доставки" value={checkout.address} placeholder="Город, улица, дом" onChange={(event) => updateCheckout({ address: event.target.value })}/></label><span>Ориентировочная дата и стоимость будут рассчитаны после выбора адреса.</span></div>}</>}
+            {checkout.delivery === 'courier' && <><p>Выберите сохранённый адрес или укажите новый.</p><div className="checkout-saved-addresses">{addresses.map((address) => <button className={checkout.address === formatProfileAddress(address) ? 'is-selected' : ''} type="button" key={address.id} onClick={() => { updateCheckout({ address: formatProfileAddress(address) }); setCourierEditor(false) }}>{address.label} — {formatProfileAddress(address)}</button>)}</div>{!courierEditor && <button className="checkout-secondary-button" type="button" onClick={() => setCourierEditor(true)}>Указать адрес доставки</button>}{(courierEditor || (checkout.address && !addresses.some((address) => formatProfileAddress(address) === checkout.address))) && <div className="checkout-address"><label>Адрес доставки<input aria-label="Адрес доставки" value={checkout.address} placeholder="Город, улица, дом" onChange={(event) => updateCheckout({ address: event.target.value })}/></label><span>Ориентировочная дата и стоимость будут рассчитаны после выбора адреса.</span></div>}</>}
             {checkout.delivery === 'transport' && <><p>Отправка из выбранного региона. Можно указать адрес или терминал транспортной компании.</p>{!transportEditor && !checkout.transportAddress ? <button className="checkout-secondary-button" type="button" onClick={() => setTransportEditor(true)}>Указать адрес или терминал</button> : <div className="checkout-address"><label>Адрес или терминал<input aria-label="Адрес или терминал транспортной компании" value={checkout.transportAddress} placeholder="Терминал или адрес" onChange={(event) => updateCheckout({ transportAddress: event.target.value })}/></label><span>Срок и стоимость рассчитываются по тарифу перевозчика.</span></div>}</>}
           </div>
         </section>

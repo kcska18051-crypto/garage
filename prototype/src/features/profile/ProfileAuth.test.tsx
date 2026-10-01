@@ -4,6 +4,11 @@ import { MemoryRouter } from 'react-router-dom'
 import { App } from '../../app/App'
 
 describe('profile phone verification prototype', () => {
+  it('links to the direct recovery route', () => {
+    render(<MemoryRouter initialEntries={['/profile/auth']}><App /></MemoryRouter>)
+    expect(screen.getByRole('link', { name: 'Не получается войти?' })).toHaveAttribute('href', '/profile/recovery')
+  })
+
   it('keeps consents separate and demonstrates code errors, resend and success', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter initialEntries={['/profile/auth']}><App /></MemoryRouter>)

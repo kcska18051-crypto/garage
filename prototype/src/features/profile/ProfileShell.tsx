@@ -1,13 +1,13 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { Breadcrumbs } from '../catalog/Breadcrumbs'
 import { profileConfig } from '../../data/profileData'
-import { ProfileProvider, useProfile } from '../../state/ProfileState'
+import { useProfile } from '../../state/ProfileState'
 import './Profile.css'
 
 const links = [
   ['Обзор', '/profile', '⌂'], ['Мои заказы', '/profile/orders', '▤'], ['Мои организации', '/profile/organizations', '▣'],
   ['Избранное', '/profile/favorites', '♡'], ['Вы смотрели', '/profile/recently-viewed', '◷'], ['Заявки на услуги', '/profile/services', '◇'],
-  ['Отзывы', '/profile/reviews', '☆'], ['Профиль', '/profile/data', '○'],
+  ['Документы', '/profile/documents', '▧'], ['Отзывы', '/profile/reviews', '☆'], ['Адреса', '/profile/addresses', '⌖'], ['Профиль', '/profile/data', '○'], ['Помощь', '/profile/help', '?'],
 ] as const
 
 function ShellContent() {
@@ -25,4 +25,4 @@ function ShellContent() {
   </main>
 }
 
-export function ProfileShell() { return <ProfileProvider><ShellContent /></ProfileProvider> }
+export function ProfileShell() { return <ShellContent /> }

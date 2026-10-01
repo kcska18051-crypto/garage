@@ -55,7 +55,7 @@ describe('profile secondary sections', () => {
     await user.clear(screen.getByLabelText('Имя')); await user.type(screen.getByLabelText('Имя'), 'Иван')
     await user.click(screen.getByRole('button', { name: 'Сохранить данные' }))
     expect(screen.getByRole('status')).toHaveTextContent('Данные профиля сохранены')
-    expect(screen.getByText('Ярославль, ул. Промышленная, 12')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Управлять' })).toHaveAttribute('href', '/profile/addresses')
     expect(screen.getByLabelText('Телефон')).toHaveAttribute('readonly')
   })
 

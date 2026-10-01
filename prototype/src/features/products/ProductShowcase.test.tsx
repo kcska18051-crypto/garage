@@ -18,9 +18,13 @@ describe('new products showcase', () => {
   it('updates shared header badges from real product actions', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter><App /></MemoryRouter>)
+    const favoriteAction = screen.getAllByRole('link', { name: /^Избранное(?:: \d+)?$/ })[0]
+    const initialFavoriteCount = Number(favoriteAction.getAttribute('aria-label')?.match(/\d+/)?.[0] ?? 0)
     await user.click(screen.getAllByRole('button', { name: /Добавить в избранное/ })[0])
-    expect(screen.getAllByLabelText('Избранное: 1').length).toBeGreaterThan(0)
+    expect(screen.getAllByLabelText(`Избранное: ${initialFavoriteCount + 1}`).length).toBeGreaterThan(0)
+    const cartAction = screen.getAllByRole('link', { name: /^Корзина(?:: \d+)?$/ })[0]
+    const initialCartCount = Number(cartAction.getAttribute('aria-label')?.match(/\d+/)?.[0] ?? 0)
     await user.click(screen.getAllByRole('button', { name: /Добавить в корзину/ })[0])
-    expect(screen.getAllByLabelText('Корзина: 1').length).toBeGreaterThan(0)
-  })
+    expect(screen.getAllByLabelText(`Корзина: ${initialCartCount + 1}`).length).toBeGreaterThan(0)
+  }, 10_000)
 })

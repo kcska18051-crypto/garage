@@ -36,6 +36,7 @@ export function ProfileAuth() {
           <label className="profile-check"><input type="checkbox" checked={messagesConsent} onChange={(event) => setMessagesConsent(event.target.checked)} /><span>Согласен получать информационные и рекламные сообщения</span></label>
           {error && <p className="profile-message profile-message--error" role="alert">{error}</p>}
           <button className="profile-button profile-button--primary" type="submit">Получить код</button>
+          <Link className="profile-auth__recovery" to="/profile/recovery">Не получается войти?</Link>
         </form>}
         {stage === 'code' && <form className="profile-form" onSubmit={verify}>
           <div><span className="profile-step">Шаг 2 из 2</span><h2>Введите код из SMS</h2><p>Код отправлен на {phone}. Для демонстрации используйте 1234.</p></div>

@@ -101,6 +101,7 @@
 .checkout-location__actions{display:flex;flex-wrap:wrap;gap:.5rem}
 .checkout-location__actions button+button{border-color:var(--color-border)}
 .checkout-address{display:grid;gap:.5rem}
+.checkout-saved-addresses{display:grid;gap:.45rem;grid-template-columns:repeat(2,minmax(0,1fr))}.checkout-saved-addresses button{background:var(--color-surface);border:1px solid var(--color-border);border-radius:.6rem;cursor:pointer;font-size:.68rem;padding:.65rem;text-align:left}.checkout-saved-addresses button.is-selected{border-color:var(--color-text);box-shadow:inset 0 0 0 1px var(--color-text)}
 .checkout-payment-grid{display:grid;gap:.6rem;grid-template-columns:repeat(2,minmax(0,1fr))}
 .checkout-payment{align-items:flex-start;background:var(--color-background);border:1px solid var(--color-border);border-radius:.75rem;cursor:pointer;display:flex;gap:.6rem;min-height:4.4rem;padding:.8rem}
 .checkout-payment input{margin-top:.15rem}
@@ -150,4 +151,5 @@
   .checkout-page .checkout-card{gap:.85rem}
   .checkout-delivery-panel{padding:.85rem}
   .checkout-secondary-button{width:100%}
+  .checkout-saved-addresses{grid-template-columns:1fr}
 }

@@ -11,7 +11,7 @@ import { CatalogSectionPage } from '../pages/CatalogSectionPage'
 import { ActionsPage } from '../pages/ActionsPage'
 import { ActionDetailPage } from '../pages/ActionDetailPage'
 import { ProfileShell } from '../features/profile/ProfileShell'
-import { ProfileAuthPage, ProfileDataPage, ProfileFavoritesPage, ProfileOrderDetailPage, ProfileOrdersPage, ProfileOrganizationsPage, ProfileOverviewPage, ProfileRecentlyViewedPage, ProfileReviewsPage, ProfileServicesPage } from '../pages/ProfilePages'
+import { ProfileAddressesPage, ProfileAuthPage, ProfileDataPage, ProfileDocumentsPage, ProfileFavoritesPage, ProfileHelpPage, ProfileOrderDetailPage, ProfileOrdersPage, ProfileOrganizationsPage, ProfileOverviewPage, ProfileRecentlyViewedPage, ProfileRecoveryPage, ProfileReviewsPage, ProfileServicesPage } from '../pages/ProfilePages'
 import { CartPage } from '../pages/CartPage'
 import { CheckoutDeliveryPage, CheckoutReviewPage, CheckoutSuccessPage } from '../pages/CheckoutPages'
 import { SearchResultsPage } from '../pages/SearchResultsPage'
@@ -52,9 +52,10 @@ export function AppRoutes() {
       <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
       <Route path="/search" element={<SearchResultsPage />} />
       <Route path="/favorites" element={<Navigate to="/profile/favorites" replace />} />
+      <Route path="/profile/auth" element={<ProfileAuthPage />} />
+      <Route path="/profile/recovery" element={<ProfileRecoveryPage />} />
       <Route path="/profile" element={<ProfileShell />}>
         <Route index element={<ProfileOverviewPage />} />
-        <Route path="auth" element={<ProfileAuthPage />} />
         <Route path="orders" element={<ProfileOrdersPage />} />
         <Route path="orders/:id" element={<ProfileOrderDetailPage />} />
         <Route path="organizations" element={<ProfileOrganizationsPage />} />
@@ -62,6 +63,9 @@ export function AppRoutes() {
         <Route path="recently-viewed" element={<ProfileRecentlyViewedPage />} />
         <Route path="services" element={<ProfileServicesPage />} />
         <Route path="reviews" element={<ProfileReviewsPage />} />
+        <Route path="documents" element={<ProfileDocumentsPage />} />
+        <Route path="help" element={<ProfileHelpPage />} />
+        <Route path="addresses" element={<ProfileAddressesPage />} />
         <Route path="data" element={<ProfileDataPage />} />
       </Route>
       {prototypeRoutes.map((route) => <Route key={route.path} path={route.path} element={<PlaceholderPage title={route.label} />} />)}

@@ -9,13 +9,18 @@ test('product detail keeps the approved hierarchy and interactive buying flow', 
   expect(headingBox!.y + headingBox!.height).toBeLessThan(heroBox!.y)
   await expect(page.getByRole('main').getByRole('link', { name: 'Remeza', exact: true })).toHaveAttribute('href', '/brand/remeza/')
 
+  const favoriteLink = page.getByRole('link', { name: /^Избранное(?:: \d+)?$/ }).first()
+  const cartLink = page.getByRole('link', { name: /^Корзина(?:: \d+)?$/ }).first()
+  const initialFavoriteCount = Number((await favoriteLink.getAttribute('aria-label'))?.match(/\d+/)?.[0] ?? 0)
+  const initialCartCount = Number((await cartLink.getAttribute('aria-label'))?.match(/\d+/)?.[0] ?? 0)
+
   await page.getByRole('button', { name: 'Сравнить' }).click()
   await page.getByRole('button', { name: 'В избранное' }).click()
   await page.getByRole('button', { name: 'В корзину' }).first().click()
   if (page.viewportSize()!.width >= 768) await expect(page.getByRole('link', { name: 'Сравнение: 1' })).toBeVisible()
   else await expect(page.getByRole('button', { name: 'Сравнить' })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.getByRole('link', { name: 'Избранное: 1' })).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Корзина: 1' })).toBeVisible()
+  await expect(page.getByRole('link', { name: `Избранное: ${initialFavoriteCount + 1}` }).first()).toBeVisible()
+  await expect(page.getByRole('link', { name: `Корзина: ${initialCartCount + 1}` }).first()).toBeVisible()
 
   await page.getByRole('button', { name: 'Следующее изображение' }).first().click()
   await expect(page.getByText('2 из 5').first()).toBeVisible()

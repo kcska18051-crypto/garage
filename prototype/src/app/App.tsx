@@ -4,6 +4,7 @@ import { CommerceProvider, useCommerce } from '../state/CommerceState'
 import { Footer } from '../features/footer/Footer'
 import { AppRoutes } from './routes'
 import { RegionProvider } from '../state/RegionState'
+import { ProfileProvider } from '../state/ProfileState'
 
 function AppContent() {
   const commerce = useCommerce()
@@ -21,6 +22,6 @@ export function routerBasename(baseUrl: string) {
 }
 
 export function App() {
-  const content = <RegionProvider><CommerceProvider><AppContent /></CommerceProvider></RegionProvider>
+  const content = <RegionProvider><CommerceProvider><ProfileProvider><AppContent /></ProfileProvider></CommerceProvider></RegionProvider>
   return useInRouterContext() ? content : <BrowserRouter basename={routerBasename(import.meta.env.BASE_URL)}>{content}</BrowserRouter>
 }

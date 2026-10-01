@@ -10,6 +10,9 @@ const routes = [
   ['/profile/recently-viewed', 'Вы смотрели'],
   ['/profile/services', 'Заявки на услуги'],
   ['/profile/reviews', 'Отзывы'],
+  ['/profile/documents', 'Документы'],
+  ['/profile/help', 'Помощь'],
+  ['/profile/addresses', 'Адреса доставки'],
   ['/profile/data', 'Профиль'],
 ] as const
 
@@ -20,7 +23,13 @@ describe('profile route shell', () => {
     expect(screen.getByRole('heading', { level: 1, name: heading })).toBeInTheDocument()
     expect(screen.getAllByText('+7 900 000-00-00').length).toBeGreaterThan(0)
     expect(screen.getByRole('navigation', { name: 'Разделы личного кабинета' })).toBeInTheDocument()
-    expect(document.querySelector('.profile-section__heading p')).not.toBeInTheDocument()
+    expect(document.querySelector('.profile-section__eyebrow')).not.toBeInTheDocument()
+  })
+
+  it('opens recovery as a public profile route without the account menu', () => {
+    render(<MemoryRouter initialEntries={['/profile/recovery']}><App /></MemoryRouter>)
+    expect(screen.getByRole('heading', { level: 1, name: 'Восстановление доступа' })).toBeInTheDocument()
+    expect(screen.queryByRole('navigation', { name: 'Разделы личного кабинета' })).not.toBeInTheDocument()
   })
 
   it('keeps the bonus card feature completely hidden', () => {

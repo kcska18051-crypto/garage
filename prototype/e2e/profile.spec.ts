@@ -28,6 +28,75 @@ test('phone authorization handles an expired code and a valid demo code', async 
   await expect(page.getByText('Номер подтверждён')).toBeVisible()
 })
 
+test('documents and help are real account sections with working actions', async ({ page }) => {
+  await page.goto('/profile')
+  await page.getByRole('link', { name: 'Документы' }).click()
+  await expect(page).toHaveURL(/\/profile\/documents/)
+  await page.getByRole('tab', { name: 'Организации' }).click()
+  await expect(page.getByText('Счёт на оплату')).toBeVisible()
+  await page.getByRole('button', { name: 'Посмотреть документ' }).first().click()
+  await expect(page.getByRole('dialog', { name: 'Предпросмотр документа' })).toBeVisible()
+  await page.getByRole('button', { name: 'Закрыть диалог' }).click()
+  await page.getByRole('link', { name: 'Помощь' }).click()
+  await expect(page).toHaveURL(/\/profile\/help/)
+  await page.getByRole('searchbox', { name: 'Поиск по вопросам' }).fill('возврат')
+  await page.getByRole('button', { name: /Как оформить возврат/ }).click()
+  await expect(page.getByText(/сохраните комплектность/i)).toBeVisible()
+  await page.getByRole('button', { name: 'Задать вопрос' }).click()
+  await page.getByLabel('Текст вопроса').fill('Нужна помощь с заказом')
+  await page.getByRole('button', { name: 'Отправить обращение' }).click()
+  await expect(page.getByText('Спасибо! Ваше обращение отправлено')).toBeVisible()
+})
+
+test('recovery handles an error and confirms access with the demo code', async ({ page }) => {
+  await page.goto('/profile/recovery')
+  await page.getByLabel('Номер телефона').fill('+7 900 000-00-00')
+  await page.getByRole('button', { name: 'Получить код' }).click()
+  await page.getByLabel('Код подтверждения').fill('9999')
+  await page.getByRole('button', { name: 'Подтвердить доступ' }).click()
+  await expect(page.getByRole('alert')).toContainText('Неверный код')
+  await page.getByLabel('Код подтверждения').fill('1234')
+  await page.getByRole('button', { name: 'Подтвердить доступ' }).click()
+  await expect(page.getByRole('heading', { name: 'Доступ подтверждён' })).toBeVisible()
+})
+
+test('address CRUD stays connected to courier checkout', async ({ page }) => {
+  await page.goto('/profile/addresses')
+  await page.getByRole('button', { name: 'Добавить адрес' }).click()
+  await page.getByLabel('Название адреса').fill('Склад')
+  await page.getByRole('textbox', { name: 'Город', exact: true }).fill('Ярославль')
+  await page.getByRole('textbox', { name: 'Улица', exact: true }).fill('Свободы')
+  await page.getByRole('textbox', { name: 'Дом', exact: true }).fill('18')
+  await page.getByRole('button', { name: 'Сохранить адрес' }).click()
+  const card = page.locator('.profile-address-card').filter({ hasText: 'Склад' })
+  await card.getByRole('button', { name: 'Изменить' }).click()
+  await page.getByRole('textbox', { name: 'Дом', exact: true }).fill('19')
+  await page.getByRole('button', { name: 'Сохранить адрес' }).click()
+  await expect(card).toContainText('д. 19')
+  await card.getByRole('button', { name: 'Сделать основным' }).click()
+  await expect(card).toContainText('Основной')
+  await page.getByRole('link', { name: /Корзина/ }).click()
+  await page.getByRole('link', { name: 'Перейти к оформлению' }).click()
+  await page.getByRole('tab', { name: /Курьером/ }).click()
+  await expect(page.getByRole('button', { name: /Склад — Ярославль, ул. Свободы, д. 19/ })).toBeVisible()
+  await page.getByRole('link', { name: 'Профиль' }).click()
+  await page.getByRole('link', { name: 'Адреса', exact: true }).click()
+  const savedCard = page.locator('.profile-address-card').filter({ hasText: 'Склад' })
+  await savedCard.getByRole('button', { name: 'Удалить адрес' }).click()
+  await page.getByRole('dialog', { name: 'Удалить адрес' }).getByRole('button', { name: 'Удалить' }).click()
+  await expect(page.getByText('Склад')).toHaveCount(0)
+})
+
+for (const route of ['/profile/documents', '/profile/help', '/profile/recovery', '/profile/addresses']) {
+  for (const width of [1440, 1024, 390, 360]) {
+    test(`${route} has no document overflow at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: width < 500 ? 844 : 900 })
+      await page.goto(route)
+      expect(await page.locator('body').evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true)
+    })
+  }
+}
+
 for (const viewport of [{ width: 1920, height: 1080 }, { width: 1440, height: 900 }, { width: 1024, height: 768 }, { width: 768, height: 900 }, { width: 390, height: 844 }, { width: 360, height: 800 }]) {
   test(`profile has no horizontal page overflow at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport)

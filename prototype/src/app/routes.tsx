@@ -15,6 +15,7 @@ import { ProfileAuthPage, ProfileDataPage, ProfileFavoritesPage, ProfileOrderDet
 import { CartPage } from '../pages/CartPage'
 import { CheckoutDeliveryPage, CheckoutReviewPage, CheckoutSuccessPage } from '../pages/CheckoutPages'
 import { SearchResultsPage } from '../pages/SearchResultsPage'
+import { ComparePage } from '../pages/ComparePage'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -23,7 +24,7 @@ export const prototypeRoutes: RouteDefinition[] = [
   { path: '/services/*', label: 'Услуги' }, { path: '/actions/*', label: 'Акции' },
   { path: '/new', label: 'Новинки' },
   { path: '/product/:slug', label: 'Карточка товара' },
-  { path: '/compare', label: 'Сравнение' }, { path: '/cart', label: 'Корзина' },
+  { path: '/cart', label: 'Корзина' },
   { path: '/delivery', label: 'Доставка и оплата' }, { path: '/about', label: 'О компании' },
   { path: '/contacts', label: 'Контакты' }, { path: '/articles/:slug', label: 'Статья' },
   { path: '/news/*', label: 'Новости' }, { path: '/articles', label: 'Статьи' }, { path: '/reviews', label: 'Обзоры' },
@@ -45,6 +46,7 @@ export function AppRoutes() {
       <Route path="/actions/completed" element={<Navigate to="/actions#archive" replace />} />
       <Route path="/actions/:slug" element={<ActionDetailPage />} />
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/compare" element={<ComparePage />} />
       <Route path="/checkout/review" element={<CheckoutReviewPage />} />
       <Route path="/checkout/delivery" element={<CheckoutDeliveryPage />} />
       <Route path="/checkout/success" element={<CheckoutSuccessPage />} />

@@ -4,7 +4,8 @@ type CommerceContextValue = {
   favoriteIds: Set<string>; compareIds: Set<string>; cartIds: Set<string>
   cartItems: CartLine[]; cartCount: number; checkout: CheckoutState
   toggleFavorite(id: string): void; addFavorite(id: string): void; removeFavorite(id: string): void
-  toggleCompare(id: string): void; addToCart(id: string): void; addManyToCart(ids: string[]): void
+  toggleCompare(id: string): void; addCompare(id: string): void; removeCompare(id: string): void; clearCompare(ids?: string[]): void; ensureDemoCompare(ids: string[]): void
+  addToCart(id: string): void; addManyToCart(ids: string[]): void
   updateQuantity(id: string, quantity: number): void; removeFromCart(id: string): void; moveToFavorites(id: string): void
   ensureDemoCart(): void
   updateCheckout(patch: Partial<CheckoutState>): void
@@ -33,7 +34,12 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
     toggleFavorite: (id: string) => setFavorites((current) => toggle(current, id)),
     addFavorite: (id: string) => setFavorites((current) => new Set(current).add(id)),
     removeFavorite: (id: string) => setFavorites((current) => { const next = new Set(current); next.delete(id); return next }),
-    toggleCompare: (id: string) => setCompare((current) => toggle(current, id)), addToCart,
+    toggleCompare: (id: string) => setCompare((current) => toggle(current, id)),
+    addCompare: (id: string) => setCompare((current) => new Set(current).add(id)),
+    removeCompare: (id: string) => setCompare((current) => { const next = new Set(current); next.delete(id); return next }),
+    clearCompare: (ids?: string[]) => setCompare((current) => ids ? new Set([...current].filter((id) => !ids.includes(id))) : new Set()),
+    ensureDemoCompare: (ids: string[]) => setCompare((current) => current.size ? current : new Set(ids)),
+    addToCart,
     addManyToCart: (ids: string[]) => ids.forEach(addToCart),
     updateQuantity: (id: string, quantity: number) => quantity < 1 ? removeFromCart(id) : setCartItems((current) => current.map((item) => item.id === id ? { ...item, quantity } : item)),
     removeFromCart,

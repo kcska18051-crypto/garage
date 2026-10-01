@@ -15,6 +15,21 @@ test('cart quantity and checkout choices persist through success', async ({ page
   await expect(page.getByRole('heading', { name: 'Заказ принят' })).toBeVisible()
 })
 
+test('cart uses a centered two-column workspace with selection, totals and recommendations', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/cart')
+  const layout = page.locator('.cart-layout')
+  const box = await layout.boundingBox()
+  expect(box?.width).toBeLessThanOrEqual(1280)
+  await expect(page.getByRole('checkbox', { name: 'Выбрать все товары' })).toBeChecked()
+  await page.getByRole('checkbox', { name: /Выбрать Компрессор поршневой Remeza/ }).uncheck()
+  await expect(page.getByRole('complementary', { name: 'Итоги заказа' })).toContainText('55 800 ₽')
+  await expect(page.getByTestId('cart-recommendation')).toHaveCount(3)
+  await page.getByRole('textbox', { name: 'Промокод' }).fill('GARAGE-DEMO')
+  await page.getByRole('button', { name: 'Применить промокод' }).click()
+  await expect(page.getByRole('status')).toContainText('Промокод применён')
+})
+
 test('search discovery, history and real result URL work together', async ({ page }) => {
   await page.goto('/')
   const search = page.getByRole('searchbox', { name: 'Поиск по товарам, брендам и артикулам' }).first()

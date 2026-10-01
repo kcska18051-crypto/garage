@@ -13,9 +13,23 @@ describe('cart and checkout', () => {
     expect(screen.getByText('В наличии в 1 магазине')).toBeInTheDocument()
     expect(screen.getByText('В наличии в 3 магазинах')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Корзина: 3' })).toBeInTheDocument()
+    expect(screen.getByText('3 товара на сумму')).toBeInTheDocument()
     await user.click(within(screen.getAllByTestId('cart-line')[0]).getByRole('button', { name: 'Увеличить количество' }))
     expect(screen.getByRole('link', { name: 'Корзина: 4' })).toBeInTheDocument()
     expect(screen.getByText('Итого к оформлению')).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'Выбрать все товары' })).toBeChecked()
+    expect(screen.getByText('4 товара на сумму')).toBeInTheDocument()
+    expect(screen.getAllByTestId('cart-recommendation')).toHaveLength(3)
+  })
+
+  it('recalculates selected goods and applies a demonstration promo code', async () => {
+    const user = userEvent.setup(); open('/cart')
+    await user.click(screen.getByRole('checkbox', { name: /Выбрать Компрессор поршневой Remeza/ }))
+    expect(screen.getByText('2 товара на сумму')).toBeInTheDocument()
+    expect(screen.getByRole('complementary', { name: 'Итоги заказа' })).toHaveTextContent('55 800 ₽')
+    await user.type(screen.getByLabelText('Промокод'), 'GARAGE-DEMO')
+    await user.click(screen.getByRole('button', { name: 'Применить промокод' }))
+    expect(screen.getByRole('status')).toHaveTextContent('Промокод применён для демонстрации')
   })
 
   it('moves a cart line to favorites and supports the empty state', async () => {

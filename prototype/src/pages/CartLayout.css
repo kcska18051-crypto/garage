@@ -1,0 +1,5 @@
+.cart-page {
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  width: 100%;
+}

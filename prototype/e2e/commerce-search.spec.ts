@@ -30,6 +30,19 @@ test('cart uses a centered two-column workspace with selection, totals and recom
   await expect(page.getByRole('status')).toContainText('Промокод применён')
 })
 
+for (const width of [2560, 1920, 1440, 1024, 390, 360]) {
+  test(`cart main container is centered without overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width <= 390 ? 844 : 1000 })
+    await page.goto('/cart')
+    const box = await page.locator('main.cart-page').boundingBox()
+    expect(box).not.toBeNull()
+    const left = box!.x
+    const right = width - box!.x - box!.width
+    expect(Math.abs(left - right)).toBeLessThanOrEqual(1)
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+  })
+}
+
 test('search discovery, history and real result URL work together', async ({ page }) => {
   await page.goto('/')
   const search = page.getByRole('searchbox', { name: 'Поиск по товарам, брендам и артикулам' }).first()

@@ -4,6 +4,7 @@ import { checkoutProducts, money } from '../data/checkoutData'
 import { useCommerce } from '../state/CommerceState'
 import { formatAvailability } from '../utils/availability'
 import './CartCheckout.css'
+import './CartLayout.css'
 
 type SummaryProps = { action?: React.ReactNode; selectedIds?: Set<string>; promo?: React.ReactNode }
 

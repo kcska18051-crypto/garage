@@ -18,7 +18,21 @@ test('comparison groups products and keeps controls interactive', async ({ page 
   await expect(page.getByRole('link', { name: 'Сравнение: 3' })).toBeVisible()
 })
 
-for (const width of [1920, 1440, 1024, 390, 360]) {
+test('comparison uses the same centered widescreen container as the header at 2560px', async ({ page }) => {
+  await page.setViewportSize({ width: 2560, height: 1440 })
+  await page.goto('/compare')
+
+  const main = await page.locator('main.compare-page').boundingBox()
+  const header = await page.locator('.desktop-header').boundingBox()
+  expect(main).not.toBeNull()
+  expect(header).not.toBeNull()
+  expect(main!.width).toBeLessThanOrEqual(1440)
+  expect(Math.abs(main!.x - header!.x)).toBeLessThanOrEqual(1)
+  expect(Math.abs(main!.width - header!.width)).toBeLessThanOrEqual(1)
+  expect(Math.abs(main!.x - (2560 - main!.x - main!.width))).toBeLessThanOrEqual(1)
+})
+
+for (const width of [2560, 1920, 1440, 1024, 390, 360]) {
   test(`comparison keeps the page viewport clean at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width <= 390 ? 844 : 1000 })
     await page.goto('/compare')

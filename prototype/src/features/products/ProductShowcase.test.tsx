@@ -12,7 +12,7 @@ describe('new products showcase', () => {
     expect(card.querySelector('[data-testid="product-gallery"]')).toBeInTheDocument()
     expect(card.querySelectorAll('[data-testid="product-gallery-dot"]')).toHaveLength(3)
     expect(card).toHaveTextContent('Артикул:')
-    expect(card.querySelector('.product-card__availability')).toBeNull()
+    expect(card.querySelector('.product-teaser__availability')).toHaveTextContent(/В наличии в \d+ магазин|Под заказ|Нет в наличии|Снят с производства/)
   })
 
   it('updates shared header badges from real product actions', async () => {

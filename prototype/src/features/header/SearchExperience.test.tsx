@@ -22,5 +22,6 @@ describe('search experience', () => {
     render(<MemoryRouter initialEntries={['/search?q=компрессор']}><CommerceProvider><Routes><Route path="/search" element={<SearchResultsPage/>}/></Routes></CommerceProvider></MemoryRouter>)
     expect(screen.getByRole('heading', { name: /Результаты поиска/ })).toBeInTheDocument()
     expect(screen.getByText('Компрессор поршневой')).toBeInTheDocument()
+    expect(screen.getByText('Под заказ')).toBeInTheDocument()
   })
 })

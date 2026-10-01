@@ -5,6 +5,7 @@ import { prototypeData } from '../../data/prototypeData'
 import type { Product } from '../../data/types'
 import { useCommerce } from '../../state/CommerceState'
 import { useProfile } from '../../state/ProfileState'
+import { formatAvailability } from '../../utils/availability'
 import { ProfileDialog } from './ProfileDialog'
 
 function Heading({ title, action }: { title: string; note?: string; action?: React.ReactNode }) {
@@ -13,7 +14,7 @@ function Heading({ title, action }: { title: string; note?: string; action?: Rea
 
 function ProductTile({ product, removable = false, compact = false }: { product: Product; removable?: boolean; compact?: boolean }) {
   const commerce = useCommerce()
-  return <article className={`profile-product${compact ? ' profile-product--compact' : ''}`} data-testid={`profile-product-${product.id}`}><Link to={product.href} className="profile-product__art" aria-label={product.name}><i /><span /></Link><div><small>Артикул: {product.sku}</small><Link to={product.href}><strong>{product.name}</strong></Link><span>{product.availability}</span></div><footer><b>{product.price}</b><div>{removable && <button type="button" aria-label="Удалить из избранного" onClick={() => commerce.removeFavorite(product.id)}>×</button>}<button type="button" aria-label="Добавить в корзину" onClick={() => commerce.addToCart(product.id)}>+</button></div></footer></article>
+  return <article className={`profile-product${compact ? ' profile-product--compact' : ''}`} data-testid={`profile-product-${product.id}`}><Link to={product.href} className="profile-product__art" aria-label={product.name}><i /><span /></Link><div><small>Артикул: {product.sku}</small><Link to={product.href}><strong>{product.name}</strong></Link><span>{formatAvailability(product.availabilityStatus, product.storeCount)}</span></div><footer><b>{product.price}</b><div>{removable && <button type="button" aria-label="Удалить из избранного" onClick={() => commerce.removeFavorite(product.id)}>×</button>}<button type="button" aria-label="Добавить в корзину" onClick={() => commerce.addToCart(product.id)}>+</button></div></footer></article>
 }
 
 export function ProfileOrganizations() {

@@ -10,6 +10,8 @@ describe('cart and checkout', () => {
     const user = userEvent.setup(); open('/cart')
     expect(screen.getByRole('heading', { name: 'Корзина' })).toBeInTheDocument()
     expect(screen.getAllByTestId('cart-line')).toHaveLength(2)
+    expect(screen.getByText('В наличии в 1 магазине')).toBeInTheDocument()
+    expect(screen.getByText('В наличии в 3 магазинах')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Корзина: 3' })).toBeInTheDocument()
     await user.click(within(screen.getAllByTestId('cart-line')[0]).getByRole('button', { name: 'Увеличить количество' }))
     expect(screen.getByRole('link', { name: 'Корзина: 4' })).toBeInTheDocument()

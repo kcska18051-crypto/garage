@@ -1,3 +1,5 @@
+import type { AvailabilityStatus } from '../utils/availability'
+
 export type Slide = {
   id: string
   title: string
@@ -14,7 +16,8 @@ export type Product = {
   name: string
   sku: string
   price: string
-  availability: string
+  availabilityStatus: AvailabilityStatus
+  storeCount: number
   href: string
 }
 export type Service = { id: string; name: string; text: string; cta: string; href: string }

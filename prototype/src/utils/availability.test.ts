@@ -9,4 +9,8 @@ describe('formatAvailability', () => {
   it.each(['Под заказ', 'Нет в наличии', 'Снят с производства'] as const)('keeps %s status', (status) => {
     expect(formatAvailability(status)).toBe(status)
   })
+
+  it('does not present zero stores as in-stock', () => {
+    expect(formatAvailability('available', 0)).toBe('Доступно для заказа')
+  })
 })

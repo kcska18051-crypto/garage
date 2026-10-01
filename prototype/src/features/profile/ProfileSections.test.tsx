@@ -23,6 +23,13 @@ describe('profile secondary sections', () => {
     expect(screen.queryByTestId('profile-product-product-1')).not.toBeInTheDocument()
   })
 
+  it('uses the shared availability wording in favorites and recently viewed', () => {
+    const { unmount } = open('/profile/favorites')
+    expect(screen.getByTestId('profile-product-product-1')).toHaveTextContent('В наличии в 1 магазине')
+    unmount(); open('/profile/recently-viewed')
+    expect(screen.getByTestId('profile-product-product-5')).toHaveTextContent('Нет в наличии')
+  })
+
   it('clears recently viewed products with an explicit confirmation', async () => {
     const user = userEvent.setup(); open('/profile/recently-viewed')
     await user.click(screen.getByRole('button', { name: 'Очистить историю' }))

@@ -61,6 +61,13 @@ describe('catalog product listing', () => {
     expect(screen.getByLabelText('22 кВт')).toBeDisabled()
   })
 
+  it('keeps the same availability wording in grid and list views', () => {
+    renderListing()
+    expect(screen.getAllByText('В наличии в 3 магазинах').length).toBeGreaterThan(0)
+    fireEvent.click(screen.getByRole('button', { name: 'Список' }))
+    expect(screen.getAllByText('В наличии в 3 магазинах').length).toBeGreaterThan(0)
+  })
+
   it('removes the complete filter interface when filters are disabled', () => {
     render(<MemoryRouter><CommerceProvider><ProductListing products={catalogProducts} filterGroups={fullFilterGroups} mode="full" showFilters={false} /></CommerceProvider></MemoryRouter>)
     expect(screen.queryByRole('button', { name: 'Фильтры' })).not.toBeInTheDocument()

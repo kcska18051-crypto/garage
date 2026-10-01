@@ -10,5 +10,6 @@ function storeWord(count: number) {
 
 export function formatAvailability(status: AvailabilityStatus, storeCount = 0) {
   if (status !== 'available') return status
+  if (storeCount < 1) return 'Доступно для заказа'
   return `В наличии в ${storeCount} ${storeWord(storeCount)}`
 }

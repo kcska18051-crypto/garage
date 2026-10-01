@@ -1,6 +1,15 @@
 import type { Product, PrototypeData } from './types'
 
-const products: Product[] = Array.from({ length: 10 }, (_, index) => ({ id: `product-${index + 1}`, name: ['Домкрат подкатной профессиональный', 'Набор инструмента для мастерской', 'Краскопульт с верхним бачком', 'Компрессор поршневой', 'Стенд диагностический', 'Шлифовальная машинка', 'Тележка инструментальная', 'Сварочный аппарат', 'Осушитель рефрижераторный', 'Ресивер вертикальный'][index], sku: `GR-${String(index + 1).padStart(4, '0')}`, price: `${(index + 2) * 9} 900 ₽`, availability: index % 3 === 0 ? 'Срок уточняется для вашего города' : 'Доступно к заказу', href: `/product/product-${index + 1}` }))
+const availability = [
+  { availabilityStatus: 'available' as const, storeCount: 1 },
+  { availabilityStatus: 'available' as const, storeCount: 2 },
+  { availabilityStatus: 'available' as const, storeCount: 5 },
+  { availabilityStatus: 'Под заказ' as const, storeCount: 0 },
+  { availabilityStatus: 'Нет в наличии' as const, storeCount: 0 },
+  { availabilityStatus: 'Снят с производства' as const, storeCount: 0 },
+]
+
+const products: Product[] = Array.from({ length: 10 }, (_, index) => ({ id: `product-${index + 1}`, name: ['Домкрат подкатной профессиональный', 'Набор инструмента для мастерской', 'Краскопульт с верхним бачком', 'Компрессор поршневой', 'Стенд диагностический', 'Шлифовальная машинка', 'Тележка инструментальная', 'Сварочный аппарат', 'Осушитель рефрижераторный', 'Ресивер вертикальный'][index], sku: `GR-${String(index + 1).padStart(4, '0')}`, price: `${(index + 2) * 9} 900 ₽`, ...availability[index % availability.length], href: `/product/product-${index + 1}` }))
 
 export const prototypeData: PrototypeData = {
   slides: [

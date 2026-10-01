@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { money, productDetail, type ProductOffer } from '../../data/productDetailData'
+import './CommercialProposal.css'
 
 type Props = { offer: ProductOffer; quantity: number; onClose(): void }
 
@@ -7,10 +9,17 @@ export function CommercialProposal({ offer, quantity, onClose }: Props) {
   const [feedback, setFeedback] = useState('')
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => event.key === 'Escape' && onClose()
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.body.classList.add('proposal-overlay-open')
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = previousOverflow
+      document.body.classList.remove('proposal-overlay-open')
+    }
   }, [onClose])
-  return <div className="product-modal" role="dialog" aria-modal="true" aria-label="Коммерческое предложение" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
+  return createPortal(<div className="product-modal product-modal--proposal" role="dialog" aria-modal="true" aria-label="Коммерческое предложение" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
     <section className="proposal-modal">
       <button className="product-modal__close" type="button" aria-label="Закрыть коммерческое предложение" onClick={onClose}>×</button>
       <p className="proposal-modal__eyebrow">Предпросмотр документа</p>
@@ -24,5 +33,5 @@ export function CommercialProposal({ offer, quantity, onClose }: Props) {
       <div className="proposal-modal__actions"><button className="button button--dark" type="button" onClick={() => setFeedback('PDF подготовлен в демонстрационном режиме')}>Скачать PDF</button><button className="button" type="button" onClick={() => setFeedback('Отправка показана в демонстрационном режиме')}>Отправить на e-mail</button></div>
       {feedback && <p className="product-feedback" role="status">{feedback}</p>}
     </section>
-  </div>
+  </div>, document.body)
 }

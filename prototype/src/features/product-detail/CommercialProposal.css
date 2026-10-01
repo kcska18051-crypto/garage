@@ -1,0 +1,3 @@
+.product-modal--proposal { isolation: isolate; z-index: 300; }
+body.proposal-overlay-open .product-mobile-purchase,
+body.proposal-overlay-open .mobile-bottom-nav { display: none; }

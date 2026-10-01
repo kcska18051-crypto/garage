@@ -43,6 +43,19 @@ test('mobile product detail keeps the purchase action above bottom navigation', 
   expect(purchaseBox!.y + purchaseBox!.height).toBeLessThanOrEqual(navBox!.y + 1)
 })
 
+test('commercial proposal owns the top layer on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/product/remeza-vk-10-gr-0001/')
+  await page.getByRole('button', { name: 'Коммерческое предложение' }).click()
+  const dialog = page.getByRole('dialog', { name: 'Коммерческое предложение' })
+  await expect(dialog).toBeVisible()
+  await expect(page.locator('.product-mobile-purchase')).toBeHidden()
+  await expect(page.getByRole('navigation', { name: 'Мобильная навигация' })).toBeHidden()
+  const box = await dialog.boundingBox()
+  expect(box?.x).toBe(0)
+  expect(box?.y).toBe(0)
+})
+
 for (const [device, width, height] of [['desktop', 1440, 900], ['mobile', 390, 844]] as const) {
   test(`${device} copies the selected sku and opens sharing options before copying the product URL`, async ({ page, context }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'http://127.0.0.1:43991' })

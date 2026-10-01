@@ -82,6 +82,7 @@ describe('Remeza product detail redesign', () => {
 
     await user.click(screen.getByRole('button', { name: 'Коммерческое предложение' }))
     const modal = screen.getByRole('dialog', { name: 'Коммерческое предложение' })
+    expect(modal.parentElement).toBe(document.body)
     expect(within(modal).getByText(/GR-0001/)).toBeInTheDocument()
     expect(within(modal).getByText(/380 В · 7,5 кВт/)).toBeInTheDocument()
 

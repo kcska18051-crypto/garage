@@ -16,7 +16,10 @@ export type CheckoutState = {
   customerType: 'personal' | 'organization'; organization: string; guest: boolean; phoneVerified: boolean
   guestName: string; guestEmail: string; guestPhone: string
   otherRecipient: boolean; recipientName: string; recipientLastName: string; recipientPhone: string
-  delivery: 'delivery' | 'pickup'; payment: 'card' | 'cash' | 'invoice'; address: string; store: string
+  organizationInn: string
+  delivery: 'pickup' | 'courier' | 'transport'; payment: 'card' | 'sbp' | 'cash' | 'installment' | 'invoice'
+  address: string; store: string; transportAddress: string
+  comment: string; marketingConsent: boolean
 }
 
 const CommerceContext = createContext<CommerceContextValue | null>(null)
@@ -26,7 +29,7 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
   const [favoriteIds, setFavorites] = useState<Set<string>>(() => new Set())
   const [compareIds, setCompare] = useState<Set<string>>(() => new Set())
   const [cartItems, setCartItems] = useState<CartLine[]>(() => [])
-  const [checkout, setCheckout] = useState<CheckoutState>({ customerType: 'personal', organization: 'ООО «Гараж»', guest: false, phoneVerified: false, guestName: '', guestEmail: '', guestPhone: '', otherRecipient: false, recipientName: '', recipientLastName: '', recipientPhone: '', delivery: 'delivery', payment: 'card', address: 'Ярославль', store: 'Магазин в выбранном городе' })
+  const [checkout, setCheckout] = useState<CheckoutState>({ customerType: 'personal', organization: 'ООО «Гараж»', guest: false, phoneVerified: false, guestName: '', guestEmail: '', guestPhone: '', otherRecipient: false, recipientName: '', recipientLastName: '', recipientPhone: '', organizationInn: '', delivery: 'pickup', payment: 'card', address: '', store: '', transportAddress: '', comment: '', marketingConsent: false })
   const cartIds = useMemo(() => new Set(cartItems.map(({ id }) => id)), [cartItems])
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
   const addToCart = (id: string) => setCartItems((current) => current.some((item) => item.id === id) ? current.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item) : [...current, { id, quantity: 1 }])

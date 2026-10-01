@@ -8,10 +8,10 @@ test('cart quantity and checkout choices persist through success', async ({ page
   await page.getByTestId('cart-line').first().getByRole('button', { name: 'Увеличить количество' }).click()
   await expect(page.getByRole('link', { name: 'Корзина: 4' })).toBeVisible()
   await page.getByRole('link', { name: 'Перейти к оформлению' }).click()
-  await page.getByLabel('Оформляет организация').click()
-  await page.getByRole('link', { name: 'Продолжить оформление' }).click()
-  await expect(page.getByLabel('Оплата по счёту')).toBeChecked()
-  await page.getByRole('link', { name: 'Подтвердить заказ' }).click()
+  await page.getByRole('tab', { name: /Самовывоз/ }).click()
+  await page.getByRole('button', { name: 'Выбрать пункт выдачи' }).click()
+  await page.getByLabel('Картой онлайн').click()
+  await page.getByRole('button', { name: 'Оформить заказ' }).click()
   await expect(page.getByRole('heading', { name: 'Заказ принят' })).toBeVisible()
 })
 
@@ -30,7 +30,7 @@ test('cart uses a centered two-column workspace with selection, totals and recom
   await expect(page.getByRole('status')).toContainText('Промокод применён')
 })
 
-test('checkout review uses the header container and compact interactive cards at 2560px', async ({ page }) => {
+test('one-page checkout switches recipient, customer, delivery and payment states', async ({ page }) => {
   await page.setViewportSize({ width: 2560, height: 1440 })
   await page.goto('/checkout/review')
   const header = await page.locator('.desktop-header').boundingBox()
@@ -41,15 +41,34 @@ test('checkout review uses the header container and compact interactive cards at
   expect(Math.abs(main!.x - header!.x)).toBeLessThanOrEqual(1)
   expect(Math.abs(main!.width - header!.width)).toBeLessThanOrEqual(1)
   expect(Math.abs(main!.x - (2560 - main!.x - main!.width))).toBeLessThanOrEqual(1)
-  await page.getByLabel('Оформляет организация').click()
-  await expect(page.getByText('Реквизиты и ИНН загружены из профиля')).toBeVisible()
-  await page.getByLabel('Оформить как гость').check()
-  await expect(page.getByLabel('Имя покупателя')).toBeVisible()
-  await page.getByLabel('Другой получатель').check()
+  await expect(page.getByRole('heading', { name: 'Оформление заказа' })).toBeVisible()
+  await expect(page.getByLabel('Оформить как гость')).toHaveCount(0)
+  await page.getByLabel('Заберёт другой человек').check()
   await expect(page.getByLabel('Фамилия получателя')).toBeVisible()
+  await page.getByRole('tab', { name: 'Купить как юридическое лицо' }).click()
+  await expect(page.getByLabel('Оплата по счёту')).toBeChecked()
+  await page.getByRole('tab', { name: /Курьером/ }).click()
+  await page.getByRole('button', { name: 'Указать адрес доставки' }).click()
+  await page.getByLabel('Адрес доставки').fill('ул. Примерная, 10')
+  await expect(page.getByRole('complementary', { name: 'Итоги заказа' })).toContainText('Курьером')
+  await page.getByRole('tab', { name: 'Покупка для себя' }).click()
+  await page.getByRole('tab', { name: /Транспортная компания/ }).click()
+  await expect(page.getByLabel('При получении')).toBeDisabled()
+  await expect(page.getByText(/Спасибо/i)).toHaveCount(0)
 })
 
-for (const width of [2560, 1920, 1440, 1024, 390, 360]) {
+test('mobile checkout hint scrolls to the main CTA and hides when it is visible', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/checkout/review')
+  const hint = page.getByTestId('mobile-checkout-hint')
+  await expect(hint).toBeVisible()
+  await hint.getByRole('button', { name: 'Перейти к оформлению заказа' }).click()
+  await expect(page.getByTestId('checkout-submit')).toBeInViewport()
+  await expect(hint).toBeHidden()
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+})
+
+for (const width of [2560, 1920, 1440, 1024, 768, 390, 360]) {
   test(`checkout review is centered without document overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width <= 390 ? 844 : 1000 })
     await page.goto('/checkout/review')

@@ -59,11 +59,12 @@ describe('materials pages', () => {
     expect(screen.getByRole('heading', { level: 2, name: 'Читайте дальше' })).toBeInTheDocument()
   })
 
-  it('keeps article contents separate from the materials navigation', () => {
+  it('uses regular article copy without a table of contents', () => {
     open('/articles/work-area')
-    const contents = screen.getByRole('navigation', { name: 'Содержание статьи' })
-    expect(within(contents).getByRole('link', { name: 'Определите задачи зоны' })).toHaveAttribute('href', '#tasks')
-    expect(screen.getByRole('navigation', { name: 'Разделы материалов' })).not.toBe(contents)
+    expect(screen.queryByRole('navigation', { name: 'Содержание статьи' })).not.toBeInTheDocument()
+    expect(screen.queryByText('Содержание')).not.toBeInTheDocument()
+    expect(screen.getByTestId('material-detail-note')).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Разделы материалов' })).toBeInTheDocument()
   })
 
   it('starts an optional video only after a click', async () => {

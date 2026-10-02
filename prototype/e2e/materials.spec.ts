@@ -19,12 +19,12 @@ test('footer links open independent material lists', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1, name: 'Статьи' })).toBeVisible()
 })
 
-test('article contents and section navigation stay separate', async ({ page }) => {
+test('article uses regular copy without a table of contents', async ({ page }) => {
   await page.goto('/articles/work-area')
-  await expect(page.getByRole('navigation', { name: 'Содержание статьи' })).toBeVisible()
+  await expect(page.getByRole('navigation', { name: 'Содержание статьи' })).toHaveCount(0)
+  await expect(page.getByText('Содержание', { exact: true })).toHaveCount(0)
+  await expect(page.getByTestId('material-detail-note')).toBeVisible()
   await expect(page.getByRole('navigation', { name: 'Разделы материалов' })).toBeVisible()
-  await page.getByRole('link', { name: 'Определите задачи зоны' }).click()
-  await expect(page).toHaveURL(/#tasks$/)
 })
 
 test('detail without video does not reserve a media block', async ({ page }) => {
@@ -42,7 +42,7 @@ test('wide and desktop lists use the approved card density', async ({ page }) =>
   }
 })
 
-test('balances wide detail composition and keeps video variants responsive', async ({ page }) => {
+test('keeps wide detail media and video variants responsive', async ({ page }) => {
   for (const width of [1920, 2560]) {
     await page.setViewportSize({ width, height: 1000 })
     await page.goto('/reviews/workshop-solutions')
@@ -52,16 +52,12 @@ test('balances wide detail composition and keeps video variants responsive', asy
       const heading = box('.material-detail__heading')
       const cover = box('.material-detail__cover')
       const videos = box('.material-videos')
-      const text = box('.material-intro')
       return {
         widths: [heading.width, cover.width, videos.width],
         mainWidth: main.width,
-        textLeftGap: text.left - main.left,
-        textRightGap: main.right - text.right,
       }
     })
     for (const mediaWidth of geometry.widths) expect(Math.abs(mediaWidth - geometry.mainWidth)).toBeLessThanOrEqual(2)
-    expect(Math.abs(geometry.textLeftGap - geometry.textRightGap)).toBeLessThanOrEqual(2)
   }
 
   await page.goto('/reviews/compressor-types')
@@ -73,6 +69,27 @@ test('balances wide detail composition and keeps video variants responsive', asy
   await page.setViewportSize({ width: 390, height: 844 })
   const mobileBoxes = await videos.evaluateAll((items) => items.map((item) => item.getBoundingClientRect()))
   expect(mobileBoxes[1].top).toBeGreaterThan(mobileBoxes[0].bottom)
+})
+
+test('keeps compact banners and one content line', async ({ page }) => {
+  for (const width of [1920, 2560]) {
+    await page.setViewportSize({ width, height: 1000 })
+    await page.goto('/articles/work-area')
+    const geometry = await page.evaluate(() => {
+      const box = (selector: string) => document.querySelector(selector)!.getBoundingClientRect()
+      const main = box('.materials-main')
+      const cover = box('.material-detail__cover .material-cover')
+      const inline = box('.material-inline-image')
+      return {
+        ratios: [cover.width / cover.height, inline.width / inline.height],
+        lefts: [box('.material-intro').left, box('.material-detail__note').left, box('.material-section').left],
+        mainLeft: main.left,
+      }
+    })
+    for (const ratio of geometry.ratios) expect(ratio).toBeGreaterThanOrEqual(2.9)
+    for (const left of geometry.lefts) expect(Math.abs(left - geometry.mainLeft)).toBeLessThanOrEqual(2)
+    await expect(page.locator('.material-contents')).toHaveCount(0)
+  }
 })
 
 for (const width of [1920, 1440, 768, 390, 360]) {

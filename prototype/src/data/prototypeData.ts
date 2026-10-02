@@ -59,6 +59,6 @@ export const prototypeData: PrototypeData = {
     { id: 'rental', name: 'Аренда оборудования', text: 'Техника для временных и проектных задач.', cta: 'Условия аренды', href: '/services/rental' },
     { id: 'paint-matching', name: 'Подбор автоэмали', text: 'Подбор цвета и материалов для ремонта покрытия.', cta: 'Узнать о подборе', href: '/services/paint-matching' },
   ],
-  useful: (['news', 'article', 'review'] as const).flatMap((kind) => materials.filter((item) => item.kind === kind).slice(0, 5).map((item) => ({ id: `${item.kind}-${item.slug}`, kind: item.kind, title: item.title, text: item.summary, meta: `${materialKinds[item.kind].singular} · ${item.dateLabel}`, href: `${materialKinds[item.kind].path}/${item.slug}`, video: Boolean(item.video) }))),
+  useful: (['news', 'article', 'review'] as const).flatMap((kind) => materials.filter((item) => item.kind === kind).slice(0, 5).map((item) => ({ id: `${item.kind}-${item.slug}`, kind: item.kind, title: item.title, text: item.summary, meta: `${materialKinds[item.kind].singular} · ${item.dateLabel}`, href: `${materialKinds[item.kind].path}/${item.slug}`, video: Boolean(item.videos?.length) }))),
   config: { showReviews: true, showNewsletter: false },
 }

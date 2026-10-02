@@ -32,6 +32,35 @@ test('detail without video does not reserve a media block', async ({ page }) => 
   await expect(page.locator('.material-video')).toHaveCount(0)
 })
 
+test('wide and desktop lists use the approved card density', async ({ page }) => {
+  for (const [width, columns] of [[1920, 4], [1440, 3], [768, 2]] as const) {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('/news')
+    const cards = page.getByTestId('material-card')
+    const tops = await cards.evaluateAll((items) => items.map((item) => Math.round(item.getBoundingClientRect().top)))
+    expect(tops.filter((top) => top === tops[0])).toHaveLength(columns)
+  }
+})
+
+test('detail media follows the readable column and video variants reflow', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1000 })
+  await page.goto('/reviews/workshop-solutions')
+  const mainWidth = await page.locator('.materials-main').evaluate((node) => node.getBoundingClientRect().width)
+  const coverWidth = await page.locator('.material-detail__cover').evaluate((node) => node.getBoundingClientRect().width)
+  expect(coverWidth).toBeLessThan(mainWidth)
+  expect(coverWidth).toBeLessThanOrEqual(820)
+
+  await page.goto('/reviews/compressor-types')
+  const videos = page.locator('.material-video')
+  await expect(videos).toHaveCount(2)
+  const desktopBoxes = await videos.evaluateAll((items) => items.map((item) => item.getBoundingClientRect()))
+  expect(Math.abs(desktopBoxes[0].top - desktopBoxes[1].top)).toBeLessThan(2)
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  const mobileBoxes = await videos.evaluateAll((items) => items.map((item) => item.getBoundingClientRect()))
+  expect(mobileBoxes[1].top).toBeGreaterThan(mobileBoxes[0].bottom)
+})
+
 for (const width of [1920, 1440, 768, 390, 360]) {
   test(`materials lists and details have no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })

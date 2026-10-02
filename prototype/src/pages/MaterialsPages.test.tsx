@@ -56,6 +56,7 @@ describe('materials pages', () => {
     expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: backLabel })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Связанные материалы' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Читайте дальше' })).toBeInTheDocument()
   })
 
   it('keeps article contents separate from the materials navigation', () => {
@@ -71,7 +72,23 @@ describe('materials pages', () => {
     expect(screen.queryByText('Демонстрационное видео воспроизводится')).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Воспроизвести видео: Оснащение рабочего поста' }))
     expect(screen.getByText('Демонстрационное видео воспроизводится')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Приостановить видео' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Приостановить видео: Оснащение рабочего поста' })).toBeInTheDocument()
+    expect(document.querySelector('.material-video__copy')).toBeNull()
+  })
+
+  it('shows two compact video covers without a side description', () => {
+    open('/reviews/compressor-types')
+    const videos = screen.getByRole('region', { name: 'Видео материала' })
+    expect(within(videos).getAllByRole('button', { name: /Воспроизвести видео:/ })).toHaveLength(2)
+    expect(videos.querySelectorAll('.material-video')).toHaveLength(2)
+    expect(videos.querySelector('.material-video__copy')).toBeNull()
+  })
+
+  it('uses neutral body copy instead of the removed explanatory blocks', () => {
+    open('/news/assortment-update')
+    expect(screen.queryByRole('heading', { name: 'Что изменилось' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Практическое применение' })).not.toBeInTheDocument()
+    expect(screen.getAllByTestId('material-body-paragraph')).toHaveLength(4)
   })
 
   it.each([

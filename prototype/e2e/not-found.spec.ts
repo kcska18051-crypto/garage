@@ -25,5 +25,23 @@ for (const width of [1920, 390, 360]) {
     await page.goto('/missing-responsive-route')
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1)).toBe(true)
     await expect(page.locator('.not-found-page')).toBeVisible()
+    const alignment = await page.evaluate(() => {
+      const main = document.querySelector('.not-found-page')!.getBoundingClientRect()
+      const items = [...document.querySelector('.not-found-page')!.children].map((item) => item.getBoundingClientRect())
+      const content = {
+        left: Math.min(...items.map((item) => item.left)),
+        right: Math.max(...items.map((item) => item.right)),
+        top: Math.min(...items.map((item) => item.top)),
+        bottom: Math.max(...items.map((item) => item.bottom)),
+      }
+      return {
+        horizontalDelta: Math.abs((content.left + content.right) / 2 - (main.left + main.right) / 2),
+        verticalDelta: Math.abs((content.top + content.bottom) / 2 - (main.top + main.bottom) / 2),
+        centeredText: getComputedStyle(document.querySelector('.not-found-page')!).textAlign,
+      }
+    })
+    expect(alignment.horizontalDelta).toBeLessThanOrEqual(2)
+    expect(alignment.verticalDelta).toBeLessThanOrEqual(8)
+    expect(alignment.centeredText).toBe('center')
   })
 }

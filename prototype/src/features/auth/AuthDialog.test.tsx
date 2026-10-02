@@ -38,24 +38,31 @@ describe('unified auth dialog', () => {
     expect(screen.getAllByRole('link', { name: 'Профиль' })[0]).toHaveAttribute('href', '/profile')
   })
 
-  it('opens the personal account after password login', async () => {
+  it('opens the personal account from the demo password tab without credentials', async () => {
     const user = userEvent.setup()
     const dialog = await openFromHeader(user)
     await user.click(within(dialog).getByRole('button', { name: 'По паролю' }))
-    await user.type(within(dialog).getByLabelText('Номер телефона'), '+7 900 000-00-00')
-    await user.type(within(dialog).getByLabelText('Пароль'), 'garage123')
+    expect(within(dialog).getByText('Демонстрационный режим: нажмите «Войти», чтобы открыть личный кабинет. Заполнять поля не нужно.')).toBeInTheDocument()
     await user.click(within(dialog).getByRole('button', { name: 'Войти' }))
     expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/profile')
   })
 
-  it('supports password login and both forgot-password choices without storing a password', async () => {
+  it('keeps checkout open after demo password entry without credentials', async () => {
+    const user = userEvent.setup()
+    open('/checkout/review')
+    await user.click(screen.getByRole('button', { name: 'Войти или зарегистрироваться' }))
+    const dialog = screen.getByRole('dialog', { name: 'Вход и регистрация' })
+    await user.click(within(dialog).getByRole('button', { name: 'По паролю' }))
+    await user.click(within(dialog).getByRole('button', { name: 'Войти' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/checkout/review')
+  })
+
+  it('supports both forgot-password choices without storing a password', async () => {
     const user = userEvent.setup()
     let dialog = await openFromHeader(user)
     await user.click(within(dialog).getByRole('button', { name: 'По паролю' }))
     await user.type(within(dialog).getByLabelText('Номер телефона'), '+7 900 000-00-00')
-    await user.type(within(dialog).getByLabelText('Пароль'), 'wrong')
-    await user.click(within(dialog).getByRole('button', { name: 'Войти' }))
-    expect(within(dialog).getByRole('alert')).toHaveTextContent('Неверный телефон или пароль')
     await user.click(within(dialog).getByRole('button', { name: 'Забыли пароль?' }))
     await user.click(within(dialog).getByRole('button', { name: 'Войти по SMS' }))
     expect(within(dialog).getByText(/Код отправлен на \+7 900 000-00-00/)).toBeInTheDocument()

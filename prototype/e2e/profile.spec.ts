@@ -79,16 +79,25 @@ test('guest enters the personal account through the header and stays signed in',
   await expect(page.getByRole('link', { name: 'Профиль' }).first()).toHaveAttribute('href', '/profile')
 })
 
-test('password login from the header opens the personal account', async ({ page }) => {
+test('demo password login from the header opens the personal account without credentials', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: 'Профиль' }).click()
   const dialog = page.getByRole('dialog', { name: 'Вход и регистрация' })
   await dialog.getByRole('button', { name: 'По паролю' }).click()
-  await dialog.getByLabel('Номер телефона').fill('+7 900 000-00-00')
-  await dialog.getByLabel('Пароль').fill('garage123')
+  await expect(dialog.getByText('Демонстрационный режим: нажмите «Войти», чтобы открыть личный кабинет. Заполнять поля не нужно.')).toBeVisible()
   await dialog.getByRole('button', { name: 'Войти' }).click()
   await expect(page).toHaveURL(/\/profile$/)
   await expect(page.getByRole('navigation', { name: 'Разделы личного кабинета' })).toBeVisible()
+})
+
+test('demo password login keeps checkout open without credentials', async ({ page }) => {
+  await page.goto('/checkout/review')
+  await page.getByRole('button', { name: 'Войти или зарегистрироваться' }).click()
+  const dialog = page.getByRole('dialog', { name: 'Вход и регистрация' })
+  await dialog.getByRole('button', { name: 'По паролю' }).click()
+  await dialog.getByRole('button', { name: 'Войти' }).click()
+  await expect(dialog).toBeHidden()
+  await expect(page).toHaveURL(/\/checkout\/review$/)
 })
 
 test('personal registration from the header opens the personal account', async ({ page }) => {

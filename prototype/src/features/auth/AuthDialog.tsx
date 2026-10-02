@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { AuthIntent } from '../../state/AuthState'
+import { DEMO_PASSWORD_ENTRY_ENABLED } from './authDemoConfig'
 import './AuthDialog.css'
 
 type Screen = 'login' | 'login-code' | 'forgot' | 'recovery-phone' | 'recovery-code' | 'recovery-password' | 'register' | 'register-code' | 'existing' | 'organization' | 'password-choice'
@@ -78,6 +79,7 @@ export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent
 
   const submitLogin = (event: FormEvent) => {
     event.preventDefault(); clearFeedback()
+    if (method === 'password' && DEMO_PASSWORD_ENTRY_ENABLED) { onComplete('Вы вошли в демонстрационный профиль'); return }
     if (!validatePhone()) return
     if (method === 'sms') { startCode('login-code'); return }
     if (password !== 'garage123') { setError('Неверный телефон или пароль'); return }
@@ -124,6 +126,7 @@ export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent
         {screen === 'login' && <form className="auth-form" onSubmit={submitLogin}>
           <div><h2>Войдите в профиль</h2><p>Заказы, документы и адреса будут доступны после входа.</p></div>
           <div className="auth-methods" role="group" aria-label="Способ входа"><button type="button" aria-pressed={method === 'sms'} onClick={() => { setMethod('sms'); clearFeedback(); setPassword('') }}>По SMS</button><button type="button" aria-pressed={method === 'password'} onClick={() => { setMethod('password'); clearFeedback(); setPassword('') }}>По паролю</button></div>
+          {method === 'password' && DEMO_PASSWORD_ENTRY_ENABLED && <p className="auth-message">Демонстрационный режим: нажмите «Войти», чтобы открыть личный кабинет. Заполнять поля не нужно.</p>}
           <label>Номер телефона<input value={phone} onChange={(event) => setPhone(event.target.value)} inputMode="tel" placeholder="+7 900 000-00-00" /></label>
           {method === 'password' && <label>Пароль<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" /></label>}
           {error && <p className="auth-message auth-message--error" role="alert">{error}</p>}

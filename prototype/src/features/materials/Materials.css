@@ -43,19 +43,20 @@
 .materials-pagination a { align-items: center; border: 1px solid var(--color-border); border-radius: .5rem; display: flex; height: 2.5rem; justify-content: center; text-decoration: none; width: 2.5rem; }
 .materials-pagination a[aria-current="page"] { background: var(--color-text); color: white; }
 .material-back { display: inline-block; font-size: .75rem; font-weight: 750; margin-bottom: 1.2rem; text-decoration: none; }
-.material-detail__heading { max-width: 50rem; }
-.material-detail__cover { margin: 2rem 0; max-width: 50rem; width: 100%; }
+.material-detail__heading { width: 100%; }
+.material-detail__heading > p { margin-inline: auto; }
+.material-detail__cover { margin: 2rem 0; width: 100%; }
 .material-detail__cover .material-cover { border-radius: var(--radius-lg); }
-.material-intro { font-size: 1.12rem; font-weight: 600; line-height: 1.6; max-width: 50rem; }
-.material-contents { background: var(--color-surface-subtle); border-radius: var(--radius-md); display: grid; gap: .65rem; margin: 2rem 0; max-width: 32rem; padding: 1.2rem; }
+.material-intro { font-size: 1.12rem; font-weight: 600; line-height: 1.6; margin-inline: auto; max-width: 50rem; }
+.material-contents { background: var(--color-surface-subtle); border-radius: var(--radius-md); display: grid; gap: .65rem; margin: 2rem auto; max-width: 32rem; padding: 1.2rem; }
 .material-contents a { align-items: center; display: flex; font-size: .78rem; min-height: 2.5rem; }
-.material-section { max-width: 50rem; padding-top: 1rem; }
+.material-section { margin-inline: auto; max-width: 50rem; padding-top: 1rem; }
 .material-section h2 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); margin: 1.5rem 0 .65rem; }
 .material-section p { color: #444; line-height: 1.75; }
 .material-inline-image { aspect-ratio: 16 / 9; background: var(--color-placeholder-1); margin: 1.5rem 0; overflow: hidden; position: relative; }
 .material-inline-image i { background: var(--color-placeholder-3); border-radius: 50%; height: 84%; position: absolute; right: 5%; top: 6%; width: 48%; }
 .material-inline-image b { background: white; height: 64%; left: 10%; position: absolute; top: 20%; transform: rotate(12deg); width: 25%; }
-.material-videos { display: grid; gap: 1rem; margin: 2rem 0; max-width: 50rem; }
+.material-videos { display: grid; gap: 1rem; margin: 2rem 0; width: 100%; }
 .material-videos--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .material-video { aspect-ratio: 16 / 9; background: #242422; border-radius: var(--radius-lg); color: white; overflow: hidden; position: relative; }
 .material-video__cover { height: 100%; overflow: hidden; position: relative; }

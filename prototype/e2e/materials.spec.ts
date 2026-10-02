@@ -42,13 +42,27 @@ test('wide and desktop lists use the approved card density', async ({ page }) =>
   }
 })
 
-test('detail media follows the readable column and video variants reflow', async ({ page }) => {
-  await page.setViewportSize({ width: 1920, height: 1000 })
-  await page.goto('/reviews/workshop-solutions')
-  const mainWidth = await page.locator('.materials-main').evaluate((node) => node.getBoundingClientRect().width)
-  const coverWidth = await page.locator('.material-detail__cover').evaluate((node) => node.getBoundingClientRect().width)
-  expect(coverWidth).toBeLessThan(mainWidth)
-  expect(coverWidth).toBeLessThanOrEqual(820)
+test('balances wide detail composition and keeps video variants responsive', async ({ page }) => {
+  for (const width of [1920, 2560]) {
+    await page.setViewportSize({ width, height: 1000 })
+    await page.goto('/reviews/workshop-solutions')
+    const geometry = await page.evaluate(() => {
+      const box = (selector: string) => document.querySelector(selector)!.getBoundingClientRect()
+      const main = box('.materials-main')
+      const heading = box('.material-detail__heading')
+      const cover = box('.material-detail__cover')
+      const videos = box('.material-videos')
+      const text = box('.material-intro')
+      return {
+        widths: [heading.width, cover.width, videos.width],
+        mainWidth: main.width,
+        textLeftGap: text.left - main.left,
+        textRightGap: main.right - text.right,
+      }
+    })
+    for (const mediaWidth of geometry.widths) expect(Math.abs(mediaWidth - geometry.mainWidth)).toBeLessThanOrEqual(2)
+    expect(Math.abs(geometry.textLeftGap - geometry.textRightGap)).toBeLessThanOrEqual(2)
+  }
 
   await page.goto('/reviews/compressor-types')
   const videos = page.locator('.material-video')

@@ -42,6 +42,38 @@ describe('profile help', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Спасибо! Ваше обращение отправлено')
     expect(screen.getByRole('link', { name: 'Перейти к обращениям' })).toHaveAttribute('href', '/profile/services')
   })
+
+  it('opens the matching answer when every help category is selected', async () => {
+    const user = userEvent.setup(); open('/profile/help')
+    const categories = [
+      ['Заказы', 'Статус и этапы обработки'],
+      ['Доставка и получение', 'Если заказ ещё допускает изменения'],
+      ['Оплата', 'Доступные способы зависят'],
+      ['Возврат и гарантия', 'Сохраните комплектность товара'],
+      ['Профиль и организации', 'выполните демонстрационный поиск по ИНН'],
+      ['Услуги', 'Текущие обращения доступны'],
+    ] as const
+
+    for (const [category, answer] of categories) {
+      await user.click(screen.getByRole('button', { name: new RegExp(`^${category}$`) }))
+      expect(screen.getByText(new RegExp(answer, 'i'))).toBeVisible()
+    }
+  })
+
+  it('shows distinct request content for every help action', async () => {
+    const user = userEvent.setup(); open('/profile/help')
+
+    await user.click(screen.getByRole('button', { name: 'Задать вопрос' }))
+    expect(within(screen.getByRole('region', { name: 'Форма обращения' })).getByRole('heading', { name: 'Задать вопрос' })).toBeVisible()
+
+    await user.click(screen.getByRole('button', { name: 'Заказать звонок' }))
+    expect(within(screen.getByRole('region', { name: 'Форма обращения' })).getByRole('heading', { name: 'Заказать звонок' })).toBeVisible()
+    expect(screen.getByLabelText('Предпочтительный способ ответа')).toHaveValue('Телефон')
+
+    await user.click(screen.getByRole('button', { name: 'Написать в чат' }))
+    expect(within(screen.getByRole('region', { name: 'Форма обращения' })).getByRole('heading', { name: 'Написать в чат' })).toBeVisible()
+    expect(screen.getByLabelText('Предпочтительный способ ответа')).toHaveValue('Чат')
+  })
 })
 
 describe('profile recovery', () => {

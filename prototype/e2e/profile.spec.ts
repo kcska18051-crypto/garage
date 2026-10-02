@@ -132,3 +132,15 @@ for (const width of [390, 360]) {
     await expectActionAboveNavigation('Отправить обращение')
   })
 }
+
+for (const viewport of [{ width: 1440, height: 800 }, { width: 390, height: 844 }]) {
+  test(`help actions reveal their matching form at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+
+    for (const action of ['Задать вопрос', 'Заказать звонок', 'Написать в чат']) {
+      await page.goto('/profile/help')
+      await page.getByRole('button', { name: action, exact: true }).click()
+      await expect(page.getByRole('region', { name: 'Форма обращения' }).getByRole('heading', { name: action, exact: true })).toBeInViewport()
+    }
+  })
+}

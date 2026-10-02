@@ -114,6 +114,11 @@ describe('prototype routes', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('heading', { name: 'Страница не найдена' })).toBeInTheDocument()
+    const main = screen.getByRole('main')
+    expect(within(main).getByText('404')).toBeInTheDocument()
+    expect(within(main).getByRole('heading', { name: 'Страница не найдена' })).toBeInTheDocument()
+    expect(within(main).getByRole('link', { name: 'На главную' })).toHaveAttribute('href', '/')
+    expect(within(main).getByRole('link', { name: 'В каталог' })).toHaveAttribute('href', '/catalog')
+    expect(within(main).queryByText('Такого адреса нет в текущей карте прототипа.')).not.toBeInTheDocument()
   })
 })

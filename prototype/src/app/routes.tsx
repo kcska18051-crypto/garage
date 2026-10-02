@@ -17,6 +17,7 @@ import { CheckoutDeliveryPage, CheckoutReviewPage, CheckoutSuccessPage } from '.
 import { SearchResultsPage } from '../pages/SearchResultsPage'
 import { ComparePage } from '../pages/ComparePage'
 import { AuthRouteBridge } from '../state/AuthState'
+import { MaterialDetailPage, MaterialsListPage } from '../pages/MaterialsPages'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -27,8 +28,7 @@ export const prototypeRoutes: RouteDefinition[] = [
   { path: '/product/:slug', label: 'Карточка товара' },
   { path: '/cart', label: 'Корзина' },
   { path: '/delivery', label: 'Доставка и оплата' }, { path: '/about', label: 'О компании' },
-  { path: '/contacts', label: 'Контакты' }, { path: '/articles/:slug', label: 'Статья' },
-  { path: '/news/*', label: 'Новости' }, { path: '/articles', label: 'Статьи' }, { path: '/reviews', label: 'Обзоры' },
+  { path: '/contacts', label: 'Контакты' },
   { path: '/brands/*', label: 'Бренд' },
 ]
 
@@ -46,6 +46,12 @@ export function AppRoutes() {
       <Route path="/actions" element={<ActionsPage />} />
       <Route path="/actions/completed" element={<Navigate to="/actions#archive" replace />} />
       <Route path="/actions/:slug" element={<ActionDetailPage />} />
+      <Route path="/news" element={<MaterialsListPage kind="news" />} />
+      <Route path="/news/:slug" element={<MaterialDetailPage kind="news" />} />
+      <Route path="/articles" element={<MaterialsListPage kind="article" />} />
+      <Route path="/articles/:slug" element={<MaterialDetailPage kind="article" />} />
+      <Route path="/reviews" element={<MaterialsListPage kind="review" />} />
+      <Route path="/reviews/:slug" element={<MaterialDetailPage kind="review" />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/compare" element={<ComparePage />} />
       <Route path="/checkout/review" element={<CheckoutReviewPage />} />

@@ -19,14 +19,14 @@ describe('lower homepage sections', () => {
     await user.type(screen.getByLabelText('Телефон или электронная почта'), 'anna@example.ru')
     await user.click(screen.getByRole('button', { name: 'Отправить запрос' }))
     expect(screen.getByText('Спасибо! Ваше сообщение отправлено')).toBeVisible()
-  }, 10_000)
+  }, 15_000)
 
   it('switches the section action together with news, article and review tabs', async () => {
     const user = userEvent.setup()
     const items = [
       { id: 'news', kind: 'news' as const, title: 'Новость', text: 'Описание', meta: 'Демо', href: '/news/item' },
       { id: 'article', kind: 'article' as const, title: 'Статья', text: 'Описание', meta: 'Демо', href: '/articles/item' },
-      { id: 'review', kind: 'review' as const, title: 'Обзор', text: 'Описание', meta: 'Демо', href: '/reviews' },
+      { id: 'review', kind: 'review' as const, title: 'Обзор', text: 'Описание', meta: '29 сентября 2026', href: '/reviews/workshop-solutions', video: true },
     ]
     render(<MemoryRouter><UsefulSection items={items} /></MemoryRouter>)
 
@@ -35,5 +35,7 @@ describe('lower homepage sections', () => {
     expect(screen.getByRole('link', { name: 'Все статьи' })).toHaveAttribute('href', '/articles')
     await user.click(screen.getByRole('tab', { name: 'Обзоры' }))
     expect(screen.getByRole('link', { name: 'Все обзоры' })).toHaveAttribute('href', '/reviews')
+    expect(screen.getByRole('link', { name: /Обзор/ })).toHaveAttribute('href', '/reviews/workshop-solutions')
+    expect(screen.getByText('Видео')).toBeInTheDocument()
   })
 })

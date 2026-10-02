@@ -39,7 +39,9 @@
 .useful-grid > a { background: var(--color-surface-subtle); border-radius: var(--radius-md); color: inherit; display: flex; flex: 0 0 calc((100% - 2.4rem) / 4); flex-direction: column; min-height: 19rem; overflow: hidden; scroll-snap-align: start; text-decoration: none; }
 .useful-grid__art { background: var(--color-placeholder-2); height: 9rem; overflow: hidden; position: relative; }
 .useful-grid__art span { background: var(--color-placeholder-4); border-radius: 50%; height: 7rem; position: absolute; right: -1rem; top: 1rem; width: 7rem; }
+.useful-grid__art b { align-items: center; background: rgb(20 20 18 / .86); border-radius: 50%; color: white; display: flex; font-size: .8rem; height: 2.7rem; justify-content: center; left: 50%; padding-left: .15rem; position: absolute; top: 50%; transform: translate(-50%, -50%); width: 2.7rem; }
 .useful-grid__copy { display: flex; flex: 1; flex-direction: column; padding: .8rem; }
+.useful-grid__copy > strong { font-size: .63rem; letter-spacing: .08em; margin-bottom: .35rem; text-transform: uppercase; }
 .useful-grid__copy h3 { font-size: .95rem; line-height: 1.25; margin: 0 0 .45rem; }
 .useful-grid__copy p { color: var(--color-text-muted); font-size: .75rem; line-height: 1.35; margin: 0 0 .75rem; }
 .useful-grid__copy > span { color: var(--color-text-muted); font-size: .7rem; margin-top: auto; }

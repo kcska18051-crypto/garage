@@ -30,10 +30,10 @@
 - Produces: `Material`, `MaterialKind`, `materials`, `getMaterial(kind, slug)` and reusable list/detail routes.
 - Consumes: `Breadcrumbs`, React Router params/search params.
 
-- [ ] Write failing route tests for all three lists, all three details, 404, breadcrumbs, active navigation and related links.
-- [ ] Run `npx vitest run src/pages/MaterialsPages.test.tsx` and confirm failures are missing pages/routes.
-- [ ] Add typed content data and minimal shared pages/routes.
-- [ ] Re-run the focused test and confirm it passes.
+- [x] Write failing route tests for all three lists, all three details, 404, breadcrumbs, active navigation and related links.
+- [x] Run `npx vitest run src/pages/MaterialsPages.test.tsx` and confirm failures are missing pages/routes.
+- [x] Add typed content data and minimal shared pages/routes.
+- [x] Re-run the focused test and confirm it passes.
 
 ### Task 2: List controls and responsive presentation
 
@@ -46,10 +46,10 @@
 - Produces: query-backed category, sorting and pagination behavior.
 - Consumes: typed material cards from Task 1.
 
-- [ ] Add failing tests for category filtering, sorting, pagination and video badges.
-- [ ] Run the focused test and confirm expected behavioral failures.
-- [ ] Implement controls, cards, desktop sidebar and mobile horizontal navigation.
-- [ ] Re-run the focused test and confirm it passes.
+- [x] Add failing tests for category filtering, sorting, pagination and video badges.
+- [x] Run the focused test and confirm expected behavioral failures.
+- [x] Implement controls, cards, desktop sidebar and mobile horizontal navigation.
+- [x] Re-run the focused test and confirm it passes.
 
 ### Task 3: Detail content and optional video
 
@@ -63,10 +63,10 @@
 - Produces: `DemoVideo({ title })` with click-to-play state and no autoplay.
 - Consumes: content sections and optional video metadata from `Material`.
 
-- [ ] Add failing tests for review/news/article video placement, playback state, article anchors and no-video details.
-- [ ] Run the focused test and confirm expected failures.
-- [ ] Implement detail sections, contents anchors, related cards and optional video.
-- [ ] Re-run the focused test and confirm it passes.
+- [x] Add failing tests for review/news/article video placement, playback state, article anchors and no-video details.
+- [x] Run the focused test and confirm expected failures.
+- [x] Implement detail sections, contents anchors, related cards and optional video.
+- [x] Re-run the focused test and confirm it passes.
 
 ### Task 4: Home, footer, E2E and publication
 
@@ -81,7 +81,7 @@
 - Consumes: public material URLs from Tasks 1–3.
 - Produces: entry points from home/footer and responsive end-to-end coverage.
 
-- [ ] Add failing integration tests for home/footer entry points and E2E scenarios for navigation, video and overflow.
-- [ ] Implement synchronized links and footer entries.
-- [ ] Run unit tests, `npm run build:pages`, and `npm run test:e2e -- e2e/materials.spec.ts`.
+- [x] Add failing integration tests for home/footer entry points and E2E scenarios for navigation, video and overflow.
+- [x] Implement synchronized links and footer entries.
+- [x] Run unit tests, `npm run build:pages`, and `npm run test:e2e -- e2e/materials.spec.ts`.
 - [ ] Review the diff, commit, push, wait for Pages and verify direct public URLs.

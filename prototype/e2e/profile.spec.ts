@@ -108,3 +108,27 @@ for (const viewport of [{ width: 1920, height: 1080 }, { width: 1440, height: 90
     }
   })
 }
+
+for (const width of [390, 360]) {
+  test(`mobile profile form actions stay above navigation at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 })
+
+    const expectActionAboveNavigation = async (actionName: string) => {
+      const action = page.getByRole('button', { name: actionName })
+      await action.evaluate((node) => node.scrollIntoView({ block: 'end' }))
+      const actionBox = await action.boundingBox()
+      const navigationBox = await page.getByRole('navigation', { name: 'Мобильная навигация' }).boundingBox()
+      expect(actionBox).not.toBeNull()
+      expect(navigationBox).not.toBeNull()
+      expect(actionBox!.y + actionBox!.height).toBeLessThanOrEqual(navigationBox!.y - 8)
+    }
+
+    await page.goto('/profile/addresses')
+    await page.getByRole('button', { name: 'Добавить адрес' }).click()
+    await expectActionAboveNavigation('Сохранить адрес')
+
+    await page.goto('/profile/help')
+    await page.getByRole('button', { name: 'Задать вопрос' }).click()
+    await expectActionAboveNavigation('Отправить обращение')
+  })
+}

@@ -123,4 +123,11 @@ describe('Remeza product detail redesign', () => {
     expect(writeText).toHaveBeenCalledWith('GR-220-55')
     expect(screen.getByText('Артикул скопирован', { selector: '[role="status"]' })).toBeInTheDocument()
   })
+
+  it('links delivery, payment and warranty information from the product page', () => {
+    renderPage()
+    expect(screen.getByRole('link', { name: 'Подробнее о доставке' })).toHaveAttribute('href', '/delivery')
+    expect(screen.getByRole('link', { name: 'Подробнее об оплате' })).toHaveAttribute('href', '/payment')
+    expect(screen.getByRole('link', { name: 'Подробнее о гарантии' })).toHaveAttribute('href', '/warranty')
+  })
 })

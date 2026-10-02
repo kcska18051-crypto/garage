@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { productDetail } from '../../data/productDetailData'
 import { useRegion } from '../../state/RegionState'
 
@@ -13,8 +14,8 @@ export function ProductSections() {
     <section id="documents" className="product-content-section"><h2>Документы</h2><div className="product-documents"><button type="button">Паспорт изделия <span>PDF · прототип</span></button><button type="button">Техническая карточка <span>PDF · прототип</span></button><button type="button">Сертификаты <span>Состав уточняется</span></button></div></section>
     <section id="reviews" className="product-content-section product-conditional"><h2>Отзывы</h2><p>Демонстрационный блок. Публикуется после подтверждения источника и модерации.</p><button className="button" type="button">Оставить отзыв</button></section>
     <section id="questions" className="product-content-section product-conditional"><h2>Вопросы</h2><p>Здесь будут ответы специалиста по выбору и эксплуатации оборудования.</p><button className="button" type="button">Задать вопрос</button></section>
-    <section id="delivery" className="product-content-section product-delivery"><h2>Доставка и оплата</h2><div><strong>{region}</strong><p>Ожидаемый способ и срок получения уточняются с учётом выбранного варианта и адреса. Внутренняя складская логика пользователю не показывается.</p></div></section>
-    <section id="service" className="product-content-section"><h2>Сервис и гарантия</h2><p>Условия гарантии, пусконаладки и сервисного обслуживания уточняются для конкретной комплектации. Здесь будут опубликованы подтверждённые регламенты и контакты поддержки.</p></section>
+    <section id="delivery" className="product-content-section product-delivery"><h2>Доставка и оплата</h2><div><strong>{region}</strong><p>Ожидаемый способ и срок получения уточняются с учётом выбранного варианта и адреса. Внутренняя складская логика пользователю не показывается.</p><div className="product-info-links"><Link to="/delivery">Подробнее о доставке</Link><Link to="/payment">Подробнее об оплате</Link></div></div></section>
+    <section id="service" className="product-content-section"><h2>Сервис и гарантия</h2><p>Условия гарантии, пусконаладки и сервисного обслуживания уточняются для конкретной комплектации. Здесь будут опубликованы подтверждённые регламенты и контакты поддержки.</p><div className="product-info-links"><Link to="/warranty">Подробнее о гарантии</Link></div></section>
     <Rail title="Расходные материалы" items={['Сервисный комплект', 'Фильтрующий элемент', 'Компрессорное масло']} />
     <Rail title="Совместимые товары" items={['Рефрижераторный осушитель', 'Воздушный ресивер', 'Магистральный фильтр']} />
     <Rail id="analogs" title="Аналоги" items={['Винтовой компрессор — аналог 01', 'Винтовой компрессор — аналог 02', 'Комплектное решение — аналог 03']} />

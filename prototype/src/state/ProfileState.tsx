@@ -7,6 +7,36 @@ type Recipient = ProfileOrder['recipient']
 export type ProfileAddress = { id: string; label: string; city: string; street: string; house: string; building: string; unit: string; postalCode: string; comment: string; isPrimary: boolean }
 export const formatProfileAddress = (address: ProfileAddress) => [address.city, `ул. ${address.street}`, `д. ${address.house}`, address.building && `корп. ${address.building}`, address.unit && `кв./офис ${address.unit}`].filter(Boolean).join(', ')
 
+const addressStorageKey = 'garage-profile-addresses-v1'
+const defaultAddresses: ProfileAddress[] = [
+  { id: 'address-home', label: 'Дом', city: 'Ярославль', street: 'Промышленная', house: '12', building: '', unit: '8', postalCode: '150000', comment: '', isPrimary: true },
+  { id: 'address-work', label: 'Работа', city: 'Ярославль', street: 'Индустриальная', house: '8', building: '', unit: '12', postalCode: '150010', comment: 'Позвонить перед приездом', isPrimary: false },
+]
+const addressStringFields = ['id', 'label', 'city', 'street', 'house', 'building', 'unit', 'postalCode', 'comment'] as const
+const isProfileAddress = (value: unknown): value is ProfileAddress => {
+  if (!value || typeof value !== 'object') return false
+  const candidate = value as Record<string, unknown>
+  return addressStringFields.every((field) => typeof candidate[field] === 'string')
+    && typeof candidate.isPrimary === 'boolean'
+    && Boolean((candidate.id as string).trim() && (candidate.city as string).trim() && (candidate.street as string).trim() && (candidate.house as string).trim())
+}
+const readAddresses = (): ProfileAddress[] => {
+  try {
+    if (typeof localStorage === 'undefined') return defaultAddresses
+    const saved = localStorage.getItem(addressStorageKey)
+    if (saved === null) return defaultAddresses
+    const parsed: unknown = JSON.parse(saved)
+    if (!Array.isArray(parsed) || !parsed.length || !parsed.every(isProfileAddress)) return defaultAddresses
+    if (new Set(parsed.map((address) => address.id)).size !== parsed.length || parsed.filter((address) => address.isPrimary).length !== 1) return defaultAddresses
+    return parsed
+  } catch {
+    return defaultAddresses
+  }
+}
+const writeAddresses = (addresses: ProfileAddress[]) => {
+  try { localStorage.setItem(addressStorageKey, JSON.stringify(addresses)) } catch { /* Storage may be unavailable; in-memory behavior remains usable. */ }
+}
+
 type ProfileContextValue = {
   user: UserData
   orders: ProfileOrder[]
@@ -37,10 +67,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState(profileData.user)
   const [orders, setOrders] = useState<ProfileOrder[]>(profileData.orders)
   const [organizations, setOrganizations] = useState<ProfileOrganization[]>(profileData.organizations)
-  const [addresses, setAddresses] = useState<ProfileAddress[]>([
-    { id: 'address-home', label: 'Дом', city: 'Ярославль', street: 'Промышленная', house: '12', building: '', unit: '8', postalCode: '150000', comment: '', isPrimary: true },
-    { id: 'address-work', label: 'Работа', city: 'Ярославль', street: 'Индустриальная', house: '8', building: '', unit: '12', postalCode: '150010', comment: 'Позвонить перед приездом', isPrimary: false },
-  ])
+  const [addresses, setAddresses] = useState<ProfileAddress[]>(readAddresses)
   const [recentProductIds, setRecentProductIds] = useState(profileData.recentlyViewedProductIds)
   const [notification, setNotification] = useState('')
   const [profileDeleted, setProfileDeleted] = useState(false)
@@ -48,6 +75,8 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     profileData.favoriteProductIds.forEach(commerce.addFavorite)
   }, [])
+
+  useEffect(() => writeAddresses(addresses), [addresses])
 
   const value = useMemo<ProfileContextValue>(() => ({
     user,

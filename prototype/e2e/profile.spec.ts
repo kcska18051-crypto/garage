@@ -75,16 +75,22 @@ test('address CRUD stays connected to courier checkout', async ({ page }) => {
   await expect(card).toContainText('д. 19')
   await card.getByRole('button', { name: 'Сделать основным' }).click()
   await expect(card).toContainText('Основной')
-  await page.getByRole('link', { name: /Корзина/ }).click()
-  await page.getByRole('link', { name: 'Перейти к оформлению' }).click()
+
+  await page.reload()
+  const persistedCard = page.locator('.profile-address-card').filter({ hasText: 'Склад' })
+  await expect(persistedCard).toContainText('д. 19')
+  await expect(persistedCard).toContainText('Основной')
+
+  await page.goto('/checkout/review')
   await page.getByRole('tab', { name: /Курьером/ }).click()
   await expect(page.getByRole('button', { name: /Склад — Ярославль, ул. Свободы, д. 19/ })).toBeVisible()
-  await page.getByRole('link', { name: 'Профиль' }).click()
-  await page.getByRole('link', { name: 'Адреса', exact: true }).click()
+  await page.goto('/profile/addresses')
   const savedCard = page.locator('.profile-address-card').filter({ hasText: 'Склад' })
   await savedCard.getByRole('button', { name: 'Удалить адрес' }).click()
   await page.getByRole('dialog', { name: 'Удалить адрес' }).getByRole('button', { name: 'Удалить' }).click()
+  await page.reload()
   await expect(page.getByText('Склад')).toHaveCount(0)
+  await expect(page.locator('.profile-address-card').filter({ has: page.getByText('Дом', { exact: true }) })).toContainText('Основной')
 })
 
 for (const route of ['/profile/documents', '/profile/help', '/profile/recovery', '/profile/addresses']) {

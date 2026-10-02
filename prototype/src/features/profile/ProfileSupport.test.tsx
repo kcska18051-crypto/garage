@@ -5,6 +5,8 @@ import { App } from '../../app/App'
 
 const open = (path: string) => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
 
+beforeEach(() => localStorage.clear())
+
 describe('profile documents', () => {
   it('filters documents and previews only available files', async () => {
     const user = userEvent.setup(); open('/profile/documents')
@@ -98,6 +100,24 @@ describe('profile recovery', () => {
 })
 
 describe('profile addresses', () => {
+  it('loads validated saved addresses when the profile remounts', () => {
+    localStorage.setItem('garage-profile-addresses-v1', JSON.stringify([{
+      id: 'address-saved', label: 'Склад', city: 'Ярославль', street: 'Свободы', house: '19', building: '', unit: '', postalCode: '150000', comment: '', isPrimary: true,
+    }]))
+    open('/profile/addresses')
+
+    expect(screen.getByText('Склад')).toBeInTheDocument()
+    expect(screen.getByText(/Ярославль, ул. Свободы, д. 19/)).toBeInTheDocument()
+  })
+
+  it('falls back to demo addresses when saved data is invalid', () => {
+    localStorage.setItem('garage-profile-addresses-v1', JSON.stringify([{ id: 'unsafe' }]))
+    open('/profile/addresses')
+
+    expect(screen.getByText('Дом')).toBeInTheDocument()
+    expect(screen.getByText(/Ярославль, ул. Промышленная, д. 12/)).toBeInTheDocument()
+  })
+
   it('adds, edits, maps, promotes and deletes addresses with confirmation', async () => {
     const user = userEvent.setup(); open('/profile/addresses')
     await user.click(screen.getByRole('button', { name: 'Добавить адрес' }))

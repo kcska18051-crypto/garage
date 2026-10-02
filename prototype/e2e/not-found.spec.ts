@@ -6,9 +6,11 @@ test('direct unknown route shows the minimal 404 and both actions work', async (
   await expect(main.getByText('404')).toBeVisible()
   await expect(main.getByRole('heading', { name: 'Страница не найдена' })).toBeVisible()
   await expect(main.getByRole('link', { name: 'На главную' })).toHaveAttribute('href', '/')
-  await expect(main.getByRole('link', { name: 'В каталог' })).toHaveAttribute('href', '/catalog')
+  const catalogLink = main.getByRole('link', { name: 'В каталог' })
+  await expect(catalogLink).toHaveAttribute('href', '/catalog')
+  expect(await catalogLink.evaluate((element) => getComputedStyle(element).color)).toBe('rgb(32, 32, 30)')
 
-  await main.getByRole('link', { name: 'В каталог' }).click()
+  await catalogLink.click()
   await expect(page).toHaveURL(/\/catalog$/)
   await expect(page.getByRole('heading', { level: 1, name: 'Каталог' })).toBeVisible()
 

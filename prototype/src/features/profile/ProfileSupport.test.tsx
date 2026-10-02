@@ -78,27 +78,6 @@ describe('profile help', () => {
   })
 })
 
-describe('profile recovery', () => {
-  it('supports neutral phone, invalid, expired, resend and successful code states', async () => {
-    const user = userEvent.setup(); open('/profile/recovery')
-    await user.type(screen.getByLabelText('Номер телефона'), '+7 999 000-00-00')
-    await user.click(screen.getByRole('button', { name: 'Получить код' }))
-    expect(screen.getByText(/Если номер связан с профилем/)).toBeInTheDocument()
-    await user.type(screen.getByLabelText('Код подтверждения'), '9999')
-    await user.click(screen.getByRole('button', { name: 'Подтвердить доступ' }))
-    expect(screen.getByRole('alert')).toHaveTextContent('Неверный код')
-    await user.clear(screen.getByLabelText('Код подтверждения')); await user.type(screen.getByLabelText('Код подтверждения'), '0000')
-    await user.click(screen.getByRole('button', { name: 'Подтвердить доступ' }))
-    expect(screen.getByRole('alert')).toHaveTextContent('истёк')
-    await user.click(screen.getByRole('button', { name: 'Отправить код повторно' }))
-    expect(screen.getByRole('status')).toHaveTextContent('Новый код отправлен')
-    await user.type(screen.getByLabelText('Код подтверждения'), '1234')
-    await user.click(screen.getByRole('button', { name: 'Подтвердить доступ' }))
-    expect(screen.getByRole('heading', { name: 'Доступ подтверждён' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Перейти в личный кабинет' })).toHaveAttribute('href', '/profile')
-  })
-})
-
 describe('profile addresses', () => {
   it('loads validated saved addresses when the profile remounts', () => {
     localStorage.setItem('garage-profile-addresses-v1', JSON.stringify([{

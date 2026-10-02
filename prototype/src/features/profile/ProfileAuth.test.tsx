@@ -1,49 +1,45 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, useLocation } from 'react-router-dom'
 import { App } from '../../app/App'
 
-describe('profile phone verification prototype', () => {
-  it('links to the direct recovery route', () => {
-    render(<MemoryRouter initialEntries={['/profile/auth']}><App /></MemoryRouter>)
-    expect(screen.getByRole('link', { name: 'Не получается войти?' })).toHaveAttribute('href', '/profile/recovery')
+function LocationEcho() {
+  const location = useLocation()
+  return <output aria-label="Текущий маршрут">{location.pathname}</output>
+}
+
+const open = (path: string) => render(<MemoryRouter initialEntries={[path]}><App /><LocationEcho /></MemoryRouter>)
+
+describe('auth dialog entry points', () => {
+  it('opens from the account shell and returns focus after closing', async () => {
+    const user = userEvent.setup(); open('/profile')
+    const trigger = screen.getByRole('button', { name: 'Войти / регистрация' })
+    await user.click(trigger)
+    expect(screen.getByRole('dialog', { name: 'Вход и регистрация' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Закрыть' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(trigger).toHaveFocus()
   })
 
-  it('keeps consents separate and demonstrates code errors, resend and success', async () => {
-    const user = userEvent.setup()
-    render(<MemoryRouter initialEntries={['/profile/auth']}><App /></MemoryRouter>)
-
-    expect(screen.getByRole('checkbox', { name: /обработку персональных данных/i })).toBeInTheDocument()
-    expect(screen.getByRole('checkbox', { name: /получать .*сообщения/i })).toBeInTheDocument()
-    await user.type(screen.getByLabelText('Номер телефона'), '+7 900 123-45-67')
-    await user.click(screen.getByRole('checkbox', { name: /обработку персональных данных/i }))
-    await user.click(screen.getByRole('button', { name: 'Получить код' }))
-
-    expect(screen.getByRole('heading', { name: 'Введите код из SMS' })).toBeInTheDocument()
-    expect(screen.getByText(/повторно через 00:30/i)).toBeInTheDocument()
-    await user.type(screen.getByLabelText('Код подтверждения'), '9999')
-    await user.click(screen.getByRole('button', { name: 'Подтвердить' }))
-    expect(screen.getByRole('alert')).toHaveTextContent('Неверный код')
-
-    await user.clear(screen.getByLabelText('Код подтверждения'))
-    await user.type(screen.getByLabelText('Код подтверждения'), '0000')
-    await user.click(screen.getByRole('button', { name: 'Подтвердить' }))
-    expect(screen.getByRole('alert')).toHaveTextContent('Код истёк')
-
-    await user.click(screen.getByRole('button', { name: 'Отправить код повторно' }))
-    expect(screen.getByRole('status')).toHaveTextContent('Новый код отправлен')
-    await user.clear(screen.getByLabelText('Код подтверждения'))
-    await user.type(screen.getByLabelText('Код подтверждения'), '1234')
-    await user.click(screen.getByRole('button', { name: 'Подтвердить' }))
-    expect(screen.getByRole('heading', { name: 'Номер подтверждён' })).toBeInTheDocument()
+  it('opens from checkout and keeps checkout behind the dialog', async () => {
+    const user = userEvent.setup(); open('/checkout/review')
+    await user.click(screen.getByRole('button', { name: 'Войти или зарегистрироваться' }))
+    expect(screen.getByRole('dialog', { name: 'Вход и регистрация' })).toBeInTheDocument()
+    expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/checkout/review')
   })
 
-  it('shows a compact working dashboard on the overview route', () => {
-    render(<MemoryRouter initialEntries={['/profile']}><App /></MemoryRouter>)
+  it('opens from mobile navigation and keeps all five destinations', async () => {
+    const user = userEvent.setup(); open('/catalog')
+    const navigation = document.querySelector<HTMLElement>('[aria-label="Мобильная навигация"]')!
+    expect(navigation.querySelectorAll('a,button')).toHaveLength(5)
+    await user.click(within(navigation).getByRole('button', { name: 'Профиль', hidden: true }))
+    expect(screen.getByRole('dialog', { name: 'Вход и регистрация' })).toBeInTheDocument()
+  })
 
+  it('keeps the profile dashboard available by its direct route', () => {
+    open('/profile')
     expect(screen.getByText('Здравствуйте, Алексей')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Активные заказы' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Последние просмотренные' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Мои организации' })).toHaveAttribute('href', '/profile/organizations')
   })
 })

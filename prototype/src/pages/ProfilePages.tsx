@@ -1,16 +1,12 @@
-import { ProfileAuth } from '../features/profile/ProfileAuth'
 import { ProfileOverview } from '../features/profile/ProfileOverview'
 import { ProfileOrders } from '../features/profile/ProfileOrders'
 import { ProfileOrderDetail } from '../features/profile/ProfileOrderDetail'
 import { ProfileData, ProfileFavorites, ProfileOrganizations, ProfileRecentlyViewed, ProfileReviews, ProfileServices } from '../features/profile/ProfileSections'
 import { ProfileDocuments } from '../features/profile/ProfileDocuments'
 import { ProfileHelp } from '../features/profile/ProfileHelp'
-import { ProfileRecovery } from '../features/profile/ProfileRecovery'
 import { ProfileAddresses } from '../features/profile/ProfileAddresses'
 
 export function ProfileOverviewPage() { return <ProfileOverview /> }
-export function ProfileAuthPage() { return <main className="profile-page profile-public-page"><ProfileAuth /></main> }
-export function ProfileRecoveryPage() { return <main className="profile-page profile-public-page"><ProfileRecovery /></main> }
 export function ProfileOrdersPage() { return <ProfileOrders /> }
 export function ProfileOrderDetailPage() { return <ProfileOrderDetail /> }
 export function ProfileOrganizationsPage() { return <ProfileOrganizations /> }

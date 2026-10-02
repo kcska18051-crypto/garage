@@ -26,9 +26,10 @@ describe('profile route shell', () => {
     expect(document.querySelector('.profile-section__eyebrow')).not.toBeInTheDocument()
   })
 
-  it('opens recovery as a public profile route without the account menu', () => {
+  it('opens recovery in the unified dialog and replaces the legacy route', async () => {
     render(<MemoryRouter initialEntries={['/profile/recovery']}><App /></MemoryRouter>)
-    expect(screen.getByRole('heading', { level: 1, name: 'Восстановление доступа' })).toBeInTheDocument()
+    expect(await screen.findByRole('dialog', { name: 'Вход и регистрация' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Восстановление доступа' })).toBeInTheDocument()
     expect(screen.queryByRole('navigation', { name: 'Разделы личного кабинета' })).not.toBeInTheDocument()
   })
 

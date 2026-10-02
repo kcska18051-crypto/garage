@@ -11,11 +11,12 @@ import { CatalogSectionPage } from '../pages/CatalogSectionPage'
 import { ActionsPage } from '../pages/ActionsPage'
 import { ActionDetailPage } from '../pages/ActionDetailPage'
 import { ProfileShell } from '../features/profile/ProfileShell'
-import { ProfileAddressesPage, ProfileAuthPage, ProfileDataPage, ProfileDocumentsPage, ProfileFavoritesPage, ProfileHelpPage, ProfileOrderDetailPage, ProfileOrdersPage, ProfileOrganizationsPage, ProfileOverviewPage, ProfileRecentlyViewedPage, ProfileRecoveryPage, ProfileReviewsPage, ProfileServicesPage } from '../pages/ProfilePages'
+import { ProfileAddressesPage, ProfileDataPage, ProfileDocumentsPage, ProfileFavoritesPage, ProfileHelpPage, ProfileOrderDetailPage, ProfileOrdersPage, ProfileOrganizationsPage, ProfileOverviewPage, ProfileRecentlyViewedPage, ProfileReviewsPage, ProfileServicesPage } from '../pages/ProfilePages'
 import { CartPage } from '../pages/CartPage'
 import { CheckoutDeliveryPage, CheckoutReviewPage, CheckoutSuccessPage } from '../pages/CheckoutPages'
 import { SearchResultsPage } from '../pages/SearchResultsPage'
 import { ComparePage } from '../pages/ComparePage'
+import { AuthRouteBridge } from '../state/AuthState'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -52,8 +53,8 @@ export function AppRoutes() {
       <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
       <Route path="/search" element={<SearchResultsPage />} />
       <Route path="/favorites" element={<Navigate to="/profile/favorites" replace />} />
-      <Route path="/profile/auth" element={<ProfileAuthPage />} />
-      <Route path="/profile/recovery" element={<ProfileRecoveryPage />} />
+      <Route path="/profile/auth" element={<AuthRouteBridge intent="login" />} />
+      <Route path="/profile/recovery" element={<AuthRouteBridge intent="recovery" />} />
       <Route path="/profile" element={<ProfileShell />}>
         <Route index element={<ProfileOverviewPage />} />
         <Route path="orders" element={<ProfileOrdersPage />} />

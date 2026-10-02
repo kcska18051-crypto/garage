@@ -3,9 +3,10 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { Header } from './Header'
 import { RegionProvider, useRegion } from '../../state/RegionState'
+import { AuthProvider } from '../../state/AuthState'
 
 function renderHeader() {
-  return render(<MemoryRouter><RegionProvider><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /></RegionProvider></MemoryRouter>)
+  return render(<MemoryRouter><RegionProvider><AuthProvider><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /></AuthProvider></RegionProvider></MemoryRouter>)
 }
 
 function RegionEcho() {
@@ -16,7 +17,7 @@ function RegionEcho() {
 describe('responsive header', () => {
   it('changes the selected region from the region dialog', async () => {
     const user = userEvent.setup()
-    render(<MemoryRouter><RegionProvider><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /><RegionEcho /></RegionProvider></MemoryRouter>)
+    render(<MemoryRouter><RegionProvider><AuthProvider><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /><RegionEcho /></AuthProvider></RegionProvider></MemoryRouter>)
     await user.click(screen.getByRole('button', { name: 'Выбрать город' }))
     await user.click(screen.getByRole('button', { name: 'Вологда' }))
     expect(screen.getByRole('status', { name: 'Регион страницы' })).toHaveTextContent('Вологда')
@@ -40,7 +41,7 @@ describe('responsive header', () => {
     const user = userEvent.setup()
     renderHeader()
     const mobileNav = document.querySelector<HTMLElement>('[aria-label="Мобильная навигация"]')!
-    expect(mobileNav.querySelectorAll('a')).toHaveLength(5)
+    expect(mobileNav.querySelectorAll('a,button')).toHaveLength(5)
     await user.click(screen.getByLabelText('Открыть меню'))
     expect(document.querySelector('[aria-label="Мобильное меню"]')).toBeInTheDocument()
     await user.keyboard('{Escape}')

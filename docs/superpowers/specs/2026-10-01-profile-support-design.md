@@ -8,7 +8,7 @@ Extend the existing account prototype with real Documents, Help, Recovery, and A
 
 `ProfileProvider` moves from `ProfileShell` to the application provider tree, inside `CommerceProvider`. Profile-only state remains in `ProfileState`, while checkout reads the same address collection through `useProfile`. This avoids a second address store and preserves state across account and checkout routes.
 
-Focused components own each journey: `ProfileDocuments`, `ProfileHelp`, `ProfileRecovery`, and `ProfileAddresses`. Auth and recovery are public profile routes outside the authenticated shell; documents, help, and addresses render inside `ProfileShell`. `/profile/data` links to address management instead of duplicating CRUD.
+Focused components own each support journey: `ProfileDocuments`, `ProfileHelp`, and `ProfileAddresses`. Auth and recovery are states of the global auth dialog; their legacy routes open that dialog. Documents, help, and addresses render inside `ProfileShell`. `/profile/data` links to address management instead of duplicating CRUD.
 
 ## Documents
 
@@ -16,7 +16,7 @@ The page provides account-shell navigation, tabs, organization/type/period filte
 
 ## Help and recovery
 
-Help uses category navigation, searchable accordions, quick actions, and a validated request form. Successful submission produces a demonstration request number and links to `/profile/services`. Recovery reuses the established demo codes: `1234` succeeds, `0000` expires, other codes fail; resend resets the code and timer message. The unknown-number message does not reveal account existence, and loss of phone access routes to Help.
+Help uses category navigation, searchable accordions, quick actions, and a validated request form. Successful submission produces a demonstration request number and links to `/profile/services`. Recovery lives in the unified auth dialog and offers SMS login without changing the password or password recovery through SMS and a new password. The unknown-number message does not reveal account existence, and loss of phone access routes to Help.
 
 ## Addresses
 

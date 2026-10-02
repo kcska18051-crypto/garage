@@ -4,6 +4,7 @@ import { useCommerce } from '../state/CommerceState'
 import './CartCheckout.css'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { formatProfileAddress, useProfile } from '../state/ProfileState'
+import { useAuth } from '../state/AuthState'
 
 const useDemoCart = () => { const { ensureDemoCart } = useCommerce(); useEffect(() => ensureDemoCart(), []) }
 
@@ -19,6 +20,7 @@ export function CheckoutReviewPage() {
   const navigate = useNavigate()
   const { cartItems, checkout, updateCheckout } = useCommerce()
   const { addresses } = useProfile()
+  const { openAuth } = useAuth()
   const [courierEditor, setCourierEditor] = useState(Boolean(checkout.address))
   const [transportEditor, setTransportEditor] = useState(Boolean(checkout.transportAddress))
   const [validationMessage, setValidationMessage] = useState('')
@@ -59,6 +61,7 @@ export function CheckoutReviewPage() {
             <label>Имя<input aria-label="Имя пользователя" value="Пользователь профиля" readOnly/></label>
             <label>Телефон<input aria-label="Подтверждённый телефон" value="+7 (900) 000-00-00" readOnly/></label>
           </div>
+          <button className="checkout-secondary-button" type="button" onClick={() => openAuth('login')}>Войти или зарегистрироваться</button>
           {checkout.customerType === 'organization' && <div className="checkout-organization"><label>Организация<select aria-label="Организация" value={checkout.organization} onChange={(event) => updateCheckout({ organization: event.target.value })}><option>ООО «Гараж»</option></select></label><label>Найти другую организацию<input aria-label="Поиск организации по ИНН" inputMode="numeric" placeholder="Введите ИНН" value={checkout.organizationInn} onChange={(event) => updateCheckout({ organizationInn: event.target.value })}/></label><p>Реквизиты выбранной организации загружаются из профиля.</p></div>}
           <label className="checkout-switch"><input type="checkbox" aria-label="Заберёт другой человек" checked={checkout.otherRecipient} onChange={(event) => updateCheckout({ otherRecipient: event.target.checked })}/><span><strong>Заберёт другой человек</strong><small>Укажите его контактные данные</small></span></label>
           {checkout.otherRecipient && <div className="checkout-fields checkout-fields--recipient">

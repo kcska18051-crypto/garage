@@ -19,6 +19,7 @@ import { ComparePage } from '../pages/ComparePage'
 import { AuthRouteBridge } from '../state/AuthState'
 import { MaterialDetailPage, MaterialsListPage } from '../pages/MaterialsPages'
 import { InfoPage } from '../pages/InfoPage'
+import { ContactsPage } from '../pages/ContactsPage'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -29,7 +30,6 @@ export const prototypeRoutes: RouteDefinition[] = [
   { path: '/product/:slug', label: 'Карточка товара' },
   { path: '/cart', label: 'Корзина' },
   { path: '/privacy', label: 'Политика конфиденциальности' }, { path: '/about', label: 'О компании' },
-  { path: '/contacts', label: 'Контакты' },
   { path: '/brands/*', label: 'Бренд' },
 ]
 
@@ -56,6 +56,7 @@ export function AppRoutes() {
       <Route path="/delivery" element={<InfoPage page="delivery" />} />
       <Route path="/payment" element={<InfoPage page="payment" />} />
       <Route path="/warranty" element={<InfoPage page="warranty" />} />
+      <Route path="/contacts" element={<ContactsPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/compare" element={<ComparePage />} />
       <Route path="/checkout/review" element={<CheckoutReviewPage />} />

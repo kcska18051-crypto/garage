@@ -9,7 +9,7 @@ function ActionLink({ to, label, symbol, count }: { to: string; label: string; s
 }
 
 export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, onCatalog }: { region: string; onRegion(): void; counts: HeaderCounts; compact: boolean; catalogOpen: boolean; onCatalog(): void }) {
-  const { openAuth } = useAuth()
+  const { isAuthenticated, openAuth } = useAuth()
   return (
     <div className={`desktop-header${compact ? ' desktop-header--compact' : ''}`}>
       {!compact && <div className="service-row"><button onClick={onRegion} aria-label="Выбрать город">⌖ {region}</button><nav aria-label="Сервисная навигация"><Link to="/delivery">Доставка и оплата</Link><Link to="/about">О компании</Link><Link to="/contacts">Контакты</Link></nav><a href="tel:+70000000000">+7 (000) 000-00-00 <small>Пн–Пт, 9:00–18:00</small></a></div>}
@@ -18,7 +18,7 @@ export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, 
         <button className="catalog-button" onClick={onCatalog} aria-expanded={catalogOpen}>▦ <span>Каталог</span></button>
         <SearchBox compact={compact} />
         {!compact && <Link className="service-link" to="/services">Услуги</Link>}
-        <div className="header-actions"><button className="header-action" type="button" aria-label="Профиль" onClick={() => openAuth('login')}><span aria-hidden="true">○</span><small>Профиль</small></button><ActionLink to="/compare" label="Сравнение" symbol="≡" count={counts.compare} /><ActionLink to="/favorites" label="Избранное" symbol="♡" count={counts.favorites} /><ActionLink to="/cart" label="Корзина" symbol="▱" count={counts.cart} /></div>
+        <div className="header-actions">{isAuthenticated ? <ActionLink to="/profile" label="Профиль" symbol="○" /> : <button className="header-action" type="button" aria-label="Профиль" onClick={() => openAuth('login', { returnTo: '/profile' })}><span aria-hidden="true">○</span><small>Профиль</small></button>}<ActionLink to="/compare" label="Сравнение" symbol="≡" count={counts.compare} /><ActionLink to="/favorites" label="Избранное" symbol="♡" count={counts.favorites} /><ActionLink to="/cart" label="Корзина" symbol="▱" count={counts.cart} /></div>
       </div>
       {catalogOpen && <nav className="catalog-panel" aria-label="Меню каталога"><p className="eyebrow">Основные направления</p>{[['Компрессорное оборудование', '/catalog/compressor-equipment'], ['Подъёмное оборудование', '/catalog/lifting'], ['Кузовной ремонт', '/catalog/body'], ['Покраска и подготовка', '/catalog/paint'], ['Инструмент', '/catalog/tools'], ['Все категории', '/catalog']].map(([name, href]) => <Link key={name} to={href} onClick={onCatalog}>{name}<span>→</span></Link>)}</nav>}
     </div>

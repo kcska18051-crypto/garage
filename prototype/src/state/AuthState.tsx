@@ -5,8 +5,9 @@ import { AuthDialog } from '../features/auth/AuthDialog'
 export type AuthIntent = 'login' | 'register' | 'recovery'
 type AuthContextValue = {
   isOpen: boolean
+  isAuthenticated: boolean
   status: string
-  openAuth(intent?: AuthIntent): void
+  openAuth(intent?: AuthIntent, options?: { returnTo?: string }): void
   closeAuth(): void
   completeAuth(message: string): void
 }
@@ -14,21 +15,29 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [request, setRequest] = useState<{ intent: AuthIntent; revision: number } | null>(null)
+  const navigate = useNavigate()
+  const [request, setRequest] = useState<{ intent: AuthIntent; revision: number; returnTo?: string } | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [status, setStatus] = useState('')
   const openerRef = useRef<HTMLElement | null>(null)
   const closeAuth = useCallback(() => {
     setRequest(null)
     window.setTimeout(() => openerRef.current?.isConnected && openerRef.current.focus(), 0)
   }, [])
-  const openAuth = useCallback((intent: AuthIntent = 'login') => {
+  const openAuth = useCallback((intent: AuthIntent = 'login', options?: { returnTo?: string }) => {
     openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
     setStatus('')
-    setRequest((current) => ({ intent, revision: (current?.revision ?? 0) + 1 }))
+    setRequest((current) => ({ intent, returnTo: options?.returnTo, revision: (current?.revision ?? 0) + 1 }))
   }, [])
-  const completeAuth = useCallback((message: string) => { setStatus(message); closeAuth() }, [closeAuth])
+  const completeAuth = useCallback((message: string) => {
+    const returnTo = request?.returnTo
+    setIsAuthenticated(true)
+    setStatus(message)
+    setRequest(null)
+    if (returnTo) navigate(returnTo)
+  }, [navigate, request])
 
-  return <AuthContext.Provider value={{ isOpen: Boolean(request), status, openAuth, closeAuth, completeAuth }}>
+  return <AuthContext.Provider value={{ isOpen: Boolean(request), isAuthenticated, status, openAuth, closeAuth, completeAuth }}>
     {children}
     {status && <p className="auth-toast" role="status">{status}</p>}
     {request && <AuthDialog key={request.revision} intent={request.intent} onClose={closeAuth} onComplete={completeAuth} />}
@@ -38,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function AuthRouteBridge({ intent }: { intent: AuthIntent }) {
   const navigate = useNavigate()
   const { openAuth } = useAuth()
-  useEffect(() => { openAuth(intent); navigate('/', { replace: true }) }, [intent, navigate, openAuth])
+  useEffect(() => { openAuth(intent, { returnTo: '/profile' }); navigate('/', { replace: true }) }, [intent, navigate, openAuth])
   return null
 }
 

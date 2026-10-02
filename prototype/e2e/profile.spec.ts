@@ -14,7 +14,7 @@ test('profile connects the overview, orders and organization flows', async ({ pa
   await expect(page.getByText('ООО «Гараж Профи»')).toBeVisible()
 })
 
-test('unified auth dialog supports SMS and password login without leaving the source page', async ({ page }) => {
+test('unified auth dialog handles SMS code states before opening the personal account', async ({ page }) => {
   await page.goto('/catalog')
   await page.getByRole('button', { name: 'Профиль' }).click()
   const dialog = page.getByRole('dialog', { name: 'Вход и регистрация' })
@@ -27,15 +27,7 @@ test('unified auth dialog supports SMS and password login without leaving the so
   await dialog.getByLabel('Код подтверждения').fill('1234')
   await dialog.getByRole('button', { name: 'Войти' }).click()
   await expect(dialog).toBeHidden()
-  await expect(page).toHaveURL(/\/catalog$/)
-
-  await page.getByRole('button', { name: 'Профиль' }).click()
-  await dialog.getByRole('button', { name: 'По паролю' }).click()
-  await dialog.getByLabel('Номер телефона').fill('+7 900 000-00-00')
-  await dialog.getByLabel('Пароль').fill('garage123')
-  await dialog.getByRole('button', { name: 'Войти' }).click()
-  await expect(dialog).toBeHidden()
-  await expect(page).toHaveURL(/\/catalog$/)
+  await expect(page).toHaveURL(/\/profile$/)
 })
 
 test('documents and help are real account sections with working actions', async ({ page }) => {
@@ -71,7 +63,49 @@ test('legacy recovery route opens both recovery choices in the unified dialog', 
   await dialog.getByLabel('Повторите пароль').fill('garage-new')
   await dialog.getByRole('button', { name: 'Сохранить пароль и войти' }).click()
   await expect(dialog).toBeHidden()
-  await expect(page).toHaveURL(/\/$/)
+  await expect(page).toHaveURL(/\/profile$/)
+})
+
+test('guest enters the personal account through the header and stays signed in', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Профиль' }).click()
+  const dialog = page.getByRole('dialog', { name: 'Вход и регистрация' })
+  await dialog.getByLabel('Номер телефона').fill('+7 999 111-22-33')
+  await dialog.getByRole('button', { name: 'Получить код' }).click()
+  await dialog.getByLabel('Код подтверждения').fill('1234')
+  await dialog.getByRole('button', { name: 'Войти' }).click()
+  await expect(page).toHaveURL(/\/profile$/)
+  await expect(page.getByRole('navigation', { name: 'Разделы личного кабинета' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Профиль' }).first()).toHaveAttribute('href', '/profile')
+})
+
+test('password login from the header opens the personal account', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Профиль' }).click()
+  const dialog = page.getByRole('dialog', { name: 'Вход и регистрация' })
+  await dialog.getByRole('button', { name: 'По паролю' }).click()
+  await dialog.getByLabel('Номер телефона').fill('+7 900 000-00-00')
+  await dialog.getByLabel('Пароль').fill('garage123')
+  await dialog.getByRole('button', { name: 'Войти' }).click()
+  await expect(page).toHaveURL(/\/profile$/)
+  await expect(page.getByRole('navigation', { name: 'Разделы личного кабинета' })).toBeVisible()
+})
+
+test('personal registration from the header opens the personal account', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Профиль' }).click()
+  const dialog = page.getByRole('dialog', { name: 'Вход и регистрация' })
+  await dialog.getByRole('tab', { name: 'Регистрация' }).click()
+  await dialog.getByLabel('Имя').fill('Ирина')
+  await dialog.getByLabel('Номер телефона').fill('+7 999 222-33-44')
+  await dialog.getByLabel(/обработку персональных данных/).check()
+  await dialog.getByLabel(/условия сервиса/).check()
+  await dialog.getByRole('button', { name: 'Продолжить' }).click()
+  await dialog.getByLabel('Код подтверждения').fill('1234')
+  await dialog.getByRole('button', { name: 'Подтвердить' }).click()
+  await dialog.getByRole('button', { name: 'Продолжить без пароля' }).click()
+  await expect(page).toHaveURL(/\/profile$/)
+  await expect(page.getByRole('navigation', { name: 'Разделы личного кабинета' })).toBeVisible()
 })
 
 test('company registration returns to checkout after connecting an organization', async ({ page }) => {

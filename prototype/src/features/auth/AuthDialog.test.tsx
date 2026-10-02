@@ -18,7 +18,7 @@ const openFromHeader = async (user: ReturnType<typeof userEvent.setup>) => {
 beforeEach(() => localStorage.clear())
 
 describe('unified auth dialog', () => {
-  it('logs in by SMS, handles code states and preserves the source route', async () => {
+  it('logs in by SMS from the header and opens the personal account', async () => {
     const user = userEvent.setup()
     const dialog = await openFromHeader(user)
 
@@ -34,7 +34,18 @@ describe('unified auth dialog', () => {
 
     expect(screen.queryByRole('dialog', { name: 'Вход и регистрация' })).not.toBeInTheDocument()
     expect(screen.getByText(/Вы вошли в демонстрационный профиль/)).toBeInTheDocument()
-    expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/catalog')
+    expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/profile')
+    expect(screen.getAllByRole('link', { name: 'Профиль' })[0]).toHaveAttribute('href', '/profile')
+  })
+
+  it('opens the personal account after password login', async () => {
+    const user = userEvent.setup()
+    const dialog = await openFromHeader(user)
+    await user.click(within(dialog).getByRole('button', { name: 'По паролю' }))
+    await user.type(within(dialog).getByLabelText('Номер телефона'), '+7 900 000-00-00')
+    await user.type(within(dialog).getByLabelText('Пароль'), 'garage123')
+    await user.click(within(dialog).getByRole('button', { name: 'Войти' }))
+    expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/profile')
   })
 
   it('supports password login and both forgot-password choices without storing a password', async () => {
@@ -89,6 +100,7 @@ describe('unified auth dialog', () => {
     await user.click(within(dialog).getByRole('button', { name: 'Продолжить без пароля' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(screen.getByText('Регистрация завершена', { exact: true })).toBeInTheDocument()
+    expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/profile')
   })
 
   it('offers login for an existing phone and connects a company by INN', async () => {

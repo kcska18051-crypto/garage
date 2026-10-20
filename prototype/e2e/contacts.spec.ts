@@ -12,8 +12,9 @@ test('header and footer open the complete contacts page', async ({ page }) => {
 
 test('point selection updates the schematic map and message closes with Escape', async ({ page }) => {
   await page.goto('/contacts')
-  await page.getByRole('button', { name: 'На карте: Демо-сервисная точка' }).click()
-  await expect(page.getByRole('region', { name: 'Демонстрационная карта' }).getByRole('heading', { name: 'Демо-сервисная точка' })).toBeVisible()
+  await page.getByLabel('Город контактов').selectOption('Череповец')
+  await page.getByRole('radio', { name: /Демо-сервисная точка/ }).check()
+  await expect(page.getByRole('region', { name: 'Карта контактных точек' }).getByRole('heading', { name: 'Демо-сервисная точка' })).toBeVisible()
   const trigger = page.getByRole('button', { name: 'Написать сообщение' })
   await trigger.click()
   await expect(page.getByRole('dialog', { name: 'Написать сообщение' })).toBeVisible()
@@ -27,7 +28,7 @@ for (const width of [2560, 1920, 1440, 1024, 390, 360]) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/contacts')
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1)).toBe(true)
-    await expect(page.getByRole('region', { name: 'Демонстрационная карта' })).toBeVisible()
+    await expect(page.getByRole('region', { name: 'Карта контактных точек' })).toBeVisible()
     await page.getByRole('button', { name: 'Заказать звонок' }).click()
     await expect(page.getByRole('dialog', { name: 'Заказать звонок' })).toBeVisible()
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1)).toBe(true)

@@ -1,18 +1,23 @@
-import { useRef, useState, type MouseEvent } from 'react'
+import { useCallback, useRef, useState, type MouseEvent } from 'react'
 import { contactPoints, primaryContacts } from '../data/contactsData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ContactDialog, type ContactDialogMode } from '../features/forms/ContactDialog'
-import { Link } from 'react-router-dom'
-import { CoordinateMap } from '../features/maps/CoordinateMap'
+import { cityCenters, CoordinateMap } from '../features/maps/CoordinateMap'
+import { PickupDetails } from '../features/checkout/PickupDetails'
+import type { ContactPoint } from '../data/contactsData'
 import { useRegion } from '../state/RegionState'
 import './ContactsPage.css'
 
 export function ContactsPage() {
-  const { region } = useRegion()
+  const { region, setRegion } = useRegion()
   const [activeId, setActiveId] = useState(contactPoints[0].id)
   const [dialog, setDialog] = useState<ContactDialogMode | null>(null)
   const dialogTrigger = useRef<HTMLButtonElement | null>(null)
-  const activePoint = contactPoints.find((point) => point.id === activeId) ?? contactPoints[0]
+  const points = contactPoints.filter(point => point.city === region)
+  const activePoint = points.find(point => point.id === activeId) ?? points[0]
+  const cities = [...new Set(contactPoints.map(point => point.city))]
+  const [details, setDetails] = useState<ContactPoint | null>(null)
+  const closeDetails = useCallback(() => setDetails(null), [])
 
   const openDialog = (mode: ContactDialogMode, event: MouseEvent<HTMLButtonElement>) => {
     dialogTrigger.current = event.currentTarget
@@ -32,17 +37,19 @@ export function ContactsPage() {
 
     <section className="contacts-locations" aria-labelledby="contact-points-title">
       <header>
-        <div><h2 id="contact-points-title">Контактные точки</h2><p>Выберите точку, чтобы увидеть её на схематичной карте.</p></div>
-        <div className="contacts-location-context"><span>Город сайта: {region}</span><label>Контактная точка<select value={activeId} onChange={(event) => setActiveId(event.target.value)}>{contactPoints.map((point) => <option key={point.id} value={point.id}>{point.name}</option>)}</select></label></div>
+        <div><h2 id="contact-points-title">Контактные точки</h2><p>Выберите город и точку для просмотра на карте. Это не меняет пункт получения вашего заказа.</p></div>
+        <div className="contacts-location-context"><span>Город сайта: {region}</span><label>Город<select aria-label="Город контактов" value={region} onChange={(event) => setRegion(event.target.value)}>{!cities.includes(region) && <option value={region}>{region}</option>}{cities.map(city => <option key={city}>{city}</option>)}</select></label></div>
       </header>
       <div className="contacts-locations__grid">
-        <div className="contact-point-list">
-          {contactPoints.map((point) => <article className="contact-point" data-testid="contact-point" data-active={activeId === point.id} key={point.id}>
-            <span>{point.kind} · {point.city}</span><Link to={`/contacts/${point.id}`}>О магазине →</Link><h3>{point.name}</h3><p>{point.address}</p><p>{point.hours}</p><a href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>{point.phone}</a><a href={`mailto:${point.email}`}>{point.email}</a>
-            <button type="button" aria-pressed={activeId === point.id} onClick={() => setActiveId(point.id)}>На карте: {point.name}</button>
+        <div className="contact-point-list" role="radiogroup" aria-label="Точка для просмотра на карте">
+          {points.map((point) => <article className="contact-point" data-testid="contact-point" data-active={activePoint?.id === point.id} key={point.id}>
+            <label className="contact-point__choice"><input type="radio" name="contact-point" checked={activePoint?.id === point.id} onChange={() => setActiveId(point.id)} aria-label={`${point.name}, ${point.city}, ${point.address}`}/><span><small>{point.kind} · {point.city}</small><strong>{point.name}</strong><span>{point.address}</span><span>{point.hours}</span>{activePoint?.id === point.id && <b><span aria-hidden="true">✓ </span>Показана на карте</b>}</span></label>
+            <div className="contact-point__links"><a href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>{point.phone}</a><a href={`mailto:${point.email}`}>{point.email}</a></div>
+            <button className="contact-point__details" type="button" aria-label={`Фото и как добраться: ${point.name}`} onClick={() => setDetails(point)}>Фото и как добраться</button>
           </article>)}
+          {!points.length && <p role="status">В городе «{region}» контактные точки пока не указаны. Выберите другой город.</p>}
         </div>
-        <div><CoordinateMap center={activePoint.coordinates} value={activePoint.coordinates} markers={contactPoints.filter(p => p.city === activePoint.city).map(p => ({ id: p.id, label: p.name, point: p.coordinates }))} onMarker={setActiveId}/><Link to={`/contacts/${activePoint.id}`}>Подробнее: {activePoint.name} →</Link><p>Демонстрационные координаты · {activePoint.city}</p></div>
+        {activePoint && <section className="contacts-map-panel" aria-label="Карта контактных точек"><CoordinateMap center={activePoint.coordinates ?? cityCenters[region]} selectedMarkerId={activePoint.id} markers={points.map(point => ({ id: point.id, label: point.name, point: point.coordinates }))} onMarker={setActiveId}/><div className="contacts-map__caption" aria-live="polite"><span>Показана на карте · {region}</span><h3>{activePoint.name}</h3><p>{activePoint.address}</p><p>Демонстрационные координаты</p></div></section>}
       </div>
     </section>
 
@@ -51,5 +58,6 @@ export function ContactsPage() {
       <article className="contacts-request"><h2>Связаться с нами</h2><p>Оставьте демонстрационное обращение. Данные никуда не отправляются и не сохраняются.</p><div><button className="button button--dark" type="button" onClick={(event) => openDialog('message', event)}>Написать сообщение</button><button className="button" type="button" onClick={(event) => openDialog('callback', event)}>Заказать звонок</button></div></article>
     </section>
     {dialog && <ContactDialog mode={dialog} onClose={closeDialog} />}
+    {details && <PickupDetails point={details} onClose={closeDetails}/>}
   </main>
 }

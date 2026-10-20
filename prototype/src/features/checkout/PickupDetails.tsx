@@ -34,7 +34,7 @@ export function PickupDetails({ point, onClose }: { point: ContactPoint; onClose
     <header className="pickup-details__heading"><div><small>Фото и как добраться</small><h2 id="pickup-details-title">{point.name} — {point.city}</h2></div><button ref={closeRef} type="button" aria-label="Закрыть информацию о пункте" onClick={onClose}>×</button></header>
     <div className="pickup-details__body">
       <p className="pickup-details__notice">Демонстрационные данные: адрес, координаты, контакты и фотографии требуют подтверждения клиентом.</p>
-      <p>{point.kind}. Здесь можно уточнить комплектацию и получение заказа.</p>
+      <p>{point.kind}. Условия посещения и доступные услуги уточняются у точки.</p>
       <div className="pickup-details__photos">{['Фасад', 'Вход'].map(label => <figure key={label}><div role="img" aria-label={`Место для фотографии: ${label}`}>{label}</div><figcaption>Демозаглушка · {label}</figcaption></figure>)}</div>
       <dl><div><dt>Адрес</dt><dd>{point.city}, {point.address}</dd></div><div><dt>Часы работы</dt><dd>{point.hours}</dd></div><div><dt>Контакты</dt><dd><a href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>{point.phone}</a><br/><a href={`mailto:${point.email}`}>{point.email}</a></dd></div></dl>
       <h3>Как добраться</h3><p>Вход и ориентиры уточняются. Карта показывает демонстрационную точку.</p>

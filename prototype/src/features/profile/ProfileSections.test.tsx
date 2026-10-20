@@ -23,6 +23,18 @@ describe('profile secondary sections', () => {
     expect(screen.queryByTestId('profile-product-product-1')).not.toBeInTheDocument()
   })
 
+  it('uses compact non-stretching favorite tiles without dropping commercial data or actions', () => {
+    open('/profile/favorites')
+    expect(document.querySelector('.profile-product-grid--favorites')).toBeInTheDocument()
+    const card = screen.getByTestId('profile-product-product-1')
+    expect(card).toHaveClass('profile-product--compact')
+    expect(card).toHaveTextContent('Артикул:')
+    expect(card).toHaveTextContent('В наличии')
+    expect(within(card).getByRole('link', { name: 'Акция' })).toBeInTheDocument()
+    expect(card.querySelector('del')).toBeInTheDocument()
+    expect(within(card).getByRole('button', { name: 'Добавить в корзину' })).toBeInTheDocument()
+  })
+
   it('uses the shared availability wording in favorites and recently viewed', () => {
     const { unmount } = open('/profile/favorites')
     expect(screen.getByTestId('profile-product-product-1')).toHaveTextContent('В наличии в 1 магазине')

@@ -21,7 +21,6 @@ export function OrderSummary({ action, selectedIds, promo }: SummaryProps) {
     <h2>Итого к оформлению</h2>
     <div className="order-summary__row"><span>{count} товара на сумму</span><b>{money(total + discount)}</b></div>
     <div className="order-summary__row"><span>Скидка</span><b>{money(discount)}</b></div>
-    <div className="order-summary__row"><span>Доставка</span><b>Рассчитаем при оформлении</b></div>
     <div className="order-summary__total"><span>Итого</span><strong>{money(total)}</strong></div>
     {promo}{action}
     <small>Наличие и срок получения уточняются для выбранного города.</small>
@@ -61,7 +60,7 @@ export function CartPage() {
             <Link className="cart-line__image" to={product.href} aria-label={`Открыть ${product.name}`}><i /><b />{promotionPrice(product.id,product.price).oldPrice && <span className="cart-promotion">Акция</span>}</Link>
             <div className="cart-line__details"><Link to={product.href}><h2>{product.name}</h2></Link><p>Артикул: {product.sku}</p>{line.optionFor && <div className="cart-option-link">{Object.entries(line.optionParents ?? { [line.optionFor]: line.quantity }).map(([parent, count]) => <p key={parent}>Опция для варианта: {optionParentLabel(parent)} · {count} шт.</p>)}</div>}<p>{product.modification}</p><p className="cart-line__availability">{formatAvailability(product.availabilityStatus, product.storeCount)}</p><div className="cart-line__secondary"><button onClick={() => moveToFavorites(line.id)} aria-label="Перенести в избранное">♡ В избранное</button><button onClick={() => removeFromCart(line.id)} aria-label="Удалить товар">Удалить</button></div></div>
             <div className="cart-line__controls"><strong>{money(product.price * line.quantity)}</strong><div className="quantity"><button aria-label="Уменьшить количество" onClick={() => updateQuantity(line.id, line.quantity - 1)}>−</button><span aria-label="Количество">{line.quantity}</span><button aria-label="Увеличить количество" onClick={() => updateQuantity(line.id, line.quantity + 1)}>+</button></div></div>
-            <details className="line-accessories" open={cartItems.length <= 2 || lineIndex === 0}><summary>Может пригодиться</summary><div>{relatedForCart(line.id).filter(p => p.id !== line.id).map(p => <article key={p.id}><span className="accessory-mini" aria-label={p.name}/><div><strong>{p.name}</strong><small>{money(p.price)}</small></div><button aria-label={`Добавить ${p.name} в корзину`} onClick={() => addToCart(p.id)}>+</button></article>)}</div></details>
+            <details className="line-accessories" open={cartItems.length <= 2 || lineIndex === 0}><summary>Может пригодиться</summary><div className="line-accessories__rail">{relatedForCart(line.id).filter(p => p.id !== line.id).map(p => <article key={p.id}><span className="accessory-mini" aria-hidden="true"/><div><strong title={p.name}>{p.name}</strong><small>{money(p.price)}</small></div><button type="button" aria-label={`Добавить ${p.name} в корзину`} onClick={() => addToCart(p.id)}><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M3 3h2l2.4 12h11l2-8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg></button></article>)}</div></details>
           </article>
         })}</div>
       </section>

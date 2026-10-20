@@ -6,6 +6,7 @@ import { CommercialProposal } from '../product-detail/CommercialProposal'
 import { ProfileDialog } from '../profile/ProfileDialog'
 import { decodeCart, encodeCart } from '../../data/sharedCartData'
 import { formatAvailability } from '../../utils/availability'
+import { ShareCartDialog } from './ShareCartDialog'
 export { decodeCart } from '../../data/sharedCartData'
 export function SharedCart({ encoded }: { encoded: string }) {
   const lines = decodeCart(encoded); const { importCart } = useCommerce(); const navigate = useNavigate()
@@ -17,7 +18,7 @@ export function CartTools({ lines }: { lines: CartLine[] }) {
   const url = new URL(window.location.href); url.search = ''; url.hash = ''; url.searchParams.set('shared', encodeCart(lines))
   return <div className="cart-tools"><div>{[['proposal','Коммерческое предложение'],['credit','Купить в кредит'],['share','Поделиться корзиной']].map(([key,label]) => <button key={key} type="button" onClick={() => { setMessage(''); setSuccess(false); if(!lines.length) setMessage('Выберите хотя бы один товар'); else setTool(key as typeof tool) }}>{label}</button>)}</div>{message && <p role="status">{message}</p>}
     {tool === 'proposal' && <CommercialProposal lines={lines} onClose={() => setTool(null)} />}
-    {tool === 'share' && <ProfileDialog title="Поделиться корзиной" onClose={() => setTool(null)}><p>Ссылка содержит товары, количества и связи опций с вариантами оборудования. Персональных данных в ней нет.</p><label>Ссылка на корзину<input aria-label="Ссылка на корзину" readOnly value={url.href}/></label><button onClick={async () => { try { await navigator.clipboard.writeText(url.href); setMessage('Ссылка скопирована') } catch { setMessage('Выделите и скопируйте ссылку вручную') } }}>Копировать ссылку</button><a href={url.href} target="_blank" rel="noreferrer">Открыть общую корзину ↗</a>{message && <p role="status">{message}</p>}</ProfileDialog>}
+    {tool === 'share' && <ShareCartDialog url={url.href} onClose={() => setTool(null)}/>}
     {tool === 'credit' && <ProfileDialog title="Купить в кредит" onClose={() => setTool(null)}>{success ? <p role="status">Демонстрационная заявка подготовлена. В банк ничего не отправлено.</p> : <form className="profile-form" onSubmit={e => { e.preventDefault(); setSuccess(true) }}><p>Сумма выбранных товаров: <strong>{money(total)}</strong>. Условия и решение банка в прототипе не рассчитываются.</p><label>Имя<input required name="name" minLength={2}/></label><label>Телефон<input required name="phone" type="tel" pattern="[+0-9() -]{10,20}"/></label><label><input type="checkbox" required/>Понимаю, что это демонстрация без обращения в банк</label><button type="submit">Подготовить заявку</button></form>}</ProfileDialog>}
   </div>
 }

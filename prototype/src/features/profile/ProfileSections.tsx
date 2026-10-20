@@ -28,7 +28,7 @@ export function ProfileOrganizations() {
 
 export function ProfileFavorites() {
   const commerce = useCommerce(); const products = prototypeData.products.filter((product) => commerce.favoriteIds.has(product.id))
-  return <div className="profile-section"><Heading title="Избранное" note="Сохранённые товары" /><p className="profile-section-note">Изменения синхронизированы с избранным в каталоге и счётчиком в шапке.</p>{products.length ? <div className="profile-product-grid">{products.map((product) => <ProductTile key={product.id} product={product} removable />)}</div> : <div className="profile-empty"><span>♡</span><h2>В избранном пока пусто</h2><p>Добавляйте товары из каталога, чтобы вернуться к ним позже.</p><Link className="profile-button profile-button--primary" to="/catalog">Перейти в каталог</Link></div>}</div>
+  return <div className="profile-section"><Heading title="Избранное" note="Сохранённые товары" /><p className="profile-section-note">Изменения синхронизированы с избранным в каталоге и счётчиком в шапке.</p>{products.length ? <div className="profile-product-grid profile-product-grid--favorites">{products.map((product) => <ProductTile compact key={product.id} product={product} removable />)}</div> : <div className="profile-empty"><span>♡</span><h2>В избранном пока пусто</h2><p>Добавляйте товары из каталога, чтобы вернуться к ним позже.</p><Link className="profile-button profile-button--primary" to="/catalog">Перейти в каталог</Link></div>}</div>
 }
 
 export function ProfileRecentlyViewed() {

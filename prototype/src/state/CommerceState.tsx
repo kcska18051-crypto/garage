@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo, useState, useEffect, useRef, type ReactNode } from 'react'
 import type { Coordinates } from '../features/maps/CoordinateMap'
+import { profileData } from '../data/profileData'
 
 type CommerceContextValue = {
   favoriteIds: Set<string>; compareIds: Set<string>; cartIds: Set<string>
@@ -50,7 +51,8 @@ const resizeLine = (item: CartLine, quantity: number): CartLine => {
 }
 
 export function CommerceProvider({ children }: { children: ReactNode }) {
-  const [favoriteIds, setFavorites] = useState<Set<string>>(() => new Set())
+  const [favoriteIds, setFavorites] = useState<Set<string>>(() => { const saved=readStored<unknown>('garage-favorites-v1', null); return new Set(Array.isArray(saved) && saved.every(id => typeof id === 'string') ? saved : profileData.favoriteProductIds) })
+  useEffect(() => { try { localStorage.setItem('garage-favorites-v1', JSON.stringify([...favoriteIds])) } catch { /* In-memory fallback. */ } }, [favoriteIds])
   const [compareIds, setCompare] = useState<Set<string>>(() => new Set())
   const [cartItems, setCartItems] = useState<CartLine[]>(() => readStored('garage-cart-v2', []))
   const seeded = useRef(cartItems.length > 0)

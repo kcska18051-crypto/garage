@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { signIntoDemoAccount } from './helpers/demoAuth'
 
 test('cart quantity and checkout choices persist through success', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
@@ -8,6 +9,7 @@ test('cart quantity and checkout choices persist through success', async ({ page
   await page.getByTestId('cart-line').first().getByRole('button', { name: 'Увеличить количество' }).click()
   await expect(page.getByRole('link', { name: 'Корзина: 4' })).toBeVisible()
   await page.getByRole('link', { name: 'Перейти к оформлению' }).click()
+  await signIntoDemoAccount(page)
   await page.getByRole('tab', { name: /Самовывоз/ }).click()
   await page.getByRole('radio', { name: /Демо-магазин/ }).check()
   await page.getByLabel('Картой онлайн').click()

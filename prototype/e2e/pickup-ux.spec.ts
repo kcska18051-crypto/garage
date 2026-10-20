@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { signIntoDemoAccount } from './helpers/demoAuth'
 
 for (const width of [360,390,1440,1920]) {
   test.describe(`pickup ${width}`, () => {
@@ -6,6 +7,7 @@ for (const width of [360,390,1440,1920]) {
     test('radio selection, local details, keyboard, map and checkout preservation', async ({ page }) => {
       await page.route('https://tile.openstreetmap.org/**', route => route.abort())
       await page.goto('/checkout/review')
+      await signIntoDemoAccount(page)
       const summary = page.getByRole('complementary', { name: 'Итоги заказа' })
       const radio = page.getByRole('radio', { name: /Демо-магазин/ })
       const trigger = page.getByRole('button', { name: 'Фото и как добраться: Демо-магазин' })

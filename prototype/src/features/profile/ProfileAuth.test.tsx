@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { App } from '../../app/App'
+import { seedDemoSession } from '../../test/auth'
 
 function LocationEcho() {
   const location = useLocation()
@@ -13,7 +14,7 @@ const open = (path: string) => render(<MemoryRouter initialEntries={[path]}><App
 describe('auth dialog entry points', () => {
   it('opens from the account shell and returns focus after closing', async () => {
     const user = userEvent.setup(); open('/profile')
-    const trigger = screen.getByRole('button', { name: 'Войти / регистрация' })
+    const trigger = within(screen.getByRole('navigation', { name:'Разделы личного кабинета' })).getByRole('button', { name: 'Войти / зарегистрироваться' })
     await user.click(trigger)
     expect(screen.getByRole('dialog', { name: 'Вход и регистрация' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Закрыть' }))
@@ -37,6 +38,7 @@ describe('auth dialog entry points', () => {
   })
 
   it('keeps the profile dashboard available by its direct route', () => {
+    seedDemoSession()
     open('/profile')
     expect(screen.getByText('Здравствуйте, Алексей')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Активные заказы' })).toBeInTheDocument()

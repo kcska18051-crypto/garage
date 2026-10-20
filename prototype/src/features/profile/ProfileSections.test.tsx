@@ -2,8 +2,9 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../../app/App'
+import { seedDemoSession } from '../../test/auth'
 
-const open = (path: string) => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
+const open = (path: string) => { seedDemoSession(); return render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>) }
 
 describe('profile secondary sections', () => {
   it('adds an organization from a demo INN lookup', async () => {

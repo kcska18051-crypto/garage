@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test'
+import { signIntoDemoAccount } from './helpers/demoAuth'
 
 test('profile connects the overview, orders and organization flows', async ({ page }) => {
   await page.goto('/profile')
+  await signIntoDemoAccount(page)
   await expect(page.getByRole('heading', { level: 1, name: 'Личный кабинет' })).toBeVisible()
   await page.getByRole('link', { name: 'Мои заказы' }).click()
   await expect(page.getByText('Получен', { exact: true })).toBeVisible()
@@ -32,6 +34,7 @@ test('unified auth dialog handles SMS code states before opening the personal ac
 
 test('documents and help are real account sections with working actions', async ({ page }) => {
   await page.goto('/profile')
+  await signIntoDemoAccount(page)
   await page.getByRole('link', { name: 'Документы' }).click()
   await expect(page).toHaveURL(/\/profile\/documents/)
   await page.getByRole('tab', { name: 'Организации' }).click()
@@ -141,6 +144,7 @@ test('company registration returns to checkout after connecting an organization'
 
 test('address CRUD stays connected to courier checkout', async ({ page }) => {
   await page.goto('/profile/addresses')
+  await signIntoDemoAccount(page)
   await page.getByRole('button', { name: 'Добавить адрес' }).click()
   await page.getByLabel('Название адреса').fill('Склад')
   await page.getByRole('textbox', { name: 'Город', exact: true }).fill('Ярославль')
@@ -189,7 +193,7 @@ for (const viewport of [{ width: 1920, height: 1080 }, { width: 1440, height: 90
     expect(await page.locator('body').evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true)
     if (viewport.width < 768) {
       await expect(page.getByRole('navigation', { name: 'Мобильная навигация' })).toBeVisible()
-      expect(await page.locator('.profile-product-grid').evaluate((node) => node.scrollWidth > node.clientWidth)).toBe(true)
+      expect(await page.locator('.profile-product-grid').evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true)
     }
   })
 }
@@ -209,6 +213,7 @@ for (const width of [390, 360]) {
     }
 
     await page.goto('/profile/addresses')
+    await signIntoDemoAccount(page)
     await page.getByRole('button', { name: 'Добавить адрес' }).click()
     await expectActionAboveNavigation('Сохранить адрес')
 

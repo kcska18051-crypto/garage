@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { signIntoDemoAccount } from './helpers/demoAuth'
+test.beforeEach(async ({page}) => { await page.goto('/profile/data'); await signIntoDemoAccount(page) })
 
 test('recent history has no clearing action and profile exposes saved addresses', async ({ page }) => {
   await page.goto('/profile/recently-viewed')

@@ -73,10 +73,6 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [notification, setNotification] = useState('')
   const [profileDeleted, setProfileDeleted] = useState(false)
 
-  useEffect(() => {
-    profileData.favoriteProductIds.forEach(commerce.addFavorite)
-  }, [])
-
   useEffect(() => writeAddresses(addresses), [addresses])
 
   const value = useMemo<ProfileContextValue>(() => ({

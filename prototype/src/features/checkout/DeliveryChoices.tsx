@@ -5,9 +5,12 @@ import { useRegion } from '../../state/RegionState'
 import { formatProfileAddress, useProfile } from '../../state/ProfileState'
 import { cityCenters, CoordinateMap, type Coordinates } from '../maps/CoordinateMap'
 import { PickupChoices } from './PickupChoices'
+import { useAuth } from '../../state/AuthState'
 
 export function DeliveryChoices() {
-  const { checkout: c, updateCheckout: update } = useCommerce(); const { region } = useRegion(); const { addresses } = useProfile()
+  const { checkout: c, updateCheckout: update } = useCommerce(); const { region } = useRegion(); const { addresses: profileAddresses } = useProfile()
+  const { isAuthenticated } = useAuth()
+  const addresses = isAuthenticated ? profileAddresses : []
   const [geo, setGeo] = useState(''); const [savedPoint, setSavedPoint] = useState<Coordinates | null>(() => { try { return JSON.parse(localStorage.getItem('garage-saved-point') ?? 'null') } catch { return null } })
   const city = c.pickupCity ?? (cityCenters[region] ? region : 'Ярославль')
   const points = contactPoints.filter(p => p.city === city)

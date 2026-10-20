@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { checkoutProducts, money } from '../data/checkoutData'
 import { promotionPrice } from '../data/promotionPricing'
 import { useCommerce } from '../state/CommerceState'
@@ -6,6 +6,7 @@ import './CartCheckout.css'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { DeliveryChoices, deliverySummary } from '../features/checkout/DeliveryChoices'
 import { useAuth } from '../state/AuthState'
+import { useProfile } from '../state/ProfileState'
 
 const useDemoCart = () => { const { ensureDemoCart } = useCommerce(); useEffect(() => ensureDemoCart(), []) }
 
@@ -19,8 +20,11 @@ function scrollToSection(id: string) {
 export function CheckoutReviewPage() {
   useDemoCart()
   const navigate = useNavigate()
+  const location = useLocation()
   const { cartItems, checkout, updateCheckout } = useCommerce()
-  const { openAuth } = useAuth()
+  const { isAuthenticated, openAuth } = useAuth()
+  const { user } = useProfile()
+  const openCheckoutAuth = () => openAuth('login', { returnTo: location.pathname + location.search + location.hash })
   const [validationMessage, setValidationMessage] = useState('')
   const [ctaVisible, setCtaVisible] = useState(false)
   const submitRef = useRef<HTMLButtonElement>(null)
@@ -30,7 +34,7 @@ export function CheckoutReviewPage() {
   const recipientValid = !checkout.otherRecipient || Boolean(checkout.recipientName.trim() && checkout.recipientLastName.trim() && checkout.recipientPhone.trim())
   const deliveryValid = checkout.delivery === 'pickup' ? Boolean(checkout.store) : checkout.delivery === 'courier' ? (checkout.deliveryMode === 'point' ? Boolean(checkout.deliveryPoint) : Boolean(checkout.address.trim())) : Boolean(checkout.transportAddress.trim() && checkout.carrier && (checkout.carrier !== 'Своя ТК' || checkout.customCarrier?.trim()))
   const paymentValid = checkout.customerType === 'organization' ? checkout.payment === 'invoice' : checkout.payment !== 'invoice' && checkout.payment !== 'installment' && !(checkout.payment === 'cash' && checkout.delivery === 'transport')
-  const orderValid = recipientValid && deliveryValid && paymentValid
+  const orderValid = isAuthenticated && recipientValid && deliveryValid && paymentValid
 
   useEffect(() => {
     if (!submitRef.current || typeof IntersectionObserver === 'undefined') return
@@ -42,6 +46,7 @@ export function CheckoutReviewPage() {
   const setCustomerType = (customerType: 'personal' | 'organization') => updateCheckout({ customerType, payment: customerType === 'organization' ? 'invoice' : 'card' })
   const setDelivery = (delivery: 'pickup' | 'courier' | 'transport') => updateCheckout({ delivery, payment: checkout.customerType === 'organization' ? 'invoice' : checkout.payment === 'cash' && delivery === 'transport' ? 'card' : checkout.payment })
   const submit = () => {
+    if (!isAuthenticated) { openCheckoutAuth(); return }
     if (!recipientValid) { setValidationMessage('Заполните данные другого получателя'); scrollToSection('checkout-recipient'); return }
     if (!deliveryValid) { setValidationMessage('Выберите способ получения и укажите место получения'); scrollToSection('checkout-delivery'); return }
     if (!paymentValid) { setValidationMessage('Выберите доступный способ оплаты'); scrollToSection('checkout-payment'); return }
@@ -56,12 +61,11 @@ export function CheckoutReviewPage() {
       <section className="checkout-form">
         <section className="checkout-card" id="checkout-recipient" aria-labelledby="recipient-title">
           <div className="checkout-card__heading"><h2 id="recipient-title">Данные получателя</h2><div className="checkout-customer-tabs" role="tablist" aria-label="Тип покупателя"><button role="tab" aria-selected={checkout.customerType === 'personal'} onClick={() => setCustomerType('personal')}>Покупка для себя</button><button role="tab" aria-selected={checkout.customerType === 'organization'} onClick={() => setCustomerType('organization')}>Купить как юридическое лицо</button></div></div>
-          <div className="checkout-profile-data">
-            <label>Имя<input aria-label="Имя пользователя" value="Пользователь профиля" readOnly/></label>
-            <label>Телефон<input aria-label="Подтверждённый телефон" value="+7 (900) 000-00-00" readOnly/></label>
-          </div>
-          <button className="checkout-secondary-button" type="button" onClick={() => openAuth('login')}>Войти или зарегистрироваться</button>
-          {checkout.customerType === 'organization' && <div className="checkout-organization"><label>Организация<select aria-label="Организация" value={checkout.organization} onChange={(event) => updateCheckout({ organization: event.target.value })}><option>ООО «Гараж»</option></select></label><label>Найти другую организацию<input aria-label="Поиск организации по ИНН" inputMode="numeric" placeholder="Введите ИНН" value={checkout.organizationInn} onChange={(event) => updateCheckout({ organizationInn: event.target.value })}/></label><p>Реквизиты выбранной организации загружаются из профиля.</p></div>}
+          {isAuthenticated ? <><p>Данные демонстрационного профиля</p><div className="checkout-profile-data">
+            <label>Имя<input aria-label="Имя пользователя" value={`${user.firstName} ${user.lastName}`} readOnly/></label>
+            <label>Телефон<input aria-label="Подтверждённый телефон" value={user.phone} readOnly/></label>
+          </div></> : <><p>Войдите, чтобы использовать данные профиля и завершить оформление. Выбор товаров и способов получения сохранится.</p><button className="checkout-secondary-button" type="button" onClick={openCheckoutAuth}>Войти или зарегистрироваться</button></>}
+          {checkout.customerType === 'organization' && isAuthenticated && <div className="checkout-organization"><label>Организация<select aria-label="Организация" value={checkout.organization} onChange={(event) => updateCheckout({ organization: event.target.value })}><option>ООО «Гараж»</option></select></label><label>Найти другую организацию<input aria-label="Поиск организации по ИНН" inputMode="numeric" placeholder="Введите ИНН" value={checkout.organizationInn} onChange={(event) => updateCheckout({ organizationInn: event.target.value })}/></label><p>Реквизиты выбранной организации загружаются из профиля.</p></div>}
           <label className="checkout-switch"><input type="checkbox" aria-label="Заберёт другой человек" checked={checkout.otherRecipient} onChange={(event) => updateCheckout({ otherRecipient: event.target.checked })}/><span><strong>Заберёт другой человек</strong><small>Укажите его контактные данные</small></span></label>
           {checkout.otherRecipient && <div className="checkout-fields checkout-fields--recipient">
             <label>Имя получателя<input aria-label="Имя получателя" required value={checkout.recipientName} onChange={(event) => updateCheckout({ recipientName: event.target.value })}/></label>
@@ -99,7 +103,7 @@ export function CheckoutReviewPage() {
       </section>
       <aside className="order-summary checkout-summary" aria-label="Итоги заказа">
         <h2>Ваш заказ</h2><div className="order-summary__row"><span>{count} товара на сумму</span><b>{money(total + discount)}</b></div><div className="order-summary__row"><span>Скидка</span><b>{money(discount)}</b></div><div className="order-summary__row"><span>Доставка</span><b>{checkout.delivery === 'pickup' ? 'Бесплатно' : checkout.delivery === 'courier' ? 'Рассчитает менеджер' : 'По тарифу ТК'}</b></div><div className="order-summary__total"><span>Итого</span><strong>{money(total)}</strong></div>
-        <div className="checkout-summary__details"><p><span>Получатель</span><b>{checkout.otherRecipient ? `${checkout.recipientName || 'Другой'} ${checkout.recipientLastName}`.trim() : 'Пользователь профиля'}</b><button onClick={() => scrollToSection('checkout-recipient')}>Изменить</button></p><p><span>Получение</span><b>{deliveryLabels[checkout.delivery]} · {deliverySummary(checkout)}</b><button onClick={() => scrollToSection('checkout-delivery')}>Изменить</button></p><p><span>Оплата</span><b>{paymentLabels[checkout.payment]}</b><button onClick={() => scrollToSection('checkout-payment')}>Изменить</button></p></div>
+        <div className="checkout-summary__details"><p><span>Получатель</span><b>{checkout.otherRecipient ? `${checkout.recipientName || 'Другой'} ${checkout.recipientLastName}`.trim() : isAuthenticated ? `${user.firstName} ${user.lastName}` : 'Данные профиля после входа'}</b><button onClick={() => scrollToSection('checkout-recipient')}>Изменить</button></p><p><span>Получение</span><b>{deliveryLabels[checkout.delivery]} · {deliverySummary(checkout)}</b><button onClick={() => scrollToSection('checkout-delivery')}>Изменить</button></p><p><span>Оплата</span><b>{paymentLabels[checkout.payment]}</b><button onClick={() => scrollToSection('checkout-payment')}>Изменить</button></p></div>
         {validationMessage && <p className="checkout-validation" role="alert">{validationMessage}</p>}
         <button ref={submitRef} data-testid="checkout-submit" className={`button checkout-submit${orderValid ? '' : ' is-inactive'}`} aria-disabled={!orderValid} type="button" onClick={submit}>Оформить заказ</button>
       </aside>

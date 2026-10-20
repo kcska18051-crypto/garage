@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
+import { seedDemoSession } from '../test/auth'
 
 const routes = [
   ['/profile', 'Личный кабинет'],
@@ -18,6 +19,7 @@ const routes = [
 
 describe('profile route shell', () => {
   it.each(routes)('opens %s inside the shared account shell', (path, heading) => {
+    seedDemoSession()
     render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
 
     expect(screen.getByRole('heading', { level: 1, name: heading })).toBeInTheDocument()

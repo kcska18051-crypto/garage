@@ -15,3 +15,4 @@
 .product-teaser__cart,.product-teaser__quote{background:var(--color-text);border:0;border-radius:.6rem;color:white;cursor:pointer;min-height:2.8rem}.product-teaser__cart{font-size:1.25rem;width:2.8rem}.product-teaser__quote{font-size:.72rem;padding:.5rem .7rem}
 @media(max-width:519px){.product-teaser{min-height:17.5rem}.product-teaser__media{height:9rem}.product-teaser__dots{min-height:2.75rem}.product-teaser__dots button{height:2.75rem;width:2.75rem}}
 @media(prefers-reduced-motion:reduce){.product-teaser__visual i,.product-teaser__visual b{transition:none}}
+.promotion-badge{position:absolute;left:.65rem;top:.65rem;z-index:2;background:#30302e;color:white;border-radius:.3rem;padding:.3rem .5rem;font-size:.7rem;text-decoration:none}.profile-product__art{position:relative}.profile-product footer del{display:block;font-size:.7rem;color:#777}

@@ -9,9 +9,9 @@ describe('contacts page', () => {
   it('shows demo contacts, points and a schematic map', () => {
     open()
     expect(screen.getByRole('heading', { level: 1, name: 'Контакты' })).toBeInTheDocument()
-    expect(screen.getByText(/демонстрационные/i)).toBeInTheDocument()
+    expect(screen.getByText(/Контактные данные на странице демонстрационные/i)).toBeInTheDocument()
     expect(screen.getAllByTestId('contact-point')).toHaveLength(3)
-    expect(screen.getByRole('region', { name: 'Демонстрационная карта' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Карта пунктов получения' })).toBeInTheDocument()
     expect(screen.getByText('contact@example.com')).toBeInTheDocument()
     expect(screen.queryByText(/маршрут построен/i)).not.toBeInTheDocument()
   })
@@ -21,8 +21,8 @@ describe('contacts page', () => {
     open()
     expect(screen.getByText('Город сайта: Ярославль')).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'На карте: Демо-пункт выдачи' }))
-    expect(screen.getByRole('button', { name: 'На карте: Демо-пункт выдачи' })).toHaveAttribute('aria-pressed', 'true')
-    expect(within(screen.getByRole('region', { name: 'Демонстрационная карта' })).getByRole('heading', { name: 'Демо-пункт выдачи' })).toBeInTheDocument()
+    expect(within(screen.getAllByTestId('contact-point')[1]).getByRole('button', { name: 'На карте: Демо-пункт выдачи' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('link', { name: 'Подробнее: Демо-пункт выдачи →' })).toHaveAttribute('href', '/contacts/pickup')
     expect(screen.getByText('Город сайта: Ярославль')).toBeInTheDocument()
   })
 

@@ -3,6 +3,8 @@ import { copyFile, mkdir } from 'node:fs/promises'
 const outputDirectory = new URL('../dist/', import.meta.url)
 const entryFile = new URL('index.html', outputDirectory)
 const publicRoutes = [
+  'profile', 'profile/data', 'profile/addresses', 'profile/recently-viewed', 'profile/documents', 'profile/help',
+  'contacts', 'contacts/store', 'contacts/pickup', 'contacts/service',
   'catalog',
   'catalog/compressor-equipment',
   'catalog/compressor-equipment/screw-compressors',

@@ -1,3 +1,4 @@
 .product-modal--proposal { isolation: isolate; z-index: 300; }
 body.proposal-overlay-open .product-mobile-purchase,
 body.proposal-overlay-open .mobile-bottom-nav { display: none; }
+.proposal-modal__sheet table{width:100%;border-collapse:collapse;font-size:.75rem}.proposal-modal__sheet th,.proposal-modal__sheet td{padding:.5rem;border-bottom:1px solid #ccc;text-align:left}.proposal-modal__sheet{overflow:auto}@media print{body>*{display:none!important}body>.product-modal--proposal{display:block!important;position:static;background:white;padding:0}.proposal-modal{max-height:none;max-width:none;box-shadow:none}.proposal-modal__actions,.product-modal__close,.proposal-modal__eyebrow{display:none!important}.proposal-modal__sheet{overflow:visible}}

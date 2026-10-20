@@ -2,6 +2,8 @@ import { useRef, useState, type MouseEvent } from 'react'
 import { contactPoints, primaryContacts } from '../data/contactsData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ContactDialog, type ContactDialogMode } from '../features/forms/ContactDialog'
+import { Link } from 'react-router-dom'
+import { CoordinateMap } from '../features/maps/CoordinateMap'
 import { useRegion } from '../state/RegionState'
 import './ContactsPage.css'
 
@@ -36,14 +38,11 @@ export function ContactsPage() {
       <div className="contacts-locations__grid">
         <div className="contact-point-list">
           {contactPoints.map((point) => <article className="contact-point" data-testid="contact-point" data-active={activeId === point.id} key={point.id}>
-            <span>{point.kind}</span><h3>{point.name}</h3><p>{point.address}</p><p>{point.hours}</p><a href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>{point.phone}</a><a href={`mailto:${point.email}`}>{point.email}</a>
+            <span>{point.kind} · {point.city}</span><Link to={`/contacts/${point.id}`}>О магазине →</Link><h3>{point.name}</h3><p>{point.address}</p><p>{point.hours}</p><a href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>{point.phone}</a><a href={`mailto:${point.email}`}>{point.email}</a>
             <button type="button" aria-pressed={activeId === point.id} onClick={() => setActiveId(point.id)}>На карте: {point.name}</button>
           </article>)}
         </div>
-        <section className="contacts-map" role="region" aria-label="Демонстрационная карта">
-          <div className="contacts-map__canvas" aria-hidden="true"><i /><i /><i />{contactPoints.map((point) => <button type="button" tabIndex={-1} key={point.id} className={activeId === point.id ? 'active' : ''} style={{ left: `${point.mapPosition.x}%`, top: `${point.mapPosition.y}%` }} />)}</div>
-          <div className="contacts-map__caption"><span>Схема без реальных координат</span><h3>{activePoint.name}</h3><p>{activePoint.address}</p></div>
-        </section>
+        <div><CoordinateMap center={activePoint.coordinates} value={activePoint.coordinates} markers={contactPoints.filter(p => p.city === activePoint.city).map(p => ({ id: p.id, label: p.name, point: p.coordinates }))} onMarker={setActiveId}/><Link to={`/contacts/${activePoint.id}`}>Подробнее: {activePoint.name} →</Link><p>Демонстрационные координаты · {activePoint.city}</p></div>
       </div>
     </section>
 

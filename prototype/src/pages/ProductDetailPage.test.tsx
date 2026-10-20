@@ -86,8 +86,10 @@ describe('Remeza product detail redesign', () => {
     expect(within(modal).getByText(/GR-0001/)).toBeInTheDocument()
     expect(within(modal).getByText(/380 В · 7,5 кВт/)).toBeInTheDocument()
 
-    await user.click(within(modal).getByRole('button', { name: 'Скачать PDF' }))
-    expect(within(modal).getByRole('status')).toHaveTextContent('PDF подготовлен')
+    const print = vi.spyOn(window, 'print').mockImplementation(() => {})
+    await user.click(within(modal).getByRole('button', { name: 'Печать / сохранить PDF' }))
+    expect(print).toHaveBeenCalledOnce()
+    print.mockRestore()
     await user.click(within(modal).getByRole('button', { name: 'Отправить на e-mail' }))
     expect(within(modal).getByRole('status')).toHaveTextContent('Отправка показана в демонстрационном режиме')
   })

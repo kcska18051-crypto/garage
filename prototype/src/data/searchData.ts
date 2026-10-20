@@ -21,8 +21,8 @@ export type SearchPromoItem = {
 }
 
 export const searchPromoItems: SearchPromoItem[] = [
-  { id: 'promo-compressor', kind: 'product', title: 'Компрессор Remeza ВК 10', caption: 'Товар специальной подборки', href: '/product/remeza-vk-10-gr-0001', price: '185 000 ₽', oldPrice: '207 200 ₽', badge: 'Выгода' },
-  { id: 'promo-tools', kind: 'product', title: 'Набор инструмента для мастерской', caption: 'Комплектация для рабочего поста', href: '/product/product-2', price: '27 900 ₽', badge: 'Подборка' },
+  { id: 'promo-compressor', kind: 'product', title: 'Компрессор Remeza ВК 10', caption: 'Товар специальной подборки', href: '/product/remeza-vk-10-gr-0001', price: '185 000 ₽', oldPrice: '207 200 ₽', badge: 'Акция' },
+  { id: 'promo-tools', kind: 'product', title: 'Набор инструмента для мастерской', caption: 'Комплектация для рабочего поста', href: '/product/product-2', price: '27 900 ₽', oldPrice: '31 248 ₽', badge: 'Акция' },
   { id: 'promo-workshop', kind: 'section', title: 'Оснащение мастерской', caption: 'Специальное предложение на комплект', href: '/actions/professional-workshop', badge: 'Акция' },
   { id: 'promo-new', kind: 'section', title: 'Новинки оборудования', caption: 'Свежие позиции каталога', href: '/new', badge: 'Раздел' },
 ]

@@ -1,5 +1,7 @@
 export type ContactPoint = {
   id: string
+  city: string
+  coordinates: { lat: number; lng: number }
   name: string
   kind: string
   address: string
@@ -10,9 +12,9 @@ export type ContactPoint = {
 }
 
 export const contactPoints: ContactPoint[] = [
-  { id: 'store', name: 'Демо-магазин', kind: 'Торговая точка', address: 'Демонстрационный адрес, дом 1', hours: 'Демо-график: будни и выходные', phone: '+7 (000) 000-00-01', email: 'store@example.com', mapPosition: { x: 28, y: 35 } },
-  { id: 'pickup', name: 'Демо-пункт выдачи', kind: 'Получение заказов', address: 'Демонстрационный адрес, дом 2', hours: 'Демо-график: уточняется', phone: '+7 (000) 000-00-02', email: 'pickup@example.com', mapPosition: { x: 65, y: 28 } },
-  { id: 'service', name: 'Демо-сервисная точка', kind: 'Консультации', address: 'Демонстрационный адрес, дом 3', hours: 'Демо-график: по предварительному обращению', phone: '+7 (000) 000-00-03', email: 'service@example.com', mapPosition: { x: 54, y: 68 } },
+  { id: 'store', city: 'Ярославль', coordinates: { lat: 57.626, lng: 39.893 }, name: 'Демо-магазин', kind: 'Торговая точка', address: 'Демонстрационный адрес, дом 1', hours: 'Демо-график: будни и выходные', phone: '+7 (000) 000-00-01', email: 'store@example.com', mapPosition: { x: 28, y: 35 } },
+  { id: 'pickup', city: 'Вологда', coordinates: { lat: 59.22, lng: 39.89 }, name: 'Демо-пункт выдачи', kind: 'Получение заказов', address: 'Демонстрационный адрес, дом 2', hours: 'Демо-график: уточняется', phone: '+7 (000) 000-00-02', email: 'pickup@example.com', mapPosition: { x: 65, y: 28 } },
+  { id: 'service', city: 'Череповец', coordinates: { lat: 59.128, lng: 37.909 }, name: 'Демо-сервисная точка', kind: 'Консультации', address: 'Демонстрационный адрес, дом 3', hours: 'Демо-график: по предварительному обращению', phone: '+7 (000) 000-00-03', email: 'service@example.com', mapPosition: { x: 54, y: 68 } },
 ]
 
 export const primaryContacts = {

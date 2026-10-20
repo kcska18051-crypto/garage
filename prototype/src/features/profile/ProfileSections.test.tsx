@@ -30,11 +30,10 @@ describe('profile secondary sections', () => {
     expect(screen.getByTestId('profile-product-product-5')).toHaveTextContent('Нет в наличии')
   })
 
-  it('clears recently viewed products with an explicit confirmation', async () => {
-    const user = userEvent.setup(); open('/profile/recently-viewed')
-    await user.click(screen.getByRole('button', { name: 'Очистить историю' }))
-    await user.click(within(screen.getByRole('dialog', { name: 'Очистить историю просмотров' })).getByRole('button', { name: 'Очистить' }))
-    expect(screen.getByText('История просмотров пуста')).toBeInTheDocument()
+  it('keeps recent history without a destructive clearing control', () => {
+    open('/profile/recently-viewed')
+    expect(screen.queryByRole('button', { name: 'Очистить историю' })).not.toBeInTheDocument()
+    expect(document.querySelectorAll('.profile-product--compact')).toHaveLength(5)
   })
 
   it('renders recently viewed as a compact responsive grid', () => {

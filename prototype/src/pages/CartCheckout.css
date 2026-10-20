@@ -153,3 +153,4 @@
   .checkout-secondary-button{width:100%}
   .checkout-saved-addresses{grid-template-columns:1fr}
 }
+.checkout-delivery-panel label{display:grid;gap:.4rem;font-size:.8rem}.checkout-delivery-panel input:not([type=radio]),.checkout-delivery-panel select{min-width:0;width:100%;padding:.65rem;border:1px solid #bbb;border-radius:.5rem;font:inherit}.pickup-list{display:grid;gap:.5rem}.pickup-list article{padding:.8rem;border:1px solid #bbb;border-radius:.6rem}.pickup-list .is-selected{border:2px solid #222}.pickup-list button,.delivery-mode button,.checkout-delivery-panel>button{padding:.6rem;border-radius:.5rem;cursor:pointer}.pickup-list a{font-size:.75rem;margin-left:1rem}.delivery-mode{display:flex;gap:.5rem}.delivery-mode [aria-pressed=true]{background:#252522;color:white}.carrier-list{display:grid;gap:.7rem}.carrier-list label{display:flex;align-items:center;gap:.5rem}.checkout-summary__details b{overflow-wrap:anywhere}

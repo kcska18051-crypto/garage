@@ -26,7 +26,8 @@ const readAddresses = (): ProfileAddress[] => {
     const saved = localStorage.getItem(addressStorageKey)
     if (saved === null) return defaultAddresses
     const parsed: unknown = JSON.parse(saved)
-    if (!Array.isArray(parsed) || !parsed.length || !parsed.every(isProfileAddress)) return defaultAddresses
+    if (!Array.isArray(parsed) || !parsed.every(isProfileAddress)) return defaultAddresses
+    if (parsed.length === 0) return []
     if (new Set(parsed.map((address) => address.id)).size !== parsed.length || parsed.filter((address) => address.isPrimary).length !== 1) return defaultAddresses
     return parsed
   } catch {
@@ -91,8 +92,8 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     updateAddress: (id, address) => setOrders((current) => current.map((order) => order.id === id ? { ...order, address } : order)),
     addOrganization: (organization) => setOrganizations((current) => [...current, organization]),
     addAddress: (address) => setAddresses((current) => [...current, { ...address, id: `address-${Date.now()}`, isPrimary: current.length === 0 }]),
-    updateSavedAddress: (id, address) => setAddresses((current) => { const target = current.find((item) => item.id === id); const next = current.map((item) => item.id === id ? { ...item, ...address } : item); if (target && commerce.checkout.address === formatProfileAddress(target)) commerce.updateCheckout({ address: formatProfileAddress({ ...target, ...address }) }); return next }),
-    removeAddress: (id) => setAddresses((current) => { const target = current.find((item) => item.id === id); if (!target || (target.isPrimary && current.length === 1)) return current; const next = current.filter((item) => item.id !== id); if (commerce.checkout.address === formatProfileAddress(target)) commerce.updateCheckout({ address: '' }); return target.isPrimary && next.length ? next.map((item, index) => ({ ...item, isPrimary: index === 0 })) : next }),
+    updateSavedAddress: (id, address) => { const target = addresses.find(item => item.id === id); if (target && (commerce.checkout.savedAddressId === id || commerce.checkout.address === formatProfileAddress(target))) commerce.updateCheckout({ address: formatProfileAddress({ ...target, ...address }), savedAddressId: id }); setAddresses(current => current.map(item => item.id === id ? { ...item, ...address } : item)) },
+    removeAddress: (id) => { const target = addresses.find(item => item.id === id); if (!target) return; if (commerce.checkout.savedAddressId === id || commerce.checkout.address === formatProfileAddress(target)) commerce.updateCheckout({ address: '', savedAddressId: '' }); setAddresses(current => { const remaining = current.filter(item => item.id !== id); return target.isPrimary ? remaining.map((item,index) => ({ ...item, isPrimary: index === 0 })) : remaining }) },
     setPrimaryAddress: (id) => setAddresses((current) => current.map((item) => ({ ...item, isPrimary: item.id === id }))),
     clearRecentlyViewed: () => setRecentProductIds([]),
     updateUser: setUser,

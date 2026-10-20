@@ -41,6 +41,7 @@ export const productDetail = {
     ['Исполнение', 'Напольное'], ['Ресивер', 'Без ресивера'],
   ] as Array<[string, string]>,
   sections: [
+    { id: 'options', label: 'Опции' }, { id: 'companion-products', label: 'Сопутствующие товары' },
     { id: 'description', label: 'Описание' }, { id: 'characteristics', label: 'Характеристики' },
     { id: 'equipment', label: 'Комплектация' }, { id: 'video', label: 'Видео' },
     { id: 'documents', label: 'Документы' }, { id: 'reviews', label: 'Отзывы' },

@@ -39,7 +39,7 @@ export function ProductDetailPage() {
       <ProductPurchase offer={offer} state={commercialState} onStateChange={setCommercialState} />
     </section>
     <nav className="product-anchor-nav" aria-label="Разделы товара">{productDetail.sections.map((section) => <a key={section.id} href={`#${section.id}`}>{section.label}</a>)}</nav>
-    <ProductSections />
+    <ProductSections offer={offer} />
     <ProductMobilePurchase offer={offer} state={commercialState} />
   </main>
 }

@@ -1,4 +1,5 @@
 import type { CatalogBrand, CatalogProduct, CatalogRootCategory, CatalogRootSubcategory, CatalogSubcategory, FilterGroup, TagGroup } from './catalogTypes'
+import { promotionPrice } from './promotionPricing'
 
 export const catalogBrands: CatalogBrand[] = [
   { id: 'remeza', name: 'Remeza', count: 8 }, { id: 'berg', name: 'Berg', count: 6 }, { id: 'dali', name: 'Dali', count: 5 },
@@ -163,12 +164,12 @@ export const catalogProducts: CatalogProduct[] = Array.from({ length: 32 }, (_, 
     brandId,
     subcategoryId,
     price,
-    oldPrice: index % 5 === 0 ? Math.round(price * 1.12) : undefined,
+    oldPrice: promotionPrice(index === 0 ? 'remeza-vk-10-gr-0001' : `compressor-${index + 1}`, price, index > 0 && index % 7 === 0).oldPrice,
     availability: index % 4 === 0 ? ['to-order', 'delivery'] : index % 3 === 0 ? ['in-stock', 'pickup-today', 'delivery'] : ['in-stock', 'delivery'],
     storeCount: index % 4 === 0 ? 0 : index % 3 === 0 ? 1 : 2 + (index % 3),
     availabilityLabel: index % 4 === 0 ? 'Под заказ' : 'available',
     delivery: index % 4 === 0 ? 'Поставка от 7 дней' : 'Доставка от 2 дней',
-    purchaseMode: index % 7 === 0 ? 'quote' : 'cart',
+    purchaseMode: index > 0 && index % 7 === 0 ? 'quote' : 'cart',
     popularity: 100 - index,
     isNew: index % 6 === 0,
     specs: {

@@ -10,7 +10,7 @@ export const checkoutProducts: CheckoutProduct[] = [
   ...prototypeData.products.map(product => ({ ...product, modification: 'Демонстрационный товар', price: Number(product.price.replace(/\D/g, '')) })),
   ...catalogProducts.map(product => ({ ...product, modification: 'Демонстрационная комплектация', availabilityStatus: product.availabilityLabel as AvailabilityStatus, href: `/product/${product.slug}` })),
   ...productDetail.offers.slice(1).map(offer => ({ ...offer, name: productDetail.name, modification: Object.values(offer.options).join(' · '), availabilityStatus: 'available' as const, storeCount: 2, href: `/product/${productDetail.id}` })),
-  ...[...equipmentOptions, ...companionProducts].map(product => ({ ...product, modification: product.description, availabilityStatus: 'available' as const, storeCount: 1, href: `/product/${productDetail.id}#options` })),
+  ...[...equipmentOptions, ...companionProducts].map(product => ({ ...product, modification: product.description, href: `/product/${productDetail.id}#${product.id.startsWith('option-') ? 'options' : 'companion-products'}` })),
 ]
 
 export const money = (value: number) => `${new Intl.NumberFormat('ru-RU').format(value)} ₽`

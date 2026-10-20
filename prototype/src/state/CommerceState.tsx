@@ -7,12 +7,27 @@ type CommerceContextValue = {
   toggleFavorite(id: string): void; addFavorite(id: string): void; removeFavorite(id: string): void
   toggleCompare(id: string): void; addCompare(id: string): void; removeCompare(id: string): void; clearCompare(ids?: string[]): void; ensureDemoCompare(ids: string[]): void
   addToCart(id: string, quantity?: number, optionFor?: string): void; addManyToCart(ids: string[]): void
+  importCart(lines: CartLine[]): void
   updateQuantity(id: string, quantity: number): void; removeFromCart(id: string): void; moveToFavorites(id: string): void
   ensureDemoCart(): void
   updateCheckout(patch: Partial<CheckoutState>): void
 }
 
 export type CartLine = { id: string; quantity: number; optionFor?: string; optionParents?: Record<string, number> }
+const parentAllocations = (line: CartLine) => line.optionParents ?? (line.optionFor ? { [line.optionFor]: line.quantity } : {})
+
+export function mergeCartLines(current: CartLine[], incoming: CartLine[]): CartLine[] {
+  const merged = current.map(line => ({ ...line, optionParents: { ...parentAllocations(line) } }))
+  for (const line of incoming) {
+    const existing = merged.find(item => item.id === line.id)
+    const parents = { ...parentAllocations(line) }
+    if (!existing) { merged.push({ ...line, optionParents: parents, optionFor: Object.keys(parents)[0] }); continue }
+    existing.quantity += line.quantity
+    for (const [parentId, count] of Object.entries(parents)) existing.optionParents[parentId] = (existing.optionParents[parentId] ?? 0) + count
+    existing.optionFor = Object.keys(existing.optionParents)[0]
+  }
+  return merged
+}
 export type CheckoutState = {
   customerType: 'personal' | 'organization'; organization: string; guest: boolean; phoneVerified: boolean
   guestName: string; guestEmail: string; guestPhone: string
@@ -55,6 +70,7 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
     clearCompare: (ids?: string[]) => setCompare((current) => ids ? new Set([...current].filter((id) => !ids.includes(id))) : new Set()),
     ensureDemoCompare: (ids: string[]) => setCompare((current) => current.size ? current : new Set(ids)),
     addToCart,
+    importCart: (lines: CartLine[]) => { seeded.current = true; setCartItems(current => mergeCartLines(current, lines)) },
     addManyToCart: (ids: string[]) => ids.forEach(id => addToCart(id)),
     updateQuantity: (id: string, quantity: number) => quantity < 1 ? removeFromCart(id) : setCartItems((current) => current.map((item) => item.id === id ? resizeLine(item, quantity) : item)),
     removeFromCart,

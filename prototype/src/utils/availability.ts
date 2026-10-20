@@ -1,4 +1,4 @@
-export type AvailabilityStatus = 'available' | 'Под заказ' | 'Нет в наличии' | 'Снят с производства'
+export type AvailabilityStatus = 'available' | 'Доступно для заказа' | 'Под заказ' | 'Нет в наличии' | 'Снят с производства'
 
 function storeWord(count: number) {
   const lastTwo = count % 100

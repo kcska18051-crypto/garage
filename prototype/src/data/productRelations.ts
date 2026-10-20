@@ -7,5 +7,10 @@ export const companionProducts = [
   { id: 'supply-filter', name: 'Сервисный фильтр', sku: 'SUP-02', price: 2400, description: 'Расходник для обслуживания компрессорной линии.' },
   { id: 'supply-organizer', name: 'Органайзер для инструмента', sku: 'SUP-03', price: 4600, description: 'Хранение инструмента рабочего поста.' },
   { id: 'supply-pad', name: 'Резиновая опора для домкрата', sku: 'SUP-04', price: 900, description: 'Защитная накладка; совместимость уточняется по размеру опоры.' },
+  { id: 'supply-paint', name: 'Фильтры для краски', sku: 'SUP-05', price: 450, description: 'Принадлежности для подготовки материала к распылению.' },
+  { id: 'supply-abrasive', name: 'Шлифовальные круги', sku: 'SUP-06', price: 1200, description: 'Расходники для шлифовальной машинки; размер уточняется.' },
+  { id: 'supply-cable', name: 'Соединительный кабель', sku: 'SUP-07', price: 1800, description: 'Принадлежность для диагностического рабочего поста; разъём уточняется.' },
+  { id: 'supply-welding', name: 'Сварочная проволока', sku: 'SUP-08', price: 2400, description: 'Расходник для сварочного поста; тип проволоки уточняется.' },
 ]
-export const relatedForCart = (id: string) => id === 'product-1' ? [companionProducts[3]] : id === 'product-2' || id.includes('organizer') ? [companionProducts[2]] : companionProducts.slice(0, 2)
+const homeRelations: Record<string, number[]> = { 'product-1':[3], 'product-2':[2], 'product-3':[4], 'product-4':[0,1], 'product-5':[6], 'product-6':[5], 'product-7':[2], 'product-8':[7], 'product-9':[1], 'product-10':[1], 'option-control':[6], 'supply-oil':[1], 'supply-filter':[0], 'supply-organizer':[3], 'supply-pad':[2], 'supply-paint':[2], 'supply-abrasive':[2], 'supply-cable':[2], 'supply-welding':[2] }
+export const relatedForCart = (id: string) => (homeRelations[id] ?? [0,1]).map(index => companionProducts[index]).filter(p => p.id !== id)

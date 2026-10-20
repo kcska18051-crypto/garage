@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { checkoutProducts, money } from '../data/checkoutData'
+import { checkoutProducts, money, optionParentLabel } from '../data/checkoutData'
 import { promotionPrice } from '../data/promotionPricing'
 import { useCommerce } from '../state/CommerceState'
 import { formatAvailability } from '../utils/availability'
@@ -49,7 +49,7 @@ export function CartPage() {
   if (!cartItems.length) return <main className="cart-page container"><h1>Корзина пуста</h1><p>Добавьте товары из каталога, чтобы оформить заказ.</p><Link className="button" to="/catalog">Перейти в каталог</Link></main>
   const promo = <form className="cart-promo" onSubmit={(event) => { event.preventDefault(); if (promoCode.trim()) setPromoApplied(true) }}><label htmlFor="cart-promo">Промокод</label><div><input id="cart-promo" value={promoCode} onChange={(event) => { setPromoCode(event.target.value); setPromoApplied(false) }} placeholder="Введите промокод" /><button type="submit" aria-label="Применить промокод">Применить</button></div>{promoApplied && <p role="status">Промокод применён для демонстрации</p>}</form>
   return <main className="cart-page container">
-    <header className="cart-heading"><div><p><Link to="/">Главная</Link> / Корзина</p><h1>Корзина</h1></div><span>{cartItems.length} позиции</span></header>
+    <header className="cart-heading"><div><p><Link to="/">Главная</Link> / Корзина</p><h1>Корзина</h1></div><span>{cartItems.length} {cartItems.length % 10 === 1 && cartItems.length % 100 !== 11 ? 'позиция' : [2,3,4].includes(cartItems.length % 10) && ![12,13,14].includes(cartItems.length % 100) ? 'позиции' : 'позиций'}</span></header>
     <CartTools lines={cartItems.filter(line => selected.has(line.id))}/>
     <div className="cart-layout">
       <section className="cart-order" aria-label="Состав заказа">
@@ -59,7 +59,7 @@ export function CartPage() {
           return <article className="cart-line" data-testid="cart-line" key={line.id}>
             <label className="cart-line__select"><input type="checkbox" checked={selected.has(line.id)} onChange={() => toggleLine(line.id)} aria-label={`Выбрать ${product.name}`} /></label>
             <Link className="cart-line__image" to={product.href} aria-label={`Открыть ${product.name}`}><i /><b />{promotionPrice(product.id,product.price).oldPrice && <span className="cart-promotion">Акция</span>}</Link>
-            <div className="cart-line__details"><Link to={product.href}><h2>{product.name}</h2></Link><p>Артикул: {product.sku}</p>{line.optionFor && <div className="cart-option-link">{Object.entries(line.optionParents ?? { [line.optionFor]: line.quantity }).map(([parent, count]) => <p key={parent}>Опция для {checkoutProducts.find(p => p.id === parent)?.name ?? parent} ({checkoutProducts.find(p => p.id === parent)?.sku ?? parent}) · {count} шт.</p>)}</div>}<p>{product.modification}</p><p className="cart-line__availability">{formatAvailability(product.availabilityStatus, product.storeCount)}</p><div className="cart-line__secondary"><button onClick={() => moveToFavorites(line.id)} aria-label="Перенести в избранное">♡ В избранное</button><button onClick={() => removeFromCart(line.id)} aria-label="Удалить товар">Удалить</button></div></div>
+            <div className="cart-line__details"><Link to={product.href}><h2>{product.name}</h2></Link><p>Артикул: {product.sku}</p>{line.optionFor && <div className="cart-option-link">{Object.entries(line.optionParents ?? { [line.optionFor]: line.quantity }).map(([parent, count]) => <p key={parent}>Опция для варианта: {optionParentLabel(parent)} · {count} шт.</p>)}</div>}<p>{product.modification}</p><p className="cart-line__availability">{formatAvailability(product.availabilityStatus, product.storeCount)}</p><div className="cart-line__secondary"><button onClick={() => moveToFavorites(line.id)} aria-label="Перенести в избранное">♡ В избранное</button><button onClick={() => removeFromCart(line.id)} aria-label="Удалить товар">Удалить</button></div></div>
             <div className="cart-line__controls"><strong>{money(product.price * line.quantity)}</strong><div className="quantity"><button aria-label="Уменьшить количество" onClick={() => updateQuantity(line.id, line.quantity - 1)}>−</button><span aria-label="Количество">{line.quantity}</span><button aria-label="Увеличить количество" onClick={() => updateQuantity(line.id, line.quantity + 1)}>+</button></div></div>
             <details className="line-accessories" open={cartItems.length <= 2 || lineIndex === 0}><summary>Может пригодиться</summary><div>{relatedForCart(line.id).filter(p => p.id !== line.id).map(p => <article key={p.id}><span className="accessory-mini" aria-label={p.name}/><div><strong>{p.name}</strong><small>{money(p.price)}</small></div><button aria-label={`Добавить ${p.name} в корзину`} onClick={() => addToCart(p.id)}>+</button></article>)}</div></details>
           </article>

@@ -6,6 +6,14 @@ import { App } from '../app/App'
 const open = (path: string) => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
 
 describe('cart and checkout', () => {
+  it('labels option parents by selected variant and uses singular position', () => {
+    localStorage.setItem('garage-cart-v2', JSON.stringify([{ id: 'option-dryer', quantity: 2, optionFor: 'remeza-vk-10-gr-0001', optionParents: { 'remeza-vk-10-gr-0001': 1, 'remeza-vk-10-220-55': 1 } }]))
+    open('/cart')
+    const links = document.querySelector('.cart-option-link')!
+    expect(links).toHaveTextContent('380 В · 7,5 кВт (GR-0001)')
+    expect(links).toHaveTextContent('220 В · 5,5 кВт (GR-220-55)')
+    expect(screen.getByText('1 позиция')).toBeInTheDocument()
+  })
   it('shows detailed cart lines and syncs the badge to total quantity', async () => {
     const user = userEvent.setup(); open('/cart')
     expect(screen.getByRole('heading', { name: 'Корзина' })).toBeInTheDocument()

@@ -14,3 +14,10 @@ export const checkoutProducts: CheckoutProduct[] = [
 ]
 
 export const money = (value: number) => `${new Intl.NumberFormat('ru-RU').format(value)} ₽`
+
+export function optionParentLabel(id: string) {
+  const offer = productDetail.offers.find(offer => offer.id === id)
+  if (offer) return `${Object.values(offer.options).join(' · ')} (${offer.sku})`
+  const product = checkoutProducts.find(product => product.id === id)
+  return product ? `${product.name} (${product.sku})` : id
+}

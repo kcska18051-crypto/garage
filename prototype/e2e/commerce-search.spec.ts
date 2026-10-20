@@ -9,7 +9,7 @@ test('cart quantity and checkout choices persist through success', async ({ page
   await expect(page.getByRole('link', { name: 'Корзина: 4' })).toBeVisible()
   await page.getByRole('link', { name: 'Перейти к оформлению' }).click()
   await page.getByRole('tab', { name: /Самовывоз/ }).click()
-  await page.getByRole('button', { name: 'Выбрать пункт выдачи' }).click()
+  await page.getByRole('radio', { name: /Демо-магазин/ }).check()
   await page.getByLabel('Картой онлайн').click()
   await page.getByRole('button', { name: 'Оформить заказ' }).click()
   await expect(page.getByRole('heading', { name: 'Заказ принят' })).toBeVisible()

@@ -11,7 +11,7 @@ test('recent history has no clearing action and profile exposes saved addresses'
 test('checkout selects a city point and permits coordinates without an address', async ({ page }) => {
   await page.goto('/checkout/review')
   await page.getByLabel('Город самовывоза').selectOption('Вологда')
-  await page.getByRole('button', { name: /Выбрать.*Демо/ }).first().click()
+  await page.getByRole('radio', { name: /Демо/ }).first().check()
   await expect(page.locator('.checkout-summary')).toContainText('Вологда')
   await page.getByRole('tab', { name: /Курьером/ }).click()
   await page.getByRole('button', { name: 'Точка на карте', exact: true }).click()

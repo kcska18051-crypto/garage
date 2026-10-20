@@ -7,6 +7,22 @@ import { contactPoints } from '../data/contactsData'
 const open = () => render(<MemoryRouter initialEntries={['/contacts']}><App /></MemoryRouter>)
 
 describe('contacts page', () => {
+  it('uses three visible city tabs with keyboard selection instead of select or duplicate city badge', async () => {
+    const user = userEvent.setup(); open()
+    const tabs = within(screen.getByRole('tablist', { name: 'Город контактов' })).getAllByRole('tab')
+    expect(tabs.map(tab => tab.textContent)).toEqual(['Ярославль','Вологда','Череповец'])
+    expect(tabs[0]).toHaveAttribute('aria-selected','true')
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+    expect(screen.queryByText(/Город сайта:/)).not.toBeInTheDocument()
+    tabs[0].focus(); await user.keyboard('{ArrowRight}')
+    expect(tabs[1]).toHaveFocus()
+    expect(tabs[1]).toHaveAttribute('aria-selected','true')
+    expect(screen.getByRole('radio', { name: /Демо-пункт выдачи/ })).toBeChecked()
+    await user.keyboard('{End}')
+    expect(tabs[2]).toHaveAttribute('aria-selected','true')
+    await user.keyboard('{Home}')
+    expect(tabs[0]).toHaveAttribute('aria-selected','true')
+  })
   it('shows demo contacts, points and a schematic map', () => {
     open()
     expect(screen.getByRole('heading', { level: 1, name: 'Контакты' })).toBeInTheDocument()
@@ -20,12 +36,13 @@ describe('contacts page', () => {
   it('synchronizes city, header, filtered points and map', async () => {
     const user = userEvent.setup()
     open()
-    expect(screen.getByText('Город сайта: Ярославль')).toBeInTheDocument()
-    await user.selectOptions(screen.getByLabelText('Город контактов'), 'Вологда')
+    expect(screen.getByRole('tab', { name: 'Ярославль' })).toHaveAttribute('aria-selected','true')
+    await user.click(screen.getByRole('tab', { name: 'Вологда' }))
     expect(screen.getByRole('radio', { name: /Демо-пункт выдачи/ })).toBeChecked()
     expect(screen.getByRole('button', { name: 'На карте: Демо-пункт выдачи' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.queryByRole('link', { name: /Подробнее:|О магазине/ })).not.toBeInTheDocument()
-    expect(screen.getByText('Город сайта: Вологда')).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Вологда' })).toHaveAttribute('aria-selected','true')
+    expect(screen.getAllByRole('button', { name: 'Выбрать город' })[0]).toHaveTextContent('Вологда')
     expect(screen.queryByRole('radio', { name: /Демо-магазин/ })).not.toBeInTheDocument()
   })
 
@@ -33,7 +50,7 @@ describe('contacts page', () => {
     const user = userEvent.setup(); open()
     await user.click(screen.getAllByRole('button', { name: 'Выбрать город' })[0])
     await user.click(screen.getByRole('button', { name: 'Другой город' }))
-    expect(screen.getByLabelText('Город контактов')).toHaveValue('Другой город')
+    expect(screen.getAllByRole('tab').every(tab => tab.getAttribute('aria-selected') === 'false')).toBe(true)
     expect(screen.queryByTestId('contact-point')).not.toBeInTheDocument()
     expect(screen.getByText(/контактные точки пока не указаны/)).toBeInTheDocument()
     expect(screen.queryByRole('radio', { name: /Демо-магазин/ })).not.toBeInTheDocument()

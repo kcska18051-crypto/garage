@@ -37,10 +37,17 @@ export function ContactsPage() {
 
     <section className="contacts-locations" aria-labelledby="contact-points-title">
       <header>
-        <div><h2 id="contact-points-title">Контактные точки</h2><p>Выберите город и точку для просмотра на карте. Это не меняет пункт получения вашего заказа.</p></div>
-        <div className="contacts-location-context"><span>Город сайта: {region}</span><label>Город<select aria-label="Город контактов" value={region} onChange={(event) => setRegion(event.target.value)}>{!cities.includes(region) && <option value={region}>{region}</option>}{cities.map(city => <option key={city}>{city}</option>)}</select></label></div>
+        <h2 id="contact-points-title">Контактные точки</h2>
+        <div className="contacts-city-tabs" role="tablist" aria-label="Город контактов" onKeyDown={event => {
+          if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return
+          const tabs = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role=tab]')]
+          const index = tabs.indexOf(document.activeElement as HTMLButtonElement)
+          const next = event.key === 'Home' ? 0 : event.key === 'End' ? cities.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + cities.length) % cities.length
+          event.preventDefault(); setRegion(cities[next]); tabs[next]?.focus()
+        }}>{cities.map((city,index) => <button key={city} id={`contact-city-${index}`} type="button" role="tab" aria-selected={region === city} aria-controls="contact-city-panel" tabIndex={region === city || (!cities.includes(region) && index === 0) ? 0 : -1} onClick={() => setRegion(city)}>{city}</button>)}</div>
+        <p>Выберите город и точку для просмотра на карте. Это не меняет пункт получения вашего заказа.</p>
       </header>
-      <div className="contacts-locations__grid">
+      <div className="contacts-locations__grid" id="contact-city-panel" role="tabpanel" aria-labelledby={cities.includes(region) ? `contact-city-${cities.indexOf(region)}` : undefined} aria-label={!cities.includes(region) ? `Контактные точки: ${region}` : undefined}>
         <div className="contact-point-list" role="radiogroup" aria-label="Точка для просмотра на карте">
           {points.map((point) => <article className="contact-point" data-testid="contact-point" data-active={activePoint?.id === point.id} key={point.id}>
             <label className="contact-point__choice"><input type="radio" name="contact-point" checked={activePoint?.id === point.id} onChange={() => setActiveId(point.id)} aria-label={`${point.name}, ${point.city}, ${point.address}`}/><span><small>{point.kind} · {point.city}</small><strong>{point.name}</strong><span>{point.address}</span><span>{point.hours}</span>{activePoint?.id === point.id && <b><span aria-hidden="true">✓ </span>Показана на карте</b>}</span></label>

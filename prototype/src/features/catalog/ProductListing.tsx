@@ -6,21 +6,24 @@ import { FilterPanel } from './FilterPanel'
 import { MobileFilterDrawer } from './MobileFilterDrawer'
 import { TagGroups } from './TagGroups'
 import { useCatalogListing } from './useCatalogListing'
+import {usePageBoundedFilter} from '../../hooks/usePageBoundedFilter'
 
 const resultWord=(count:number)=>count%10===1&&count%100!==11?'товар':[2,3,4].includes(count%10)&&![12,13,14].includes(count%100)?'товара':'товаров'
 type Props={products:CatalogProduct[];filterGroups:FilterGroup[];mode:'reduced'|'full';title?:string|null;tagGroups?:TagGroup[];showFilters?:boolean}
 
 export function ProductListing({products,filterGroups,mode,title,tagGroups,showFilters=true}:Props){
  const listing=useCatalogListing({products,pageSize:12});const[filterOpen,setFilterOpen]=useState(false);const[draft,setDraft]=useState(listing.state);const filterTrigger=useRef<HTMLButtonElement>(null)
+ const filterSlot=useRef<HTMLDivElement>(null),sidebar=useRef<HTMLElement>(null)
+ usePageBoundedFilter(filterSlot,sidebar,showFilters)
  const closeFilter=()=>{setFilterOpen(false);window.setTimeout(()=>filterTrigger.current?.focus(),0)};const openFilter=()=>{setDraft({...listing.state,specs:{...listing.state.specs}});setFilterOpen(true)}
  const resolvedTitle=title===null?null:title??(mode==='reduced'?'Все компрессорное оборудование':'Подбор оборудования')
  return <section className={`catalog-listing catalog-listing--${mode}${resolvedTitle?'':' catalog-listing--untitled'}`} aria-label={resolvedTitle?'Товары':'Товарная выдача'}>
   {resolvedTitle?<div className="catalog-listing__title"><div><h2>{resolvedTitle}</h2></div></div>:null}
   <div className={`catalog-listing__layout${showFilters?'':' catalog-listing__layout--no-filters'}`}>
-   {showFilters?<aside className="catalog-listing__sidebar" aria-label="Фильтры">
+   {showFilters?<div className="catalog-listing__sidebar-slot" ref={filterSlot}><aside ref={sidebar} className="catalog-listing__sidebar" aria-label="Фильтры">
     <div className="catalog-listing__filter-scroll" role="region" aria-label="Параметры фильтра" tabIndex={0}><FilterPanel groups={filterGroups} products={products} state={listing.state} onToggle={listing.toggleFilter} onPrice={listing.setPrice} onClearPrice={listing.clearPrice}/></div>
     <button className="catalog-listing__filter-reset" type="button" onClick={listing.clearAll}>Сбросить фильтры</button>
-   </aside>:null}
+   </aside></div>:null}
    <div className="catalog-listing__content">{showFilters?<button ref={filterTrigger} className="catalog-mobile-filter-button" type="button" onClick={openFilter}>Фильтры</button>:null}{tagGroups?.length?<TagGroups groups={tagGroups} activeTag={listing.state.tag} onSelect={listing.applyTag}/>:null}<div className="catalog-listing__toolbar"><strong>Найдено {listing.results.length} {resultWord(listing.results.length)}</strong><div className="catalog-listing__controls"><label>Сортировка<select aria-label="Сортировка" value={listing.state.sort} onChange={event=>listing.setSort(event.target.value as typeof listing.state.sort)}><option value="popular">По популярности</option><option value="price-asc">Сначала дешевле</option><option value="price-desc">Сначала дороже</option><option value="new">По новизне</option><option value="available">По наличию</option></select></label><div className="catalog-view-switch" aria-label="Вид выдачи"><button type="button" aria-label="Плитка" aria-pressed={listing.state.view==='grid'} onClick={()=>listing.setView('grid')}>▦</button><button type="button" aria-label="Список" aria-pressed={listing.state.view==='list'} onClick={()=>listing.setView('list')}>☷</button></div></div></div><ActiveFilters state={listing.state} onRemove={listing.removeCriterion} onClear={listing.clearAll}/>{listing.results.length?<><div className={`catalog-results catalog-results--${listing.state.view}`} data-testid="catalog-results">{listing.pageItems.map((product,index)=><CatalogProductCard key={product.id} product={product} index={index}/>)}</div><div className="catalog-pagination"><nav aria-label="Страницы каталога">{Array.from({length:listing.pagination.pages},(_,index)=>index+1).map(page=><button type="button" key={page} aria-label={`Страница ${page}`} aria-current={listing.pagination.page===page?'page':undefined} onClick={()=>listing.setPage(page)}>{page}</button>)}</nav>{listing.pagination.page<listing.pagination.pages?<button type="button" onClick={()=>listing.setPage(listing.pagination.page+1)}>Показать ещё</button>:null}</div></>:<div className="catalog-empty"><span aria-hidden="true">∅</span><h3>Ничего не найдено</h3><p>Измените параметры или верните исходную выдачу.</p><button className="button button--dark" type="button" onClick={listing.clearAll}>Сбросить параметры</button></div>}</div></div>
   {showFilters&&filterOpen?<MobileFilterDrawer groups={filterGroups} products={products} draft={draft} onDraft={setDraft} onClose={closeFilter} onApply={()=>{listing.applyState(draft);closeFilter()}}/>:null}
  </section>

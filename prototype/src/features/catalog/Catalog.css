@@ -123,9 +123,13 @@
 .catalog-active-filters .catalog-active-filters__clear { background: transparent; border: 0; text-decoration: underline; }
 .catalog-listing__layout { display: grid; gap: clamp(1.2rem, 2.2vw, 2rem); grid-template-columns: minmax(15rem, 18rem) minmax(0, 1fr); padding-top: 1.5rem; }
 .catalog-listing--untitled .catalog-listing__layout { padding-top: 0; }
-.catalog-listing__sidebar { align-self: start; display: flex; flex-direction: column; min-height: 0; min-width: 0; position: sticky; top: calc(var(--catalog-pinned-header-height,0px) + .75rem); max-height: calc(100vh - var(--catalog-pinned-header-height,0px) - 1.5rem); max-height: calc(100dvh - var(--catalog-pinned-header-height,0px) - 1.5rem); }
+.catalog-listing__sidebar-slot { align-self: start; min-height: 0; min-width: 0; }
+.catalog-listing__sidebar { display: flex; flex-direction: column; min-height: 0; min-width: 0; max-height: calc(100vh - var(--catalog-pinned-header-height,0px) - 1.5rem); max-height: calc(100dvh - var(--catalog-pinned-header-height,0px) - 1.5rem); }
+.catalog-listing__sidebar[data-pinned] { z-index: 15; }
 .catalog-listing__filter-scroll { min-height: 0; min-width: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable; }
 .catalog-listing__filter-reset { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); cursor: pointer; flex-shrink: 0; font: inherit; font-size: .8rem; margin-top: .5rem; min-height: 44px; padding: .6rem; }
+@media(min-width:768px){.catalog-page[data-catalog-filter-boundary] .catalog-seo-tail,.brand-detail-page[data-catalog-filter-boundary] .brand-products~section{margin-left:calc(18rem + clamp(1.2rem,2.2vw,2rem))}}
+@media(max-width:767px){.catalog-listing__sidebar-slot{display:none}}
 .catalog-listing__content > .catalog-tags { background: transparent; border-bottom: 1px solid var(--color-border); border-radius: 0; color: var(--color-text); display: block; margin: 0 0 .35rem; padding: 0 0 .75rem; }
 .catalog-listing__content > .catalog-tags .catalog-tags__groups { display: grid; gap: .55rem; grid-template-columns: 1fr; }
 .catalog-listing__content > .catalog-tags .catalog-tag-group { align-items: center; display: grid; gap: .45rem .7rem; grid-template-columns: 9.5rem minmax(0, 1fr) auto; }

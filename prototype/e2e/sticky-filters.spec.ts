@@ -9,8 +9,9 @@ for(const width of [1024,1440,1920,2560]) test(`versioned public review URL reta
   for(const y of [450,750,1100]) {
     await page.evaluate(y=>scrollTo(0,y),y)
     await expect.poll(async()=>sidebar.evaluate(el=>{
-      const box=el.getBoundingClientRect(),layout=el.parentElement!.getBoundingClientRect()
-      const expected=Math.min(Math.max(layout.top,parseFloat(getComputedStyle(el).top)),layout.bottom-box.height)
+      const box=el.getBoundingClientRect(),slot=el.parentElement!.getBoundingClientRect(),main=el.closest('main')!.getBoundingClientRect()
+      const pinTop=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--catalog-pinned-header-height'))+12
+      const expected=slot.top>=pinTop?slot.top:Math.min(pinTop,main.bottom-12-Math.min(180,box.height))
       return Math.abs(box.top-expected)
     })).toBeLessThan(2)
   }
@@ -22,7 +23,7 @@ for(const width of [1024,1440,1920,2560]) test(`receiver filters stay bounded an
   await page.setViewportSize({width,height:900})
   await page.goto(receiver)
   const sidebar=page.getByRole('complementary',{name:'Фильтры',exact:true})
-  await expect(sidebar).toHaveCSS('position','sticky')
+  await expect(sidebar).toBeVisible()
   const layout=page.locator('.catalog-listing__layout')
   const layoutY=await layout.evaluate(el=>el.getBoundingClientRect().top+scrollY)
   await page.evaluate(y=>scrollTo(0,y+200),layoutY)
@@ -47,7 +48,8 @@ for(const width of [1024,1440,1920,2560]) test(`receiver filters stay bounded an
   await expect.poll(async()=>Math.round((await sidebar.boundingBox())!.y-(await pinned.boundingBox())!.height)).toBe(12)
   await pinned.locator('.main-header-row').evaluate(el=>el.style.removeProperty('min-height'))
   await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight))
-  const sideEnd=await sidebar.boundingBox(),layoutEnd=await layout.boundingBox(),footer=await page.getByRole('contentinfo').boundingBox()
+  await expect.poll(()=>sidebar.evaluate(el=>el.getBoundingClientRect().bottom-el.closest('main')!.getBoundingClientRect().bottom)).toBeLessThanOrEqual(0)
+  const sideEnd=await sidebar.boundingBox(),layoutEnd=await page.locator('main').boundingBox(),footer=await page.getByRole('contentinfo').boundingBox()
   expect(sideEnd!.y+sideEnd!.height).toBeLessThanOrEqual(layoutEnd!.y+layoutEnd!.height+1)
   expect(sideEnd!.y+sideEnd!.height).toBeLessThanOrEqual(footer!.y)
   await page.evaluate(()=>scrollTo(0,119))
@@ -77,7 +79,10 @@ test('the common sidebar is sticky in category and brand listings without changi
   await page.setViewportSize({width:1440,height:900})
   for(const route of ['/catalog/compressor-equipment/screw-compressors/','/brand/remeza/']) {
     await page.goto(route)
-    await expect(page.getByRole('complementary',{name:'Фильтры',exact:true})).toHaveCSS('position','sticky')
+    const sidebar=page.getByRole('complementary',{name:'Фильтры',exact:true})
+    await expect(sidebar).toBeVisible()
+    await page.evaluate(y=>scrollTo(0,y+200),await page.locator('.catalog-listing__layout').evaluate(el=>el.getBoundingClientRect().top+scrollY))
+    await expect(sidebar).toHaveCSS('position','fixed')
     await expect(page.getByRole('button',{name:'Сбросить фильтры',exact:true})).toBeAttached()
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   }
@@ -95,14 +100,16 @@ test('pinned sidebar follows live desktop-mobile resize and stops during the foo
     const header=page.locator('.desktop-header--compact')
     await expect.poll(async()=>Math.round((await sidebar.boundingBox())!.y-(await header.boundingBox())!.height)).toBe(12)
   }
-  const bottom=await layout.evaluate(el=>el.getBoundingClientRect().bottom+scrollY)
+  const bottom=await page.locator('main').evaluate(el=>el.getBoundingClientRect().bottom+scrollY)
   const sideHeight=(await sidebar.boundingBox())!.height
   const top=await sidebar.evaluate(el=>parseFloat(getComputedStyle(el).top))
   for(const delta of [-20,20,120]) {
-    await page.evaluate(y=>scrollTo(0,y),bottom-sideHeight-top+delta)
-    const box=await sidebar.boundingBox(),end=await layout.boundingBox(),footer=await page.getByRole('contentinfo').boundingBox()
+    await page.evaluate(y=>scrollTo(0,y),bottom-900+delta)
+    await expect.poll(()=>sidebar.evaluate(el=>Math.abs(el.getBoundingClientRect().top-parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--catalog-pinned-header-height'))-12))).toBeLessThan(2)
+    const box=await sidebar.boundingBox(),end=await page.locator('main').boundingBox(),footer=await page.getByRole('contentinfo').boundingBox()
     expect(box!.y+box!.height).toBeLessThanOrEqual(end!.y+end!.height+1)
     expect(box!.y+box!.height).toBeLessThanOrEqual(footer!.y)
-    if(delta>0) expect(box!.y).toBeLessThan(top)
+    expect(Math.abs(box!.y-top)).toBeLessThan(2)
+    if(delta>0) expect(box!.height).toBeLessThan(sideHeight)
   }
 })

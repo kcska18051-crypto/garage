@@ -28,12 +28,9 @@ import {ProfileServiceRequestDetail} from '../features/profile/ProfileServiceReq
 export type RouteDefinition = { path: string; label: string }
 
 export const prototypeRoutes: RouteDefinition[] = [
-  { path: '/catalog/*', label: 'Каталог' }, { path: '/search', label: 'Результаты поиска' },
-  { path: '/actions/*', label: 'Акции' },
   { path: '/new', label: 'Новинки' },
   { path: '/cart', label: 'Корзина' },
   { path: '/privacy', label: 'Политика конфиденциальности' },
-  { path: '/brands/*', label: 'Бренд' },
 ]
 
 export function AppRoutes() {

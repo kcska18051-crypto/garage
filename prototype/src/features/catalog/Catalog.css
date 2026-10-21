@@ -35,7 +35,7 @@
 .catalog-root-card__links { display: grid; gap: .5rem; list-style: none; margin: 0; padding: 0; position: relative; z-index: 2; }
 .catalog-root-card__links[hidden] { display: none; }
 .catalog-root-card__links--extra { margin-top: .5rem; }
-.catalog-root-card__links a { font-size: .84rem; line-height: 1.25; text-decoration-color: transparent; text-underline-offset: .18rem; }
+.catalog-root-card__links li > a, .catalog-root-card__links li > div { font-size: .84rem; line-height: 1.25; text-decoration-color: transparent; text-underline-offset: .18rem; }
 .catalog-root-card__links a:hover { text-decoration-color: currentColor; }
 .catalog-root-card__toggle { background: none; border: 0; border-bottom: 1px solid currentColor; cursor: pointer; font: inherit; font-size: .78rem; font-weight: 700; margin-top: 1rem; padding: 0 0 .2rem; position: relative; z-index: 2; }
 .catalog-root-card__toggle:focus-visible, .catalog-root-card a:focus-visible, .catalog-root-row:focus-visible, .catalog-section-row:focus-visible { outline: 2px solid var(--color-text); outline-offset: 3px; }
@@ -51,7 +51,7 @@
 .catalog-art--3 b { transform: rotate(-24deg); }
 .catalog-root-row, .catalog-section-row { align-items: center; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: .8rem; display: grid; gap: .8rem; grid-template-columns: 3.2rem minmax(0, 1fr) auto; min-width: 0; padding: .7rem .9rem; text-decoration: none; }
 .catalog-root-row > span:nth-child(2), .catalog-section-row > span:nth-child(2) { font-size: .95rem; font-weight: 700; min-width: 0; }
-.catalog-root-row > span:last-child, .catalog-section-row > span:last-child { font-size: 1.1rem; }
+.catalog-root-row > span:last-child, .catalog-section-row > span:nth-child(3) { font-size: 1.1rem; }
 .catalog-row-art { background: var(--color-placeholder-1); border-radius: .65rem; display: block; height: 3.2rem; overflow: hidden; position: relative; width: 3.2rem; }
 .catalog-row-art i { height: 2.2rem; right: -.45rem; top: .25rem; width: 2.2rem; }
 .catalog-row-art b { bottom: -.3rem; height: 1.8rem; left: .45rem; width: .9rem; }

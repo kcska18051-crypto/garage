@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CatalogDestination } from './CatalogDestination'
 import { formatProductCount } from '../../data/catalogData'
 import type { CatalogRootCategory } from '../../data/catalogTypes'
 
@@ -34,12 +35,12 @@ export function CatalogRootCard({ category }: { category: CatalogRootCategory })
       </h2>
       <p className="catalog-root-card__count">{formatProductCount(category.count)}</p>
       <ul className="catalog-root-card__links">
-        {primary.map((item) => <li key={item.id}><Link to={item.href}>{item.name}</Link></li>)}
+        {primary.map((item) => <li key={item.id}><CatalogDestination href={item.href}>{item.name}</CatalogDestination></li>)}
       </ul>
       {extra.length > 0 ? (
         <>
           <ul className="catalog-root-card__links catalog-root-card__links--extra" id={extraId} hidden={!expanded}>
-            {extra.map((item) => <li key={item.id}><Link to={item.href}>{item.name}</Link></li>)}
+            {extra.map((item) => <li key={item.id}><CatalogDestination href={item.href}>{item.name}</CatalogDestination></li>)}
           </ul>
           <button
             className="catalog-root-card__toggle"

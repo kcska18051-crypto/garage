@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { CatalogDestination } from './CatalogDestination'
 import { formatProductCount } from '../../data/catalogData'
 import type { CatalogRootSubcategory } from '../../data/catalogTypes'
 
@@ -29,11 +30,10 @@ export function CatalogSectionList({ items, className = '' }: { items: SectionIt
   return (
     <nav className={`catalog-section-list ${className}`.trim()} aria-label="Подкатегории">
       {items.map((item) => (
-        <Link className="catalog-section-row" data-testid="catalog-section-row" key={item.id} to={item.href}>
+        <CatalogDestination className="catalog-section-row" data-testid="catalog-section-row" key={item.id} href={item.href} arrow>
           <span className={`catalog-row-art catalog-art--${item.artVariant}`} aria-hidden="true"><i /><b /></span>
           <span>{item.name}{itemCount(item) ? <small>{itemCount(item)}</small> : null}</span>
-          <span aria-hidden="true">→</span>
-        </Link>
+        </CatalogDestination>
       ))}
     </nav>
   )

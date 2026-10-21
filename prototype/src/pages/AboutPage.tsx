@@ -1,31 +1,22 @@
+import { Link } from 'react-router-dom'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
+import { aboutAdvantages,aboutBrands,aboutCities,aboutFigures,aboutNews,aboutRequisites,aboutSocialPlaces } from '../data/aboutData'
 import './AboutPage.css'
-
-const features = [
-  { icon: '▦', title: 'Ассортимент', text: 'Структура каталога для профессиональной мастерской.' },
-  { icon: '⌕', title: 'Подбор', text: 'Ориентиры для выбора оборудования и инструмента.' },
-  { icon: '○', title: 'Поддержка', text: 'Каналы связи по вопросам о товарах и заказах.' },
-]
 
 export function AboutPage() {
   return <main className="about-page">
     <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: 'О компании' }]} />
-    <article className="about-content">
-      <header className="about-heading">
-        <p className="eyebrow">Информация о проекте</p>
-        <h1>О компании</h1>
-        <p>«Гараж» представлен как интернет-магазин оборудования, инструмента и материалов для профессионального ремонта и обслуживания автомобилей.</p>
-      </header>
-
-      <div className="about-copy">
-        <p>Это временный текст для демонстрации структуры раздела. Он будет заменён материалами клиента после согласования.</p>
-        <p>Здесь можно кратко рассказать о направлении работы, подходе к формированию каталога и помощи покупателям при выборе подходящих решений.</p>
-        <p>Фактические сведения о компании, её деятельности и условиях обслуживания будут добавлены после согласования и проверки исходных данных.</p>
-      </div>
-
-      <ul className="about-features" aria-label="Основные направления работы">
-        {features.map((feature) => <li key={feature.title}><span aria-hidden="true">{feature.icon}</span><div><strong>{feature.title}</strong><p>{feature.text}</p></div></li>)}
-      </ul>
-    </article>
+    <p className="about-demo-note">Всё наполнение страницы демонстрационное: тексты, цифры, география и реквизиты будут заменены данными клиента.</p>
+    <header className="about-intro">
+      <div><h1>О компании</h1><p className="about-lead">«Гараж» — магазин оборудования, инструмента и материалов для профессиональной мастерской.</p><p>Здесь можно собрать решения для автосервиса, кузовного ремонта и оснащения рабочего поста — от отдельного инструмента до комплекта оборудования.</p><p>Мы показываем магазин для специалистов, владельцев мастерских и тех, кто работает с автомобилями самостоятельно. Этот текст — пример будущего рассказа о компании.</p></div>
+      <figure className="about-photo"><div role="img" aria-label="Место для фото магазина или команды"><i/><b/><span aria-hidden="true">ГАРАЖ</span></div><figcaption>Место для фото магазина или команды</figcaption></figure>
+    </header>
+    <section className="company-about-section" aria-labelledby="about-figures-title"><div className="company-about-section-heading"><h2 id="about-figures-title">Компания в цифрах</h2><p>Заменяемые значения — не подтверждённые факты.</p></div><ul className="about-figures">{aboutFigures.map(figure=><li key={figure}><strong>{figure}</strong><span>Данные клиента</span></li>)}</ul></section>
+    <section className="company-about-section" aria-labelledby="about-advantages-title"><div className="company-about-section-heading"><h2 id="about-advantages-title">Наши преимущества</h2><p>Пример содержания. Формулировки уточняются с клиентом.</p></div><ul className="about-advantages">{aboutAdvantages.map((item,index)=><li key={item.title}><span className="about-index" aria-hidden="true">0{index+1}</span><h3>{item.title}</h3><p>{item.text}</p></li>)}</ul></section>
+    <section className="company-about-section" aria-labelledby="about-brands-title"><div className="company-about-section-heading"><div><h2 id="about-brands-title">Бренды и производители</h2><p>Примеры из справочника прототипа.</p></div><Link className="about-more" to="/brands">Все бренды →</Link></div><div className="about-brands">{aboutBrands.map(brand=><Link key={brand.id} to={brand.href}>{brand.name}</Link>)}</div></section>
+    <section className="company-about-section" aria-labelledby="about-cities-title"><div className="company-about-section-heading"><h2 id="about-cities-title">География присутствия</h2><p>Демонстрационные города текущего прототипа, не подтверждённая сеть компании.</p></div><div className="about-cities">{aboutCities.map(city=><Link key={city} to={`/contacts?city=${encodeURIComponent(city)}`}><span aria-hidden="true">⌖</span><strong>{city}</strong><span aria-hidden="true">↗</span></Link>)}</div><p className="about-caption">Выберите город, чтобы посмотреть контактные точки и карту.</p></section>
+    <section className="company-about-section" aria-labelledby="about-news-title"><div className="company-about-section-heading"><h2 id="about-news-title">Наши новости</h2><Link className="about-more" to="/news">Все новости →</Link></div><div className="about-news">{aboutNews.map(item=><article key={item.slug}><div className={`about-news-art about-news-art--${item.coverTone}`} aria-hidden="true"><i/><b/></div><div><time dateTime={item.date}>{item.dateLabel}</time><h3><Link to={item.href}>{item.title}</Link></h3><p>{item.summary}</p></div></article>)}</div></section>
+    <section className="company-about-section" aria-labelledby="about-social-title"><div className="company-about-section-heading"><h2 id="about-social-title">Наши соцсети</h2><p>Места под будущие площадки — ссылки пока не предоставлены.</p></div><ul className="about-social">{aboutSocialPlaces.map((name,index)=><li key={name}><span className="about-social-icon" aria-hidden="true">0{index+1}</span><div><strong>{name}</strong><p>Ссылка будет добавлена</p></div></li>)}</ul></section>
+    <section className="company-about-section" aria-labelledby="about-requisites-title"><div className="company-about-section-heading"><h2 id="about-requisites-title">Реквизиты</h2><p>Образец полей. Юридические и банковские данные не предоставлены.</p></div><dl className="about-requisites">{aboutRequisites.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></section>
   </main>
 }

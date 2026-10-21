@@ -1,4 +1,5 @@
-import { useCallback, useRef, useState, type MouseEvent } from 'react'
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { contactPoints, primaryContacts } from '../data/contactsData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ContactDialog, type ContactDialogMode } from '../features/forms/ContactDialog'
@@ -10,6 +11,26 @@ import './ContactsPage.css'
 
 export function ContactsPage() {
   const { region, setRegion } = useRegion()
+  const [search,setSearch]=useSearchParams()
+  const requestedCity=search.get('city')
+  const previousCityQuery=useRef<string|null|undefined>(undefined)
+  const previousRegion=useRef(region)
+  useEffect(()=>{
+    if(requestedCity!==previousCityQuery.current) {
+      previousCityQuery.current=requestedCity
+      previousRegion.current=region
+      if(requestedCity && contactPoints.some(point=>point.city===requestedCity)) setRegion(requestedCity)
+      return
+    }
+    if(region!==previousRegion.current) {
+      previousRegion.current=region
+      if(region===requestedCity) return
+      const next=new URLSearchParams(search)
+      next.set('city',region)
+      setSearch(next,{replace:true})
+    }
+  },[requestedCity,region,search,setSearch,setRegion])
+  const selectCity=(city:string)=>{setRegion(city);const next=new URLSearchParams(search);next.set('city',city);setSearch(next,{replace:true})}
   const [activeId, setActiveId] = useState(contactPoints[0].id)
   const [dialog, setDialog] = useState<ContactDialogMode | null>(null)
   const dialogTrigger = useRef<HTMLButtonElement | null>(null)
@@ -43,8 +64,8 @@ export function ContactsPage() {
           const tabs = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role=tab]')]
           const index = tabs.indexOf(document.activeElement as HTMLButtonElement)
           const next = event.key === 'Home' ? 0 : event.key === 'End' ? cities.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + cities.length) % cities.length
-          event.preventDefault(); setRegion(cities[next]); tabs[next]?.focus()
-        }}>{cities.map((city,index) => <button key={city} id={`contact-city-${index}`} type="button" role="tab" aria-selected={region === city} aria-controls="contact-city-panel" tabIndex={region === city || (!cities.includes(region) && index === 0) ? 0 : -1} onClick={() => setRegion(city)}>{city}</button>)}</div>
+          event.preventDefault(); selectCity(cities[next]); tabs[next]?.focus()
+        }}>{cities.map((city,index) => <button key={city} id={`contact-city-${index}`} type="button" role="tab" aria-selected={region === city} aria-controls="contact-city-panel" tabIndex={region === city || (!cities.includes(region) && index === 0) ? 0 : -1} onClick={() => selectCity(city)}>{city}</button>)}</div>
         <p>Выберите город и точку для просмотра на карте. Это не меняет пункт получения вашего заказа.</p>
       </header>
       <div className="contacts-locations__grid" id="contact-city-panel" role="tabpanel" aria-labelledby={cities.includes(region) ? `contact-city-${cities.indexOf(region)}` : undefined} aria-label={!cities.includes(region) ? `Контактные точки: ${region}` : undefined}>

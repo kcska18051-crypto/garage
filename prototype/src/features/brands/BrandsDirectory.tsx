@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { brandCategories, brandDirectory, type BrandDirectoryItem } from '../../data/brandDirectoryData'
 
 const ALL_CATEGORIES = 'Все направления'
@@ -11,7 +11,9 @@ function BrandCard({ brand }: { brand: BrandDirectoryItem }) {
 }
 
 export function BrandsDirectory() {
-  const [search, setSearch] = useState('')
+  const [searchParams,setSearchParams]=useSearchParams()
+  const search=searchParams.get('q')??''
+  const setSearch=(value:string)=>{const next=new URLSearchParams(searchParams);if(value) next.set('q',value);else next.delete('q');setSearchParams(next,{replace:true})}
   const [category, setCategory] = useState(ALL_CATEGORIES)
   const [letter, setLetter] = useState(ALL_LETTERS)
   const letters = useMemo(() => [...new Set(brandDirectory.map((brand) => brand.name[0].toUpperCase()))].sort((a, b) => a.localeCompare(b, 'ru')), [])

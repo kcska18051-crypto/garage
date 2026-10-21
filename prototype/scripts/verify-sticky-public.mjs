@@ -3,6 +3,7 @@ import {mkdir} from 'node:fs/promises'
 
 const url='https://kcska18051-crypto.github.io/garage/catalog/compressor-equipment/screw-compressors/receiver/'
 const version=process.argv[2]??'f914f38'
+const expectedAsset=process.argv[3]
 const browser=await chromium.launch({headless:true})
 const samples=[]
 try {
@@ -10,9 +11,12 @@ try {
   for(const width of [1024,1440,1920,2560]) {
     const context=await browser.newContext({viewport:{width,height:900}})
     const page=await context.newPage()
-    await page.goto(`${url}?v=${version}&utm_source=review`)
+    await page.goto(url)
+    const asset=await page.locator('script[type=module]').getAttribute('src')
+    if(expectedAsset)expect(asset).toContain(expectedAsset)
     const sidebar=page.locator('.catalog-listing__sidebar')
     await expect(page.locator('.catalog-results .catalog-product-card').first()).toBeVisible()
+    console.log(`Plain URL asset ${width}: ${asset}`)
     const count=await page.locator('.catalog-listing__toolbar>strong').innerText()
     for(const y of [650,900,1200]) {
       await page.evaluate(y=>scrollTo(0,y),y)

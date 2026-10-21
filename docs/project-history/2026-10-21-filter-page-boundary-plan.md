@@ -12,8 +12,10 @@
 - [x] Pure geometry tests RED→GREEN; hook/component/CSS общий, без изменений меню/данных.
 - [x] Browser4desktop normal/short/empty, actual coordinates, innerwheel/lowerfield/reset/header resize/footer;360/390 drawer.
 - [x] Обновить прежние проверки с grid boundary на main boundary, не ослаблять реальные assertions.
-- [ ] Source review/build/unitCI/publish; публичные650/900/1200 и последний экран передfooter4widths/скриншоты/отчёт/SHA; закрыть собственный браузер.
+- [x] Source review/build/unitCI/publish; публичные650/900/1200 и последний экран передfooter4widths/скриншоты/отчёт/SHA; закрыть собственный браузер.
 
 Границы: новая нижняя привязка — осознанное уточнение UX, не регрессия URLфикса. Services/ЛК не менять. Базовый коммит568ee28.
 
 Локальная проверка: browserRED на1920Y1200 разница232,09px. Geometry после создания минимального API:4поведенческихRED/1pass→5GREEN; geometry+ProductListing14/14. E2E21/21 после ожидания фактического RAF-обновления в прежнем footer assertion (первый прогон19/20, один тест читал координату сразу после scroll до кадра обновления; production не маскировался задержкой). Полный source review hook/geometry/CSS без замечаний. Build150routes GREEN, index-D41UESUe.js/index-DNZVj-D1.css. Просмотрены local1920Y1200/beforefooter; все16 локальных screenshot4ширины×4точки сохранены. Публичная проверка и CI следуют после commit.
+
+Завершено:code `cba7c44`; CI323/323,53файла +build/deploy success; publicplainURL4desktop650/900/1200+beforefooter, short/empty и360/390drawer PASS.16public screenshots/замеры в [отчёте](2026-10-21-filter-page-boundary-results.md). На1920Y1200top82,39 вместо−149,70, gridbottom655,91 уже не ограничиваетколонку. Собственный браузер закрыт, независимая повторная приёмка отдельно.

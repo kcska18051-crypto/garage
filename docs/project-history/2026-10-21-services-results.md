@@ -1,7 +1,7 @@
 # Услуги — результат реализации 21 октября 2026
 
 Код: `e0598610f7f67b0bf891ed6aee6610fc30662e9a`, опубликован в `origin/codex/homepage-prototype`.
-CI/deploy: https://github.com/kcska18051-crypto/garage/actions/runs/39572681059 — success.
+CI/deploy: https://github.com/kcska18051-crypto/garage/actions/runs/39572681059 — success, 48 файлов / 288 тестов.
 Артефакт: `index-XVkZXVy_.js`, `index-C29vLxz_.css`, 149 статических маршрутов.
 
 ## Просмотр

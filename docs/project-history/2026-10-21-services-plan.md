@@ -25,24 +25,24 @@ Files: create `src/data/serviceTypes.ts`, `src/data/servicesData.ts`, `src/pages
 
 Interface: `ServiceRequest = {kind:'repair'|'paint'|'rental';title:string;itemId:string}`; dialog receives `{request:ServiceRequest,onClose():void}`.
 
-- [ ] RED unit: корень 3 направления, каждый путь с правильным H1/крошками, rental→own detail, unknown→404, manifest entry points.
-- [ ] GREEN данные/шаблоны/маршруты. 3 rental items связаны с имеющимися примерами, без цены покупки как тарифа.
-- [ ] Проверить переходы/произвольные URL/CTA и отсутствие giant hero/overflow.
+- [x] RED unit: корень 3 направления, каждый путь с правильным H1/крошками, rental→own detail, unknown→404, manifest entry points.
+- [x] GREEN данные/шаблоны/маршруты. 3 rental items связаны с имеющимися примерами, без цены покупки как тарифа.
+- [x] Проверить переходы/произвольные URL/CTA и отсутствие giant hero/overflow.
 
 ## Task 2 — независимые формы
 
 Files: create `src/features/services/ServiceRequestDialog.tsx`, CSS, validation helpers/tests. Consumes только `serviceTypes.ts`, никаких изменений pages/router/data/commerce.
 
-- [ ] RED тесты ремонта/автоэмали/аренды, errors/success, фото, даты/количество, focus/Escape.
-- [ ] GREEN общий диалог по контракту, только память/локальный demo-номер.
-- [ ] Relevant unit GREEN; отчёт о файлах/проверках; не делать отдельный push/deploy.
+- [x] RED тесты ремонта/автоэмали/аренды, errors/success, фото, даты/количество, focus/Escape.
+- [x] GREEN общий диалог по контракту, только память/локальный demo-номер.
+- [x] Relevant unit GREEN; отчёт о файлах/проверках; не делать отдельный push/deploy.
 
 ## Task 3 — интеграция, проверка, публикация
 
-- [ ] Соединить страницы и диалог; browser все уровни/формы/фото/даты/mobile; 360/390/1024/1440/1920/2560.
-- [ ] Read-only review всех изменений, исправить важные замечания с regression tests.
-- [ ] Build + unit/CI, единый commit/push/deploy услуг; публичные HTTP200/reload/link/form checks.
-- [ ] Скриншоты/отчёт/SHA/ограничения; закрыть собственный браузер, независимая приёмка отдельно.
+- [x] Соединить страницы и диалог; browser все уровни/формы/фото/даты/mobile; 360/390/1024/1440/1920/2560.
+- [x] Read-only review всех изменений, исправить важные замечания с regression tests.
+- [x] Build + unit/CI, единый commit/push/deploy услуг; публичные HTTP200/reload/link/form checks.
+- [x] Скриншоты/отчёт/SHA/ограничения; закрыть собственный браузер, независимая приёмка отдельно.
 
 ## Progress ledger
 

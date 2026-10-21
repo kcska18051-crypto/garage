@@ -19,7 +19,8 @@ function withGroupValues(state: ListingState, group: string, values: string[]): 
 
 export function useCatalogListing({ products, pageSize = 12 }: { products: CatalogProduct[]; pageSize?: number }) {
   const [params, setParams] = useSearchParams()
-  const state = useMemo(() => parseListingState(params), [params])
+  const specKeys = useMemo(() => new Set(products.flatMap(product => Object.keys(product.specs))), [products])
+  const state = useMemo(() => parseListingState(params, specKeys), [params, specKeys])
   const results = useMemo(() => sortCatalogProducts(filterCatalogProducts(products, state), state.sort), [products, state])
   const pagination = useMemo(() => paginateProducts(results, state.page, pageSize), [pageSize, results, state.page])
   const commit = (next: ListingState) => setParams(serializeListingState(next))

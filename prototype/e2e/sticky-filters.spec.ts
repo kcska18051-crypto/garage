@@ -1,6 +1,22 @@
 import {expect,test} from '@playwright/test'
 
 const receiver='/catalog/compressor-equipment/screw-compressors/receiver/'
+for(const width of [1024,1440,1920,2560]) test(`versioned public review URL retains products and actual sticky geometry at ${width}`,async({page})=>{
+  await page.setViewportSize({width,height:900})
+  await page.goto(receiver+'?v=f914f38&utm_source=review')
+  await expect(page.locator('.catalog-results .catalog-product-card').first()).toBeVisible()
+  const sidebar=page.locator('.catalog-listing__sidebar')
+  for(const y of [450,750,1100]) {
+    await page.evaluate(y=>scrollTo(0,y),y)
+    await expect.poll(async()=>sidebar.evaluate(el=>{
+      const box=el.getBoundingClientRect(),layout=el.parentElement!.getBoundingClientRect()
+      const expected=Math.min(Math.max(layout.top,parseFloat(getComputedStyle(el).top)),layout.bottom-box.height)
+      return Math.abs(box.top-expected)
+    })).toBeLessThan(2)
+  }
+  await page.evaluate(()=>scrollTo(0,750))
+  expect((await sidebar.boundingBox())!.y).toBeGreaterThan(0)
+})
 for(const width of [1024,1440,1920,2560]) test(`receiver filters stay bounded and usable at ${width}`,async({page})=>{
   test.setTimeout(60000)
   await page.setViewportSize({width,height:900})

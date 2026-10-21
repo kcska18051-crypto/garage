@@ -3,10 +3,12 @@ import type { CatalogProduct, CatalogSort, ListingState, PaginationResult } from
 const reservedKeys = new Set(['availability', 'brand', 'subcategory', 'price-from', 'price-to', 'tag', 'sort', 'view', 'page'])
 const asNumber = (value: string | null) => value && Number.isFinite(Number(value)) ? Number(value) : undefined
 
-export function parseListingState(params: URLSearchParams): ListingState {
+export function parseListingState(params: URLSearchParams, specKeys: Iterable<string> = []): ListingState {
+  const allowedSpecs = new Set(specKeys)
   const specs: Record<string, string[]> = {}
   params.forEach((_, key) => {
-    if (!reservedKeys.has(key)) specs[key] = params.getAll(key)
+    // Version/tracking/custom URL metadata must not become phantom product filters.
+    if (!reservedKeys.has(key) && allowedSpecs.has(key)) specs[key] = params.getAll(key)
   })
   const rawTag = params.get('tag')
   const [tagGroup, ...tagValue] = rawTag?.split(':') ?? []

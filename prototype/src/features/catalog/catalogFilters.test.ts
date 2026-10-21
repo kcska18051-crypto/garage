@@ -16,8 +16,13 @@ const products: CatalogProduct[] = [
 ]
 
 describe('catalog listing state', () => {
+  test('ignores version, tracking and unknown query parameters instead of emptying the listing', () => {
+    const state = parseListingState(new URLSearchParams('v=f914f38&utm_source=review&unexpected=value&voltage=380'), Object.keys(products[0].specs))
+    expect(state.specs).toEqual({voltage:['380']})
+    expect(filterCatalogProducts(products,state).map(product=>product.id)).toEqual(['remeza-10'])
+  })
   test('round-trips ordinary filters, tag, sorting and view through query parameters', () => {
-    const state = parseListingState(new URLSearchParams('brand=remeza&voltage=380&tag=pressure%3A10&sort=price-asc&view=list&page=2'))
+    const state = parseListingState(new URLSearchParams('brand=remeza&voltage=380&tag=pressure%3A10&sort=price-asc&view=list&page=2'), Object.keys(products[0].specs))
 
     expect(state.brands).toEqual(['remeza'])
     expect(state.specs.voltage).toEqual(['380'])
@@ -34,7 +39,7 @@ describe('catalog listing state', () => {
   })
 
   test('returns an empty collection for an impossible combination', () => {
-    const state = parseListingState(new URLSearchParams('brand=berg&voltage=380'))
+    const state = parseListingState(new URLSearchParams('brand=berg&voltage=380'), Object.keys(products[0].specs))
     expect(filterCatalogProducts(products, state)).toEqual([])
   })
 

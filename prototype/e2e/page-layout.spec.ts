@@ -39,9 +39,9 @@ for(const width of [2560,1920,1440,1024,390,360]) test(`all implemented routes r
       const footer=document.querySelector('.site-footer')!.getBoundingClientRect()
       const nav=document.querySelector('.mobile-bottom-nav')!.getBoundingClientRect()
       const root=getComputedStyle(document.documentElement),token=root.getPropertyValue('--container').trim(),limit=parseFloat(token)*(token.endsWith('rem')?parseFloat(root.fontSize):1)
-      return {x:box.x,width:box.width,right:box.right,overflow:document.documentElement.scrollWidth-innerWidth,center:Math.abs(box.x+box.width/2-innerWidth/2),top:parseFloat(s.paddingTop),bottom:parseFloat(s.paddingBottom),footerBottom:footer.bottom+scrollY,available:innerHeight-(nav.height||0),limit}
+      return {x:box.x,width:box.width,right:box.right,overflow:document.documentElement.scrollWidth-innerWidth,center:Math.abs(box.x+box.width/2-innerWidth/2),top:parseFloat(s.paddingTop),bottom:parseFloat(s.paddingBottom),footerBottom:footer.bottom+scrollY,available:innerHeight-(nav.height||0),limit,constrained:el.hasAttribute('class')}
     })
-    if(result.overflow>1||result.x<-.5||result.right>width+1||result.center>1||result.footerBottom<result.available-2||route!=='/'&&(result.width>result.limit+1||result.top!==result.bottom||result.top>32)) failures.push(`${route}: ${JSON.stringify(result)}`)
+    if(result.overflow>1||result.x<-.5||result.right>width+1||result.center>1||result.footerBottom<result.available-2||result.constrained&&(result.width>result.limit+1||result.top!==result.bottom||result.top>32)) failures.push(`${route}: ${JSON.stringify(result)}`)
     if([1920,390].includes(width)&&['/catalog','/services','/news','/profile','/product/remeza-vk-10-gr-0001'].includes(route)) await page.screenshot({path:`test-results/layout-${width}-${route.slice(1).replaceAll('/','-')}.png`})
     } finally {await page.close()}
   }

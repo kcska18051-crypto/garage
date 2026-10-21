@@ -4,10 +4,12 @@ import { contactPoints } from './contactsData'
 import { materials, materialKinds } from './materialsData'
 import { actions } from './actionsData'
 import { profileData } from './profileData'
+import {serviceRoutes} from './servicesData'
 
 // Only implemented routes and existing records, not wildcard placeholders.
 export const publicRoutes = [...new Set([
   '/','/catalog','/brands','/brand/remeza','/compare','/search','/favorites','/cart',
+  ...serviceRoutes,
   '/about','/contacts','/delivery','/payment','/warranty','/actions','/actions/completed',
   '/checkout/review','/checkout/delivery','/checkout/success','/profile','/profile/auth','/profile/recovery',
   ...['data','addresses','recently-viewed','favorites','documents','help','orders','organizations','services','reviews'].map(path=>`/profile/${path}`),

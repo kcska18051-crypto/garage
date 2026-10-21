@@ -17,7 +17,7 @@ export const prototypeData: PrototypeData = {
   slides: [
     { id: 'intro', title: 'Оборудование для автосервиса', text: 'Всё необходимое для рабочих постов и мастерских.', cta: 'В каталог', href: '/catalog' },
     { id: 'paint', title: 'Подбор автоэмали', text: 'Материалы и помощь с подбором цвета под задачу.', cta: 'Об услуге', href: '/services/paint-matching', deadline: 'Условия уточняются' },
-    { id: 'service', title: 'Оснащение мастерской', text: 'Соберём комплект оборудования для вашего проекта.', cta: 'Обсудить проект', href: '/services/workshop' },
+    { id: 'service', title: 'Сервисный центр по ремонту', text: 'Знакомство с направлением ремонта оборудования мастерской.', cta: 'Посмотреть направление', href: '/services/service-center' },
   ],
   benefits: [
     { id: 'delivery', title: 'Доставка по России', text: 'Условия и срок зависят от выбранного города.' },

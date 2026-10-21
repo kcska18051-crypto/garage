@@ -22,12 +22,13 @@ import { InfoPage } from '../pages/InfoPage'
 import { ContactsPage } from '../pages/ContactsPage'
 import { AboutPage } from '../pages/AboutPage'
 import { StorePage } from '../pages/StorePage'
+import {ServicesIndexPage,ServiceCenterPage,CompressorRepairPage,RepairDetailPage,PaintMatchingPage,RentalCatalogPage,RentalDetailPage} from '../pages/ServicesPages'
 
 export type RouteDefinition = { path: string; label: string }
 
 export const prototypeRoutes: RouteDefinition[] = [
   { path: '/catalog/*', label: 'Каталог' }, { path: '/search', label: 'Результаты поиска' },
-  { path: '/services/*', label: 'Услуги' }, { path: '/actions/*', label: 'Акции' },
+  { path: '/actions/*', label: 'Акции' },
   { path: '/new', label: 'Новинки' },
   { path: '/cart', label: 'Корзина' },
   { path: '/privacy', label: 'Политика конфиденциальности' },
@@ -38,6 +39,15 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/services" element={<ServicesIndexPage/>}/>
+      <Route path="/services/service-center" element={<ServiceCenterPage/>}/>
+      <Route path="/services/service-center/compressor-repair" element={<CompressorRepairPage/>}/>
+      <Route path="/services/service-center/compressor-repair/:repairSlug" element={<RepairDetailPage/>}/>
+      <Route path="/services/paint-matching" element={<PaintMatchingPage/>}/>
+      <Route path="/services/rental" element={<RentalCatalogPage/>}/>
+      <Route path="/services/rental/:rentalSlug" element={<RentalDetailPage/>}/>
+      <Route path="/services/workshop" element={<Navigate to="/services" replace/>}/>
+      <Route path="/services/*" element={<NotFoundPage/>}/>
       <Route path="/catalog" element={<CatalogPage />} />
       <Route path="/catalog/compressor-equipment/:subcategorySlug" element={<CatalogSubcategoryPage />} />
       <Route path="/catalog/compressor-equipment/:subcategorySlug/:childSlug" element={<CatalogSubcategoryPage />} />

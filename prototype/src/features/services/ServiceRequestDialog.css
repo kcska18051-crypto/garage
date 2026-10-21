@@ -1,0 +1,21 @@
+body.service-dialog-open{overflow:hidden}
+body.service-dialog-open .mobile-bottom-nav{display:none}
+.service-request-overlay{overscroll-behavior:contain}
+.service-request-dialog{box-sizing:border-box;max-height:calc(100dvh - 2rem);max-width:100%;overflow:auto;overscroll-behavior:contain;width:36rem}
+.service-request-dialog form,.service-request-success{display:grid;gap:1rem;min-width:0}
+.service-request-dialog h2{margin:0;padding-right:1.8rem;font-size:1.35rem}
+.service-request-note,.service-request-dialog small{color:var(--color-text-muted);font-size:.78rem;line-height:1.5;margin:0}
+.service-request-selection{background:var(--color-background);border:1px solid var(--color-border);border-radius:.6rem;font-size:.85rem;margin:0;padding:.75rem;overflow-wrap:anywhere}
+.service-request-dialog .form-field{display:grid;gap:.35rem;min-width:0}
+.service-request-dialog label{font-size:.78rem;font-weight:700}
+.service-request-dialog input,.service-request-dialog textarea{background:var(--color-background);border:1px solid var(--color-border);border-radius:.6rem;box-sizing:border-box;color:var(--color-text);font:inherit;min-height:44px;min-width:0;padding:.8rem;resize:vertical;width:100%}
+.service-request-dialog input[type=file]{font-size:.78rem}
+.service-request-dialog [aria-invalid=true]{border-color:#9b2727}
+.service-request-dialog .field-error{color:#9b2727;font-size:.76rem;line-height:1.4}
+.service-request-dates{display:grid;gap:.75rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+.service-request-photo{border-radius:.6rem;max-height:11rem;max-width:100%;object-fit:contain;justify-self:start}
+.service-request-dialog .button,.service-request-remove{min-height:44px}
+.service-request-remove{background:none;border:1px solid var(--color-border);border-radius:.6rem;cursor:pointer;font:inherit;justify-self:start;padding:.6rem .9rem}
+.service-request-success p{font-size:.88rem;line-height:1.5;margin:0}
+.service-request-number{font-weight:700;overflow-wrap:anywhere}
+@media(max-width:600px){.service-request-overlay{align-items:end;padding:0}.service-request-dialog{border-radius:var(--radius-lg) var(--radius-lg) 0 0;max-height:calc(100dvh - .5rem);padding:1.2rem 1rem calc(1rem + env(safe-area-inset-bottom));width:100%}.service-request-dialog .button{width:100%}.service-request-dates{grid-template-columns:1fr}}

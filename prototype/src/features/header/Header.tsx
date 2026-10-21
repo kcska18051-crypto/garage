@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
+import { usePinnedHeaderHeight } from '../../hooks/usePinnedHeaderHeight'
 import { useScrollThreshold } from '../../hooks/useScrollThreshold'
 import { DesktopHeader, type HeaderCounts } from './DesktopHeader'
 import { MobileBottomNav } from './MobileBottomNav'
@@ -14,9 +15,11 @@ export function Header({ counts }: { counts: HeaderCounts }) {
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const compact = useScrollThreshold(120)
+  const header=useRef<HTMLElement>(null)
+  usePinnedHeaderHeight(header,compact)
   const toggleMenu = useCallback(() => setMenuOpen((value) => !value), [])
   return <>
-    <header className="site-header">
+    <header className="site-header" ref={header}>
       <DesktopHeader region={region} onRegion={() => setRegionOpen(true)} counts={counts} compact={compact} catalogOpen={catalogOpen} onCatalog={() => setCatalogOpen((value) => !value)} />
       <MobileHeader region={region} onRegion={() => setRegionOpen(true)} menuOpen={menuOpen} onMenu={toggleMenu} />
       <ThirdLevelNavigation compact={compact} />

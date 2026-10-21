@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { catalogProducts, compressorSubcategories, fullFilterGroups, reducedFilterGroups } from '../../data/catalogData'
 import { CommerceProvider } from '../../state/CommerceState'
@@ -7,6 +7,18 @@ import { ProductListing } from './ProductListing'
 const renderListing = (mode: 'reduced' | 'full' = 'full') => render(<MemoryRouter><CommerceProvider><ProductListing products={catalogProducts} filterGroups={mode === 'full' ? fullFilterGroups : reducedFilterGroups} mode={mode} /></CommerceProvider></MemoryRouter>)
 
 describe('catalog product listing', () => {
+  it('keeps reset outside the independently scrollable desktop filter region',()=>{
+    renderListing()
+    const sidebar=screen.getByRole('complementary',{name:'Фильтры'})
+    const scroll=within(sidebar).getByRole('region',{name:'Параметры фильтра'})
+    expect(scroll).toHaveAttribute('tabindex','0')
+    const reset=within(sidebar).getByRole('button',{name:'Сбросить фильтры'})
+    expect(scroll).not.toContainElement(reset)
+    fireEvent.click(within(sidebar).getByLabelText('Remeza'))
+    expect(screen.getByText('Найдено 6 товаров')).toBeInTheDocument()
+    fireEvent.click(reset)
+    expect(screen.getByText('Найдено 32 товара')).toBeInTheDocument()
+  })
   it('filters immediately, exposes removable chips and changes sorting and view', () => {
     renderListing()
     expect(screen.getByText('Найдено 32 товара')).toBeInTheDocument()

@@ -39,12 +39,13 @@ try {
         for (const name of ['Компрессоры','Подъёмное оборудование','Кузовной ремонт','Покраска','Инструмент','Оснащение автосервиса']) {
           await panel.getByRole('button', { name, exact: true }).click()
           const href = await panel.getByRole('link', { name: 'Все товары раздела' }).getAttribute('href')
-          expect((await page.request.get(new URL(href, base))).status()).toBe(200)
+          expect((await page.request.get(new URL(href, base).href)).status()).toBe(200)
         }
         await panel.getByRole('button', { name: 'Компрессоры', exact: true }).click()
       }
       await panel.getByRole('link', { name: 'Винтовые компрессоры на ресивере', exact: true }).click()
-      await expect(page.locator('main h1')).toHaveText('Винтовые компрессоры на ресивере')
+      await expect(page).toHaveURL(/\/catalog\/compressor-equipment\/screw-compressors\/receiver$/)
+      await expect(page.locator('main h1')).toHaveText('Винтовые компрессоры')
       await expect(panel).toHaveCount(0)
       expect((await page.reload()).status()).toBe(200)
       if (width >= 768) {

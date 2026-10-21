@@ -18,4 +18,14 @@
 - Совместный прогон menu6 + filter-page-boundary9: **15/15**. После исправления координации отдельно финальный menu8/8. Unit Header/Search **11/11**.
 - Визуально просмотрены local1920compact и390mobile: текст/нижние ссылки доступны, геометрия не перекрывает навигацию.
 
-Публичная проверка и SHA будут добавлены после завершения deploy. Скрипт `prototype/scripts/verify-catalog-menu-public.mjs` проверяет именно опубликованный JS asset, реальные HTTP200 корневых ссылок, мобильный touch, full/compact, точный receiver, reload, фильтр после перехода. Собственные браузеры/контексты закрываются в finally, браузер пользователя не используется.
+## Публикация и публичная проверка
+
+Код `95723ceda449a6bb8e1860095c26baa619b29f25`, origin/codex/homepage-prototype. [CI](https://github.com/kcska18051-crypto/garage/actions/runs/39588627759): success, **323/323** теста в53файлах,65,96s; build/deploy success. Public JS `index-70ry_xZ7.js`.
+
+`node scripts/verify-catalog-menu-public.mjs 95723ce index-70ry_xZ7.js` — **PASS на2560/1920/1440/1024/390/360**. Проверены актуальный JS asset, HTTP200 всех6корневых ссылок на desktop, мобильный touch, full/compact, точный receiverURL, reload, фильтр после перехода, отсутствие pageerror и overflow, закрытие/focus/сохранение scroll. В проверочном скрипте исправлены типURL для request.get и неверное ожидание H1 дочернего receiver: существующий экран имеет H1«Винтовые компрессоры», маршруты и заголовки не менялись ради теста.
+
+Полный локальный Windows unit-run прерван после timeout в AuthDialog,ServiceAccountFlow,ProductShowcase; успешным не считается. Их адресный повтор вместе с MaterialsPages **32/32 GREEN**; Header/Search **11/11 GREEN**; полный CI **323/323 GREEN**.
+
+Скриншоты: [desktop1920 full](screenshots/catalog-menu/public/1920-0.png), [desktop1920 compact](screenshots/catalog-menu/public/1920-650.png), [mobile390](screenshots/catalog-menu/public/390-650.png), [mobile360](screenshots/catalog-menu/public/360-650.png). Ещё full/compact для1024/1440/2560 сохранены в той же папке. Просмотрены также локальные1920/390.
+
+Собственные браузеры/контексты закрыты в finally, браузер пользователя не использован. [Открыть главную и нажать Каталог](https://kcska18051-crypto.github.io/garage/?v=95723ce). Независимая аналитическая приёмка отдельно.

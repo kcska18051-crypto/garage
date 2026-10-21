@@ -37,7 +37,9 @@ try {
         await page.getByRole('button',{name:'Добавить в корзину',exact:true}).click()
         assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('garage-cart-v2')))).some(item=>item.id===id))
       }
-      await page.goto(`${base}/product/remeza-vk-10-220-55/`)
+      await page.goto(`${base}/product/remeza-vk-10-gr-0001/`)
+      await page.getByRole('button',{name:'220 В',exact:true}).click()
+      assert.equal(new URL(page.url()).searchParams.get('variant'),'remeza-vk-10-220-55')
       await page.reload()
       await expect(page.locator('.product-heading')).toContainText('220 В · 5,5 кВт')
       await expect(page.locator('.product-key-specs')).toContainText('10 л/мин')
@@ -50,6 +52,17 @@ try {
       await proposal.getByRole('button',{name:'Закрыть коммерческое предложение'}).click()
       await (width<600?page.locator('.product-mobile-purchase'):purchase).getByRole('button',{name:'В корзину',exact:true}).click()
       assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('garage-cart-v2')))).some(item=>item.id==='remeza-vk-10-220-55'&&item.quantity===2))
+      for(const [power,id,sku,price] of [['5,5 кВт','remeza-vk-10-380-55','GR-380-55','176 500 ₽'],['7,5 кВт','remeza-vk-10-gr-0001','GR-0001','185 000 ₽']]) {
+        await page.getByRole('button',{name:'380 В',exact:true}).click()
+        await page.getByRole('button',{name:power,exact:true}).click()
+        assert.equal(new URL(page.url()).searchParams.get('variant'),id)
+        await page.reload()
+        await expect(page.locator('.product-heading')).toContainText(`380 В · ${power}`)
+        await expect(purchase.locator('.product-purchase__price strong')).toHaveText(price)
+        await expect(page.getByRole('button',{name:`Скопировать артикул ${sku}`})).toBeAttached()
+        await (width<600?page.locator('.product-mobile-purchase'):purchase).getByRole('button',{name:'В корзину',exact:true}).click()
+        assert((await page.evaluate(()=>JSON.parse(localStorage.getItem('garage-cart-v2')))).some(item=>item.id===id&&item.quantity===1))
+      }
       await page.goto(`${base}/product/remeza-vk-10-220-55/#options`)
       await expect(page.locator('#options h2')).toBeInViewport()
       await page.reload()
@@ -60,7 +73,7 @@ try {
       assert.equal(unknown.status(),404)
       await expect(page.getByRole('heading',{name:'Страница не найдена'})).toBeVisible()
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`overflow ${width}`)
-      console.log(`PASS ${width}: search, 3 own PDP/cart IDs, selected variant/quantity/CP, anchors/reload, units, unknown HTTP404/UI`)
+      console.log(`PASS ${width}: search, 3 own PDP/cart IDs, UI-selected 220/380 offers after reload/cart, quantity/CP, anchors/reload, units, unknown HTTP404/UI`)
     } finally {await context.close()}
   }
 } finally {await browser.close()}

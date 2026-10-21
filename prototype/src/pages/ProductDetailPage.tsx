@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { defaultOffer, findOffer, offerSelections, productDetail, type ProductOffer } from '../data/productDetailData'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { defaultOffer, findOffer, offerSelections, productDetail } from '../data/productDetailData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ProductGallery } from '../features/product-detail/ProductGallery'
 import { ProductHeadingTools } from '../features/product-detail/ProductHeadingTools'
@@ -13,9 +13,12 @@ import '../features/product-detail/ProductDetail.css'
 export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string } = {}) {
   const [commercialState, setCommercialState] = useState<CommercialState>('available')
   const [quantity,setQuantity] = useState(1)
+  const location=useLocation()
+  const navigate=useNavigate()
   const initialOffer = productDetail.offers.find(offer=>offer.id===initialOfferId) ?? defaultOffer
-  const [offer, setOffer] = useState<ProductOffer>(initialOffer)
-  const [selections, setSelections] = useState(offerSelections(initialOffer))
+  const requestedOfferId=new URLSearchParams(location.search).get('variant')
+  const offer=productDetail.offers.find(candidate=>candidate.id===requestedOfferId) ?? initialOffer
+  const selections=offerSelections(offer)
   const commerce = useCommerce()
   const favorite = commerce.favoriteIds.has(productDetail.id)
   const compared = commerce.compareIds.has(productDetail.id)
@@ -23,8 +26,9 @@ export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string }
     const exact = findOffer({ ...selections, [groupId]: value })
     const next = exact ?? productDetail.offers.find((candidate) => candidate.options[groupId] === value)
     if (!next) return
-    setOffer(next)
-    setSelections(offerSelections(next))
+    const params=new URLSearchParams(location.search)
+    params.set('variant',next.id)
+    navigate({pathname:location.pathname,search:`?${params}`,hash:location.hash},{replace:true,preventScrollReset:true})
   }
   return <main className="product-page">
     <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: 'Каталог', to: '/catalog' }, { label: 'Компрессорное оборудование', to: '/catalog/compressor-equipment' }, { label: 'Винтовые компрессоры', to: '/catalog/compressor-equipment/screw-compressors' }, { label: productDetail.brand }]} />

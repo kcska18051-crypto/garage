@@ -1,5 +1,6 @@
-import { catalogCategories, catalogProducts, compressorSubcategories } from './catalogData'
+import { catalogCategories, catalogBrands, compressorSubcategories } from './catalogData'
 import { prototypeData } from './prototypeData'
+import { demoProducts, matchesSearch, money } from './productRegistry'
 
 export type SearchSuggestion = {
   id: string
@@ -28,8 +29,7 @@ export const searchPromoItems: SearchPromoItem[] = [
 ]
 
 const productSuggestions: SearchSuggestion[] = [
-  ...prototypeData.products.map((item) => ({ id: `home-${item.id}`, kind: 'Товар' as const, name: item.name, meta: `${item.sku} · ${item.price}`, href: item.href })),
-  ...catalogProducts.map((item) => ({ id: `catalog-${item.id}`, kind: 'Товар' as const, name: item.name, meta: `${item.sku} · ${new Intl.NumberFormat('ru-RU').format(item.price)} ₽`, href: `/product/${item.slug}` })),
+  ...demoProducts.map(item=>({id:item.id,kind:'Товар' as const,name:item.name,meta:`${item.sku} · ${item.brand??''} · ${item.searchTerms??''} · ${item.purchaseMode==='quote'?'Цена по запросу':money(item.price)}`,href:item.href})),
 ]
 
 const categorySuggestions: SearchSuggestion[] = [
@@ -37,13 +37,13 @@ const categorySuggestions: SearchSuggestion[] = [
   ...compressorSubcategories.map((item) => ({ id: `subcategory-${item.id}`, kind: 'Категория' as const, name: item.name, meta: 'Категория оборудования', href: item.href })),
 ]
 
-const brandNames = new Set(['Remeza', ...prototypeData.brands.map((item) => item.name)])
+const brandNames = new Set([...catalogBrands.map(item=>item.name), ...prototypeData.brands.map((item) => item.name)])
 const brandSuggestions: SearchSuggestion[] = [...brandNames].map((name) => ({
   id: `brand-${name.toLocaleLowerCase()}`,
   kind: 'Бренд',
   name,
   meta: 'Бренд',
-  href: name === 'Remeza' ? '/brand/remeza' : `/brands/${encodeURIComponent(name.toLocaleLowerCase())}`,
+  href: name === 'Remeza' ? '/brand/remeza' : `/search?q=${encodeURIComponent(name)}`,
 }))
 
 const searchIndex = [...brandSuggestions, ...categorySuggestions, ...productSuggestions]
@@ -53,7 +53,7 @@ export function findSearchSuggestions(query: string, limit = 8): SearchSuggestio
   if (needle.length < 2) return []
   const seen = new Set<string>()
   return searchIndex.filter((item) => {
-    const matches = `${item.name} ${item.meta}`.toLocaleLowerCase().includes(needle)
+    const matches = matchesSearch(`${item.name} ${item.meta}`,needle)
     const key = `${item.name}-${item.href}`
     if (!matches || seen.has(key)) return false
     seen.add(key)

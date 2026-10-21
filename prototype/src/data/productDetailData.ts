@@ -1,3 +1,7 @@
+import { catalogProducts } from './catalogData'
+import { formatTechnicalValue } from './productProperties'
+const modelSpecs = catalogProducts[0].specs
+const performance = formatTechnicalValue('performance',modelSpecs.performance)
 export type ProductSectionLink = { id: string; label: string }
 export type ProductSpecGroup = { title: string; items: Array<[string, string]> }
 export type GalleryItem = { label: string; type: 'image' | 'video' }
@@ -13,7 +17,7 @@ export type ProductOffer = {
 
 export const productDetail = {
   id: 'remeza-vk-10-gr-0001',
-  name: 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом, 380 В, 7,5 кВт',
+  name: 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом',
   brand: 'Remeza',
   rating: '4,8',
   reviewCount: '12 отзывов',
@@ -37,7 +41,7 @@ export const productDetail = {
     { id: 'remeza-vk-10-220-55', sku: 'GR-220-55', options: { voltage: '220 В', power: '5,5 кВт' }, oldPrice: 188500, price: 169000, galleryIndex: 2 },
   ] as ProductOffer[],
   keySpecs: [
-    ['Производительность', '10 л/мин'], ['Максимальное давление', '10 бар'], ['Тип привода', 'Ременной'],
+    ['Производительность', performance], ['Максимальное давление', formatTechnicalValue('pressure',modelSpecs.pressure)], ['Тип привода', formatTechnicalValue('drive',modelSpecs.drive)],
     ['Исполнение', 'Напольное'], ['Ресивер', 'Без ресивера'],
   ] as Array<[string, string]>,
   sections: [
@@ -49,7 +53,7 @@ export const productDetail = {
     { id: 'service', label: 'Сервис и гарантия' },
   ] as ProductSectionLink[],
   specGroups: [
-    { title: 'Рабочие параметры', items: [['Производительность', '10 л/мин'], ['Максимальное давление', '10 бар'], ['Мощность двигателя', 'Зависит от варианта'], ['Напряжение питания', 'Зависит от варианта']] },
+    { title: 'Рабочие параметры', items: [['Производительность', performance], ['Максимальное давление', formatTechnicalValue('pressure',modelSpecs.pressure)], ['Мощность двигателя', 'Зависит от варианта'], ['Напряжение питания', 'Зависит от варианта']] },
     { title: 'Конструкция', items: [['Тип компрессора', 'Винтовой'], ['Тип привода', 'Ременной'], ['Система смазки', 'Масляная'], ['Установка', 'Напольная']] },
     { title: 'Эксплуатация', items: [['Уровень шума', 'Данные уточняются'], ['Температурный диапазон', 'Данные уточняются'], ['Подключение', 'Данные уточняются']] },
   ] as ProductSpecGroup[],

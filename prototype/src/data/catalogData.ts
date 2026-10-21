@@ -1,5 +1,6 @@
 import type { CatalogBrand, CatalogProduct, CatalogRootCategory, CatalogRootSubcategory, CatalogSubcategory, FilterGroup, TagGroup } from './catalogTypes'
 import { promotionPrice } from './promotionPricing'
+import { performanceValues, formatTechnicalValue } from './productProperties'
 
 export const catalogBrands: CatalogBrand[] = [
   { id: 'remeza', name: 'Remeza', count: 8 }, { id: 'berg', name: 'Berg', count: 6 }, { id: 'dali', name: 'Dali', count: 5 },
@@ -98,7 +99,7 @@ export const getCatalogCategory = (slug: string | undefined) => catalogCategorie
 const screwTags: TagGroup[] = [
   { id: 'brand', label: 'По бренду', limit: 3, seoIndexable: false, values: [{ value: 'remeza', label: 'Remeza', count: 6 }, { value: 'berg', label: 'Berg', count: 4 }, { value: 'dali', label: 'Dali', count: 3 }, { value: 'comprag', label: 'Comprag', count: 2 }] },
   { id: 'voltage', label: 'По напряжению', seoIndexable: false, values: [{ value: '220', label: '220 В', count: 4 }, { value: '380', label: '380 В', count: 14 }] },
-  { id: 'performance', label: 'По производительности', limit: 3, seoIndexable: false, values: [{ value: '10', label: '10 л/мин', count: 4 }, { value: '11', label: '11 л/мин', count: 5 }, { value: '15', label: '15 л/мин', count: 5 }, { value: '30', label: '30 л/мин', count: 4 }] },
+  { id: 'performance', label: 'По производительности', limit: 3, seoIndexable: false, values: performanceValues.map((value,index)=>({value,label:formatTechnicalValue('performance',value),count:[4,5,5,4][index]})) },
   { id: 'pressure', label: 'По рабочему давлению', seoIndexable: false, values: [{ value: '8', label: '8 бар', count: 6 }, { value: '10', label: '10 бар', count: 8 }, { value: '12', label: '12 бар', count: 4 }] },
 ]
 
@@ -129,7 +130,7 @@ export const fullFilterGroups: FilterGroup[] = [
   { id: 'availability', label: 'Покупка и получение', type: 'checkbox', options: availabilityOptions, initiallyOpen: true },
   { id: 'price', label: 'Цена', type: 'price', initiallyOpen: true },
   { id: 'brand', label: 'Бренд', type: 'brand', limit: 4, initiallyOpen: true, options: catalogBrands.map(({ id, name }) => option(id, name)) },
-  { id: 'performance', label: 'Производительность', type: 'checkbox', options: ['10', '11', '15', '30'].map((value) => option(value, `${value} л/мин`)) },
+  { id: 'performance', label: 'Производительность', type: 'checkbox', options: performanceValues.map(value => option(value, formatTechnicalValue('performance',value))) },
   { id: 'voltage', label: 'Напряжение', type: 'checkbox', options: [option('220', '220 В'), option('380', '380 В')] },
   { id: 'power', label: 'Мощность двигателя', type: 'checkbox', options: ['5.5', '7.5', '11', '15', '22'].map((value) => option(value, `${value} кВт`)) },
   { id: 'pressure', label: 'Максимальное давление', type: 'checkbox', options: ['8', '10', '12'].map((value) => option(value, `${value} бар`)) },
@@ -148,7 +149,7 @@ export const reducedFilterGroups: FilterGroup[] = [
 const brands = ['remeza', 'berg', 'dali', 'comprag', 'fiac', 'garage-pro']
 const subcategories = ['screw-compressors', 'screw-compressors', 'screw-compressors', 'piston-compressors', 'oil-free-compressors', 'receivers', 'dryers', 'compressor-accessories']
 const voltages = ['380', '380', '220']
-const performances = ['10', '11', '15', '30']
+const performances = performanceValues
 const pressures = ['8', '10', '12']
 const countries = ['belarus', 'italy', 'china', 'russia']
 

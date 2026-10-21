@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 test('product detail keeps the approved hierarchy and interactive buying flow', async ({ page }) => {
   await page.goto('/product/remeza-vk-10-gr-0001/')
-  const heading = page.getByRole('heading', { level: 1, name: 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом, 380 В, 7,5 кВт' })
+  const heading = page.getByRole('heading', { level: 1, name: 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом' })
   await expect(heading).toBeVisible()
   const headingBox = await heading.boundingBox()
   const heroBox = await page.locator('.product-hero').boundingBox()
@@ -87,7 +87,10 @@ for (const [device, width, height] of [['desktop', 1440, 900], ['mobile', 390, 8
     }
     await menu.getByRole('menuitem', { name: 'Скопировать ссылку' }).click()
     await expect(page.getByRole('status').filter({ hasText: 'Ссылка на товар скопирована' })).toBeVisible()
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('/product/remeza-vk-10-gr-0001/')
+    const sharedUrl=await page.evaluate(() => navigator.clipboard.readText())
+    expect(sharedUrl).toContain('/product/remeza-vk-10-220-55/')
+    await page.goto(sharedUrl)
+    await expect(page.locator('.product-heading')).toContainText('220 В · 5,5 кВт')
   })
 }
 

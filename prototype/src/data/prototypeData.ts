@@ -1,5 +1,6 @@
 import type { Product, PrototypeData } from './types'
 import { materialKinds, materials } from './materialsData'
+import { catalogProducts } from './catalogData'
 
 const availability = [
   { availabilityStatus: 'available' as const, storeCount: 1 },
@@ -31,7 +32,7 @@ export const prototypeData: PrototypeData = {
   products,
   productCollections: [
     { id: 'service', label: 'Оборудование для автосервиса', href: '/catalog?collection=service', source: 'category', products: [products[0], products[1], products[4], products[6], products[7]] },
-    { id: 'remeza', label: 'Товары Remeza', href: '/brand/remeza', source: 'brand', products: [products[3], products[8], products[9], products[1], products[4]] },
+    { id: 'remeza', label: 'Товары Remeza', href: '/brand/remeza', source: 'brand', products: catalogProducts.filter(p=>p.brandId==='remeza').slice(0,5).map(p=>({id:p.id,name:p.name,sku:p.sku,price:`${p.price.toLocaleString('ru-RU')} ₽`,availabilityStatus:p.availabilityLabel,storeCount:p.storeCount,href:`/product/${p.id}`,purchaseMode:p.purchaseMode})) },
     { id: 'new', label: 'Новинки', href: '/new', source: 'automatic-new', products: [products[2], products[5], products[0], products[7], products[6]] },
     { id: 'bestsellers', label: 'Хиты продаж', href: '/catalog?collection=bestsellers', source: 'automatic-bestseller', products: [products[1], products[3], products[4], products[6], products[8]] },
   ],

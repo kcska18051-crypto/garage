@@ -39,9 +39,10 @@ export function ProductHeadingTools({ sku, favorite, compared, onToggleFavorite,
       setFeedback('Не удалось скопировать')
     }
   }
-  const shareUrl = window.location.pathname.includes('/product/')
-    ? window.location.href
-    : new URL(productPath, window.location.origin).href
+  const deploymentPrefix = window.location.pathname.includes('/product/')
+    ? window.location.pathname.split('/product/')[0]
+    : ''
+  const shareUrl = new URL(`${deploymentPrefix}${productPath}`,window.location.origin).href
 
   return <>
     <div className="product-heading__bar">

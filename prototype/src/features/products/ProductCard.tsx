@@ -3,5 +3,5 @@ import { formatAvailability } from '../../utils/availability'
 import { ProductTeaserCard } from './ProductTeaserCard'
 
 export function ProductCard({ product, index }: { product: Product; index: number }) {
-  return <ProductTeaserCard className="product-card" index={index} product={{ id: product.id, name: product.name, href: product.href, sku: product.sku, price: product.price, availability: formatAvailability(product.availabilityStatus, product.storeCount) }} />
+  return <ProductTeaserCard className="product-card" index={index} product={{ id: product.id, name: product.name, href: product.href, sku: product.sku, price: product.price, purchaseMode:product.purchaseMode, availability: formatAvailability(product.availabilityStatus, product.storeCount) }} />
 }

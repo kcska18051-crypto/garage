@@ -19,6 +19,7 @@ export type Product = {
   availabilityStatus: AvailabilityStatus
   storeCount: number
   href: string
+  purchaseMode?: 'cart' | 'quote'
 }
 export type Service = { id: string; name: string; text: string; cta: string; href: string }
 export type ProductCollection = { id: string; label: string; href: string; source: 'automatic-new' | 'automatic-bestseller' | 'brand' | 'category' | 'curated'; products: Product[] }

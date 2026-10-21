@@ -13,28 +13,27 @@ const stateMap: Record<CommercialState, { label: string; switchLabel?: string; a
   discontinued: { label: 'Снят с производства', action: 'Показать аналоги', tone: 'neutral', stocks: [['Ярославль', 'Поставка прекращена'], ['Вологда', 'Поставка прекращена']] },
 }
 
-type Props = { offer: ProductOffer; state: CommercialState; onStateChange(state: CommercialState): void }
+type Props = { offer: ProductOffer; state: CommercialState; onStateChange(state: CommercialState): void; quantity:number; onQuantityChange(quantity:number):void }
 
-export function GalleryPurchasePanel({ offer, state }: { offer: ProductOffer; state: CommercialState }) {
+export function GalleryPurchasePanel({ offer, state, quantity }: { offer: ProductOffer; state: CommercialState; quantity:number }) {
   const commerce = useCommerce()
   const current = stateMap[state]
   return <aside className="gallery-purchase" aria-label="Покупка в увеличенном просмотре">
     <small>Артикул {offer.sku}</small><h3>{productDetail.name}</h3><strong>{money(offer.price)}</strong>
     <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" />{current.label}</p>
-    <button className="button button--dark" type="button" disabled={state !== 'available'} onClick={() => commerce.addToCart(offer.id)}>{state === 'available' ? 'В корзину' : current.action}</button>
+    <button className="button button--dark" type="button" disabled={state !== 'available'} onClick={() => commerce.addToCart(offer.id,quantity)}>{state === 'available' ? 'В корзину' : current.action}</button>
   </aside>
 }
 
-export function ProductPurchase({ offer, state, onStateChange }: Props) {
+export function ProductPurchase({ offer, state, onStateChange, quantity, onQuantityChange }: Props) {
   const commerce = useCommerce()
   const [feedback, setFeedback] = useState('')
-  const [quantity, setQuantity] = useState(1)
   const [proposalOpen, setProposalOpen] = useState(false)
   const current = stateMap[state]
   const saving = offer.oldPrice - offer.price
   const inCart = commerce.cartIds.has(offer.id)
   const primaryAction = () => {
-    if (state === 'available') commerce.addToCart(offer.id)
+    if (state === 'available') commerce.addToCart(offer.id,quantity)
     else if (state === 'order') setFeedback('Запрос срока подготовлен. Менеджер уточнит поставку.')
     else if (state === 'unavailable') setFeedback('Уведомление о поступлении включено в демонстрационном режиме.')
     else document.querySelector('#analogs')?.scrollIntoView()
@@ -46,7 +45,7 @@ export function ProductPurchase({ offer, state, onStateChange }: Props) {
     <div className="product-purchase__price"><del>{money(offer.oldPrice)}</del><strong>{money(offer.price)}</strong><span>Выгода {money(saving)}</span></div>
     <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" /><strong>{current.label}</strong></p>
     <div className="product-stock" aria-label="Наличие по городам">{current.stocks.map(([city, note]) => <div key={city}><strong className="product-stock__city">{city}</strong><span>{note}</span></div>)}</div>
-    {state === 'available' && <div className="product-purchase__buy-row"><div className="product-quantity" aria-label="Количество товара"><button type="button" aria-label="Уменьшить количество" onClick={() => setQuantity((value) => Math.max(1, value - 1))}>−</button><output>{quantity}</output><button type="button" aria-label="Увеличить количество" onClick={() => setQuantity((value) => value + 1)}>+</button></div><button className="button button--dark" type="button" onClick={primaryAction}>{inCart ? 'В корзине' : current.action}</button></div>}
+    {state === 'available' && <div className="product-purchase__buy-row"><div className="product-quantity" aria-label="Количество товара"><button type="button" aria-label="Уменьшить количество" onClick={() => onQuantityChange(Math.max(1, quantity - 1))}>−</button><output>{quantity}</output><button type="button" aria-label="Увеличить количество" onClick={() => onQuantityChange(Math.min(999, quantity + 1))}>+</button></div><button className="button button--dark" type="button" onClick={primaryAction}>{inCart ? 'В корзине' : current.action}</button></div>}
     {state !== 'available' && <button className="button button--dark" type="button" onClick={primaryAction}>{current.action}</button>}
     {(state === 'available' || state === 'order') && <button className="button" type="button" onClick={() => setFeedback('Быстрый заказ подготовлен. Менеджер свяжется для подтверждения.')}>Купить в один клик</button>}
     <button className="product-purchase__proposal" type="button" onClick={() => setProposalOpen(true)}>Коммерческое предложение</button>
@@ -57,8 +56,8 @@ export function ProductPurchase({ offer, state, onStateChange }: Props) {
   </aside>
 }
 
-export function ProductMobilePurchase({ offer, state }: { offer: ProductOffer; state: CommercialState }) {
+export function ProductMobilePurchase({ offer, state, quantity }: { offer: ProductOffer; state: CommercialState; quantity:number }) {
   const commerce = useCommerce()
   const current = stateMap[state]
-  return <div className="product-mobile-purchase"><div><small>{current.label}</small><strong>{money(offer.price)}</strong></div><button className="button button--dark" type="button" onClick={() => state === 'available' ? commerce.addToCart(offer.id) : document.querySelector('.product-purchase')?.scrollIntoView()}>{state === 'available' && commerce.cartIds.has(offer.id) ? 'В корзине' : current.action}</button></div>
+  return <div className="product-mobile-purchase"><div><small>{current.label}</small><strong>{money(offer.price)}</strong></div><button className="button button--dark" type="button" onClick={() => state === 'available' ? commerce.addToCart(offer.id,quantity) : document.querySelector('.product-purchase')?.scrollIntoView()}>{state === 'available' && commerce.cartIds.has(offer.id) ? 'В корзине' : current.action}</button></div>
 }

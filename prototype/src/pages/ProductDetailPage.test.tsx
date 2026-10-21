@@ -5,7 +5,7 @@ import { vi } from 'vitest'
 import { App } from '../app/App'
 
 const route = '/product/remeza-vk-10-gr-0001/'
-const longName = 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом, 380 В, 7,5 кВт'
+const longName = 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом'
 
 const renderPage = () => render(<MemoryRouter initialEntries={[route]}><App /></MemoryRouter>)
 

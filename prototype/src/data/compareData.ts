@@ -18,22 +18,22 @@ const compareSource: CompareProduct[] = [
   {
     id: 'remeza-vk-10-gr-0001', categoryId: 'compressors', categoryLabel: 'Компрессоры', name: 'Remeza ВК 10', sku: 'GR-0001', price: 185000, oldPrice: 207200,
     href: '/product/remeza-vk-10-gr-0001', availability: 'В наличии в 2 магазинах',
-    specs: { 'Тип компрессора': 'Винтовой', 'Производительность': '1 000 л/мин', 'Максимальное давление': '10 бар', 'Мощность': '7,5 кВт', 'Напряжение': '380 В', 'Тип привода': 'Ременной', 'Ресивер': 'Без ресивера', 'Гарантия': 'Условия уточняются' },
+    specs: { 'Гарантия': 'Условия уточняются' },
   },
   {
     id: 'compressor-2', categoryId: 'compressors', categoryLabel: 'Компрессоры', name: 'Berg ВК 11', sku: 'GR-0004', price: 208750,
     href: '/catalog/compressor-equipment/screw-compressors', availability: 'Получение ориентировочно завтра',
-    specs: { 'Тип компрессора': 'Винтовой', 'Производительность': '1 250 л/мин', 'Максимальное давление': '10 бар', 'Мощность': '11 кВт', 'Напряжение': '380 В', 'Тип привода': 'Прямой', 'Ресивер': 'Без ресивера', 'Гарантия': 'Условия уточняются' },
+    specs: { 'Гарантия': 'Условия уточняются' },
   },
   {
     id: 'compressor-3', categoryId: 'compressors', categoryLabel: 'Компрессоры', name: 'Dali ВК 12', sku: 'GR-0006', price: 232500,
     href: '/catalog/compressor-equipment/screw-compressors', availability: 'Под заказ',
-    specs: { 'Тип компрессора': 'Винтовой', 'Производительность': '1 600 л/мин', 'Максимальное давление': '13 бар', 'Мощность': '15 кВт', 'Напряжение': '380 В', 'Тип привода': 'Прямой', 'Ресивер': '500 л', 'Гарантия': 'Условия уточняются' },
+    specs: { 'Гарантия': 'Условия уточняются' },
   },
   {
     id: 'compressor-4', categoryId: 'compressors', categoryLabel: 'Компрессоры', name: 'Comaro Air 13', sku: 'GR-0009', price: 256250,
     href: '/catalog/compressor-equipment/screw-compressors', availability: 'В наличии в 1 магазине',
-    specs: { 'Тип компрессора': 'Винтовой', 'Производительность': '1 800 л/мин', 'Максимальное давление': '13 бар', 'Мощность': '15 кВт', 'Напряжение': '380 В', 'Тип привода': 'Ременной', 'Ресивер': '500 л', 'Гарантия': 'Условия уточняются' },
+    specs: { 'Гарантия': 'Условия уточняются' },
   },
   {
     id: 'product-2', categoryId: 'tools', categoryLabel: 'Инструмент', name: 'Набор инструмента для мастерской', sku: 'GR-0002', price: 27900,
@@ -47,7 +47,7 @@ const compareSource: CompareProduct[] = [
   },
 ]
 
-export const compareProducts: CompareProduct[] = compareSource.map(product => { const shared = checkoutProducts.find(p => p.id === product.id); return { ...product, categoryId: product.categoryId as CompareProduct['categoryId'], name: shared?.name ?? product.name, sku: shared?.sku ?? product.sku, href: shared?.href ?? product.href, price: shared?.price ?? product.price, oldPrice: promotionPrice(product.id, shared?.price ?? product.price).oldPrice, availability: shared ? formatAvailability(shared.availabilityStatus,shared.storeCount) : product.availability } })
+export const compareProducts: CompareProduct[] = compareSource.map(product => { const shared = checkoutProducts.find(p => p.id === product.id); return { ...product, specs:{...product.specs,...shared?.specs}, categoryId: product.categoryId as CompareProduct['categoryId'], name: shared?.name ?? product.name, sku: shared?.sku ?? product.sku, href: shared?.href ?? product.href, price: shared?.price ?? product.price, oldPrice: promotionPrice(product.id, shared?.price ?? product.price).oldPrice, availability: shared ? formatAvailability(shared.availabilityStatus,shared.storeCount) : product.availability } })
 
 export const demoCompareIds = ['remeza-vk-10-gr-0001', 'compressor-2', 'compressor-3', 'product-2']
 

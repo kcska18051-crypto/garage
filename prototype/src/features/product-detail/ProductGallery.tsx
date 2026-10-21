@@ -4,9 +4,9 @@ import { GalleryPurchasePanel, type CommercialState } from './ProductPurchase'
 import { Link } from 'react-router-dom'
 import { promotionHref } from '../../data/promotionPricing'
 
-type Props = { images: GalleryItem[]; name: string; offer: ProductOffer; state: CommercialState }
+type Props = { images: GalleryItem[]; name: string; offer: ProductOffer; state: CommercialState; quantity:number }
 
-export function ProductGallery({ images, name, offer, state }: Props) {
+export function ProductGallery({ images, name, offer, state, quantity }: Props) {
   const [active, setActive] = useState(offer.galleryIndex)
   const [open, setOpen] = useState(false)
   const [touchStart, setTouchStart] = useState<number | null>(null)
@@ -28,5 +28,5 @@ export function ProductGallery({ images, name, offer, state }: Props) {
     <span className="product-gallery__counter">{active + 1} из {images.length}</span>
     {modal && <p>{name} — {image.label}</p>}
   </div>
-  return <section className="product-gallery" aria-label="Галерея товара"><div className="product-gallery__layout">{thumbs()}{stage()}</div>{open && <div className="product-gallery-modal" role="dialog" aria-modal="true" aria-label="Увеличенный просмотр товара" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}><div className="product-gallery-modal__content"><button className="product-modal__close" type="button" aria-label="Закрыть изображение" onClick={() => setOpen(false)}>×</button><div className="product-gallery-modal__viewer">{thumbs(true)}{stage(true)}</div><GalleryPurchasePanel offer={offer} state={state} /></div></div>}</section>
+  return <section className="product-gallery" aria-label="Галерея товара"><div className="product-gallery__layout">{thumbs()}{stage()}</div>{open && <div className="product-gallery-modal" role="dialog" aria-modal="true" aria-label="Увеличенный просмотр товара" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}><div className="product-gallery-modal__content"><button className="product-modal__close" type="button" aria-label="Закрыть изображение" onClick={() => setOpen(false)}>×</button><div className="product-gallery-modal__viewer">{thumbs(true)}{stage(true)}</div><GalleryPurchasePanel offer={offer} state={state} quantity={quantity} /></div></div>}</section>
 }

@@ -10,10 +10,12 @@ import { ProductVariants } from '../features/product-detail/ProductVariants'
 import { useCommerce } from '../state/CommerceState'
 import '../features/product-detail/ProductDetail.css'
 
-export function ProductDetailPage() {
+export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string } = {}) {
   const [commercialState, setCommercialState] = useState<CommercialState>('available')
-  const [offer, setOffer] = useState<ProductOffer>(defaultOffer)
-  const [selections, setSelections] = useState(offerSelections(defaultOffer))
+  const [quantity,setQuantity] = useState(1)
+  const initialOffer = productDetail.offers.find(offer=>offer.id===initialOfferId) ?? defaultOffer
+  const [offer, setOffer] = useState<ProductOffer>(initialOffer)
+  const [selections, setSelections] = useState(offerSelections(initialOffer))
   const commerce = useCommerce()
   const favorite = commerce.favoriteIds.has(productDetail.id)
   const compared = commerce.compareIds.has(productDetail.id)
@@ -29,17 +31,18 @@ export function ProductDetailPage() {
     <header className="product-heading">
       <div className="product-labels">{productDetail.labels.map((label) => <span key={label}>{label}</span>)}</div>
       <h1>{productDetail.name}</h1>
-      <ProductHeadingTools sku={offer.sku} favorite={favorite} compared={compared} onToggleFavorite={() => commerce.toggleFavorite(productDetail.id)} onToggleCompare={() => commerce.toggleCompare(productDetail.id)} productPath={`/product/${productDetail.id}/`}>
+      <p className="product-data-note" aria-live="polite">Выбранный вариант: {Object.values(offer.options).join(' · ')}. Параметры демонстрационные, не подтверждены поставщиком.</p>
+      <ProductHeadingTools sku={offer.sku} favorite={favorite} compared={compared} onToggleFavorite={() => commerce.toggleFavorite(productDetail.id)} onToggleCompare={() => commerce.toggleCompare(productDetail.id)} productPath={`/product/${offer.id}/`}>
         <strong>★ {productDetail.rating}</strong><button type="button" onClick={() => document.querySelector('#reviews')?.scrollIntoView()}>{productDetail.reviewCount}</button><button type="button" onClick={() => document.querySelector('#questions')?.scrollIntoView()}>{productDetail.questionCount}</button><span>{productDetail.warranty}</span>
       </ProductHeadingTools>
     </header>
     <section className="product-hero">
-      <ProductGallery images={productDetail.gallery} name={productDetail.name} offer={offer} state={commercialState} />
+      <ProductGallery images={productDetail.gallery} name={productDetail.name} offer={offer} state={commercialState} quantity={quantity} />
       <div className="product-identity"><Link className="product-identity__brand" to="/brand/remeza/">{productDetail.brand}</Link><ProductVariants groups={productDetail.variantGroups} selections={selections} offers={productDetail.offers} onChange={selectVariant} /><h2>Ключевые характеристики</h2><dl className="product-key-specs">{productDetail.keySpecs.map(([name, value]) => <div key={name}><dt>{name}</dt><dd>{value}</dd></div>)}</dl><a className="product-all-specs" href="#characteristics">Все характеристики ↓</a></div>
-      <ProductPurchase offer={offer} state={commercialState} onStateChange={setCommercialState} />
+      <ProductPurchase offer={offer} state={commercialState} onStateChange={setCommercialState} quantity={quantity} onQuantityChange={setQuantity} />
     </section>
     <nav className="product-anchor-nav" aria-label="Разделы товара">{productDetail.sections.map((section) => <a key={section.id} href={`#${section.id}`}>{section.label}</a>)}</nav>
     <ProductSections offer={offer} />
-    <ProductMobilePurchase offer={offer} state={commercialState} />
+    <ProductMobilePurchase offer={offer} state={commercialState} quantity={quantity} />
   </main>
 }

@@ -2,6 +2,10 @@ import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import type { ServiceRequest } from '../../data/serviceTypes'
 import { isServicePhoneValid, localDateString, validatePhoto, validateRental } from './serviceRequestValidation'
 import './ServiceRequestDialog.css'
+import {useNavigate} from 'react-router-dom'
+import {useProfile} from '../../state/ProfileState'
+import {useAuth} from '../../state/AuthState'
+import {serviceRequestHref,type ProfileServiceRequest} from '../../state/serviceRequests'
 
 const emptyFields = { name: '', phone: '', model: '', description: '', car: '', comment: '', start: '', end: '', quantity: '1' }
 type Field = keyof typeof emptyFields
@@ -12,6 +16,13 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
   const [photo, setPhoto] = useState<string | null>(null)
   const [photoError, setPhotoError] = useState<string>()
   const [demoNumber, setDemoNumber] = useState<string>()
+  const [created,setCreated]=useState<ProfileServiceRequest|null>(null)
+  const [storageError,setStorageError]=useState('')
+  const [submissionId]=useState(()=>crypto.randomUUID())
+  const submitted=useRef(false)
+  const {createServiceRequest}=useProfile()
+  const {identity,openAuth}=useAuth()
+  const navigate=useNavigate()
   const dialogRef = useRef<HTMLElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const photoInputRef = useRef<HTMLInputElement>(null)
@@ -55,7 +66,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
     }
     return <div className="form-field" key={key}>
       <label htmlFor={inputId}>{label}</label>
-      {options.multiline ? <textarea {...props} rows={3} /> : <input {...props} type={options.type ?? 'text'} min={options.min} step={options.type === 'number' ? '1' : undefined} autoComplete={options.autoComplete} />}
+      {options.multiline ? <textarea {...props} rows={3} maxLength={4000} /> : <input {...props} maxLength={key==='name'?100:key==='phone'?64:200} type={options.type ?? 'text'} min={options.min} step={options.type === 'number' ? '1' : undefined} autoComplete={options.autoComplete} />}
       {errors[key] && <span className="field-error" id={`${inputId}-error`}>{errors[key]}</span>}
     </div>
   }
@@ -65,7 +76,8 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
   }
   const submit = (event: FormEvent) => {
     event.preventDefault()
-    if (demoNumber) return
+    if (submitted.current) return
+    setStorageError('')
     const next: Record<string, string> = {}
     if (!fields.name.trim()) next.name = 'Укажите имя'
     if (!isServicePhoneValid(fields.phone)) next.phone = 'Укажите телефон: от 10 до 15 цифр, без букв'
@@ -80,7 +92,11 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
     setErrors(next)
     const first = Object.keys(next)[0]
     if (first) { dialogRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus(); return }
-    setDemoNumber(`DEMO-${Date.now().toString(36).toUpperCase()}`)
+    submitted.current=true
+    const result=createServiceRequest({submissionId,request,fields,photoAttached:Boolean(photo)},identity?.phone??null)
+    if(!result.ok){submitted.current=false;setStorageError(result.error);return}
+    setCreated(result.record)
+    setDemoNumber(result.record.number)
     setFields(emptyFields)
     removePhoto()
   }
@@ -92,12 +108,21 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
         <h2 ref={headingRef} tabIndex={-1}>Демонстрационная заявка</h2>
         <p role="status">{request.kind === 'rental' ? 'Заявка на аренду отправлена' : 'Демонстрационная заявка создана'}</p>
         <p className="service-request-number">Номер: {demoNumber}</p>
-        <p>Реальная отправка не выполняется. Данные не сохраняются и не добавляются в историю обращений.</p>
+        <p>Статус: {created?.status}</p>
+        <p>Реальная отправка менеджеру не выполняется. Текстовые данные сохранены локально в этом браузере и доступны в истории после входа в соответствующий демопрофиль.</p>
+        {created?.photoAttached&&<p>Фото было приложено к форме, но сам файл не сохранён. После закрытия или перезагрузки предпросмотр недоступен.</p>}
         {request.kind === 'rental' && <p>Это демонстрация, не бронь. Доступность оборудования не изменяется.</p>}
+        {!created?.ownerPhone&&<p>Для доступа подтвердите телефон, указанный в заявке. Используется демонстрационный код, это не безопасная реальная авторизация.</p>}
+        <button className="button button--dark" type="button" onClick={()=>{
+          if(!created)return
+          const href=serviceRequestHref(created.id)
+          closeRef.current();navigate(href)
+          if(!identity||created.ownerPhone!==identity.phone)openAuth('login',{returnTo:href,requirePhoneConfirmation:true})
+        }}>Посмотреть заявку в личном кабинете</button>
         <button className="button button--dark" onClick={() => closeRef.current()}>Закрыть</button>
       </div> : <form onSubmit={submit} noValidate>
         <h2 ref={headingRef} tabIndex={-1}>{title}</h2>
-        <p className="service-request-note">Демонстрационная форма. Данные и фото остаются только в памяти открытой формы; реальная отправка не выполняется.</p>
+        <p className="service-request-note">Локальный демонстрационный прототип: текстовые данные сохранятся только в этом браузере. Не вводите реальные персональные данные на общем устройстве. Реальная отправка менеджеру не выполняется.</p>
         <p className="service-request-selection">{request.title}</p>
         {field('name', 'Ваше имя', { autoComplete: 'name' })}
         {field('phone', 'Телефон', { type: 'tel', autoComplete: 'tel' })}
@@ -114,7 +139,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
               setPhotoError(error)
               setPhoto(error ? null : URL.createObjectURL(file))
             }} />
-            <small id={`${id}-photo-help`}>Одно фото JPEG, PNG или WebP, до 5 МиБ. Без загрузки на сервер.</small>
+            <small id={`${id}-photo-help`}>Одно фото JPEG, PNG или WebP, до 5 МиБ. Без загрузки на сервер. В истории останется только факт приложения: сам файл не сохраняется и после закрытия или перезагрузки недоступен.</small>
             {photoError && <span id={`${id}-photo-error`} className="field-error">{photoError}</span>}
             {photo && <img className="service-request-photo" src={photo} alt="Предпросмотр фото неисправности" />}
             {(photo || photoError) && <button className="service-request-remove" type="button" onClick={removePhoto}>Удалить фото</button>}
@@ -126,6 +151,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
           {field('quantity', 'Количество', { type: 'number', min: '1' })}
           {field('comment', 'Комментарий', { multiline: true, optional: true })}
         </>}
+        {storageError&&<p className="field-error" role="alert">{storageError}</p>}
         <button className="button button--dark" type="submit">Отправить заявку</button>
       </form>}
     </section>

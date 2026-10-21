@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { AuthIntent } from '../../state/AuthState'
+import type { AuthIdentity, AuthIntent } from '../../state/AuthState'
+import { normalizePhoneIdentity } from '../../utils/phoneIdentity'
 import { DEMO_PASSWORD_ENTRY_ENABLED } from './authDemoConfig'
 import './AuthDialog.css'
 
@@ -9,14 +10,14 @@ type Mode = 'login' | 'register'
 type Method = 'sms' | 'password'
 
 const digits = (value: string) => value.replace(/\D/g, '')
-const isExistingPhone = (value: string) => digits(value) === '79000000000'
+const isExistingPhone = (value: string) => normalizePhoneIdentity(value) === '79000000000'
 
-export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent; onClose(): void; onComplete(message: string): void }) {
+export function AuthDialog({ intent, requirePhoneConfirmation = false, onClose, onComplete }: { intent: AuthIntent; requirePhoneConfirmation?: boolean; onClose(): void; onComplete(message: string, identity?: AuthIdentity): void }) {
   const navigate = useNavigate()
   const dialogRef = useRef<HTMLElement>(null)
-  const [mode, setMode] = useState<Mode>(intent === 'register' ? 'register' : 'login')
+  const [mode, setMode] = useState<Mode>(!requirePhoneConfirmation && intent === 'register' ? 'register' : 'login')
   const [method, setMethod] = useState<Method>('sms')
-  const [screen, setScreen] = useState<Screen>(intent === 'recovery' ? 'forgot' : intent === 'register' ? 'register' : 'login')
+  const [screen, setScreen] = useState<Screen>(requirePhoneConfirmation ? 'login' : intent === 'recovery' ? 'forgot' : intent === 'register' ? 'register' : 'login')
   const [phone, setPhone] = useState('')
   const [name, setName] = useState('')
   const [code, setCode] = useState('')
@@ -58,7 +59,11 @@ export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent
     setMode(next); setScreen(next === 'login' ? 'login' : 'register'); clearFeedback(); setPassword(''); setRepeatPassword('')
   }
   const startCode = (next: Screen) => { setCode(''); setTimer(30); clearFeedback(); setScreen(next) }
-  const validatePhone = () => phone.trim() ? true : (setError('Введите номер телефона'), false)
+  const validatePhone = () => normalizePhoneIdentity(phone) ? true : (setError(phone.trim() ? 'Введите корректный номер телефона: от 10 до 15 цифр' : 'Введите номер телефона'), false)
+  const completeConfirmed = (message: string) => {
+    const normalizedPhone = normalizePhoneIdentity(phone)
+    if (normalizedPhone) onComplete(message, { phone: normalizedPhone, phoneConfirmed: true })
+  }
   const verifyCode = (success: () => void) => {
     if (code === '1234') { clearFeedback(); success(); return }
     if (code === '0000') { setTimer(0); setError('Код истёк. Отправьте новый код.'); return }
@@ -79,9 +84,9 @@ export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent
 
   const submitLogin = (event: FormEvent) => {
     event.preventDefault(); clearFeedback()
-    if (method === 'password' && DEMO_PASSWORD_ENTRY_ENABLED) { onComplete('Вы вошли в демонстрационный профиль'); return }
+    if (!requirePhoneConfirmation && method === 'password' && DEMO_PASSWORD_ENTRY_ENABLED) { onComplete('Вы вошли в демонстрационный профиль'); return }
     if (!validatePhone()) return
-    if (method === 'sms') { startCode('login-code'); return }
+    if (requirePhoneConfirmation || method === 'sms') { startCode('login-code'); return }
     if (password !== 'garage123') { setError('Неверный телефон или пароль'); return }
     onComplete('Вы вошли в демонстрационный профиль')
   }
@@ -97,9 +102,9 @@ export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent
     event.preventDefault(); clearFeedback()
     if (password.length < 6) return setError('Пароль должен содержать не менее 6 символов')
     if (password !== repeatPassword) return setError('Пароли не совпадают')
-    onComplete('Пароль обновлён, вход выполнен')
+    completeConfirmed('Пароль обновлён, вход выполнен')
   }
-  const finishRegistration = () => onComplete(company ? 'Компания подключена, регистрация завершена' : 'Регистрация завершена')
+  const finishRegistration = () => completeConfirmed(company ? 'Компания подключена, регистрация завершена' : 'Регистрация завершена')
   const setOptionalPassword = (event: FormEvent) => {
     event.preventDefault(); clearFeedback()
     if (password.length < 6) return setError('Пароль должен содержать не менее 6 символов')
@@ -108,7 +113,7 @@ export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent
   }
 
   const codeForm = (title: string, action: string, onVerify: () => void) => <form className="auth-form" onSubmit={(event) => { event.preventDefault(); verifyCode(onVerify) }}>
-    <div><h2>{title}</h2><p>Код отправлен на {phone || 'указанный номер'}. Для демонстрации используйте 1234.</p></div>
+    <div><h2>{title}</h2><p>Код отправлен на {phone || 'указанный номер'} — имитация в демонстрации. Реальные SMS не отправляются. Используйте демо-код 1234.</p></div>
     <label>Код подтверждения<input autoFocus value={code} onChange={(event) => setCode(digits(event.target.value).slice(0, 4))} inputMode="numeric" autoComplete="one-time-code" /></label>
     <p className="auth-timer">{timer > 0 ? `Отправить повторно через 00:${String(timer).padStart(2, '0')}` : 'Код можно отправить повторно'}</p>
     {error && <p className="auth-message auth-message--error" role="alert">{error}</p>}{status && <p className="auth-message" role="status">{status}</p>}
@@ -121,11 +126,11 @@ export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent
   return <div className="auth-backdrop" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
     <section ref={dialogRef} className="auth-dialog" role="dialog" aria-modal="true" aria-label="Вход и регистрация">
       <header className="auth-dialog__header"><div><span>Личный кабинет</span><strong>ГАРАЖ</strong></div><button autoFocus type="button" aria-label="Закрыть" onClick={onClose}>×</button></header>
-      <div className="auth-tabs" role="tablist" aria-label="Авторизация"><button role="tab" aria-selected={mode === 'login'} onClick={() => showMode('login')}>Вход</button><button role="tab" aria-selected={mode === 'register'} onClick={() => showMode('register')}>Регистрация</button></div>
+      {!requirePhoneConfirmation && <div className="auth-tabs" role="tablist" aria-label="Авторизация"><button role="tab" aria-selected={mode === 'login'} onClick={() => showMode('login')}>Вход</button><button role="tab" aria-selected={mode === 'register'} onClick={() => showMode('register')}>Регистрация</button></div>}
       <div className="auth-dialog__body">
         {screen === 'login' && <form className="auth-form" onSubmit={submitLogin}>
           <div><h2>Войдите в профиль</h2><p>Заказы, документы и адреса будут доступны после входа.</p></div>
-          <div className="auth-methods" role="group" aria-label="Способ входа"><button type="button" aria-pressed={method === 'sms'} onClick={() => { setMethod('sms'); clearFeedback(); setPassword('') }}>По SMS</button><button type="button" aria-pressed={method === 'password'} onClick={() => { setMethod('password'); clearFeedback(); setPassword('') }}>По паролю</button></div>
+          {!requirePhoneConfirmation && <div className="auth-methods" role="group" aria-label="Способ входа"><button type="button" aria-pressed={method === 'sms'} onClick={() => { setMethod('sms'); clearFeedback(); setPassword('') }}>По SMS</button><button type="button" aria-pressed={method === 'password'} onClick={() => { setMethod('password'); clearFeedback(); setPassword('') }}>По паролю</button></div>}
           {method === 'password' && DEMO_PASSWORD_ENTRY_ENABLED && <p className="auth-message">Демонстрационный режим: нажмите «Войти», чтобы открыть личный кабинет. Заполнять поля не нужно.</p>}
           <label>Номер телефона<input value={phone} onChange={(event) => setPhone(event.target.value)} inputMode="tel" placeholder="+7 900 000-00-00" /></label>
           {method === 'password' && <label>Пароль<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" /></label>}
@@ -133,7 +138,7 @@ export function AuthDialog({ intent, onClose, onComplete }: { intent: AuthIntent
           <button className="profile-button profile-button--primary" type="submit">{method === 'sms' ? 'Получить код' : 'Войти'}</button>
           {method === 'password' && <button className="auth-link" type="button" onClick={() => { clearFeedback(); setPassword(''); setScreen('forgot') }}>Забыли пароль?</button>}
         </form>}
-        {screen === 'login-code' && codeForm('Введите код из SMS', 'Войти', () => onComplete('Вы вошли в демонстрационный профиль'))}
+        {screen === 'login-code' && codeForm('Введите код из SMS', 'Войти', () => completeConfirmed('Вы вошли в демонстрационный профиль'))}
         {screen === 'forgot' && <div className="auth-form"><div><h2>Восстановление доступа</h2><p>Можно войти по SMS без смены пароля или создать новый пароль.</p></div><button className="profile-button profile-button--primary" type="button" onClick={() => { setMethod('sms'); if (phone.trim()) startCode('login-code'); else { clearFeedback(); setScreen('login') } }}>Войти по SMS</button><button className="profile-button" type="button" onClick={() => { clearFeedback(); setScreen('recovery-phone') }}>Восстановить пароль</button><button className="auth-link" type="button" onClick={toHelp}>Нет доступа к телефону</button><button className="auth-link" type="button" onClick={back}>← Вернуться ко входу</button></div>}
         {screen === 'recovery-phone' && <form className="auth-form" onSubmit={submitRecoveryPhone}><div><h2>Подтвердите телефон</h2><p>Не сообщаем, зарегистрирован ли номер, до проверки кода.</p></div><label>Номер телефона<input value={phone} onChange={(event) => setPhone(event.target.value)} inputMode="tel" /></label>{error && <p className="auth-message auth-message--error" role="alert">{error}</p>}<button className="profile-button profile-button--primary" type="submit">Получить код</button><button className="auth-link" type="button" onClick={back}>← Назад</button><button className="auth-link" type="button" onClick={toHelp}>Нет доступа к телефону</button></form>}
         {screen === 'recovery-code' && codeForm('Подтвердите восстановление', 'Подтвердить', () => { setPassword(''); setRepeatPassword(''); setScreen('recovery-password') })}

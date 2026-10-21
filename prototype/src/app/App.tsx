@@ -5,10 +5,15 @@ import { Footer } from '../features/footer/Footer'
 import { AppRoutes } from './routes'
 import { RegionProvider } from '../state/RegionState'
 import { ProfileProvider } from '../state/ProfileState'
-import { AuthProvider } from '../state/AuthState'
+import { AuthProvider,useAuth } from '../state/AuthState'
+import {useEffect} from 'react'
+import {useProfile} from '../state/ProfileState'
 
 function AppContent() {
   const commerce = useCommerce()
+  const {identity}=useAuth()
+  const {claimServiceRequests}=useProfile()
+  useEffect(()=>{if(identity)claimServiceRequests(identity)},[identity,claimServiceRequests])
   return (
     <div className="app-shell">
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />

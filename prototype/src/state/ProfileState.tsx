@@ -1,6 +1,9 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { profileData, type ProfileOrder, type ProfileOrganization } from '../data/profileData'
 import { useCommerce } from './CommerceState'
+import type {ServiceRequestDraft} from '../data/serviceTypes'
+import {buildServiceRequest,readServiceRequests,saveServiceRequests,type ProfileServiceRequest,type ServiceCreationResult,type ServiceIdentity} from './serviceRequests'
+import {normalizePhoneIdentity} from '../utils/phoneIdentity'
 
 type UserData = typeof profileData.user
 type Recipient = ProfileOrder['recipient']
@@ -39,6 +42,10 @@ const writeAddresses = (addresses: ProfileAddress[]) => {
 }
 
 type ProfileContextValue = {
+  serviceRequests: ProfileServiceRequest[]
+  serviceStorageError: string
+  createServiceRequest(input:ServiceRequestDraft,ownerPhone:string|null):ServiceCreationResult
+  claimServiceRequests(identity:ServiceIdentity):void
   user: UserData
   orders: ProfileOrder[]
   organizations: ProfileOrganization[]
@@ -72,10 +79,41 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [recentProductIds, setRecentProductIds] = useState(profileData.recentlyViewedProductIds)
   const [notification, setNotification] = useState('')
   const [profileDeleted, setProfileDeleted] = useState(false)
+  const [serviceSnapshot]=useState(readServiceRequests)
+  const [serviceRequests,setServiceRequests]=useState(serviceSnapshot.records)
+  const serviceRef=useRef(serviceRequests)
+  const [serviceStorageError,setServiceStorageError]=useState(serviceSnapshot.error)
+  const createServiceRequest=useCallback((input:ServiceRequestDraft,ownerPhone:string|null):ServiceCreationResult=>{
+    if(serviceSnapshot.error)return{ok:false,error:serviceSnapshot.error}
+    const latest=readServiceRequests()
+    if(latest.error){setServiceStorageError(latest.error);return{ok:false,error:latest.error}}
+    const existing=latest.records.find(record=>record.submissionId===input.submissionId)
+    if(existing)return{ok:true,record:existing}
+    const record=buildServiceRequest(input,ownerPhone)
+    if(!record)return{ok:false,error:'Заявка не сохранена: проверьте данные и допустимую длину полей.'}
+    const next=[record,...latest.records]
+    const error=saveServiceRequests(next)
+    if(error){setServiceStorageError(error);return{ok:false,error}}
+    serviceRef.current=next;setServiceRequests(next);setServiceStorageError('')
+    return{ok:true,record}
+  },[serviceSnapshot.error])
+  const claimServiceRequests=useCallback((identity:ServiceIdentity)=>{
+    if(!identity.phoneConfirmed||serviceSnapshot.error)return
+    const phone=normalizePhoneIdentity(identity.phone)
+    if(!phone)return
+    const latest=readServiceRequests()
+    if(latest.error){setServiceStorageError(latest.error);return}
+    const next=latest.records.map(record=>!record.ownerPhone&&normalizePhoneIdentity(record.fields.phone)===phone?{...record,ownerPhone:phone}:record)
+    if(next.every((record,index)=>record===latest.records[index]))return
+    const error=saveServiceRequests(next)
+    if(error){setServiceStorageError(error);return}
+    serviceRef.current=next;setServiceRequests(next);setServiceStorageError('')
+  },[serviceSnapshot.error])
 
   useEffect(() => writeAddresses(addresses), [addresses])
 
   const value = useMemo<ProfileContextValue>(() => ({
+    serviceRequests,serviceStorageError,createServiceRequest,claimServiceRequests,
     user,
     orders,
     organizations,
@@ -96,7 +134,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     notify: setNotification,
     deleteProfile: () => setProfileDeleted(true),
     restoreProfile: () => setProfileDeleted(false),
-  }), [addresses, commerce, notification, orders, organizations, profileDeleted, recentProductIds, user])
+  }), [addresses, commerce, notification, orders, organizations, profileDeleted, recentProductIds, user,serviceRequests,serviceStorageError,createServiceRequest,claimServiceRequests])
 
   return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
 }

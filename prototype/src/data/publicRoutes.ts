@@ -13,6 +13,7 @@ export const publicRoutes = [...new Set([
   '/about','/contacts','/delivery','/payment','/warranty','/actions','/actions/completed',
   '/checkout/review','/checkout/delivery','/checkout/success','/profile','/profile/auth','/profile/recovery',
   ...['data','addresses','recently-viewed','favorites','documents','help','orders','organizations','services','reviews'].map(path=>`/profile/${path}`),
+  '/profile/services/request',
   ...profileData.orders.map(order=>`/profile/orders/${order.id}`),
   ...contactPoints.map(point=>`/contacts/${point.id}`),
   ...catalogCategories.map(category=>category.href),

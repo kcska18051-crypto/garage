@@ -23,6 +23,7 @@ import { ContactsPage } from '../pages/ContactsPage'
 import { AboutPage } from '../pages/AboutPage'
 import { StorePage } from '../pages/StorePage'
 import {ServicesIndexPage,ServiceCenterPage,CompressorRepairPage,RepairDetailPage,PaintMatchingPage,RentalCatalogPage,RentalDetailPage} from '../pages/ServicesPages'
+import {ProfileServiceRequestDetail} from '../features/profile/ProfileServiceRequests'
 
 export type RouteDefinition = { path: string; label: string }
 
@@ -87,6 +88,7 @@ export function AppRoutes() {
         <Route path="favorites" element={<ProfileFavoritesPage />} />
         <Route path="recently-viewed" element={<ProfileRecentlyViewedPage />} />
         <Route path="services" element={<ProfileServicesPage />} />
+        <Route path="services/request" element={<ProfileServiceRequestDetail/>}/>
         <Route path="reviews" element={<ProfileReviewsPage />} />
         <Route path="documents" element={<ProfileDocumentsPage />} />
         <Route path="help" element={<ProfileHelpPage />} />

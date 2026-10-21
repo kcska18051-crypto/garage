@@ -1,9 +1,15 @@
 import { useState } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render as rtlRender, screen } from '@testing-library/react'
+import type {ReactNode} from 'react'
+import {MemoryRouter} from 'react-router-dom'
+import {CommerceProvider} from '../../state/CommerceState'
+import {ProfileProvider} from '../../state/ProfileState'
+import {AuthProvider} from '../../state/AuthState'
 import userEvent from '@testing-library/user-event'
 import type { ServiceRequest } from '../../data/serviceTypes'
 import { ServiceRequestDialog } from './ServiceRequestDialog'
+const render=(ui:ReactNode)=>rtlRender(ui,{wrapper:({children})=><MemoryRouter><CommerceProvider><ProfileProvider><AuthProvider>{children}</AuthProvider></ProfileProvider></CommerceProvider></MemoryRouter>})
 
 const request = (kind: ServiceRequest['kind']): ServiceRequest => ({ kind, title: 'Демонстрационный компрессор', itemId: 'demo' })
 async function common(user: ReturnType<typeof userEvent.setup>) {
@@ -11,6 +17,7 @@ async function common(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText('Телефон'), '+7 (999) 123-45-67')
 }
 beforeEach(() => {
+  localStorage.removeItem('garage-service-requests-v1')
   vi.stubGlobal('URL', class extends URL {
     static createObjectURL = vi.fn(() => 'blob:local-preview')
     static revokeObjectURL = vi.fn()
@@ -41,8 +48,8 @@ describe('service request dialog', () => {
   })
   it.each(['repair', 'paint', 'rental'] as const)('accepts a valid %s request and explains the demo result', async (kind) => {
     const user = userEvent.setup()
-    const before = JSON.stringify(localStorage)
     render(<ServiceRequestDialog request={request(kind)} onClose={() => {}} />)
+    const before = localStorage.getItem('garage-cart-v2')
     await common(user)
     if (kind === 'repair') {
       await user.type(screen.getByLabelText('Модель оборудования'), 'Демо модель')
@@ -61,7 +68,8 @@ describe('service request dialog', () => {
     expect(screen.getByText(/DEMO-/)).toBeInTheDocument()
     expect(screen.getByText(/Реальная отправка/)).toBeInTheDocument()
     if (kind === 'rental') expect(screen.getByText(/не бронь/)).toBeInTheDocument()
-    expect(JSON.stringify(localStorage)).toBe(before)
+    expect(localStorage.getItem('garage-cart-v2')).toBe(before)
+    expect(JSON.parse(localStorage.getItem('garage-service-requests-v1')!).filter((record:{seed:boolean})=>!record.seed)).toHaveLength(1)
     expect(screen.queryByLabelText('Ваше имя')).not.toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Демонстрационная заявка' })).toHaveFocus()
     if (kind === 'repair') expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:local-preview')

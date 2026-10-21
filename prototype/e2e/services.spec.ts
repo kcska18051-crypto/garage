@@ -50,7 +50,7 @@ test('real repair hierarchy links, all details and demo submissions',async({page
     await dialog.getByRole('button',{name:'Отправить заявку'}).click()
     await expect(dialog.getByRole('status')).toHaveText('Демонстрационная заявка создана')
     await expect(dialog).toContainText('DEMO-')
-    await expect(dialog).toContainText('Реальная отправка не выполняется')
+    await expect(dialog).toContainText('Реальная отправка менеджеру не выполняется')
     await page.keyboard.press('Escape');await expect(trigger).toBeFocused()
     await page.getByRole('link',{name:'← Вернуться к направлению'}).click()
   }
@@ -69,7 +69,7 @@ test('paint has its own form without subcategories',async({page})=>{
 })
 test('rental list and every own detail keep dates, quantity and cart independent',async({page})=>{
   await page.goto('/services/rental')
-  const before=await page.evaluate(()=>JSON.stringify(localStorage))
+  const before=await page.evaluate(()=>localStorage.getItem('garage-cart-v2'))
   await page.getByRole('button',{name:/Арендовать: Домкрат/}).click()
   await expect(page.getByRole('dialog')).toContainText('Домкрат подкатной профессиональный')
   await page.keyboard.press('Escape')
@@ -100,7 +100,7 @@ test('rental list and every own detail keep dates, quantity and cart independent
     await expect(dialog).toContainText('не бронь')
     await expect(dialog).toContainText('DEMO-')
     await page.keyboard.press('Escape');await expect(trigger).toBeFocused()
-    expect(await page.evaluate(()=>JSON.stringify(localStorage))).toBe(before)
+    expect(await page.evaluate(()=>localStorage.getItem('garage-cart-v2'))).toBe(before)
     await page.getByRole('link',{name:'← Все позиции аренды'}).click()
   }
 })

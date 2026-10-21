@@ -57,7 +57,7 @@ describe('profile secondary sections', () => {
 
   it('shows service and review lifecycle states', () => {
     const { unmount } = open('/profile/services')
-    for (const status of ['Принята', 'В работе', 'Требуется уточнение', 'Завершена']) expect(screen.getByText(status)).toBeInTheDocument()
+    for (const status of ['Согласовано', 'Уточняем детали', 'Выполнено']) expect(screen.getAllByText(status).length).toBeGreaterThan(0)
     unmount(); open('/profile/reviews')
     for (const status of ['Опубликован', 'На модерации', 'Отклонён']) expect(screen.getByText(status)).toBeInTheDocument()
   })

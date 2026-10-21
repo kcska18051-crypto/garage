@@ -9,7 +9,7 @@ it('writes real entry points for implemented screens and existing SKUs but not i
   try {
     await writeFile(join(directory,'index.html'),'<html>Garage entry</html>')
     await writeSpaRoutes(pathToFileURL(`${directory}/`),await loadPublicRoutes())
-    const servicePaths=['services','services/service-center','services/service-center/compressor-repair',...['screw','piston','diesel'].map(id=>`services/service-center/compressor-repair/${id}`),'services/paint-matching','services/rental',...['hydraulic-jack','tool-set','piston-compressor'].map(id=>`services/rental/${id}`),'services/workshop']
+    const servicePaths=['services','services/service-center','services/service-center/compressor-repair',...['screw','piston','diesel'].map(id=>`services/service-center/compressor-repair/${id}`),'services/paint-matching','services/rental',...['hydraulic-jack','tool-set','piston-compressor'].map(id=>`services/rental/${id}`),'services/workshop','profile/services/request']
     for(const path of ['about','news','compare','cart','search','profile/favorites','product/product-1','product/product-2','product/product-5','product/remeza-vk-10-220-55',...servicePaths]) expect(await readFile(join(directory,path,'index.html'),'utf8')).toBe('<html>Garage entry</html>')
     expect(await readFile(join(directory,'404.html'),'utf8')).toBe('<html>Garage entry</html>')
     await expect(readFile(join(directory,'product/not-a-real-sku/index.html'))).rejects.toThrow()

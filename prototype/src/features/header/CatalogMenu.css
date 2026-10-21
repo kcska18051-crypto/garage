@@ -1,0 +1,36 @@
+.catalog-menu-layer { inset: 0; pointer-events: none; position: fixed; z-index: 90; }
+.catalog-menu-backdrop { background: rgb(25 25 23 / .28); bottom: 0; left: 0; pointer-events: auto; position: absolute; right: 0; top: var(--catalog-menu-top); }
+.catalog-mega { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0 0 1rem 1rem; box-shadow: var(--shadow-float); display: flex; flex-direction: column; left: 50%; max-height: calc(100dvh - var(--catalog-menu-top) - 1rem); overflow: hidden; pointer-events: auto; position: absolute; top: var(--catalog-menu-top); transform: translateX(-50%); width: min(calc(var(--container) - 2 * var(--gutter)),calc(100% - 2 * var(--gutter))); }
+.catalog-mega__toolbar { align-items: center; border-bottom: 1px solid var(--color-border); display: flex; flex: 0 0 auto; justify-content: space-between; min-height: 3.4rem; padding: .5rem 1.25rem; }
+.catalog-mega a { text-decoration: none; }
+.catalog-mega a:hover { text-decoration: underline; text-underline-offset: .2rem; }
+.catalog-mega button { background: transparent; border: 0; color: inherit; cursor: pointer; font: inherit; text-align: left; }
+.catalog-mega__toolbar a { font-size: .88rem; font-weight: 700; }
+.catalog-mega__toolbar button { border-radius: .4rem; min-height: 2.5rem; min-width: 2.5rem; }
+.catalog-mega__toolbar button[aria-label] { font-size: 1.6rem; text-align: center; }
+.catalog-mega__layout { display: grid; grid-template-columns: minmax(13rem, .29fr) minmax(0, 1fr); min-height: 0; }
+.catalog-mega__roots { background: var(--color-background); border-right: 1px solid var(--color-border); overflow-y: auto; overscroll-behavior: contain; padding: .75rem; }
+.catalog-mega__roots button { align-items: center; border-radius: .5rem; display: flex; font-size: .9rem; font-weight: 650; gap: 1rem; justify-content: space-between; min-height: 3.4rem; overflow-wrap: anywhere; padding: .85rem .75rem; width: 100%; }
+.catalog-mega__roots button[aria-pressed=true] { background: var(--color-text); color: white; }
+.catalog-mega__roots button:hover:not([aria-pressed=true]) { background: var(--color-placeholder-1); }
+.catalog-mega__details { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1.4rem 1.7rem 1.8rem; }
+.catalog-mega h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 .7rem; overflow-wrap: anywhere; }
+.catalog-mega__all { display: inline-block; font-size: .88rem; margin-bottom: 1.5rem; text-decoration: underline !important; text-underline-offset: .2rem; }
+.catalog-mega__groups { align-items: start; display: grid; gap: 1.6rem 2rem; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.catalog-mega__group { min-width: 0; }
+.catalog-mega__group-title { display: inline-block; font-size: .95rem; font-weight: 750; line-height: 1.4; }
+.catalog-mega__group ul { display: grid; gap: .6rem; list-style: none; margin: .75rem 0 0; padding: 0; }
+.catalog-mega__group li a { color: var(--color-text-muted); display: block; font-size: .82rem; line-height: 1.45; overflow-wrap: anywhere; }
+.catalog-mega :is(button,a):focus-visible, .catalog-button:focus-visible { outline: 2px solid var(--color-text); outline-offset: 3px; }
+.catalog-mega__roots button[aria-pressed=true]:focus-visible { outline-offset: -4px; outline-color: white; }
+@media (min-width:768px) and (max-width:1199px) { .catalog-mega__groups { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width:767px) {
+  .catalog-menu-backdrop { inset: 0; }
+  .catalog-mega { border: 0; border-radius: 0; height: 100dvh; inset: 0; left: 0; max-height: none; padding-top: env(safe-area-inset-top); transform: none; width: 100%; }
+  .catalog-mega__toolbar { padding-inline: 1rem; }
+  .catalog-mega__mobile-title { flex: 0 0 auto; padding: 1rem 1rem .5rem; }
+  .catalog-mega__mobile-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: .5rem 1rem calc(1.5rem + env(safe-area-inset-bottom)); }
+  .catalog-mega__mobile-body nav { display: grid; }
+  .catalog-mega__step { align-items: center; border-bottom: 1px solid var(--color-border) !important; display: flex; font-size: .95rem; gap: 1rem; justify-content: space-between; line-height: 1.4; min-height: 3.5rem; padding: .85rem .2rem; width: 100%; }
+}
+.catalog-overlay-open { overflow: hidden; }

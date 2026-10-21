@@ -6,7 +6,7 @@ import { SearchPanel } from './SearchPanel'
 
 const popular = ['Компрессоры', 'Инструмент для мастерской', 'Краскопульты']
 
-export function SearchBox({ compact = false }: { compact?: boolean }) {
+export function SearchBox({ compact = false, suspended = false }: { compact?: boolean; suspended?: boolean }) {
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [history, setHistory] = useState(readSearchHistory)
@@ -19,6 +19,8 @@ export function SearchBox({ compact = false }: { compact?: boolean }) {
   const remember = (value: string) => { addSearchHistory(value); setHistory(readSearchHistory()) }
   const runQuery = (value: string) => { const next = value.trim(); if (!next) return; setQuery(next); remember(next); close(); navigate(`/search?q=${encodeURIComponent(next)}`) }
   const chooseSuggestion = (item: SearchSuggestion) => { remember(query.trim() || item.name); close() }
+
+  useEffect(() => { if (suspended) { setOpen(false); setActive(-1) } }, [suspended])
 
   useEffect(() => {
     const onPointer = (event: MouseEvent) => { if (!root.current?.contains(event.target as Node)) close() }

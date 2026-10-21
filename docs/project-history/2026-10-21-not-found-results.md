@@ -31,4 +31,11 @@ Vite preview — SPA-сервер и может отдавать HTTP200 для 
 
 ## Состояние публикации
 
-Публичная проверка и SHA дополняются после публикации. Локальный HEAD остаётся6fb6049; ранее опубликованные layout-изменения сохранены в рабочей копии, незавершённая пагинация — отдельно в stash. Публиковать только явно перечисленные файлы404 поверх origin/codex/homepage-prototype, безforce и без включения stash.
+Код **fd9651c7d20fb7c23892f77e20f140c31175f2db**, ветка `codex/homepage-prototype`. [CI39601992808](https://github.com/kcska18051-crypto/garage/actions/runs/39601992808): **340/340** unit-тестов в54файлах,62,22s; build/deploy success. JS `index-CzWbKQhW.js`, CSS `index-8OtTkiF3.css` совпадают с production-preview.
+
+На GitHub Pages повторены **136/136** проверок17ошибочныхадресов ×slash/no-slash ×1920/1440/390/360: настоящийHTTP404 при прямом запросе, наш экран404, актуальныйJS, исходныеpath/query, `noindex, follow`, отсутствиепереполнения и корректныйнизfooter. Перезагрузка на4ширинах — PASS. Публично1920/390 также проверены10существующих маршрутов (20/20HTTP200, без404), кнопки, Back/Forward, поиск и очистка404метаданных — PASS.
+
+Просмотр: [страница404](https://kcska18051-crypto.github.io/garage/unknown-test-path/?v=fd9651c), [обычный каталог](https://kcska18051-crypto.github.io/garage/catalog/?v=fd9651c). Скриншоты: [1920](screenshots/not-found/public-1920.png), [1440](screenshots/not-found/public-1440.png), [390](screenshots/not-found/public-390.png), [360](screenshots/not-found/public-360.png).
+
+Публикация выполнена GitHub API: tree на базе9f215827 → commitfd9651c → update_ref с expected_sha, безforce. Включены только11явно перечисленных файлов404 (код, тесты, отчёт), не stash. Локальный HEAD остаётся6fb6049; ранее опубликованные layout-изменения и теперь404 сохранены в рабочей копии. Перед дальнейшим локальнымpush требуется аккуратная синхронизация без потери изменений. Незавершённая пагинация по-прежнему отдельно в stash `pagination awaiting explicit demo-content publication approval`.
+

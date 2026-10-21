@@ -33,4 +33,21 @@
 
 ## Публикация
 
-Ожидает commit/deploy и отдельной проверки публичного сайта. До этой записи пакет не считается опубликованным.
+Код опубликован коммитом **`7f26541211d1c78f362d49563110a187d474d856`**. [CI / deploy](https://github.com/kcska18051-crypto/garage/actions/runs/39557350997) — success. Публичный asset `index-DT9xb9vo.js` совпадает с проверенной сборкой.
+
+- Скрипт `prototype/scripts/verify-public-A-E.mjs`: HTTP200 у **всех 137** известных URL; дополнительно без слэша about/news/compare/product-1/вариант 220 В — конечный HTTP200 после штатного redirect.
+- Чистые браузерные контексты **360 / 390 / 1440 / 1920**: все три поисковых запроса, пустой результат, собственные PDP product-1/2/5 и собственные ID в корзине, прямой выбранный вариант 220 В + reload, количество 2 (мобильная кнопка/основная кнопка), КП 338000 и GR-220-55, производительность 10 л/мин, якорь options + reload, отсутствие overflow, неизвестный SKU HTTP404 и 404 UI — PASS.
+- Отдельно на публичной версии: ссылка «Поделиться» содержит `/garage/product/remeza-vk-10-220-55/`; передача корзины с опцией для двух вариантов сохраняет **обе** связи после импорта в чистую сессию и перезагрузки — PASS.
+- Собственные Playwright-контексты и браузеры закрыты в `finally`. Общий браузер пользователя не занимался. Независимая приёмка аналитиком ещё не заявляется выполненной.
+
+## Прямые ссылки
+
+- [Главная](https://kcska18051-crypto.github.io/garage/?v=7f26541)
+- [Поиск Remeza](https://kcska18051-crypto.github.io/garage/search/?q=Remeza&v=7f26541)
+- [Домкрат](https://kcska18051-crypto.github.io/garage/product/product-1/?v=7f26541)
+- [Набор инструмента](https://kcska18051-crypto.github.io/garage/product/product-2/?v=7f26541)
+- [Диагностический стенд](https://kcska18051-crypto.github.io/garage/product/product-5/?v=7f26541)
+- [Remeza, выбранные 220 В / 5,5 кВт](https://kcska18051-crypto.github.io/garage/product/remeza-vk-10-220-55/?v=7f26541)
+- [Сравнение](https://kcska18051-crypto.github.io/garage/compare/?v=7f26541)
+- [О компании — только исправлен маршрут](https://kcska18051-crypto.github.io/garage/about/?v=7f26541)
+- [Новости](https://kcska18051-crypto.github.io/garage/news/?v=7f26541)

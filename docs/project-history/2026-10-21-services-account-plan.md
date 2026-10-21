@@ -23,31 +23,31 @@
 
 Files: AuthState.tsx/AuthDialog.tsx, utils/phoneIdentity.ts, релевантные auth tests. Контракт: `AuthIdentity={phone:string;phoneConfirmed:boolean}`; `useAuth().identity:AuthIdentity|null`; `openAuth(intent?,{returnTo?,requirePhoneConfirmation?})`; `completeAuth(message,identity?)`. Legacyactive/password-demo identity79000000000/false; SMS/registration/recoverycode identity normalized/true. Session reload и logout чистят/восстанавливают единое состояние. Forced confirmation оставляет SMS без password-bypass. Остальные компоненты не менять.
 
-- [ ] RED→GREEN tests identity/default/forceSMS/returnTo/reload/logout; existing auth tests.
-- [ ] Возврат отчёта без отдельного release.
+- [x] RED→GREEN tests identity/default/forceSMS/returnTo/reload/logout; existing auth tests.
+- [x] Возврат отчёта без отдельного release.
 
 ## Task2 — общий store/ProfileState
 
 Files: state/serviceRequests.ts/tests, ProfileState.tsx, serviceTypes при необходимости.
 Interfaces: `createServiceRequest(input,ownerPhone):{ok:true;record}|{ok:false;error}`; `claimServiceRequests(identity)`; `serviceRequests`/storagewarning в useProfile. Поля из ТЗ, submissionId обязателен для idempotency; только разрешённые поля сериализуются, defaults из старыхprofileData.serviceRequests. Store не зависит от React или auth UI.
 
-- [ ] RED→GREEN stable IDs/dedupe/reload/owner/claim/denial/quota/corrupt/fieldlimits.
-- [ ] Persist-before-success, ref защищает двойную отправку; использовать существующий ProfileProvider.
+- [x] RED→GREEN stable IDs/dedupe/reload/owner/claim/denial/quota/corrupt/fieldlimits.
+- [x] Persist-before-success, ref защищает двойную отправку; использовать существующий ProfileProvider.
 
 ## Task3 — UI integration
 
 Files: ServiceRequestDialog +tests/CSS; новый features/profile/ProfileServiceRequests.tsx/CSS/tests; убрать старую дублирующую историю ProfileSections; ProfilePages wrapper/routes/publicRoutes/ProfileShell/App identity sync.
 
-- [ ] RED→GREEN формы создают запись и CTA; guest CTA закрывает одну модалку до auth, сохраняет exact returnTo, без вложенных overlays.
-- [ ] Единый список и query-detail с безопасным denial/unknown, fields/исторические статусы/timeline; никакого согласования менеджером.
-- [ ] Фото onlyflag+explicittext, storage errors retaininputs, а11y/focus/mobile safearea.
-- [ ] Обновить старые тесты/дисклеймеры по новой спецификации, не ослаблять поведение.
+- [x] RED→GREEN формы создают запись и CTA; guest CTA закрывает одну модалку до auth, сохраняет exact returnTo, без вложенных overlays.
+- [x] Единый список и query-detail с безопасным denial/unknown, fields/исторические статусы/timeline; никакого согласования менеджером.
+- [x] Фото onlyflag+explicittext, storage errors retaininputs, а11y/focus/mobile safearea.
+- [x] Обновить старые тесты/дисклеймеры по новой спецификации, не ослаблять поведение.
 
 ## Task4 — acceptance/release
 
-- [ ] E2E3forms/reload/list/detail; matching/mismatch/forcedSMS/logout;doubleclick/storageerror;360/390/1440/1920/screenshots.
-- [ ] Read-only review, исправления важного с RED→GREEN, fullsuite CI/build/publicHTTP/reload/flow.
-- [ ] Один code release, отчёт/links/SHA, browserclose; независимая приёмка отдельно.
+- [x] E2E3forms/reload/list/detail; matching/mismatch/forcedSMS/logout;doubleclick/storageerror;360/390/1440/1920/screenshots.
+- [x] Read-only review, исправления важного с RED→GREEN, fullsuite CI/build/publicHTTP/reload/flow.
+- [x] Один code release, отчёт/links/SHA, browserclose; независимая приёмка отдельно.
 
 ## Progress ledger
 
@@ -56,3 +56,5 @@ Files: ServiceRequestDialog +tests/CSS; новый features/profile/ProfileServi
 21.10 реализация Tasks1–3 завершена до публикации. Auth RED→GREEN34теста; store RED5→GREEN5, дополнительный corrupt-after-mount RED→GREEN6; integration RED3→GREEN3. E2Eaccount7/7 (триформы×4widths+privacy/quota/double/password); прежние услуги12/12. Source review без блокирующих дефектов ядра. Два замечания reviewer о ProfileData.phone и фиксированном dashboardcount повышены до обязательной консистентности нового flow: regression3RED→GREEN, итог45/45 в6файлах. Task3 включает ProfileOverview и отображение authphone в ProfileData. Build150routes GREEN. Full local run без результата остановлен; полный CI ожидается после codecommit. Публикация/публичная проверка ещё не объявлены завершёнными.
 
 Ruling: фото толькоflag/предпросмотрвформе — разрешённый пользователем вариант; ценаошибки яснадисклеймером, не обещаем сохранениефайла. Query-detail staticentry — чтобы произвольная локальнаязаявка давалаHTTP200; браузербезэтогоlocalStorageпокажет недоступность. Reviewer declined realbackend/security/serverconcurrency — вне явно локального ТЗ; не выдаём локальныйauth за защиту. Browser/public/CI остаются задачей4. Удаление локальнойистории черезUI не добавлено: не входило в ТЗ; предупреждение об общем устройстве есть, данные можно удалить средствами браузера. Сохранённые заявки не синхронизируются между устройствами.
+
+Task4 complete:code `bd31457`, CI318/318+build/deploy success, public4widths×3forms+guest privacy/exactintent/reloadHTTP200 PASS. Итоговый [отчёт](2026-10-21-services-account-results.md). Собственный браузер закрыт, общий не использовался, меню каталога не изменено. Независимая приёмка отдельно.

@@ -1,7 +1,7 @@
 import {expect,test,type Page} from '@playwright/test'
 
 const repairBase='/services/service-center/compressor-repair'
-const routes=['/services','/services/service-center',repairBase,...['screw','piston','diesel'].map(id=>`${repairBase}/${id}`),'/services/paint-matching','/services/rental',...['hydraulic-jack','tool-set','piston-compressor'].map(id=>`/services/rental/${id}`)]
+const routes=['/services','/services/service-center',repairBase,...['screw','piston','diesel'].map(id=>`${repairBase}/${id}`),'/services/paint-matching','/services/rental',...['compressors','tools','hydraulic-jack','tool-set','piston-compressor','screw-compressor'].map(id=>`/services/rental/${id}`)]
 async function contacts(page:Page,paint=false) {
   await page.getByLabel(paint?'Имя':'Ваше имя',{exact:true}).fill('Демонстрация')
   await page.getByLabel('Телефон',{exact:true}).fill('+7 (999) 123-45-67')
@@ -70,13 +70,15 @@ test('paint opens the chosen child before its own form',async({page})=>{
 test('rental list and every own detail keep dates, quantity and cart independent',async({page})=>{
   await page.goto('/services/rental')
   const before=await page.evaluate(()=>localStorage.getItem('garage-cart-v2'))
-  await page.getByRole('button',{name:/Арендовать: Домкрат/}).click()
-  await expect(page.getByRole('dialog')).toContainText('Домкрат подкатной профессиональный')
+  await page.getByRole('link',{name:'Аренда компрессоров',exact:true}).click()
+  await page.getByRole('button',{name:/Арендовать: Компрессор поршневой/}).click()
+  await expect(page.getByRole('dialog')).toContainText('Компрессор поршневой')
   await page.keyboard.press('Escape')
-  for(const id of ['hydraulic-jack','tool-set','piston-compressor']) {
+  for(const [id,category] of [['hydraulic-jack','tools'],['tool-set','tools'],['piston-compressor','compressors'],['screw-compressor','compressors']]) {
+    await page.goto(`/services/rental/${category}`)
     await page.locator(`.services-grid a[href="/services/rental/${id}"]`).first().click()
     await expect(page).toHaveURL(new RegExp(`/services/rental/${id}$`))
-    await expect(page.locator('main h1')).not.toHaveText('Аренда оборудования и инструментов')
+    await expect(page.locator('main h1')).not.toHaveText('Аренда оборудования и инструмента')
     const heading=await page.locator('main h1').innerText()
     const trigger=page.getByRole('button',{name:'Арендовать',exact:true})
     await trigger.click()

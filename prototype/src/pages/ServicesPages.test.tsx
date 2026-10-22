@@ -8,7 +8,7 @@ const base='/services/service-center/compressor-repair'
 it.each([
   ['/services','Услуги'],['/services/service-center','Сервисный центр по ремонту'],[base,'Ремонт компрессоров'],
   [base+'/screw','Ремонт винтовых компрессоров'],[base+'/piston','Ремонт поршневых компрессоров'],[base+'/diesel','Ремонт дизельных компрессоров'],
-  ['/services/paint-matching','Подбор автоэмали'],['/services/rental','Аренда оборудования и инструментов'],
+  ['/services/paint-matching','Подбор автоэмали'],['/services/rental','Аренда оборудования и инструмента'],
   ['/services/rental/hydraulic-jack','Домкрат подкатной профессиональный'],['/services/rental/tool-set','Набор инструмента для мастерской'],['/services/rental/piston-compressor','Компрессор поршневой'],
 ])('opens the implemented service route %s', (path,title)=>{
   open(path)

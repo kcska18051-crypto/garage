@@ -8,6 +8,7 @@ import { useCommerce } from '../state/CommerceState'
 import { useRegion } from '../state/RegionState'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ContactDialog } from '../features/forms/ContactDialog'
+import { RentalAvailability } from '../features/services/RentalAvailability'
 import { ProductDetailPage } from './ProductDetailPage'
 import { NotFoundPage } from './NotFoundPage'
 import { useProfile } from '../state/ProfileState'
@@ -25,6 +26,7 @@ function DemoProduct({ product }: { product:DemoProduct }) {
       <figure><span className={`product-teaser__visual product-teaser__visual--${product.imageVariant%4}`} role="img" aria-label={`Демозаглушка изображения: ${product.name}`}><i/><b/></span><figcaption>Место для изображения товара · {product.name}</figcaption></figure>
       <aside className="demo-pdp__purchase" aria-label="Покупка товара">
         {product.brand && <p>Бренд: {product.brand}</p>}
+        <RentalAvailability productId={product.id}/>
         <div className="demo-pdp__price">{promo.oldPrice && <del>{money(promo.oldPrice)}</del>}<strong>{product.purchaseMode==='quote'?'Цена по запросу':money(product.price)}</strong></div>
         <p>{formatAvailability(product.availabilityStatus,product.storeCount)}</p>
         <p>Получение в городе {region}: условия и срок уточняются при оформлении.</p>

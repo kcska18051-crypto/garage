@@ -7,6 +7,7 @@ import { ProductHeadingTools } from '../features/product-detail/ProductHeadingTo
 import { ProductMobilePurchase, ProductPurchase, type CommercialState } from '../features/product-detail/ProductPurchase'
 import { ProductSections } from '../features/product-detail/ProductSections'
 import { ProductVariants } from '../features/product-detail/ProductVariants'
+import { RentalAvailability } from '../features/services/RentalAvailability'
 import { useCommerce } from '../state/CommerceState'
 import '../features/product-detail/ProductDetail.css'
 
@@ -39,6 +40,7 @@ export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string }
       <ProductHeadingTools sku={offer.sku} favorite={favorite} compared={compared} onToggleFavorite={() => commerce.toggleFavorite(productDetail.id)} onToggleCompare={() => commerce.toggleCompare(productDetail.id)} productPath={`/product/${offer.id}/`}>
         <strong>★ {productDetail.rating}</strong><button type="button" onClick={() => document.querySelector('#reviews')?.scrollIntoView()}>{productDetail.reviewCount}</button><button type="button" onClick={() => document.querySelector('#questions')?.scrollIntoView()}>{productDetail.questionCount}</button><span>{productDetail.warranty}</span>
       </ProductHeadingTools>
+      <RentalAvailability key={offer.id} productId={offer.id}/>
     </header>
     <section className="product-hero">
       <ProductGallery images={productDetail.gallery} name={productDetail.name} offer={offer} state={commercialState} quantity={quantity} />

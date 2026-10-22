@@ -22,7 +22,7 @@ import { InfoPage } from '../pages/InfoPage'
 import { ContactsPage } from '../pages/ContactsPage'
 import { AboutPage } from '../pages/AboutPage'
 import { StorePage } from '../pages/StorePage'
-import {ServicesIndexPage,ServiceCenterPage,CompressorRepairPage,RepairDetailPage,PaintMatchingPage,PaintDetailPage,RentalCatalogPage,RentalDetailPage} from '../pages/ServicesPages'
+import {ServicesIndexPage,ServiceCenterPage,CompressorRepairPage,RepairDetailPage,PaintMatchingPage,PaintDetailPage,RentalCatalogPage,RentalCategoryPage,RentalDetailPage} from '../pages/ServicesPages'
 import {ProfileServiceRequestDetail} from '../features/profile/ProfileServiceRequests'
 
 export type RouteDefinition = { path: string; label: string }
@@ -44,6 +44,8 @@ export function AppRoutes() {
       <Route path="/services/paint-matching" element={<PaintMatchingPage/>}/>
       <Route path="/services/paint-matching/:paintSlug" element={<PaintDetailPage/>}/>
       <Route path="/services/rental" element={<RentalCatalogPage/>}/>
+      <Route path="/services/rental/compressors" element={<RentalCategoryPage categoryId="compressors"/>}/>
+      <Route path="/services/rental/tools" element={<RentalCategoryPage categoryId="tools"/>}/>
       <Route path="/services/rental/:rentalSlug" element={<RentalDetailPage/>}/>
       <Route path="/services/workshop" element={<Navigate to="/services" replace/>}/>
       <Route path="/services/*" element={<NotFoundPage/>}/>

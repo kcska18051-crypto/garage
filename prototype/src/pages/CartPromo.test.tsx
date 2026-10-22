@@ -43,9 +43,11 @@ describe('applied promo is a persisted calculation, not a message', () => {
   it('shows before/after prices and carries the same discounted total to checkout and success', async () => {
     const view = open()
     const user = await apply(' 123 ')
-    expect(screen.getByRole('status')).toHaveTextContent('Промокод 123 применён — скидка 10%')
+    expect(screen.getByRole('status')).toHaveTextContent('Промокод 123 применён')
     expect(screen.getByTestId('order-total')).toHaveTextContent(/42\s120/)
-    expect(screen.getByTestId('total-before-promo')).toHaveTextContent(/46\s800/)
+    expect(screen.queryByTestId('total-before-promo')).not.toBeInTheDocument()
+    expect(screen.getByTestId('product-discount')).toHaveTextContent(/2\s268/)
+    expect(screen.getByTestId('promo-discount')).toHaveTextContent(/4\s680/)
     expect(screen.getAllByTestId('line-old-price')).toHaveLength(2)
     await user.click(screen.getByRole('link', { name: 'Перейти к оформлению' }))
     expect(screen.getByRole('complementary', { name: 'Итоги заказа' })).toHaveTextContent(/42\s120/)

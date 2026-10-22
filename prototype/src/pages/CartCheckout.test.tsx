@@ -64,23 +64,23 @@ describe('cart and checkout', () => {
     expect(screen.getAllByTestId('cart-line')).toHaveLength(2)
     expect(screen.getAllByTestId('cart-line')[0]).toHaveTextContent(/В наличии|Под заказ/)
     expect(screen.getByRole('link', { name: 'Корзина: 3' })).toBeInTheDocument()
-    expect(screen.getByText('3 товара на сумму')).toBeInTheDocument()
+    expect(screen.getByText('3 товара до скидок')).toBeInTheDocument()
     await user.click(within(screen.getAllByTestId('cart-line')[0]).getByRole('button', { name: 'Увеличить количество' }))
     expect(screen.getByRole('link', { name: 'Корзина: 4' })).toBeInTheDocument()
     expect(screen.getByText('Итого к оформлению')).toBeInTheDocument()
     expect(screen.getByRole('checkbox', { name: 'Выбрать все товары' })).toBeChecked()
-    expect(screen.getByText('4 товара на сумму')).toBeInTheDocument()
+    expect(screen.getByText('4 товара до скидок')).toBeInTheDocument()
     expect(document.querySelectorAll('.line-accessories[open]')).toHaveLength(2)
   })
 
   it('recalculates selected goods and applies a demonstration promo code', async () => {
     const user = userEvent.setup(); open('/cart')
     await user.click(within(screen.getAllByTestId('cart-line')[0]).getByRole('checkbox'))
-    expect(screen.getByText('2 товара на сумму')).toBeInTheDocument()
+    expect(screen.getByText('2 товара')).toBeInTheDocument()
     expect(screen.getByRole('complementary', { name: 'Итоги заказа' })).toHaveTextContent('55 800 ₽')
     await user.type(screen.getByLabelText('Промокод'), '123')
     await user.click(screen.getByRole('button', { name: 'Применить промокод' }))
-    expect(screen.getByRole('status')).toHaveTextContent('Промокод 123 применён — скидка 10%')
+    expect(screen.getByRole('status')).toHaveTextContent('Промокод 123 применён')
   })
 
   it('moves a cart line to favorites and supports the empty state', async () => {

@@ -17,9 +17,12 @@ describe('cart presentation refresh', () => {
     open()
     const rail = document.querySelector('.line-accessories__rail')!
     expect(rail).toBeInTheDocument()
-    const button = within(rail as HTMLElement).getByRole('button', { name: /Добавить .* в корзину/ })
-    expect(button.querySelector('svg')).toBeInTheDocument()
-    expect(button).not.toHaveTextContent('+')
+    const buttons = within(rail as HTMLElement).getAllByRole('button', { name: /Добавить .* в корзину/ })
+    expect(buttons).toHaveLength(7)
+    for (const button of buttons) {
+      expect(button.querySelector('svg')).toBeInTheDocument()
+      expect(button).not.toHaveTextContent('+')
+    }
   })
   it('copies a share link, handles denial and closes with Escape restoring focus', async () => {
     const user = userEvent.setup(); open()

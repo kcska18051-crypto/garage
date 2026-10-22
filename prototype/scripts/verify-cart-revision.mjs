@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 
 export async function verifyCartRevision(browser, { base, width, screenshotRoot, expectedAsset }) {
-  const context = await browser.newContext({ viewport: { width, height: 1000 }, hasTouch: width < 600 })
+  const context = await browser.newContext({ viewport: { width, height: 1000 }, hasTouch: width < 600, isMobile: width < 600 })
   const seed = [{ id: 'product-1', quantity: 1 }, { id: 'product-2', quantity: 1 }]
   try {
     const page = await context.newPage()
@@ -23,8 +23,43 @@ export async function verifyCartRevision(browser, { base, width, screenshotRoot,
     assert.equal(await page.getByRole('dialog').count(), 0)
     assert(!(await page.locator('.cart-recipient').innerText()).includes('Алексей'))
     await checkTotal(46800)
+    const lineAmount = async (index, testId) => Number((await page.getByTestId('cart-line').nth(index).getByTestId(testId).innerText()).replace(/[^\d,]/g, '').replace(',', '.'))
+    assert.equal(await lineAmount(0, 'line-old-price'), 21168)
+    assert.equal(await page.getByTestId('cart-line').nth(1).getByTestId('line-old-price').count(), 0)
     assert.equal(await page.locator('.line-accessories[open]').count(), 2)
     const summary = page.getByRole('complementary', { name: 'Итоги заказа' })
+    const firstPanel = page.locator('.line-accessories').first()
+    const firstRail = firstPanel.locator('.line-accessories__rail')
+    assert.equal(await firstRail.locator('article').count(), 7)
+    assert.equal(new Set(await firstRail.locator('article').evaluateAll(items => items.map(item => item.getAttribute('data-related-id')))).size, 7)
+    await firstRail.evaluate(el => el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' }))
+    await firstPanel.getByRole('button', { name: 'Следующие сопутствующие товары', exact: true }).waitFor({ state: 'visible' })
+    if (width < 600) {
+      const cdp = await context.newCDPSession(page)
+      try {
+        const swipe = async () => {
+          const box = await firstRail.boundingBox()
+          const start = box.x + box.width - 20, end = box.x + 20, y = box.y + box.height / 2
+          await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: start, y }] })
+          for (let step = 1; step <= 6; step++) {
+            await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: start + (end - start) * step / 6, y }] })
+            await page.evaluate(() => new Promise(resolve => requestAnimationFrame(resolve)))
+          }
+          await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] })
+        }
+        await swipe()
+        await page.waitForFunction(el => el.scrollLeft > 0, await firstRail.elementHandle(), { timeout: 5000 })
+        for (let attempt = 0; attempt < 12 && await firstRail.evaluate(el => el.scrollLeft < el.scrollWidth - el.clientWidth - 2); attempt++) await swipe()
+      } finally { await cdp.detach() }
+    } else {
+      await firstPanel.getByRole('button', { name: 'Следующие сопутствующие товары', exact: true }).click()
+      await page.waitForFunction(el => el.scrollLeft > 0, await firstRail.elementHandle(), { timeout: 5000 })
+      await firstRail.focus(); await page.keyboard.press('ArrowRight')
+      await firstRail.locator('article').last().scrollIntoViewIfNeeded()
+    }
+    assert(await firstRail.locator('article').last().evaluate(el => el.getBoundingClientRect().right <= el.parentElement.getBoundingClientRect().right + 2), 'Last recommendation is not reachable')
+    await firstRail.evaluate(el => el.scrollTo({ left: 0, behavior: 'instant' }))
+    await page.evaluate(() => scrollTo(0, 0))
     assert.equal(await summary.locator('.cart-tools').count(), 1)
     assert.equal(await page.locator('.cart-page>.cart-tools').count(), 0)
     await screenshot('before')
@@ -38,6 +73,13 @@ export async function verifyCartRevision(browser, { base, width, screenshotRoot,
     assert((await page.getByTestId('promo-discount').innerText()).includes('4 680') || (await page.getByTestId('promo-discount').innerText()).replace(/\s/g, '').includes('4680'))
     assert.equal(await page.getByTestId('line-old-price').count(), 2)
     assert.equal(await page.getByTestId('line-new-price').count(), 2)
+    assert.equal(await lineAmount(0, 'line-old-price'), 21168)
+    assert.equal(await lineAmount(0, 'line-new-price'), 17010)
+    assert.equal(await lineAmount(1, 'line-old-price'), 27900)
+    assert.equal(await lineAmount(1, 'line-new-price'), 25110)
+    assert.equal(await summary.locator('del').count(), 0)
+    assert.equal(await summary.getByRole('group', { name: 'Расшифровка скидок' }).count(), 1)
+    assert.equal(await page.getByText('С промокодом −10%', { exact: true }).count(), 0)
     await overflow()
     await screenshot('applied')
     await apply('123')
@@ -57,7 +99,13 @@ export async function verifyCartRevision(browser, { base, width, screenshotRoot,
     await checkTotal(42120)
     await page.getByRole('button', { name: 'Удалить промокод' }).click()
     await checkTotal(46800)
+    assert.equal(await lineAmount(0, 'line-new-price'), 18900)
+    assert.equal(await lineAmount(1, 'line-new-price'), 27900)
+    assert.equal(await page.getByTestId('cart-line').nth(1).getByTestId('line-old-price').count(), 0)
+    assert((await page.getByRole('status').innerText()).includes('Промокод удалён'))
+    assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('garage-checkout-v2')).promoCode ?? null), null)
     await screenshot('removed')
+    await page.reload({ waitUntil: 'domcontentloaded' }); await checkTotal(46800)
     await apply('123')
     await page.reload({ waitUntil: 'domcontentloaded' })
     await checkTotal(42120)
@@ -134,7 +182,7 @@ export async function verifyCartRevision(browser, { base, width, screenshotRoot,
       const panel = page.locator('.line-accessories').nth(index)
       if (index) await panel.locator('summary').click()
       const rail = panel.locator('.line-accessories__rail')
-      assert.equal(await rail.locator('article').count(), [1,5,6,7,8][index])
+      assert.equal(await rail.locator('article').count(), [7,5,6,7,8][index])
       const ids = await rail.locator('article').evaluateAll(els => els.map(el => el.getAttribute('data-related-id')))
       assert.equal(new Set(ids).size, ids.length)
       if (index) {
@@ -151,6 +199,8 @@ export async function verifyCartRevision(browser, { base, width, screenshotRoot,
     await page.getByTestId('cart-line').nth(4).getByRole('button', { name: /^Наличие в магазинах:/ }).click()
     assert((await page.getByRole('dialog').innerText()).includes('Нет в наличии'))
     await page.keyboard.press('Escape')
+    await page.getByTestId('cart-line').nth(4).getByRole('button', { name: 'Удалить товар', exact: true }).click()
+    await checkTotal(129600)
     await page.evaluate(() => { localStorage.setItem('garage-cart-v2', JSON.stringify([{ id: 'compressor-8', quantity: 1 }])); localStorage.removeItem('garage-checkout-v2') })
     await goto('/cart')
     await apply('123')
@@ -163,6 +213,6 @@ export async function verifyCartRevision(browser, { base, width, screenshotRoot,
     assert.equal(await page.getByTestId('promo-discount').count(), 0)
     await overflow()
     assert.deepEqual(errors, [])
-    return { width, promo: true, snapshot: true, share: true, history: true, rails: [1,5,6,7,8], quote: true, guestGate: true, errors }
+    return { width, promo: true, snapshot: true, share: true, history: true, rails: [7,5,6,7,8], quote: true, guestGate: true, errors }
   } finally { await context.close() }
 }

@@ -6,7 +6,7 @@ const points = [
   { id: 'service', city: 'Череповец', name: 'Демо-сервисная точка', phone: '+70000000003', email: 'service@example.com', coordinates: '59.128, 37.909' },
 ]
 
-export async function verifyContactPages(browser, { base, width, screenshotRoot }) {
+export async function verifyContactPages(browser, { base, width, screenshotRoot, expectedAsset }) {
   const context = await browser.newContext({ viewport: { width, height: 1000 }, hasTouch: width < 600 })
   try {
     await context.addInitScript(() => {
@@ -17,7 +17,14 @@ export async function verifyContactPages(browser, { base, width, screenshotRoot 
     const errors = []
     page.on('pageerror', error => errors.push(error.message))
     await page.route('https://tile.openstreetmap.org/**', route => route.abort())
-    const goto = route => page.goto(`${base.replace(/\/$/, '')}${route}`, { waitUntil: 'domcontentloaded' })
+    const goto = async route => {
+      const response = await page.goto(`${base.replace(/\/$/, '')}${route}`, { waitUntil: 'domcontentloaded' })
+      if (expectedAsset) {
+        assert.equal(response.status(), route.includes('/unknown-point') ? 404 : 200)
+        assert((await page.locator('script[type=module]').getAttribute('src')).includes(expectedAsset))
+      }
+      return response
+    }
     const heading = text => page.waitForFunction(text => document.querySelector('main h1')?.textContent === text, text)
     const selectedCity = city => page.waitForFunction(city => [...document.querySelectorAll('[role=tab]')].some(el => el.textContent === city && el.getAttribute('aria-selected') === 'true'), city)
     const savedState = () => page.evaluate(() => ({ checkout: JSON.parse(localStorage.getItem('garage-checkout-v2')), cart: JSON.parse(localStorage.getItem('garage-cart-v2')) }))
@@ -53,7 +60,7 @@ export async function verifyContactPages(browser, { base, width, screenshotRoot 
         await card.locator('a[href^="mailto:"]').click()
         assert.equal(page.url(), beforeProtocol)
         await page.getByRole('button', { name: `На карте: ${point.name}` }).click()
-        assert(new URL(page.url()).pathname.endsWith('/contacts'))
+        assert(new URL(page.url()).pathname.replace(/\/+$/, '').endsWith('/contacts'), `Marker changed location: ${page.url()}`)
         if (method === 'card') {
           const strip = card.locator('.contact-point__links')
           await strip.scrollIntoViewIfNeeded()
@@ -65,7 +72,7 @@ export async function verifyContactPages(browser, { base, width, screenshotRoot 
         } else if (method === 'name') await card.locator('strong').click()
         else await card.getByRole('link', { name: `Фото и как добраться: ${point.name}` }).click()
         await heading(`${point.name} — ${point.city}`)
-        assert(new URL(page.url()).pathname.endsWith(`/contacts/${point.id}`))
+        assert(new URL(page.url()).pathname.replace(/\/+$/, '').endsWith(`/contacts/${point.id}`), `Wrong point URL: ${page.url()}`)
         assert.equal(await page.getByRole('dialog').count(), 0)
         assert.equal(await page.locator('.store-gallery figure').count(), 3)
         assert.equal(await page.locator('.store-gallery figure[hidden]').count(), 0)

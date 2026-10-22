@@ -16,11 +16,21 @@ StorePage использует исходную общую модель contactP
 - Production-browser на360/390/1440/1920: **36переходов** (3точки ×карточка/название/подробности ×4ширины), **12прямыхвходов**, **12reload**, возврат Back/крошками/кнопкой, citytabs/маркеры/шапка, изолированныеtel/mailto, всефото, маршрут, неизвестнаяточка404, nooverflow, сохранностькорзины/checkout — PASS. Для checkout отдельно **12панелей** (3города ×4ширины): выборradio, отсутствиеперехода, Escape/возвратфокуса/сохранностьданных — PASS. JSpageerrors0.
 - Подложка OSM в детерминированных браузерных тестах отключена; проверены карта-маркер, координаты, ссылка маршрута и честный fallback. Реальная внешняя маршрутизация не имитируется как интеграция.
 - TypeScript/buildPages150маршрутов — success; JS `index-rqrZrsFL.js`, CSS `index-CadfodAf.css`. Bundle>500KB — прежнее предупреждение.
-- Полный локальный Vitest с2worker завис без результатов и остановлен, не считается успешным. Полный CI и публичная проверка дополняются после публикации. Существующий E2E contacts-ux обновлён под новый сценарий; логика теста вынесена в переиспользуемый `scripts/verify-contact-pages.mjs`.
+- Полный локальный Vitest с2worker завис без результатов и остановлен, не считается успешным. Полный CI прошёл (см. ниже). Существующий E2E contacts-ux обновлён под новый сценарий; логика теста вынесена в переиспользуемый `scripts/verify-contact-pages.mjs`.
 
 ## Публикация и рабочая копия
 
 Перед работой проверен origin/codex/homepage-prototype: a644e52. Используется существующая рабочая копия `.worktrees/homepage-prototype`; локальныйHEAD всё ещё6fb6049, прежние layout/404правки уже опубликованы. Публиковать только файлы текущей задачи поверх проверенной удалённойветки, с expected_sha, безforce/main. Незавершённая пагинация остаётся в прежнемstash и сюда не включается.
+
+Код **46ac0ef0847953f8d9642641d2559e251769553d**, ветка `codex/homepage-prototype`. [CI39747950772](https://github.com/kcska18051-crypto/garage/actions/runs/39747950772): **346/346** unit-тестов в55файлах,94,79s; build и deploy success. Публичные JS `index-rqrZrsFL.js`, CSS `index-CadfodAf.css` совпадают с локальной production-сборкой.
+
+После публикации весь браузерный сценарий повторён на360/390/1440/1920 — PASS:36переходов карточка/название/подробности,12direct,12reload,12checkoutпанелей; тел/mailto/Back/крошки/возврат/город/корзина/галерея/контрастмаршрута/nooverflow/JSerrors0. Для прямых опубликованных URL провереныHTTP200 и актуальныйJS, для неизвестнойточкиHTTP404. В harness уточнён завершающийslash, который добавляетGitHubPages; приложение ради ожиданияURL не менялось. Первое несовпадение этогоassert не считалось дефектом продукта или успешным прогоном. Запуск модуля черезdynamicimport в sandbox браузерного инструмента не поддержан; та же функция проверки передана явно, с собственным headlessbrowser и finally-close. Общий браузер пользователя не использовался.
+
+Ссылки: [Контакты](https://kcska18051-crypto.github.io/garage/contacts/?v=46ac0ef), [Ярославль](https://kcska18051-crypto.github.io/garage/contacts/store/?v=46ac0ef), [Вологда](https://kcska18051-crypto.github.io/garage/contacts/pickup/?v=46ac0ef), [Череповец](https://kcska18051-crypto.github.io/garage/contacts/service/?v=46ac0ef).
+
+Скриншоты: [магазин1920](screenshots/contact-point-pages/public/store-1920.png), [магазин390](screenshots/contact-point-pages/public/store-390.png), [контакты390](screenshots/contact-point-pages/public/contacts-390.png), [checkout390](screenshots/contact-point-pages/public/checkout-390.png). Все3точки и контакты на4контрольныхширинах сохранены в той же папке.
+
+Публикация выполнена GitHubAPI: дерево на базеa644e52 →commit46ac0ef →fastforwardupdate_ref сexpected_sha, безforce. Включены9явно перечисленных файлов текущей задачи, не stash. Отчёт/скриншоты и уточнение harness публикуются отдельным test/docsкоммитом без измененияruntime. Перед дальнейшим локальнымpush синхронизировать рабочуюкопию сorigin без потери изменений. Временный preview-сервер остановлен; собственные browser/context закрыты.
 
 ## Принятая следующая очередь — НЕ входит в этот коммит
 

@@ -37,6 +37,7 @@ try{
     const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message))
     await page.goto(`${base}/services/?v=${version}`)
     await page.evaluate(()=>sessionStorage.setItem('garage-auth-demo-session-v1','active'))
+    await page.evaluate(()=>sessionStorage.setItem('garage-auth-demo-identity-v1',JSON.stringify({phone:'79991234567',phoneConfirmed:true})))
     for(const [kind,route,cta,expected] of cases){
       await page.goto(`${base}${route}?v=${version}`)
       await page.getByRole('button',{name:cta,exact:true}).click();await form(page,kind)

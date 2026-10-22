@@ -5,7 +5,7 @@ import './ServiceRequestDialog.css'
 import {useNavigate} from 'react-router-dom'
 import {useProfile} from '../../state/ProfileState'
 import {useAuth} from '../../state/AuthState'
-import {serviceRequestHref,type ProfileServiceRequest} from '../../state/serviceRequests'
+import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} from '../../state/serviceRequests'
 
 const emptyFields = { name: '', phone: '', model: '', description: '', car: '', comment: '', start: '', end: '', quantity: '1' }
 type Field = keyof typeof emptyFields
@@ -93,7 +93,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
     const first = Object.keys(next)[0]
     if (first) { dialogRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus(); return }
     submitted.current=true
-    const result=createServiceRequest({submissionId,request,fields,photoAttached:Boolean(photo)},identity?.phone??null)
+    const result=createServiceRequest({submissionId,request,fields,photoAttached:Boolean(photo)},identity?.phoneConfirmed?identity.phone:null)
     if(!result.ok){submitted.current=false;setStorageError(result.error);return}
     setCreated(result.record)
     setDemoNumber(result.record.number)
@@ -117,7 +117,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
           if(!created)return
           const href=serviceRequestHref(created.id)
           closeRef.current();navigate(href)
-          if(!identity||created.ownerPhone!==identity.phone)openAuth('login',{returnTo:href,requirePhoneConfirmation:true})
+          if(!canViewServiceRequest(created,identity))openAuth('login',{returnTo:href,requirePhoneConfirmation:true})
         }}>Посмотреть заявку в личном кабинете</button>
         <button className="button button--dark" onClick={() => closeRef.current()}>Закрыть</button>
       </div> : <form onSubmit={submit} noValidate>

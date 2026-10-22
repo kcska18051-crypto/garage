@@ -30,7 +30,10 @@ const cases=[['repair','/services/service-center/compressor-repair/screw/','Ос
 for(const width of [360,390,1440,1920])test(`three forms share stable account records at ${width}`,async({page})=>{
   test.setTimeout(90000)
   await page.setViewportSize({width,height:900})
-  await page.addInitScript(()=>sessionStorage.setItem('garage-auth-demo-session-v1','active'))
+  await page.addInitScript(()=>{
+    sessionStorage.setItem('garage-auth-demo-session-v1','active')
+    sessionStorage.setItem('garage-auth-demo-identity-v1',JSON.stringify({phone:'79991234567',phoneConfirmed:true}))
+  })
   for(const [kind,route,button,value] of cases){
     await page.goto(route)
     const cart=await page.evaluate(()=>localStorage.getItem('garage-cart-v2'))

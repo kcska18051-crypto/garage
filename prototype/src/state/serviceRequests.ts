@@ -45,7 +45,8 @@ export function buildServiceRequest(input:ServiceRequestDraft,ownerPhone:string|
   if(ownerPhone!==null&&!normalizePhoneIdentity(ownerPhone))return null
   const uuid=crypto.randomUUID()
   const now=new Date()
-  return{id:`sr-${uuid}`,number:`DEMO-SR-${now.getTime().toString(36).toUpperCase()}-${uuid.slice(0,8).toUpperCase()}`,createdAt:now.toISOString(),kind:input.request.kind,title:input.request.title,itemId:input.request.itemId,status:input.request.kind==='rental'?'Ожидает подтверждения':'Новая заявка',ownerPhone:ownerPhone?normalizePhoneIdentity(ownerPhone):null,submissionId:input.submissionId,fields:Object.fromEntries(Object.keys(fieldLimits).map(key=>[key,input.fields[key as keyof ServiceRequestFields].trim()])) as ServiceRequestFields,photoAttached:input.photoAttached,seed:false}
+  const matchedOwner=ownerPhone&&normalizePhoneIdentity(ownerPhone)===normalizePhoneIdentity(input.fields.phone)?normalizePhoneIdentity(ownerPhone):null
+  return{id:`sr-${uuid}`,number:`DEMO-SR-${now.getTime().toString(36).toUpperCase()}-${uuid.slice(0,8).toUpperCase()}`,createdAt:now.toISOString(),kind:input.request.kind,title:input.request.title,itemId:input.request.itemId,status:input.request.kind==='rental'?'Ожидает подтверждения':'Новая заявка',ownerPhone:matchedOwner,submissionId:input.submissionId,fields:Object.fromEntries(Object.keys(fieldLimits).map(key=>[key,input.fields[key as keyof ServiceRequestFields].trim()])) as ServiceRequestFields,photoAttached:input.photoAttached,seed:false}
 }
 export const serviceRequestHref=(id:string)=>`/profile/services/request/?id=${encodeURIComponent(id)}`
-export const canViewServiceRequest=(record:ProfileServiceRequest,identity:ServiceIdentity|null)=>Boolean(identity&&record.ownerPhone&&record.ownerPhone===normalizePhoneIdentity(identity.phone))
+export const canViewServiceRequest=(record:ProfileServiceRequest,identity:ServiceIdentity|null)=>Boolean(identity&&record.ownerPhone&&record.ownerPhone===normalizePhoneIdentity(identity.phone)&&(record.seed||(identity.phoneConfirmed&&record.ownerPhone===normalizePhoneIdentity(record.fields.phone))))

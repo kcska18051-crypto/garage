@@ -7,15 +7,14 @@ import {seedDemoSession} from '../../test/auth'
 const open=(path='/services/service-center/compressor-repair/screw')=>render(<MemoryRouter initialEntries={[path]}><App/></MemoryRouter>)
 async function repair(user:ReturnType<typeof userEvent.setup>){
   await user.click(screen.getByRole('button',{name:'Оставить заявку'}))
-  await user.type(screen.getByLabelText('Ваше имя'),'Тестовый клиент')
-  await user.type(screen.getByLabelText('Телефон'),'+7 999 123-45-67')
-  await user.type(screen.getByLabelText('Модель оборудования'),'Приватная модель')
-  await user.type(screen.getByLabelText('Описание неисправности'),'Не включается')
+  for (const [label,value] of [['Ваше имя','Тестовый клиент'],['Телефон','+7 999 123-45-67'],['Модель оборудования','Приватная модель'],['Описание неисправности','Не включается']]) {
+    await user.click(screen.getByLabelText(label)); await user.paste(value)
+  }
   await user.click(screen.getByRole('button',{name:'Отправить заявку'}))
 }
 beforeEach(()=>{localStorage.clear();sessionStorage.clear()})
 it('uses one saved record for success, exact account detail and the list after reload',async()=>{
-  seedDemoSession();const user=userEvent.setup();const view=open();await repair(user)
+  seedDemoSession();sessionStorage.setItem('garage-auth-demo-identity-v1',JSON.stringify({phone:'79991234567',phoneConfirmed:true}));const user=userEvent.setup();const view=open();await repair(user)
   await user.click(screen.getByRole('button',{name:'Посмотреть заявку в личном кабинете'}))
   expect(screen.getByRole('heading',{level:1,name:/Заявка № DEMO-SR-/})).toBeInTheDocument()
   expect(screen.getByText('Приватная модель')).toBeInTheDocument()
@@ -25,7 +24,7 @@ it('uses one saved record for success, exact account detail and the list after r
   await user.click(screen.getByRole('link',{name:'Все заявки на услуги'}))
   expect(screen.getByText(new RegExp(record.number))).toBeInTheDocument()
   await user.click(screen.getByRole('navigation',{name:'Разделы личного кабинета'}).querySelector('a[href="/profile"]')!)
-  expect(screen.getByRole('region',{name:'Сводка'}).querySelector('a[href="/profile/services"]')).toHaveTextContent('4')
+  expect(screen.getByRole('region',{name:'Сводка'}).querySelector('a[href="/profile/services"]')).toHaveTextContent('1')
 })
 it('shows the current identity phone and does not label a password demo as code confirmed',()=>{
   seedDemoSession();sessionStorage.setItem('garage-auth-demo-identity-v1',JSON.stringify({phone:'79991234567',phoneConfirmed:true}))

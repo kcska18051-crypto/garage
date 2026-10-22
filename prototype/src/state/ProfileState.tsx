@@ -112,7 +112,9 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     if(!phone)return
     const latest=readServiceRequests()
     if(latest.error){setServiceStorageError(latest.error);return}
-    const next=latest.records.map(record=>!record.ownerPhone&&normalizePhoneIdentity(record.fields.phone)===phone?{...record,ownerPhone:phone}:record)
+    // Repair older misbound local requests only after confirmation of their submitted phone.
+    // Preserve historical fixtures and every request's payload/ID.
+    const next=latest.records.map(record=>!record.seed&&record.ownerPhone!==phone&&normalizePhoneIdentity(record.fields.phone)===phone?{...record,ownerPhone:phone}:record)
     if(next.every((record,index)=>record===latest.records[index]))return
     const error=saveServiceRequests(next)
     if(error){setServiceStorageError(error);return}

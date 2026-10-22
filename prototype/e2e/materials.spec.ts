@@ -33,7 +33,7 @@ test('detail without video does not reserve a media block', async ({ page }) => 
 })
 
 test('wide and desktop lists use the approved card density', async ({ page }) => {
-  for (const [width, columns] of [[1920, 4], [1440, 3], [768, 2]] as const) {
+  for (const [width, columns] of [[1920, 3], [1440, 3], [768, 2]] as const) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/news')
     const cards = page.getByTestId('material-card')

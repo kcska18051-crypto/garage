@@ -5,6 +5,8 @@ import { App } from '../app/App'
 
 function LocationEcho() { const location = useLocation(); return <output aria-label="Текущий адрес">{location.pathname}{location.search}</output> }
 const open = (path: string) => render(<MemoryRouter initialEntries={[path]}><App /><LocationEcho /></MemoryRouter>)
+beforeEach(() => { vi.spyOn(window, 'scrollTo').mockImplementation(() => {}) })
+afterEach(() => { vi.restoreAllMocks() })
 
 describe('materials pages', () => {
   it.each([
@@ -30,13 +32,12 @@ describe('materials pages', () => {
     expect(screen.getByRole('status', { name: 'Текущий адрес' })).toHaveTextContent('category=events')
   })
 
-  it('sorts materials and opens the second numbered page', async () => {
+  it('sorts articles without inventing a second page for six results', async () => {
     const user = userEvent.setup()
     open('/articles')
     await user.selectOptions(screen.getByLabelText('Сортировка'), 'oldest')
     expect(screen.getAllByTestId('material-card')[0]).toHaveTextContent('15 апреля 2026')
-    await user.click(screen.getByRole('link', { name: 'Страница 2' }))
-    expect(screen.getByRole('link', { name: 'Страница 2' })).toHaveAttribute('aria-current', 'page')
+    expect(screen.queryByRole('link', { name: 'Страница 2' })).not.toBeInTheDocument()
   })
 
   it('marks video announcements but leaves regular cards clean', () => {

@@ -9,6 +9,7 @@ import { MobileHeader } from './MobileHeader'
 import { RegionDialog } from './RegionDialog'
 import { useRegion } from '../../state/RegionState'
 import { ThirdLevelNavigation } from './ThirdLevelNavigation'
+import { compactHeaderScrollThreshold } from '../../data/headerNavigationData'
 import './Header.css'
 
 export function Header({ counts }: { counts: HeaderCounts }) {
@@ -16,7 +17,7 @@ export function Header({ counts }: { counts: HeaderCounts }) {
   const [regionOpen, setRegionOpen] = useState(false)
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const compact = useScrollThreshold(120)
+  const compact = useScrollThreshold(compactHeaderScrollThreshold)
   const header=useRef<HTMLElement>(null)
   const opener=useRef<HTMLElement>(null)
   const location=useLocation()

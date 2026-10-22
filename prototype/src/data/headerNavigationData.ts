@@ -8,6 +8,8 @@ export type HeaderQuickLink = {
   visibleOnMobile?: boolean
 }
 
+export const compactHeaderScrollThreshold = 120
+
 export type HeaderQuickLinksConfig = {
   enabled: boolean
   mobileEnabled: boolean

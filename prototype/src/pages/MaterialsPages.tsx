@@ -1,11 +1,12 @@
 import { Link, NavLink, useParams, useSearchParams } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 import { getMaterial, materialKinds, materialsByKind, type Material, type MaterialKind } from '../data/materialsData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { DemoVideo } from '../features/materials/DemoVideo'
 import { NotFoundPage } from './NotFoundPage'
+import { compactHeaderScrollThreshold } from '../data/headerNavigationData'
 import '../features/materials/Materials.css'
 
-const pageSize = 4
 const kindEntries = Object.entries(materialKinds) as [MaterialKind, typeof materialKinds[MaterialKind]][]
 
 function MaterialsNav({ active }: { active: MaterialKind }) {
@@ -31,16 +32,81 @@ function setParam(search: URLSearchParams, name: string, value: string) {
 export function MaterialsListPage({ kind }: { kind: MaterialKind }) {
   const config = materialKinds[kind]
   const [search, setSearch] = useSearchParams()
+  const heading = useRef<HTMLElement>(null)
+  const previousListing = useRef('')
+  const pageSize = kind === 'review' ? 4 : 9
   const category = search.get('category') ?? 'all'
   const sort = search.get('sort') ?? 'newest'
-  const page = Math.max(1, Number(search.get('page') ?? '1'))
+  const rawPage = search.get('page')
+  const parsedPage = Number(rawPage ?? '1')
+  const page = kind === 'review' ? Math.max(1, parsedPage) : rawPage && /^[1-9]\d*$/.test(rawPage) && Number.isSafeInteger(parsedPage) ? parsedPage : 1
   const source = materialsByKind(kind)
   const categories = [...new Map(source.map((item) => [item.category, item.categoryLabel])).entries()]
   const filtered = source.filter((item) => category === 'all' || item.category === category).sort((a, b) => sort === 'oldest' ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date))
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize))
   const currentPage = Math.min(page, pageCount)
   const visible = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-  return <main className="materials-page"><Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: config.title }]} /><div className="materials-layout"><MaterialsNav active={kind} /><section className="materials-main"><header className="materials-heading"><span className="eyebrow">Материалы «Гаража»</span><h1>{config.title}</h1><p>Практические материалы об оборудовании, инструментах и организации профессиональной мастерской.</p></header><div className="materials-controls"><label>Рубрика<select value={category} onChange={(event) => setSearch(setParam(search, 'category', event.target.value))}><option value="all">Все рубрики</option>{categories.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label><label>Сортировка<select value={sort} onChange={(event) => setSearch(setParam(search, 'sort', event.target.value))}><option value="newest">Сначала новые</option><option value="oldest">Сначала старые</option></select></label><span>{filtered.length} материалов</span></div><div className="materials-grid">{visible.map((item) => <MaterialCard key={item.slug} item={item} />)}</div>{pageCount > 1 && <nav className="materials-pagination" aria-label="Пагинация материалов">{Array.from({ length: pageCount }, (_, index) => { const number = index + 1; const next = setParam(search, 'page', String(number)); return <Link key={number} to={`?${next.toString()}`} aria-label={`Страница ${number}`} aria-current={currentPage === number ? 'page' : undefined}>{number}</Link> })}</nav>}</section></div></main>
+
+  useEffect(() => {
+    if (kind === 'review' || rawPage === null) return
+    const canonical = currentPage === 1 ? null : String(currentPage)
+    if (rawPage !== canonical) {
+      const next = new URLSearchParams(search)
+      if (canonical === null) next.delete('page'); else next.set('page', canonical)
+      setSearch(next, { replace: true })
+    }
+  }, [kind, rawPage, currentPage, search, setSearch])
+
+  useEffect(() => {
+    const key = `${kind}:${category}:${sort}:${currentPage}`
+    const changed = previousListing.current && previousListing.current !== key
+    previousListing.current = key
+    if (!changed || kind === 'review') return
+    let correctionFrame = 0
+    let fullHeaderOnly = false
+    const align = () => {
+      if (!heading.current) return
+      const pinned = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--catalog-pinned-header-height')) || 0
+      const documentTop = scrollY + heading.current.getBoundingClientRect().top
+      let target = documentTop - pinned - 16
+      if (pinned && target <= compactHeaderScrollThreshold) {
+        // Crossing the compact threshold back and forth makes the final header
+        // cover the heading. Keep compact only when the heading fits below it.
+        if (documentTop - compactHeaderScrollThreshold - 1 >= pinned) target = compactHeaderScrollThreshold + 1
+        else fullHeaderOnly = true
+      }
+      if (fullHeaderOnly) target = Math.min(compactHeaderScrollThreshold, documentTop - 16)
+      scrollTo({ top: Math.max(0, target), behavior: 'auto' })
+    }
+    const frame = requestAnimationFrame(() => {
+      align()
+      heading.current?.focus({ preventScroll: true })
+      // Scrolling can itself turn the full header into a fixed row. Re-measure
+      // after that scroll event and React's compact-header layout have committed.
+      correctionFrame = requestAnimationFrame(() => {
+        align()
+        correctionFrame = requestAnimationFrame(align)
+      })
+    })
+    return () => { cancelAnimationFrame(frame); cancelAnimationFrame(correctionFrame) }
+  }, [kind, category, sort, currentPage])
+
+  return <main className={`materials-page${kind !== 'review' ? ' materials-page--nine' : ''}`}>
+    <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: config.title }]} />
+    <div className="materials-layout"><MaterialsNav active={kind} /><section className="materials-main">
+      <header className="materials-heading" ref={heading} tabIndex={-1}><span className="eyebrow">Материалы «Гаража»</span><h1>{config.title}</h1><p>Практические материалы об оборудовании, инструментах и организации профессиональной мастерской.</p></header>
+      <div className="materials-controls">
+        <label>Рубрика<select value={category} onChange={(event) => setSearch(setParam(search, 'category', event.target.value))}><option value="all">Все рубрики</option>{categories.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+        <label>Сортировка<select value={sort} onChange={(event) => setSearch(setParam(search, 'sort', event.target.value))}><option value="newest">Сначала новые</option><option value="oldest">Сначала старые</option></select></label>
+        <span>{filtered.length} материалов</span>
+      </div>
+      <div className="materials-grid">{visible.map((item) => <MaterialCard key={item.slug} item={item} />)}</div>
+      {pageCount > 1 && <nav className="materials-pagination" aria-label="Пагинация материалов">{Array.from({ length: pageCount }, (_, index) => {
+        const number = index + 1, next = setParam(search, 'page', String(number))
+        return <Link key={number} to={`?${next.toString()}`} aria-label={`Страница ${number}`} aria-current={currentPage === number ? 'page' : undefined}>{number}</Link>
+      })}</nav>}
+    </section></div>
+  </main>
 }
 
 export function MaterialDetailPage({ kind }: { kind: MaterialKind }) {

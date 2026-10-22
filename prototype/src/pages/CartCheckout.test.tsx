@@ -78,9 +78,9 @@ describe('cart and checkout', () => {
     await user.click(within(screen.getAllByTestId('cart-line')[0]).getByRole('checkbox'))
     expect(screen.getByText('2 товара на сумму')).toBeInTheDocument()
     expect(screen.getByRole('complementary', { name: 'Итоги заказа' })).toHaveTextContent('55 800 ₽')
-    await user.type(screen.getByLabelText('Промокод'), 'GARAGE-DEMO')
+    await user.type(screen.getByLabelText('Промокод'), '123')
     await user.click(screen.getByRole('button', { name: 'Применить промокод' }))
-    expect(screen.getByRole('status')).toHaveTextContent('Промокод применён для демонстрации')
+    expect(screen.getByRole('status')).toHaveTextContent('Промокод 123 применён — скидка 10%')
   })
 
   it('moves a cart line to favorites and supports the empty state', async () => {

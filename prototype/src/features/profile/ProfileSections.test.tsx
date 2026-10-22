@@ -7,6 +7,7 @@ import { seedDemoSession } from '../../test/auth'
 const open = (path: string) => { seedDemoSession(); return render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>) }
 
 describe('profile secondary sections', () => {
+  beforeEach(() => localStorage.setItem('garage-recent-products-v1', JSON.stringify(['product-5', 'product-2', 'product-9', 'product-3', 'product-7'])))
   it('adds an organization from a demo INN lookup', async () => {
     const user = userEvent.setup(); open('/profile/organizations')
     await user.click(screen.getByRole('button', { name: 'Добавить организацию' }))

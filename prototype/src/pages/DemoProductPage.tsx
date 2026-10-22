@@ -10,6 +10,7 @@ import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ContactDialog } from '../features/forms/ContactDialog'
 import { ProductDetailPage } from './ProductDetailPage'
 import { NotFoundPage } from './NotFoundPage'
+import { useProfile } from '../state/ProfileState'
 import '../features/products/ProductTeaserCard.css'
 import './DemoProductPage.css'
 
@@ -41,6 +42,8 @@ function DemoProduct({ product }: { product:DemoProduct }) {
 
 export function DemoProductPage() {
   const {slug}=useParams()
+  const { recordRecentlyViewed } = useProfile()
+  useEffect(() => { if (slug && getDemoProduct(slug)) recordRecentlyViewed(slug) }, [slug, recordRecentlyViewed])
   const {hash}=useLocation()
   useEffect(()=>{
     const target=hash ? document.getElementById(hash.slice(1)) : null

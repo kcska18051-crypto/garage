@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo, useState, useEffect, useRef, type ReactNode } from 'react'
 import type { Coordinates } from '../features/maps/CoordinateMap'
 import { profileData } from '../data/profileData'
+import type { priceCart } from '../features/cart/cartPricing'
 
 type CommerceContextValue = {
   favoriteIds: Set<string>; compareIds: Set<string>; cartIds: Set<string>
@@ -30,6 +31,8 @@ export function mergeCartLines(current: CartLine[], incoming: CartLine[]): CartL
   return merged
 }
 export type CheckoutState = {
+  promoCode?: string; selectedCartIds?: string[]
+  confirmedOrder?: { lines: CartLine[]; pricing: ReturnType<typeof priceCart>; details: Omit<CheckoutState, 'confirmedOrder'> }
   customerType: 'personal' | 'organization'; organization: string; guest: boolean; phoneVerified: boolean
   guestName: string; guestEmail: string; guestPhone: string
   otherRecipient: boolean; recipientName: string; recipientLastName: string; recipientPhone: string
@@ -55,12 +58,12 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
   useEffect(() => { try { localStorage.setItem('garage-favorites-v1', JSON.stringify([...favoriteIds])) } catch { /* In-memory fallback. */ } }, [favoriteIds])
   const [compareIds, setCompare] = useState<Set<string>>(() => new Set())
   const [cartItems, setCartItems] = useState<CartLine[]>(() => readStored('garage-cart-v2', []))
-  const seeded = useRef(cartItems.length > 0)
+  const seeded = useRef(readStored('garage-cart-v2', null) !== null)
   const [checkout, setCheckout] = useState<CheckoutState>(() => ({ customerType: 'personal', organization: 'ООО «Гараж»', guest: false, phoneVerified: false, guestName: '', guestEmail: '', guestPhone: '', otherRecipient: false, recipientName: '', recipientLastName: '', recipientPhone: '', organizationInn: '', delivery: 'pickup', payment: 'card', address: '', store: '', transportAddress: '', comment: '', marketingConsent: false, ...readStored<Partial<CheckoutState>>('garage-checkout-v2', {}) }))
   useEffect(() => { try { localStorage.setItem('garage-cart-v2', JSON.stringify(cartItems)); localStorage.setItem('garage-checkout-v2', JSON.stringify(checkout)) } catch { /* In-memory fallback. */ } }, [cartItems, checkout])
   const cartIds = useMemo(() => new Set(cartItems.map(({ id }) => id)), [cartItems])
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-  const addToCart = (id: string, quantity = 1, optionFor?: string) => { seeded.current = true; setCartItems((current) => current.some((item) => item.id === id) ? current.map((item) => { if (item.id !== id) return item; const parents = item.optionParents ?? (item.optionFor ? { [item.optionFor]: item.quantity } : {}); return { ...item, optionFor: item.optionFor ?? optionFor, optionParents: optionFor ? { ...parents, [optionFor]: (parents[optionFor] ?? 0) + quantity } : parents, quantity: item.quantity + quantity } }) : [...current, { id, quantity, optionFor, optionParents: optionFor ? { [optionFor]: quantity } : undefined }]) }
+  const addToCart = (id: string, quantity = 1, optionFor?: string) => { seeded.current = true; setCheckout(current => Array.isArray(current.selectedCartIds) ? { ...current, selectedCartIds: [...new Set([...current.selectedCartIds, id])] } : current); setCartItems((current) => current.some((item) => item.id === id) ? current.map((item) => { if (item.id !== id) return item; const parents = item.optionParents ?? (item.optionFor ? { [item.optionFor]: item.quantity } : {}); return { ...item, optionFor: item.optionFor ?? optionFor, optionParents: optionFor ? { ...parents, [optionFor]: (parents[optionFor] ?? 0) + quantity } : parents, quantity: item.quantity + quantity } }) : [...current, { id, quantity, optionFor, optionParents: optionFor ? { [optionFor]: quantity } : undefined }]) }
   const removeFromCart = (id: string) => setCartItems((current) => current.filter((item) => item.id !== id))
   const value = useMemo(() => ({ favoriteIds, compareIds, cartIds, cartItems, cartCount, checkout,
     toggleFavorite: (id: string) => setFavorites((current) => toggle(current, id)),
@@ -72,7 +75,7 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
     clearCompare: (ids?: string[]) => setCompare((current) => ids ? new Set([...current].filter((id) => !ids.includes(id))) : new Set()),
     ensureDemoCompare: (ids: string[]) => setCompare((current) => current.size ? current : new Set(ids)),
     addToCart,
-    importCart: (lines: CartLine[]) => { seeded.current = true; setCartItems(current => mergeCartLines(current, lines)) },
+    importCart: (lines: CartLine[]) => { seeded.current = true; setCartItems(current => mergeCartLines(current, lines)); setCheckout(current => Array.isArray(current.selectedCartIds) ? { ...current, selectedCartIds: [...new Set([...current.selectedCartIds, ...lines.map(line => line.id)])] } : current) },
     addManyToCart: (ids: string[]) => ids.forEach(id => addToCart(id)),
     updateQuantity: (id: string, quantity: number) => quantity < 1 ? removeFromCart(id) : setCartItems((current) => current.map((item) => item.id === id ? resizeLine(item, quantity) : item)),
     removeFromCart,

@@ -38,7 +38,7 @@ for (const width of [360,390,1440,1920]) {
       const total = async () => Number((await summary.locator('.order-summary__total strong').innerText()).replace(/\D/g,''))
       const before = await total()
       const rail = lines.first().locator('.line-accessories__rail')
-      await expect(rail.locator('article')).toHaveCount(2)
+      await expect(rail.locator('article')).toHaveCount(7)
       if (width < 600) expect(await rail.evaluate(el => el.scrollWidth > el.clientWidth)).toBe(true)
       await rail.getByRole('button', { name:'Добавить Компрессорное масло в корзину' }).click()
       await expect(lines).toHaveCount(2)

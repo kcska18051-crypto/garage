@@ -1,9 +1,10 @@
 import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { checkoutProducts, money } from '../data/checkoutData'
-import { promotionPrice } from '../data/promotionPricing'
+import { getCartPricing, selectedCartLines } from '../features/cart/cartPricing'
+import { CartPricingView } from '../features/cart/CartPricingView'
 import { useCommerce } from '../state/CommerceState'
 import './CartCheckout.css'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DeliveryChoices, deliverySummary } from '../features/checkout/DeliveryChoices'
 import { useAuth } from '../state/AuthState'
 import { useProfile } from '../state/ProfileState'
@@ -28,13 +29,14 @@ export function CheckoutReviewPage() {
   const [validationMessage, setValidationMessage] = useState('')
   const [ctaVisible, setCtaVisible] = useState(false)
   const submitRef = useRef<HTMLButtonElement>(null)
-  const count = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-  const total = useMemo(() => cartItems.reduce((sum, line) => sum + (checkoutProducts.find((item) => item.id === line.id)?.price ?? 0) * line.quantity, 0), [cartItems])
-  const discount = cartItems.reduce((sum,line) => { const p = checkoutProducts.find(p => p.id === line.id); if (!p) return sum; return sum + ((promotionPrice(p.id,p.price, 'purchaseMode' in p && p.purchaseMode === 'quote').oldPrice ?? p.price)-p.price)*line.quantity },0)
+  const included = selectedCartLines(cartItems, checkout.selectedCartIds)
+  const pricing = getCartPricing(included, checkout.promoCode)
+  const count = included.reduce((sum, item) => sum + item.quantity, 0)
+  const total = pricing.totalCents / 100
   const recipientValid = !checkout.otherRecipient || Boolean(checkout.recipientName.trim() && checkout.recipientLastName.trim() && checkout.recipientPhone.trim())
   const deliveryValid = checkout.delivery === 'pickup' ? Boolean(checkout.store) : checkout.delivery === 'courier' ? (checkout.deliveryMode === 'point' ? Boolean(checkout.deliveryPoint) : Boolean(checkout.address.trim())) : Boolean(checkout.transportAddress.trim() && checkout.carrier && (checkout.carrier !== 'Своя ТК' || checkout.customCarrier?.trim()))
   const paymentValid = checkout.customerType === 'organization' ? checkout.payment === 'invoice' : checkout.payment !== 'invoice' && checkout.payment !== 'installment' && !(checkout.payment === 'cash' && checkout.delivery === 'transport')
-  const orderValid = isAuthenticated && recipientValid && deliveryValid && paymentValid
+  const orderValid = included.length > 0 && isAuthenticated && recipientValid && deliveryValid && paymentValid
 
   useEffect(() => {
     if (!submitRef.current || typeof IntersectionObserver === 'undefined') return
@@ -46,11 +48,15 @@ export function CheckoutReviewPage() {
   const setCustomerType = (customerType: 'personal' | 'organization') => updateCheckout({ customerType, payment: customerType === 'organization' ? 'invoice' : 'card' })
   const setDelivery = (delivery: 'pickup' | 'courier' | 'transport') => updateCheckout({ delivery, payment: checkout.customerType === 'organization' ? 'invoice' : checkout.payment === 'cash' && delivery === 'transport' ? 'card' : checkout.payment })
   const submit = () => {
+    if (!included.length) { setValidationMessage('Выберите товары в корзине'); return }
     if (!isAuthenticated) { openCheckoutAuth(); return }
     if (!recipientValid) { setValidationMessage('Заполните данные другого получателя'); scrollToSection('checkout-recipient'); return }
     if (!deliveryValid) { setValidationMessage('Выберите способ получения и укажите место получения'); scrollToSection('checkout-delivery'); return }
     if (!paymentValid) { setValidationMessage('Выберите доступный способ оплаты'); scrollToSection('checkout-payment'); return }
     setValidationMessage('')
+    const details = { ...checkout }
+    delete details.confirmedOrder
+    updateCheckout({ confirmedOrder: { lines: included.map(line => ({ ...line, optionParents: line.optionParents ? { ...line.optionParents } : undefined })), pricing, details } })
     navigate('/checkout/success')
   }
 
@@ -102,13 +108,13 @@ export function CheckoutReviewPage() {
         <section className="checkout-card checkout-extra" aria-labelledby="extra-title"><h2 id="extra-title">Дополнительно</h2><label>Комментарий к заказу<textarea aria-label="Комментарий к заказу" value={checkout.comment} onChange={(event) => updateCheckout({ comment: event.target.value })}/></label><label className="checkout-marketing"><input type="checkbox" checked={checkout.marketingConsent} onChange={(event) => updateCheckout({ marketingConsent: event.target.checked })}/>Получать рекламные материалы</label><p>Нажимая «Оформить заказ», вы подтверждаете согласие с условиями оформления и обработки данных.</p></section>
       </section>
       <aside className="order-summary checkout-summary" aria-label="Итоги заказа">
-        <h2>Ваш заказ</h2><div className="order-summary__row"><span>{count} товара на сумму</span><b>{money(total + discount)}</b></div><div className="order-summary__row"><span>Скидка</span><b>{money(discount)}</b></div><div className="order-summary__row"><span>Доставка</span><b>{checkout.delivery === 'pickup' ? 'Бесплатно' : checkout.delivery === 'courier' ? 'Рассчитает менеджер' : 'По тарифу ТК'}</b></div><div className="order-summary__total"><span>Итого</span><strong>{money(total)}</strong></div>
+        <h2>Ваш заказ</h2><CartPricingView pricing={pricing} count={count}/><div className="order-summary__row"><span>Доставка</span><b>{checkout.delivery === 'pickup' ? 'Бесплатно' : checkout.delivery === 'courier' ? 'Рассчитает менеджер' : 'По тарифу ТК'}</b></div>
         <div className="checkout-summary__details"><p><span>Получатель</span><b>{checkout.otherRecipient ? `${checkout.recipientName || 'Другой'} ${checkout.recipientLastName}`.trim() : isAuthenticated ? `${user.firstName} ${user.lastName}` : 'Данные профиля после входа'}</b><button onClick={() => scrollToSection('checkout-recipient')}>Изменить</button></p><p><span>Получение</span><b>{deliveryLabels[checkout.delivery]} · {deliverySummary(checkout)}</b><button onClick={() => scrollToSection('checkout-delivery')}>Изменить</button></p><p><span>Оплата</span><b>{paymentLabels[checkout.payment]}</b><button onClick={() => scrollToSection('checkout-payment')}>Изменить</button></p></div>
         {validationMessage && <p className="checkout-validation" role="alert">{validationMessage}</p>}
         <button ref={submitRef} data-testid="checkout-submit" className={`button checkout-submit${orderValid ? '' : ' is-inactive'}`} aria-disabled={!orderValid} type="button" onClick={submit}>Оформить заказ</button>
       </aside>
     </div>
-    <div className={`mobile-checkout-hint${ctaVisible ? ' is-hidden' : ''}`} data-testid="mobile-checkout-hint"><span><b>{money(total)}</b><small>{count} товара</small></span><button type="button" aria-label="Перейти к оформлению заказа" onClick={() => submitRef.current?.scrollIntoView?.({ behavior: 'auto', block: 'center' })}>Оформить заказ</button></div>
+    <div className={`mobile-checkout-hint${ctaVisible ? ' is-hidden' : ''}`} data-testid="mobile-checkout-hint"><span><b>{pricing.rows.length > 0 && pricing.rows.every(row => row.quote) ? 'Уточняется' : money(total)}</b><small>{count} товара</small></span><button type="button" aria-label="Перейти к оформлению заказа" onClick={() => submitRef.current?.scrollIntoView?.({ behavior: 'auto', block: 'center' })}>Оформить заказ</button></div>
   </main>
 }
 
@@ -119,5 +125,9 @@ export function CheckoutDeliveryPage() {
 export function CheckoutSuccessPage() {
   useDemoCart()
   const { cartItems, checkout } = useCommerce()
-  return <main className="checkout-page checkout-success-page"><h1>Заказ принят</h1><p className="order-number">Номер заказа: GR-2026-091</p><div className="checkout-layout"><section className="checkout-form checkout-card"><h2>Состав заказа</h2><ul>{cartItems.map((line) => <li key={line.id}>{checkoutProducts.find((item) => item.id === line.id)?.name ?? line.id} — {line.quantity} шт.</li>)}</ul><h2>Получение и оплата</h2><p>{deliveryLabels[checkout.delivery]}: {deliverySummary(checkout)}</p><p>{paymentLabels[checkout.payment]}</p><div className="success-actions"><Link className="button" to="/profile/orders">Активные заказы</Link><Link to="/catalog">Вернуться в каталог</Link></div></section></div></main>
+  const confirmedCheckout = checkout.confirmedOrder?.details ?? checkout
+  const included = checkout.confirmedOrder?.lines ?? selectedCartLines(cartItems, checkout.selectedCartIds)
+  const pricing = checkout.confirmedOrder?.pricing ?? getCartPricing(included, checkout.promoCode)
+  const count = included.reduce((sum, line) => sum + line.quantity, 0)
+  return <main className="checkout-page checkout-success-page"><h1>Заказ принят</h1><p className="order-number">Номер заказа: GR-2026-091</p><div className="checkout-layout"><section className="checkout-form checkout-card"><h2>Состав заказа</h2><ul>{included.map((line) => <li key={line.id}>{checkoutProducts.find((item) => item.id === line.id)?.name ?? line.id} — {line.quantity} шт.</li>)}</ul><h2>Получение и оплата</h2><p>{deliveryLabels[confirmedCheckout.delivery]}: {deliverySummary(confirmedCheckout)}</p><p>{paymentLabels[confirmedCheckout.payment]}</p><div className="success-actions"><Link className="button" to="/profile/orders">Активные заказы</Link><Link to="/catalog">Вернуться в каталог</Link></div></section><aside className="order-summary" aria-label="Итоги заказа"><h2>Итог заказа</h2><CartPricingView pricing={pricing} count={count}/></aside></div></main>
 }

@@ -4,6 +4,7 @@ import { useCommerce } from '../../state/CommerceState'
 import { useProfile } from '../../state/ProfileState'
 import {useAuth} from '../../state/AuthState'
 import {canViewServiceRequest} from '../../state/serviceRequests'
+import { getDemoProduct, asProductCard } from '../../data/productRegistry'
 
 export function ProfileOverview() {
   const { user, orders, recentProductIds,serviceRequests } = useProfile()
@@ -11,7 +12,7 @@ export function ProfileOverview() {
   const openRequests=serviceRequests.filter(record=>canViewServiceRequest(record,identity)&&!['Выполнено','Отменено'].includes(record.status)).length
   const commerce = useCommerce()
   const activeOrders = orders.filter((order) => order.status === 'В обработке' || order.status === 'Заявка на отмену отправлена')
-  const recent = recentProductIds.slice(0, 3).map((id) => prototypeData.products.find((product) => product.id === id)!).filter(Boolean)
+  const recent = recentProductIds.slice(0, 3).flatMap(id => { const product = getDemoProduct(id); return product ? [asProductCard(product)] : [] })
   return <div className="profile-section profile-overview">
     <header className="profile-section__heading"><h1>Личный кабинет</h1><Link className="profile-button" to="/profile/data">Настроить профиль</Link></header>
     <section className="profile-welcome"><div><span>Здравствуйте, {user.firstName}</span><h2>Всё важное — в одном рабочем пространстве</h2><p>Заказы, организации, услуги и сохранённые товары доступны по разделам кабинета.</p></div><span className="profile-welcome__shape" aria-hidden="true" /></section>

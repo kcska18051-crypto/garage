@@ -4,6 +4,12 @@ import { useCommerce } from './CommerceState'
 import type {ServiceRequestDraft} from '../data/serviceTypes'
 import {buildServiceRequest,readServiceRequests,saveServiceRequests,type ProfileServiceRequest,type ServiceCreationResult,type ServiceIdentity} from './serviceRequests'
 import {normalizePhoneIdentity} from '../utils/phoneIdentity'
+import { getDemoProduct } from '../data/productRegistry'
+
+const recentStorageKey = 'garage-recent-products-v1'
+function readRecentProducts(): string[] {
+  try { const ids: unknown = JSON.parse(localStorage.getItem(recentStorageKey) ?? '[]'); return Array.isArray(ids) ? [...new Set(ids.filter((id): id is string => typeof id === 'string' && Boolean(getDemoProduct(id))))].slice(0, 20) : [] } catch { return [] }
+}
 
 type UserData = typeof profileData.user
 type Recipient = ProfileOrder['recipient']
@@ -51,6 +57,7 @@ type ProfileContextValue = {
   organizations: ProfileOrganization[]
   addresses: ProfileAddress[]
   recentProductIds: string[]
+  recordRecentlyViewed(id: string): void
   notification: string
   profileDeleted: boolean
   requestCancellation(id: string): void
@@ -76,7 +83,9 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [orders, setOrders] = useState<ProfileOrder[]>(profileData.orders)
   const [organizations, setOrganizations] = useState<ProfileOrganization[]>(profileData.organizations)
   const [addresses, setAddresses] = useState<ProfileAddress[]>(readAddresses)
-  const [recentProductIds, setRecentProductIds] = useState(profileData.recentlyViewedProductIds)
+  const [recentProductIds, setRecentProductIds] = useState<string[]>(readRecentProducts)
+  const recordRecentlyViewed = useCallback((id: string) => { if (getDemoProduct(id)) setRecentProductIds(ids => ids[0] === id ? ids : [id, ...ids.filter(value => value !== id)].slice(0, 20)) }, [])
+  useEffect(() => { try { localStorage.setItem(recentStorageKey, JSON.stringify(recentProductIds)) } catch { /* Keep in-memory history. */ } }, [recentProductIds])
   const [notification, setNotification] = useState('')
   const [profileDeleted, setProfileDeleted] = useState(false)
   const [serviceSnapshot]=useState(readServiceRequests)
@@ -119,6 +128,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     organizations,
     addresses,
     recentProductIds,
+    recordRecentlyViewed,
     notification,
     profileDeleted,
     requestCancellation: (id) => setOrders((current) => current.map((order) => order.id === id ? { ...order, status: 'Заявка на отмену отправлена', canCancel: false } : order)),

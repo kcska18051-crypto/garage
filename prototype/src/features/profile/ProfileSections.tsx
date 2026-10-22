@@ -9,7 +9,7 @@ import { formatAvailability } from '../../utils/availability'
 import { ProfileDialog } from './ProfileDialog'
 import { SavedAddressSummary } from './SavedAddressSummary'
 import { promotionPrice } from '../../data/promotionPricing'
-import { demoProducts, asProductCard } from '../../data/productRegistry'
+import { demoProducts, asProductCard, getDemoProduct } from '../../data/productRegistry'
 import {useAuth} from '../../state/AuthState'
 
 function Heading({ title, action }: { title: string; note?: string; action?: React.ReactNode }) {
@@ -34,7 +34,7 @@ export function ProfileFavorites() {
 }
 
 export function ProfileRecentlyViewed() {
-  const { recentProductIds } = useProfile(); const products = recentProductIds.map((id) => prototypeData.products.find((item) => item.id === id)).filter(Boolean) as Product[]
+  const { recentProductIds } = useProfile(); const products = recentProductIds.flatMap(id => { const product = getDemoProduct(id); return product ? [asProductCard(product)] : [] })
   return <div className="profile-section"><Heading title="Вы смотрели" note="Недавно просмотренные товары"  />{products.length ? <div className="profile-product-grid profile-product-grid--recent">{products.map((product) => <ProductTile compact key={product.id} product={product} />)}</div> : <div className="profile-empty"><span>◷</span><h2>История просмотров пуста</h2><p>Здесь появятся товары, которые вы недавно открывали.</p><Link className="profile-button profile-button--primary" to="/catalog">Перейти в каталог</Link></div>}</div>
 }
 

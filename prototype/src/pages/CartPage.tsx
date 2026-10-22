@@ -49,7 +49,7 @@ export function CartPage() {
     <CartRecipient />
     <div className="cart-layout">
       <section className="cart-order" aria-label="Состав заказа">
-        <div className="cart-toolbar"><label><input type="checkbox" checked={allSelected} onChange={toggleAll} aria-label="Выбрать все товары" /> Выбрать всё</label><span>Выбрано: {selectedCount}</span></div>
+        <div className="cart-toolbar" role="toolbar" aria-label="Действия с товарами"><div className="cart-toolbar__selection"><label><input type="checkbox" checked={allSelected} onChange={toggleAll} aria-label="Выбрать все товары" /> Выбрать всё</label><span>Выбрано: {selectedCount}</span></div><CartTools placement="toolbar" lines={cartItems.filter(line => selected.has(line.id))}/></div>
         <div className="cart-lines">{cartItems.map((line, lineIndex) => {
           const product = checkoutProducts.find((item) => item.id === line.id) ?? { id: line.id, name: line.id, sku: 'Уточняется', modification: 'Данные товара уточняются', price: 0, availabilityStatus: 'Под заказ' as const, storeCount: 0, href: '/catalog' }
           const linePricing = pricing.rows.find(row => row.id === line.id) ?? basePricing.rows.find(row => row.id === line.id)!

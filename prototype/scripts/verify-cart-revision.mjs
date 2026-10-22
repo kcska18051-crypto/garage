@@ -131,7 +131,7 @@ export async function verifyCartRevision(browser, { base, width, screenshotRoot,
       await page.keyboard.press('Escape')
       assert(await trigger.evaluate(el => el === document.activeElement))
     }
-    await summary.getByRole('button', { name: 'Поделиться корзиной', exact: true }).click()
+    await page.getByRole('toolbar', {name: 'Действия с товарами'}).getByRole('button', { name: 'Поделиться корзиной', exact: true }).click()
     const shareURL = await page.getByLabel('Ссылка на корзину', { exact: true }).inputValue()
     const payload = JSON.parse(atob(new URL(shareURL).searchParams.get('shared')))
     assert.deepEqual(payload, seed)

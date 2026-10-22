@@ -63,6 +63,10 @@ export function CheckoutReviewPage() {
   return <main className="checkout-page checkout-review-page">
     <nav className="checkout-breadcrumbs" aria-label="Хлебные крошки"><Link to="/">Главная</Link><span>/</span><Link to="/cart">Корзина</Link><span>/</span><span>Оформление заказа</span></nav>
     <header className="checkout-heading"><Link className="checkout-back" aria-label="Вернуться в корзину" to="/cart">← Вернуться в корзину</Link><h1>Оформление заказа</h1></header>
+    {!isAuthenticated && <section className="checkout-auth-notice" aria-label="Вход и регистрация">
+      <div><h2>Войдите или зарегистрируйтесь</h2><p>Для завершения заказа необходимо войти. Корзина и выбранные условия сохранятся.</p></div>
+      <button className="button" type="button" onClick={openCheckoutAuth}>Войти или зарегистрироваться</button>
+    </section>}
     <div className="checkout-layout">
       <section className="checkout-form">
         <section className="checkout-card" id="checkout-recipient" aria-labelledby="recipient-title">
@@ -70,7 +74,7 @@ export function CheckoutReviewPage() {
           {isAuthenticated ? <><p>Данные демонстрационного профиля</p><div className="checkout-profile-data">
             <label>Имя<input aria-label="Имя пользователя" value={`${user.firstName} ${user.lastName}`} readOnly/></label>
             <label>Телефон<input aria-label="Подтверждённый телефон" value={identity?.phone ? `+${identity.phone}` : ''} readOnly/></label>
-          </div></> : <><p>Войдите, чтобы использовать данные профиля и завершить оформление. Выбор товаров и способов получения сохранится.</p><button className="checkout-secondary-button" type="button" onClick={openCheckoutAuth}>Войти или зарегистрироваться</button></>}
+          </div></> : <p className="checkout-recipient-note">Заказ получите вы или другой человек. Данные вашего профиля появятся после входа.</p>}
           {checkout.customerType === 'organization' && isAuthenticated && <div className="checkout-organization"><label>Организация<select aria-label="Организация" value={checkout.organization} onChange={(event) => updateCheckout({ organization: event.target.value })}><option>ООО «Гараж»</option></select></label><label>Найти другую организацию<input aria-label="Поиск организации по ИНН" inputMode="numeric" placeholder="Введите ИНН" value={checkout.organizationInn} onChange={(event) => updateCheckout({ organizationInn: event.target.value })}/></label><p>Реквизиты выбранной организации загружаются из профиля.</p></div>}
           <label className="checkout-switch"><input type="checkbox" aria-label="Заберёт другой человек" checked={checkout.otherRecipient} onChange={(event) => updateCheckout({ otherRecipient: event.target.checked })}/><span><strong>Заберёт другой человек</strong><small>Укажите его контактные данные</small></span></label>
           {checkout.otherRecipient && <div className="checkout-fields checkout-fields--recipient">

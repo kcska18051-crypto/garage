@@ -67,6 +67,11 @@
 }
 
 /* Single-page checkout */
+.checkout-auth-notice{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1.25rem}
+.checkout-auth-notice h2{font-size:1.15rem;line-height:1.25;margin:0 0 .4rem}
+.checkout-auth-notice p,.checkout-recipient-note{color:var(--color-text-muted);font-size:.85rem;line-height:1.5;margin:0}
+.checkout-auth-notice>.button{border:0;cursor:pointer;flex-shrink:0;font:inherit;font-size:.85rem;font-weight:750}
+@media(max-width:650px){.checkout-auth-notice{align-items:stretch;flex-direction:column;gap:.85rem;padding:1rem}.checkout-auth-notice>.button{width:100%}}
 .checkout-review-page .checkout-heading{align-items:start;margin-bottom:1.25rem}
 .checkout-back{font-size:.76rem;font-weight:700;text-decoration:none;width:max-content}
 .checkout-review-page .checkout-card h2{font-size:1.15rem;line-height:1.2;margin:0}

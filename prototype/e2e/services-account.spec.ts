@@ -26,7 +26,7 @@ async function login(page:Page,phone:string){
   await auth.getByLabel('Код подтверждения').fill('1234')
   await auth.getByRole('button',{name:'Войти',exact:true}).click()
 }
-const cases=[['repair','/services/service-center/compressor-repair/screw/','Оставить заявку','Модель для проверки'],['paint','/services/paint-matching/','Оставить заявку','Демонстрационный автомобиль'],['rental','/services/rental/hydraulic-jack/','Арендовать','Локальная аренда-пример']] as const
+const cases=[['repair','/services/service-center/compressor-repair/screw/','Оставить заявку','Модель для проверки'],['paint','/services/paint-matching/automotive/','Оставить заявку','Демонстрационный автомобиль'],['rental','/services/rental/hydraulic-jack/','Арендовать','Локальная аренда-пример']] as const
 for(const width of [360,390,1440,1920])test(`three forms share stable account records at ${width}`,async({page})=>{
   test.setTimeout(90000)
   await page.setViewportSize({width,height:900})
@@ -84,7 +84,7 @@ test('guest mismatch, matching phone, exact intent, reload and logout privacy',a
   await expect(page.locator('main h1')).toHaveText('Заявка недоступна')
 })
 test('quota keeps form inputs and a double submit creates just one record',async({page})=>{
-  await page.goto('/services/paint-matching/')
+  await page.goto('/services/paint-matching/automotive/')
   await page.getByRole('button',{name:'Оставить заявку'}).click();await fill(page,'paint')
   await page.evaluate(()=>{const original=Storage.prototype.setItem;Object.assign(window,{restoreServiceStorage:()=>Storage.prototype.setItem=original});Storage.prototype.setItem=function(k,v){if(k==='garage-service-requests-v1')throw new DOMException('Quota','QuotaExceededError');return original.call(this,k,v)}})
   await page.getByRole('button',{name:'Отправить заявку'}).click()
@@ -96,7 +96,7 @@ test('quota keeps form inputs and a double submit creates just one record',async
   expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('garage-service-requests-v1')!).filter((r:{seed:boolean})=>!r.seed).length)).toBe(1)
 })
 test('a password demo cannot claim an unowned request even for the default profile phone',async({page})=>{
-  await page.goto('/services/paint-matching/')
+  await page.goto('/services/paint-matching/automotive/')
   await page.getByRole('button',{name:'Оставить заявку'}).click();await fill(page,'paint','+7 900 000-00-00')
   await page.getByRole('button',{name:'Отправить заявку'}).click()
   const id=await page.evaluate(()=>JSON.parse(localStorage.getItem('garage-service-requests-v1')!).find((r:{seed:boolean})=>!r.seed).id)

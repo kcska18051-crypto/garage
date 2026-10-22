@@ -55,9 +55,10 @@ test('real repair hierarchy links, all details and demo submissions',async({page
     await page.getByRole('link',{name:'← Вернуться к направлению'}).click()
   }
 })
-test('paint has its own form without subcategories',async({page})=>{
+test('paint opens the chosen child before its own form',async({page})=>{
   await page.goto('/services/paint-matching')
-  await expect(page.locator('.services-grid')).toHaveCount(0)
+  await expect(page.locator('.services-grid article')).toHaveCount(2)
+  await page.getByRole('main').getByRole('link',{name:'Подбор/колеровка автомобильных эмалей',exact:true}).click()
   await page.getByRole('button',{name:'Оставить заявку',exact:true}).click()
   await contacts(page)
   await page.getByRole('button',{name:'Отправить заявку'}).click()

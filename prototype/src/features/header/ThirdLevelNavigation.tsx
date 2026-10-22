@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { getVisibleHeaderQuickLinks, headerQuickLinksConfig, type HeaderQuickLink, type HeaderQuickLinksConfig } from '../../data/headerNavigationData'
+import { PaintServiceLink } from './PaintServiceLink'
 
 function QuickLink({ item, onClick }: { item: HeaderQuickLink; onClick?: () => void }) {
   return <NavLink className={`third-level-nav__link${item.tone === 'accent' ? ' third-level-nav__link--accent' : ''}`} to={item.href} onClick={onClick}>{item.label}</NavLink>
@@ -11,7 +12,7 @@ export function ThirdLevelNavigation({ compact, config = headerQuickLinksConfig 
   const mobileItems = useMemo(() => getVisibleHeaderQuickLinks(config, true), [config])
   const [visibleCount, setVisibleCount] = useState(desktopItems.length)
   const [moreOpen, setMoreOpen] = useState(false)
-  const desktopRef = useRef<HTMLDivElement>(null)
+  const desktopRef = useRef<HTMLElement>(null)
   const measureRef = useRef<HTMLDivElement>(null)
   const moreAreaRef = useRef<HTMLDivElement>(null)
 
@@ -72,14 +73,15 @@ export function ThirdLevelNavigation({ compact, config = headerQuickLinksConfig 
   const overflowItems = desktopItems.slice(visibleCount)
 
   return <div className={`third-level-nav${compact ? ' third-level-nav--compact' : ''}${config.mobileEnabled ? '' : ' third-level-nav--mobile-disabled'}`}>
-    <div className="third-level-nav__desktop" ref={desktopRef}>
-      <nav aria-label="Быстрые ссылки">
+    <div className="third-level-nav__desktop">
+      <nav aria-label="Быстрые ссылки" ref={desktopRef}>
         {primaryItems.map((item) => <QuickLink key={item.id} item={item} />)}
         {overflowItems.length > 0 && <div className="third-level-nav__more" ref={moreAreaRef}>
           <button type="button" aria-expanded={moreOpen} aria-haspopup="true" onClick={() => setMoreOpen((open) => !open)}>Ещё <span aria-hidden="true">⌄</span></button>
           {moreOpen && <nav aria-label="Дополнительные быстрые ссылки">{overflowItems.map((item) => <QuickLink key={item.id} item={item} onClick={() => setMoreOpen(false)} />)}</nav>}
         </div>}
       </nav>
+      <PaintServiceLink />
       <div className="third-level-nav__measure" ref={measureRef} aria-hidden="true">
         {desktopItems.map((item) => <span key={item.id} data-measure-link>{item.label}</span>)}
         <span data-measure-more>Ещё ⌄</span>

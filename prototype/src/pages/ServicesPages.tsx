@@ -1,6 +1,6 @@
 import {useCallback,useState,type ReactNode} from 'react'
 import {Link,useParams} from 'react-router-dom'
-import {serviceDirections,repairServices,rentalItems,repairSteps,paintSteps,rentalSteps} from '../data/servicesData'
+import {serviceDirections,repairServices,paintServices,rentalItems,repairSteps,paintSteps,rentalSteps} from '../data/servicesData'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs,type BreadcrumbItem} from '../features/catalog/Breadcrumbs'
 import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
@@ -35,7 +35,13 @@ export function RepairDetailPage() {
   return <ServiceDetail key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} crumbs={repairCrumbs} description={item.text} steps={repairSteps}/>
 }
 export function PaintMatchingPage() {
-  return <ServiceDetail request={{kind:'paint',title:'Подбор автоэмали',itemId:'paint-matching'}} crumbs={[servicesCrumb]} description="Демонстрационная страница обращения по подбору цвета и материалов для ремонта автомобильного покрытия. Автомобиль и задача передаются в форме, а способ подбора обсуждается отдельно." steps={paintSteps}/>
+  return <ServiceLayout title="Подбор автоэмали" crumbs={[servicesCrumb]}><p className="services-lead">Выберите тип эмали, чтобы посмотреть пример услуги и оставить заявку по выбранному направлению. Способ подбора, материалы, стоимость и сроки уточняются.</p><ServiceCards items={paintServices}/><Link className="services-back" to="/services">← Все услуги</Link></ServiceLayout>
+}
+export function PaintDetailPage() {
+  const {paintSlug}=useParams()
+  const item=paintServices.find(service=>service.id===paintSlug)
+  if(!item) return <NotFoundPage/>
+  return <ServiceDetail key={item.id} request={{kind:'paint',title:item.title,itemId:item.itemId}} crumbs={[servicesCrumb,{label:'Подбор автоэмали',to:'/services/paint-matching'}]} description={item.text} steps={paintSteps}/>
 }
 function ServiceDetail({request,crumbs,description,steps}:{request:ServiceRequest;crumbs:BreadcrumbItem[];description:string;steps:string[]}) {
   const [open,setOpen]=useState(false)

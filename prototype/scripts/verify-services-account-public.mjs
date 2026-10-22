@@ -3,7 +3,7 @@ import {mkdir} from 'node:fs/promises'
 const base='https://kcska18051-crypto.github.io/garage'
 const version=process.argv[2]??'service-account'
 const browser=await chromium.launch({headless:true})
-const cases=[['repair','/services/service-center/compressor-repair/screw/','Оставить заявку','Публичный демопример модели'],['paint','/services/paint-matching/','Оставить заявку','Демоавтомобиль'],['rental','/services/rental/hydraulic-jack/','Арендовать','Демонстрационная аренда']]
+const cases=[['repair','/services/service-center/compressor-repair/screw/','Оставить заявку','Публичный демопример модели'],['paint','/services/paint-matching/automotive/','Оставить заявку','Демоавтомобиль'],['rental','/services/rental/hydraulic-jack/','Арендовать','Демонстрационная аренда']]
 async function form(page,kind,phone='+7 999 123-45-67'){
   await page.getByLabel('Ваше имя',{exact:true}).fill('Демонстрация')
   await page.getByLabel('Телефон',{exact:true}).fill(phone)
@@ -63,7 +63,7 @@ try{
   }
   const context=await browser.newContext({viewport:{width:390,height:900}})
   const page=await context.newPage()
-  await page.goto(`${base}/services/paint-matching/?v=${version}`)
+  await page.goto(`${base}/services/paint-matching/automotive/?v=${version}`)
   await page.getByRole('button',{name:'Оставить заявку'}).click();await form(page,'paint')
   await page.getByRole('button',{name:'Посмотреть заявку в личном кабинете'}).click()
   const detail=page.url()

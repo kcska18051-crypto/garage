@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { SearchBox } from './SearchBox'
+import { PaintServiceLink } from './PaintServiceLink'
 
 export function MobileHeader({ region, onRegion, menuOpen, onMenu, onCatalog, searchSuspended = false }: { region: string; onRegion(): void; menuOpen: boolean; onMenu(): void; onCatalog(): void; searchSuspended?: boolean }) {
   useEffect(() => {
@@ -13,6 +14,7 @@ export function MobileHeader({ region, onRegion, menuOpen, onMenu, onCatalog, se
     <div className="mobile-header">
       <div className="mobile-header__top"><button onClick={onMenu} aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'} aria-expanded={menuOpen}>☰</button><Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link><button className="mobile-region" onClick={onRegion} aria-label="Выбрать город">⌖ <span>{region}</span></button></div>
       <SearchBox suspended={searchSuspended} />
+      <PaintServiceLink className="paint-service-link--mobile" />
       {menuOpen && <nav className="mobile-menu" aria-label="Мобильное меню"><p className="eyebrow">Навигация</p><button type="button" onClick={onCatalog} aria-haspopup="dialog">Каталог<span>→</span></button>{[['Услуги', '/services'], ['Акции', '/actions'], ['Доставка и оплата', '/delivery'], ['Контакты', '/contacts']].map(([label, href]) => <Link key={label} to={href} onClick={onMenu}>{label}<span>→</span></Link>)}<a href="tel:+70000000000">+7 (000) 000-00-00</a></nav>}
     </div>
   )

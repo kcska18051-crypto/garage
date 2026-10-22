@@ -4,6 +4,8 @@ import { MemoryRouter } from 'react-router-dom'
 import { Header } from './Header'
 import { RegionProvider, useRegion } from '../../state/RegionState'
 import { AuthProvider } from '../../state/AuthState'
+import { DesktopHeader } from './DesktopHeader'
+import { headerQuickLinksConfig } from '../../data/headerNavigationData'
 
 function renderHeader() {
   return render(<MemoryRouter><RegionProvider><AuthProvider><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /></AuthProvider></RegionProvider></MemoryRouter>)
@@ -15,6 +17,22 @@ function RegionEcho() {
 }
 
 describe('responsive header', () => {
+  it('offers a separate paint service entry even when quick navigation is disabled', () => {
+    const enabled = headerQuickLinksConfig.enabled
+    headerQuickLinksConfig.enabled = false
+    try {
+      renderHeader()
+      expect(document.querySelector('.main-header-row a[href="/services/paint-matching"]')).toHaveTextContent('Подбор автоэмали')
+      expect(document.querySelector('.mobile-header a[href="/services/paint-matching"]')).toHaveTextContent('Подбор автоэмали')
+      expect(document.querySelector('.main-header-row a[href="/services"]')).toHaveTextContent('Услуги')
+    } finally { headerQuickLinksConfig.enabled = enabled }
+  })
+
+  it('keeps the paint entry in the compact header', () => {
+    render(<MemoryRouter><AuthProvider><DesktopHeader region="Ярославль" onRegion={() => {}} counts={{ favorites: 0, compare: 0, cart: 0 }} compact catalogOpen={false} onCatalog={() => {}} /></AuthProvider></MemoryRouter>)
+    expect(screen.getByRole('link', { name: 'Подбор автоэмали' })).toHaveAttribute('href', '/services/paint-matching')
+  })
+
   it('changes the selected region from the region dialog', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter><RegionProvider><AuthProvider><Header counts={{ favorites: 2, compare: 1, cart: 3 }} /><RegionEcho /></AuthProvider></RegionProvider></MemoryRouter>)

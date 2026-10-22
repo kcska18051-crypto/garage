@@ -31,11 +31,11 @@ it('does not grant a mismatched or unconfirmed identity access to a service requ
 it('protects the actual CTA, direct URL and remount, then permits matching confirmation without deleting history', async () => {
   login('79991234567'); const user = userEvent.setup()
   const view = open('/services/paint-matching/automotive')
-  await user.click(screen.getByRole('button', {name: 'Оставить заявку'}))
-  for (const [label,value] of [['Ваше имя',draft.fields.name],['Телефон',draft.fields.phone],['Автомобиль',draft.fields.car],['Комментарий',draft.fields.comment]]) {
+  await user.click(screen.getByRole('button', {name: 'Узнать стоимость'}))
+  for (const [label,value] of [['Имя',draft.fields.name],['Телефон',draft.fields.phone],['Марка авто',draft.fields.car],['Комментарий',draft.fields.comment]]) {
     await user.click(screen.getByLabelText(label)); await user.paste(value)
   }
-  await user.click(screen.getByRole('button', {name: 'Отправить заявку'}))
+  await user.click(within(screen.getByRole('dialog')).getByRole('button', {name: 'Узнать стоимость'}))
   await user.click(screen.getByRole('button', {name: 'Посмотреть заявку в личном кабинете'}))
   expect(screen.queryByText(draft.fields.comment)).not.toBeInTheDocument()
   expect(screen.getByRole('dialog', {name: 'Вход и регистрация'})).toBeInTheDocument()

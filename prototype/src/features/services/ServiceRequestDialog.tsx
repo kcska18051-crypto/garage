@@ -7,7 +7,7 @@ import {useProfile} from '../../state/ProfileState'
 import {useAuth} from '../../state/AuthState'
 import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} from '../../state/serviceRequests'
 
-const emptyFields = { name: '', phone: '', model: '', description: '', car: '', comment: '', start: '', end: '', quantity: '1' }
+const emptyFields = { name: '', phone: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1' }
 type Field = keyof typeof emptyFields
 
 export function ServiceRequestDialog({ request, onClose }: { request: ServiceRequest; onClose(): void }) {
@@ -28,7 +28,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
   const photoInputRef = useRef<HTMLInputElement>(null)
   const closeRef = useRef(onClose)
   const id = useId()
-  const title = request.kind === 'repair' ? 'Заявка на ремонт' : request.kind === 'paint' ? 'Заявка на подбор автоэмали' : 'Заявка на аренду'
+  const title = request.kind === 'repair' ? 'Заявка на ремонт' : request.kind === 'paint' ? 'Узнать стоимость' : 'Заявка на аренду'
   const today = localDateString()
 
   useEffect(() => { closeRef.current = onClose }, [onClose])
@@ -61,11 +61,12 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
     const inputId = `${id}-${key}`
     const props = {
       id: inputId, name: key, value: fields[key], required: !options.optional,
+      'aria-label': label,
       onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setFields((current) => ({ ...current, [key]: event.target.value })),
       'aria-invalid': Boolean(errors[key]), 'aria-describedby': errors[key] ? `${inputId}-error` : undefined,
     }
     return <div className="form-field" key={key}>
-      <label htmlFor={inputId}>{label}</label>
+      <label htmlFor={inputId}>{label}{request.kind==='paint'&&!options.optional&&<span aria-hidden="true"> *</span>}</label>
       {options.multiline ? <textarea {...props} rows={3} maxLength={4000} /> : <input {...props} maxLength={key==='name'?100:key==='phone'?64:200} type={options.type ?? 'text'} min={options.min} step={options.type === 'number' ? '1' : undefined} autoComplete={options.autoComplete} />}
       {errors[key] && <span className="field-error" id={`${inputId}-error`}>{errors[key]}</span>}
     </div>
@@ -84,10 +85,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
     if (request.kind === 'repair') {
       if (!fields.model.trim()) next.model = 'Укажите модель оборудования'
       if (!fields.description.trim()) next.description = 'Опишите неисправность'
-    } else if (request.kind === 'paint') {
-      if (!fields.car.trim()) next.car = 'Укажите автомобиль'
-      if (!fields.comment.trim()) next.comment = 'Добавьте комментарий'
-    } else Object.assign(next, validateRental(fields.start, fields.end, fields.quantity, localDateString()))
+    } else if (request.kind === 'rental') Object.assign(next, validateRental(fields.start, fields.end, fields.quantity, localDateString()))
     if (photoError) next.photo = photoError
     setErrors(next)
     const first = Object.keys(next)[0]
@@ -124,7 +122,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
         <h2 ref={headingRef} tabIndex={-1}>{title}</h2>
         <p className="service-request-note">Локальный демонстрационный прототип: текстовые данные сохранятся только в этом браузере. Не вводите реальные персональные данные на общем устройстве. Реальная отправка менеджеру не выполняется.</p>
         <p className="service-request-selection">{request.title}</p>
-        {field('name', 'Ваше имя', { autoComplete: 'name' })}
+        {field('name', request.kind==='paint'?'Имя':'Ваше имя', { autoComplete: 'name' })}
         {field('phone', 'Телефон', { type: 'tel', autoComplete: 'tel' })}
         {request.kind === 'repair' && <>
           {field('model', 'Модель оборудования')}
@@ -145,14 +143,14 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
             {(photo || photoError) && <button className="service-request-remove" type="button" onClick={removePhoto}>Удалить фото</button>}
           </div>
         </>}
-        {request.kind === 'paint' && <>{field('car', 'Автомобиль')}{field('comment', 'Комментарий', { multiline: true })}</>}
+        {request.kind === 'paint' && <>{field('car', 'Марка авто', { optional: true })}{field('paintCode', 'Код краски', { optional: true })}{field('comment', 'Комментарий', { multiline: true, optional: true })}</>}
         {request.kind === 'rental' && <>
           <div className="service-request-dates">{field('start', 'Дата начала', { type: 'date', min: today })}{field('end', 'Дата окончания', { type: 'date', min: fields.start > today ? fields.start : today })}</div>
           {field('quantity', 'Количество', { type: 'number', min: '1' })}
           {field('comment', 'Комментарий', { multiline: true, optional: true })}
         </>}
         {storageError&&<p className="field-error" role="alert">{storageError}</p>}
-        <button className="button button--dark" type="submit">Отправить заявку</button>
+        <button className="button button--dark" type="submit">{request.kind==='paint'?'Узнать стоимость':'Отправить заявку'}</button>
       </form>}
     </section>
   </div>

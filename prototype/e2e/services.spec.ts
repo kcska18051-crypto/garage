@@ -2,8 +2,8 @@ import {expect,test,type Page} from '@playwright/test'
 
 const repairBase='/services/service-center/compressor-repair'
 const routes=['/services','/services/service-center',repairBase,...['screw','piston','diesel'].map(id=>`${repairBase}/${id}`),'/services/paint-matching','/services/rental',...['hydraulic-jack','tool-set','piston-compressor'].map(id=>`/services/rental/${id}`)]
-async function contacts(page:Page) {
-  await page.getByLabel('Ваше имя',{exact:true}).fill('Демонстрация')
+async function contacts(page:Page,paint=false) {
+  await page.getByLabel(paint?'Имя':'Ваше имя',{exact:true}).fill('Демонстрация')
   await page.getByLabel('Телефон',{exact:true}).fill('+7 (999) 123-45-67')
 }
 for(const width of [360,390,1024,1440,1920,2560]) test(`services all routes responsive at ${width}`,async({page})=>{
@@ -59,13 +59,12 @@ test('paint opens the chosen child before its own form',async({page})=>{
   await page.goto('/services/paint-matching')
   await expect(page.locator('.services-grid article')).toHaveCount(2)
   await page.getByRole('main').getByRole('link',{name:'Подбор/колеровка автомобильных эмалей',exact:true}).click()
-  await page.getByRole('button',{name:'Оставить заявку',exact:true}).click()
-  await contacts(page)
-  await page.getByRole('button',{name:'Отправить заявку'}).click()
-  await expect(page.getByLabel('Автомобиль',{exact:true})).toBeFocused()
-  await page.getByLabel('Автомобиль',{exact:true}).fill('Автомобиль-пример')
+  await page.getByRole('button',{name:'Узнать стоимость',exact:true}).click()
+  await contacts(page,true)
+  await expect(page.getByLabel('Марка авто',{exact:true})).not.toHaveAttribute('required','')
+  await page.getByLabel('Марка авто',{exact:true}).fill('Автомобиль-пример')
   await page.getByLabel('Комментарий',{exact:true}).fill('Демонстрационный подбор')
-  await page.getByRole('button',{name:'Отправить заявку'}).click()
+  await page.getByRole('dialog').getByRole('button',{name:'Узнать стоимость'}).click()
   await expect(page.getByRole('status')).toHaveText('Демонстрационная заявка создана')
 })
 test('rental list and every own detail keep dates, quantity and cart independent',async({page})=>{

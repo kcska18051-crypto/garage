@@ -6,6 +6,13 @@ export const serviceDirections=[
   {id:'rental',title:'Аренда оборудования и инструментов',href:'/services/rental',text:'Демонстрационные позиции для временных задач. Условия аренды уточняются.'},
 ]
 const repairBase='/services/service-center/compressor-repair'
+export const repairDirections=[
+  {id:'compressor-repair',title:'Ремонт компрессоров',href:repairBase,text:'Винтовые, поршневые и дизельные установки — три примера детализации категории.'},
+  {id:'impact-wrench-repair',title:'Ремонт гайковёрта',text:'Демонстрационное обращение по неисправности гайковёрта.'},
+  {id:'angle-grinder-repair',title:'Ремонт болгарки',text:'Демонстрационное обращение по неисправности угловой шлифовальной машины.'},
+  {id:'polisher-repair',title:'Ремонт полировальной машинки',text:'Демонстрационное обращение по неисправности полировального оборудования.'},
+  {id:'pressure-washer-repair',title:'Ремонт аппарата высокого давления',text:'Демонстрационное обращение по неисправности аппарата высокого давления.'},
+]
 export const paintServices=[
   {id:'automotive',title:'Подбор/колеровка автомобильных эмалей'},
   {id:'polyurethane',title:'Подбор полиуретановых эмалей'},
@@ -24,6 +31,6 @@ export const rentalItems=[
   return {...item,title:source.name,sku:source.sku,href:`/services/rental/${item.id}`,art:index}
 })
 export const repairSteps=['Опишите оборудование и неисправность','Передайте исходные данные для обсуждения','Согласуйте диагностику и возможные работы','Уточните стоимость, сроки и дальнейшие действия']
-export const paintSteps=['Укажите автомобиль и задачу ремонта','Подготовьте доступные сведения о цвете и покрытии','Обсудите исходные данные и способ подбора','Уточните состав материалов и условия получения']
+export const paintSteps=['Оставьте имя и телефон для связи','При желании добавьте марку авто, код краски и комментарий','Обсудите исходные данные и способ подбора','Уточните стоимость, материалы и условия получения']
 export const rentalSteps=['Выберите демонстрационную позицию','Укажите желаемые даты и количество','Уточните наличие, тариф и условия с менеджером','Отдельно согласуйте передачу и возврат']
 export const serviceRoutes=['/services',...serviceDirections.map(item=>item.href),...paintServices.map(item=>item.href),repairBase,...repairServices.map(item=>item.href),...rentalItems.map(item=>item.href),'/services/workshop']

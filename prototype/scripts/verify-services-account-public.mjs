@@ -3,15 +3,15 @@ import {mkdir} from 'node:fs/promises'
 const base='https://kcska18051-crypto.github.io/garage'
 const version=process.argv[2]??'service-account'
 const browser=await chromium.launch({headless:true})
-const cases=[['repair','/services/service-center/compressor-repair/screw/','Оставить заявку','Публичный демопример модели'],['paint','/services/paint-matching/automotive/','Оставить заявку','Демоавтомобиль'],['rental','/services/rental/hydraulic-jack/','Арендовать','Демонстрационная аренда']]
+const cases=[['repair','/services/service-center/compressor-repair/screw/','Оставить заявку','Публичный демопример модели'],['paint','/services/paint-matching/automotive/','Узнать стоимость','Демоавтомобиль'],['rental','/services/rental/hydraulic-jack/','Арендовать','Демонстрационная аренда']]
 async function form(page,kind,phone='+7 999 123-45-67'){
-  await page.getByLabel('Ваше имя',{exact:true}).fill('Демонстрация')
+  await page.getByLabel(kind==='paint'?'Имя':'Ваше имя',{exact:true}).fill('Демонстрация')
   await page.getByLabel('Телефон',{exact:true}).fill(phone)
   if(kind==='repair'){
     await page.getByLabel('Модель оборудования').fill('Публичный демопример модели')
     await page.getByLabel('Описание неисправности').fill('Только проверка прототипа')
   }else if(kind==='paint'){
-    await page.getByLabel('Автомобиль',{exact:true}).fill('Демоавтомобиль')
+    await page.getByLabel('Марка авто',{exact:true}).fill('Демоавтомобиль')
     await page.getByLabel('Комментарий',{exact:true}).fill('Демонстрационный подбор')
   }else{
     const today=await page.evaluate(()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`})
@@ -20,7 +20,7 @@ async function form(page,kind,phone='+7 999 123-45-67'){
     await page.getByLabel('Количество',{exact:true}).fill('2')
     await page.getByLabel('Комментарий',{exact:true}).fill('Демонстрационная аренда')
   }
-  await page.getByRole('button',{name:'Отправить заявку'}).click()
+  await page.getByRole('dialog').getByRole('button',{name:kind==='paint'?'Узнать стоимость':'Отправить заявку'}).click()
 }
 async function confirm(page,phone){
   const dialog=page.getByRole('dialog',{name:'Вход и регистрация'})
@@ -65,7 +65,7 @@ try{
   const context=await browser.newContext({viewport:{width:390,height:900}})
   const page=await context.newPage()
   await page.goto(`${base}/services/paint-matching/automotive/?v=${version}`)
-  await page.getByRole('button',{name:'Оставить заявку'}).click();await form(page,'paint')
+  await page.getByRole('button',{name:'Узнать стоимость'}).click();await form(page,'paint')
   await page.getByRole('button',{name:'Посмотреть заявку в личном кабинете'}).click()
   const detail=page.url()
   await confirm(page,'+7 900 111-22-33')

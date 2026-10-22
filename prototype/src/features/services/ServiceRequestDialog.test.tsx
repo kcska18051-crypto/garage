@@ -12,8 +12,8 @@ import { ServiceRequestDialog } from './ServiceRequestDialog'
 const render=(ui:ReactNode)=>rtlRender(ui,{wrapper:({children})=><MemoryRouter><CommerceProvider><ProfileProvider><AuthProvider>{children}</AuthProvider></ProfileProvider></CommerceProvider></MemoryRouter>})
 
 const request = (kind: ServiceRequest['kind']): ServiceRequest => ({ kind, title: 'Демонстрационный компрессор', itemId: 'demo' })
-async function common(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Ваше имя'), 'Иван')
+async function common(user: ReturnType<typeof userEvent.setup>, kind: ServiceRequest['kind']) {
+  await user.type(screen.getByLabelText(kind==='paint'?'Имя':'Ваше имя', {exact:true}), 'Иван')
   await user.type(screen.getByLabelText('Телефон'), '+7 (999) 123-45-67')
 }
 beforeEach(() => {
@@ -29,41 +29,44 @@ describe('service request dialog', () => {
   it.each(['repair', 'paint', 'rental'] as const)('shows linked errors and focuses the first invalid %s field', async (kind) => {
     const user = userEvent.setup()
     render(<ServiceRequestDialog request={request(kind)} onClose={() => {}} />)
-    await user.click(screen.getByRole('button', { name: 'Отправить заявку' }))
-    expect(screen.getByLabelText('Ваше имя')).toHaveFocus()
-    expect(screen.getByLabelText('Ваше имя')).toHaveAttribute('aria-invalid', 'true')
-    expect(screen.getByLabelText('Ваше имя')).toHaveAccessibleDescription('Укажите имя')
-    await common(user)
-    await user.click(screen.getByRole('button', { name: 'Отправить заявку' }))
-    const field = screen.getByLabelText(kind === 'repair' ? 'Модель оборудования' : kind === 'paint' ? 'Автомобиль' : 'Дата начала')
+    const submitLabel=kind==='paint'?'Узнать стоимость':'Отправить заявку'
+    const nameLabel=kind==='paint'?'Имя':'Ваше имя'
+    await user.click(screen.getByRole('button', { name: submitLabel }))
+    expect(screen.getByLabelText(nameLabel,{exact:true})).toHaveFocus()
+    expect(screen.getByLabelText(nameLabel,{exact:true})).toHaveAttribute('aria-invalid', 'true')
+    expect(screen.getByLabelText(nameLabel,{exact:true})).toHaveAccessibleDescription('Укажите имя')
+    await common(user,kind)
+    await user.click(screen.getByRole('button', { name: submitLabel }))
+    if(kind==='paint'){expect(screen.getByRole('status')).toHaveTextContent('Демонстрационная заявка создана');return}
+    const field = screen.getByLabelText(kind === 'repair' ? 'Модель оборудования' : 'Дата начала')
     expect(field).toHaveFocus()
     expect(field).toHaveAttribute('aria-invalid', 'true')
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
     if (kind !== 'rental') {
       await user.type(field, 'Демо')
       await user.click(screen.getByRole('button', { name: 'Отправить заявку' }))
-      expect(screen.getByLabelText(kind === 'repair' ? 'Описание неисправности' : 'Комментарий')).toHaveFocus()
-      expect(screen.getByLabelText(kind === 'repair' ? 'Описание неисправности' : 'Комментарий')).toHaveAttribute('aria-invalid', 'true')
+      expect(screen.getByLabelText('Описание неисправности')).toHaveFocus()
+      expect(screen.getByLabelText('Описание неисправности')).toHaveAttribute('aria-invalid', 'true')
     }
   })
   it.each(['repair', 'paint', 'rental'] as const)('accepts a valid %s request and explains the demo result', async (kind) => {
     const user = userEvent.setup()
     render(<ServiceRequestDialog request={request(kind)} onClose={() => {}} />)
     const before = localStorage.getItem('garage-cart-v2')
-    await common(user)
+    await common(user,kind)
     if (kind === 'repair') {
       await user.type(screen.getByLabelText('Модель оборудования'), 'Демо модель')
       await user.type(screen.getByLabelText('Описание неисправности'), 'Не включается')
       fireEvent.change(screen.getByLabelText('Фото неисправности (необязательно)'), { target: { files: [new File(['x'], 'photo.png', { type: 'image/png' })] } })
     } else if (kind === 'paint') {
-      await user.type(screen.getByLabelText('Автомобиль'), 'Демо автомобиль')
+      await user.type(screen.getByLabelText('Марка авто'), 'Демо автомобиль')
       await user.type(screen.getByLabelText('Комментарий'), 'Нужен подбор')
     } else {
       expect(screen.getByText('Демонстрационный компрессор')).toBeInTheDocument()
       fireEvent.change(screen.getByLabelText('Дата начала'), { target: { value: '2099-01-01' } })
       fireEvent.change(screen.getByLabelText('Дата окончания'), { target: { value: '2099-01-01' } })
     }
-    await user.click(screen.getByRole('button', { name: 'Отправить заявку' }))
+    await user.click(screen.getByRole('button', { name: kind==='paint'?'Узнать стоимость':'Отправить заявку' }))
     expect(screen.getByRole('status')).toHaveTextContent(kind === 'rental' ? 'Заявка на аренду отправлена' : 'Демонстрационная заявка создана')
     expect(screen.getByText(/DEMO-/)).toBeInTheDocument()
     expect(screen.getByText(/Реальная отправка/)).toBeInTheDocument()
@@ -117,11 +120,11 @@ describe('service request dialog', () => {
     await user.click(screen.getByRole('button', { name: 'Открыть' }))
     expect(document.body).toHaveClass('service-dialog-open')
     await user.tab({ shift: true })
-    expect(screen.getByRole('button', { name: 'Отправить заявку' })).toHaveFocus()
+    expect(screen.getByRole('button', { name: 'Узнать стоимость' })).toHaveFocus()
     await user.tab()
     expect(screen.getByRole('button', { name: 'Закрыть форму' })).toHaveFocus()
     await user.tab({ shift: true })
-    expect(screen.getByRole('button', { name: 'Отправить заявку' })).toHaveFocus()
+    expect(screen.getByRole('button', { name: 'Узнать стоимость' })).toHaveFocus()
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Открыть' })).toHaveFocus()

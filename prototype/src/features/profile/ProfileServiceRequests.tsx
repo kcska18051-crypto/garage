@@ -16,7 +16,7 @@ export function ProfileServiceRequests(){
 }
 function RequestFields({record}:{record:ProfileServiceRequest}){
   const f=record.fields
-  const rows=[['Тип',kindLabels[record.kind]],['Услуга / позиция',record.title],['Дата обращения',formatDate(record.createdAt)],['Имя',f.name],['Контактный телефон',f.phone],...(record.kind==='repair'?[['Модель оборудования',f.model],['Описание неисправности',f.description]]:record.kind==='paint'?[['Автомобиль',f.car],['Комментарий',f.comment]]:[['Дата начала',f.start],['Дата окончания',f.end],['Количество',f.quantity],['Комментарий',f.comment]])]
+  const rows=[['Тип',kindLabels[record.kind]],['Услуга / позиция',record.title],['Дата обращения',formatDate(record.createdAt)],['Имя',f.name],['Контактный телефон',f.phone],...(record.kind==='repair'?[['Модель оборудования',f.model],['Описание неисправности',f.description]]:record.kind==='paint'?[['Марка авто',f.car],['Код краски',f.paintCode],['Комментарий',f.comment]]:[['Дата начала',f.start],['Дата окончания',f.end],['Количество',f.quantity],['Комментарий',f.comment]])]
   return <dl className="service-account-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value||'Не указано в демопримере'}</dd></div>)}</dl>
 }
 export function ProfileServiceRequestDetail(){

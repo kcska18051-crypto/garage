@@ -13,7 +13,7 @@ const emptyFields:ServiceRequestFields={name:'',phone:'',model:'',description:''
 const seedDates=['2026-09-16T09:00:00.000Z','2026-09-12T09:00:00.000Z','2026-08-27T09:00:00.000Z','2026-07-04T09:00:00.000Z']
 const seedStatuses:ServiceStatus[]=['Согласовано','Уточняем детали','Уточняем детали','Выполнено']
 export const seededServiceRequests:ProfileServiceRequest[]=profileData.serviceRequests.map((item,index)=>({id:item.id,number:item.id,createdAt:seedDates[index],kind:index===0?'paint':index===3?'rental':'repair',title:item.service,itemId:`legacy-${item.id}`,status:seedStatuses[index],ownerPhone:'79000000000',submissionId:`legacy-${item.id}`,fields:{...emptyFields,name:'Демонстрационный клиент',phone:item.contact,comment:`Исторический демопример. Город: ${item.city}. Исходный статус: ${item.status}.`},photoAttached:false,seed:true}))
-const isFields=(value:unknown):value is ServiceRequestFields=>Boolean(value&&typeof value==='object'&&Object.entries(fieldLimits).every(([key,limit])=>typeof (value as Record<string,unknown>)[key]==='string'&&((value as Record<string,string>)[key]).length<=limit))
+const isFields=(value:unknown):value is ServiceRequestFields=>Boolean(value&&typeof value==='object'&&Object.entries(fieldLimits).every(([key,limit])=>typeof (value as Record<string,unknown>)[key]==='string'&&((value as Record<string,string>)[key]).length<=limit)&&((value as ServiceRequestFields).paintCode===undefined||(typeof (value as ServiceRequestFields).paintCode==='string'&&(value as ServiceRequestFields).paintCode!.length<=200)))
 const isRecord=(value:unknown):value is ProfileServiceRequest=>{
   if(!value||typeof value!=='object')return false
   const r=value as ProfileServiceRequest
@@ -46,7 +46,8 @@ export function buildServiceRequest(input:ServiceRequestDraft,ownerPhone:string|
   const uuid=crypto.randomUUID()
   const now=new Date()
   const matchedOwner=ownerPhone&&normalizePhoneIdentity(ownerPhone)===normalizePhoneIdentity(input.fields.phone)?normalizePhoneIdentity(ownerPhone):null
-  return{id:`sr-${uuid}`,number:`DEMO-SR-${now.getTime().toString(36).toUpperCase()}-${uuid.slice(0,8).toUpperCase()}`,createdAt:now.toISOString(),kind:input.request.kind,title:input.request.title,itemId:input.request.itemId,status:input.request.kind==='rental'?'Ожидает подтверждения':'Новая заявка',ownerPhone:matchedOwner,submissionId:input.submissionId,fields:Object.fromEntries(Object.keys(fieldLimits).map(key=>[key,input.fields[key as keyof ServiceRequestFields].trim()])) as ServiceRequestFields,photoAttached:input.photoAttached,seed:false}
+  const fields={...Object.fromEntries(Object.keys(fieldLimits).map(key=>[key,(input.fields[key as keyof ServiceRequestFields]??'').trim()])),phone:`+${normalizePhoneIdentity(input.fields.phone)}`,paintCode:(input.fields.paintCode??'').trim()} as ServiceRequestFields
+  return{id:`sr-${uuid}`,number:`DEMO-SR-${now.getTime().toString(36).toUpperCase()}-${uuid.slice(0,8).toUpperCase()}`,createdAt:now.toISOString(),kind:input.request.kind,title:input.request.title,itemId:input.request.itemId,status:input.request.kind==='rental'?'Ожидает подтверждения':'Новая заявка',ownerPhone:matchedOwner,submissionId:input.submissionId,fields,photoAttached:input.photoAttached,seed:false}
 }
 export const serviceRequestHref=(id:string)=>`/profile/services/request/?id=${encodeURIComponent(id)}`
 export const canViewServiceRequest=(record:ProfileServiceRequest,identity:ServiceIdentity|null)=>Boolean(identity&&record.ownerPhone&&record.ownerPhone===normalizePhoneIdentity(identity.phone)&&(record.seed||(identity.phoneConfirmed&&record.ownerPhone===normalizePhoneIdentity(record.fields.phone))))

@@ -8,6 +8,8 @@ import { ProfileProvider } from '../state/ProfileState'
 import { AuthProvider,useAuth } from '../state/AuthState'
 import {useEffect} from 'react'
 import {useProfile} from '../state/ProfileState'
+import { CookiePreferenceProvider } from '../state/CookiePreferenceState'
+import { CookieBanner } from '../features/cookie/CookieBanner'
 
 function AppContent() {
   const commerce = useCommerce()
@@ -19,6 +21,7 @@ function AppContent() {
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />
       <Footer />
+      <CookieBanner />
     </div>
   )
 }
@@ -28,6 +31,6 @@ export function routerBasename(baseUrl: string) {
 }
 
 export function App() {
-  const content = <RegionProvider><CommerceProvider><ProfileProvider><AuthProvider><AppContent /></AuthProvider></ProfileProvider></CommerceProvider></RegionProvider>
+  const content = <CookiePreferenceProvider><RegionProvider><CommerceProvider><ProfileProvider><AuthProvider><AppContent /></AuthProvider></ProfileProvider></CommerceProvider></RegionProvider></CookiePreferenceProvider>
   return useInRouterContext() ? content : <BrowserRouter basename={routerBasename(import.meta.env.BASE_URL)}>{content}</BrowserRouter>
 }

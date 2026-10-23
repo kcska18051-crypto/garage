@@ -24,13 +24,13 @@ import { AboutPage } from '../pages/AboutPage'
 import { StorePage } from '../pages/StorePage'
 import {ServicesIndexPage,ServiceCenterPage,CompressorRepairPage,RepairDetailPage,PaintMatchingPage,PaintDetailPage,RentalCatalogPage,RentalCategoryPage,RentalDetailPage} from '../pages/ServicesPages'
 import {ProfileServiceRequestDetail} from '../features/profile/ProfileServiceRequests'
+import { LegalDocumentPage } from '../pages/LegalDocumentPage'
 
 export type RouteDefinition = { path: string; label: string }
 
 export const prototypeRoutes: RouteDefinition[] = [
   { path: '/new', label: 'Новинки' },
   { path: '/cart', label: 'Корзина' },
-  { path: '/privacy', label: 'Политика конфиденциальности' },
 ]
 
 export function AppRoutes() {
@@ -71,6 +71,9 @@ export function AppRoutes() {
       <Route path="/contacts" element={<ContactsPage />} />
       <Route path="/contacts/:storeId" element={<StorePage />} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/privacy" element={<LegalDocumentPage title="Политика конфиденциальности" />} />
+      <Route path="/user-agreement" element={<LegalDocumentPage title="Пользовательское соглашение" />} />
+      <Route path="/personal-data-consent" element={<LegalDocumentPage title="Согласие на обработку персональных данных" />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/compare" element={<ComparePage />} />
       <Route path="/checkout/review" element={<CheckoutReviewPage />} />

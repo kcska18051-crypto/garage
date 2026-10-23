@@ -18,6 +18,13 @@ describe('lower homepage sections', () => {
     await user.type(screen.getByLabelText('Ваше имя'), 'Анна')
     await user.type(screen.getByLabelText('Телефон или электронная почта'), 'anna@example.ru')
     await user.click(screen.getByRole('button', { name: 'Отправить запрос' }))
+    expect(screen.getByText('Подтвердите согласие на обработку персональных данных')).toBeVisible()
+    expect(screen.getByText('Примите пользовательское соглашение')).toBeVisible()
+    await user.click(screen.getByRole('checkbox', { name: /даю согласие/i }))
+    await user.click(screen.getByRole('button', { name: 'Отправить запрос' }))
+    expect(screen.getByText('Примите пользовательское соглашение')).toBeVisible()
+    await user.click(screen.getByRole('checkbox', { name: /принимаю пользовательское соглашение/i }))
+    await user.click(screen.getByRole('button', { name: 'Отправить запрос' }))
     expect(screen.getByText('Спасибо! Ваше сообщение отправлено')).toBeVisible()
   }, 15_000)
 

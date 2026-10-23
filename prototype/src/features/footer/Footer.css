@@ -3,5 +3,7 @@
 .site-footer__top .logo > span { background: white; } .site-footer__top p { color: #aaa9a4; margin: 0; max-width: 28rem; } .site-footer__top > a:last-child { font-size: 1.2rem; font-weight: 750; justify-self: end; text-decoration: none; }
 .footer-groups { display: grid; grid-template-columns: repeat(4, 1fr); padding-block: 2.5rem; }
 .footer-groups details { border: 0; } .footer-groups summary { font-weight: 800; list-style: none; margin-bottom: 1rem; } .footer-groups nav { display: grid; gap: .65rem; } .footer-groups a { color: #aaa9a4; text-decoration: none; }
-.site-footer__bottom { border-top: 1px solid #4a4a46; color: #81817c; display: flex; font-size: .72rem; justify-content: space-between; padding-top: 1.5rem; } .site-footer__bottom a { color: inherit; }
+.site-footer__bottom { border-top: 1px solid #4a4a46; color: #81817c; display: flex; font-size: .72rem; gap: 1rem; justify-content: space-between; padding-top: 1.5rem; } .site-footer__bottom a { color: inherit; }
+.site-footer__bottom button { background: transparent; border: 0; color: inherit; cursor: pointer; font: inherit; padding: 0; text-decoration: underline; }
+.site-footer__legal { display: flex; flex-wrap: wrap; gap: .65rem 1rem; justify-content: center; }
 @media (max-width: 767px) { .site-footer__top { grid-template-columns: 1fr; } .site-footer__top > a:last-child { justify-self: start; } .footer-groups { grid-template-columns: 1fr; } .footer-groups details { border-bottom: 1px solid #4a4a46; padding: 1rem 0; } .site-footer__bottom { flex-direction: column; gap: .7rem; } }

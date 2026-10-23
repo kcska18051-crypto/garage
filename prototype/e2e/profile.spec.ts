@@ -49,6 +49,8 @@ test('documents and help are real account sections with working actions', async 
   await expect(page.getByText(/сохраните комплектность/i)).toBeVisible()
   await page.getByRole('button', { name: 'Задать вопрос' }).click()
   await page.getByLabel('Текст вопроса').fill('Нужна помощь с заказом')
+  await page.getByRole('checkbox', { name: /даю согласие/i }).check()
+  await page.getByRole('checkbox', { name: /принимаю пользовательское соглашение/i }).check()
   await page.getByRole('button', { name: 'Отправить обращение' }).click()
   await expect(page.getByText('Спасибо! Ваше обращение отправлено')).toBeVisible()
 })

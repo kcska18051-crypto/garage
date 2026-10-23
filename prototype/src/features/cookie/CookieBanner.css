@@ -24,6 +24,11 @@
   line-height: 1.45;
   margin: 0;
 }
+.cookie-banner__copy a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
 .cookie-banner__actions { display: flex; justify-content: center; }
 .cookie-banner__actions .button { min-height: 2.65rem; min-width: 9.5rem; white-space: nowrap; }
 

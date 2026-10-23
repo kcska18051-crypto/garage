@@ -12,10 +12,11 @@ it('offers one concise cookie action on a direct URL and persists the selected v
   const user = userEvent.setup()
   const view = open()
   const banner = screen.getByRole('region', { name: 'Настройки cookie' })
-  expect(within(banner).getByText('Мы используем файлы cookie для удобства работы с сайтом')).toBeVisible()
+  expect(within(banner).getByText(/Мы используем файлы cookie для вашего удобства/)).toHaveTextContent(
+    'Мы используем файлы cookie для вашего удобства. Продолжая пользоваться сайтом, вы соглашаетесь с политикой использования cookie. Подробнее',
+  )
   expect(within(banner).getAllByRole('button')).toHaveLength(1)
-  expect(within(banner).queryByRole('link')).not.toBeInTheDocument()
-  expect(within(banner).queryByText(/демонстрационном прототипе|трекер|необязательные категории/i)).not.toBeInTheDocument()
+  expect(within(banner).getByRole('link', { name: 'Подробнее' })).toHaveAttribute('href', '/privacy')
   await user.click(within(banner).getByRole('button', { name: 'Я согласен' }))
   expect(screen.queryByRole('region', { name: 'Настройки cookie' })).not.toBeInTheDocument()
   expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({ version: 1, choice: 'all' })

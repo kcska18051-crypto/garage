@@ -7,10 +7,10 @@ export function CookieBanner() {
   if (!isOpen) return null
 
   return (
-    <section className="cookie-banner" role="region" aria-label="Настройки cookie">
+    <section className="cookie-banner" role="region" aria-label="Настройки куки (cookie)">
       <div className="cookie-banner__copy">
         <p>
-          Мы используем файлы cookie для вашего удобства. Продолжая пользоваться сайтом, вы соглашаетесь с политикой использования cookie.{' '}
+          Мы используем файлы куки (cookie) для вашего удобства. Продолжая пользоваться сайтом, вы соглашаетесь с политикой использования куки (cookie).{' '}
           <Link to="/privacy">Подробнее</Link>
         </p>
       </div>

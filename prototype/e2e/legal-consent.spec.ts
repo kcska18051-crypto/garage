@@ -9,9 +9,9 @@ const openWithoutCookieChoice = async (page: Page, path: string) => {
 
 test('cookie choice survives reload and settings can change it', async ({ page }) => {
   await openWithoutCookieChoice(page, '/contacts')
-  const banner = page.getByRole('region', { name: 'Настройки cookie' })
+  const banner = page.getByRole('region', { name: 'Настройки куки (cookie)' })
   await expect(banner).toBeVisible()
-  await expect(banner).toContainText('Мы используем файлы cookie для вашего удобства. Продолжая пользоваться сайтом, вы соглашаетесь с политикой использования cookie. Подробнее')
+  await expect(banner).toContainText('Мы используем файлы куки (cookie) для вашего удобства. Продолжая пользоваться сайтом, вы соглашаетесь с политикой использования куки (cookie). Подробнее')
   await expect(banner.getByRole('button')).toHaveCount(1)
   await expect(banner.getByRole('link', { name: 'Подробнее' })).toHaveAttribute('href', '/privacy')
   await banner.getByRole('button', { name: 'Я согласен' }).click()
@@ -20,7 +20,7 @@ test('cookie choice survives reload and settings can change it', async ({ page }
 
   await page.reload()
   await expect(banner).toBeHidden()
-  await page.getByRole('button', { name: 'Настройки cookie' }).click()
+  await page.getByRole('button', { name: 'Настройки куки (cookie)' }).click()
   await banner.getByRole('button', { name: 'Я согласен' }).click()
   await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), storageKey)).toEqual({ version: 1, choice: 'all' })
 })
@@ -80,14 +80,14 @@ for (const viewport of [{ width: 1920, height: 1080 }, { width: 1440, height: 90
   test(`cookie banner has no overflow at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport)
     await openWithoutCookieChoice(page, '/contacts')
-    await expect(page.getByRole('region', { name: 'Настройки cookie' })).toBeVisible()
-    const bannerContent = page.getByRole('region', { name: 'Настройки cookie' })
+    await expect(page.getByRole('region', { name: 'Настройки куки (cookie)' })).toBeVisible()
+    const bannerContent = page.getByRole('region', { name: 'Настройки куки (cookie)' })
     const text = await bannerContent.locator('p').boundingBox()
     const action = await bannerContent.getByRole('button', { name: 'Я согласен' }).boundingBox()
     expect(text && action && action.y >= text.y + text.height).toBe(true)
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
     if (viewport.width < 768) {
-      const banner = await page.getByRole('region', { name: 'Настройки cookie' }).boundingBox()
+      const banner = await page.getByRole('region', { name: 'Настройки куки (cookie)' }).boundingBox()
       const mobileNav = await page.getByRole('navigation', { name: 'Мобильная навигация' }).boundingBox()
       expect(banner && mobileNav && banner.y + banner.height <= mobileNav.y).toBe(true)
     }

@@ -22,5 +22,5 @@ it('links every legal destination and cookie settings from the footer', () => {
   expect(within(footer).getByRole('link', { name: 'Политика конфиденциальности' })).toHaveAttribute('href', '/privacy')
   expect(within(footer).getByRole('link', { name: 'Пользовательское соглашение' })).toHaveAttribute('href', '/user-agreement')
   expect(within(footer).getByRole('link', { name: 'Согласие на обработку персональных данных' })).toHaveAttribute('href', '/personal-data-consent')
-  expect(within(footer).getByRole('button', { name: 'Настройки cookie' })).toBeInTheDocument()
+  expect(within(footer).getByRole('button', { name: 'Настройки куки (cookie)' })).toBeInTheDocument()
 })

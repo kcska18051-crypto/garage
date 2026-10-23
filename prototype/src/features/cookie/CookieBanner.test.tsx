@@ -11,27 +11,27 @@ beforeEach(() => localStorage.clear())
 it('offers one concise cookie action on a direct URL and persists the selected version', async () => {
   const user = userEvent.setup()
   const view = open()
-  const banner = screen.getByRole('region', { name: 'Настройки cookie' })
-  expect(within(banner).getByText(/Мы используем файлы cookie для вашего удобства/)).toHaveTextContent(
-    'Мы используем файлы cookie для вашего удобства. Продолжая пользоваться сайтом, вы соглашаетесь с политикой использования cookie. Подробнее',
+  const banner = screen.getByRole('region', { name: 'Настройки куки (cookie)' })
+  expect(within(banner).getByText(/Мы используем файлы куки \(cookie\) для вашего удобства/)).toHaveTextContent(
+    'Мы используем файлы куки (cookie) для вашего удобства. Продолжая пользоваться сайтом, вы соглашаетесь с политикой использования куки (cookie). Подробнее',
   )
   expect(within(banner).getAllByRole('button')).toHaveLength(1)
   expect(within(banner).getByRole('link', { name: 'Подробнее' })).toHaveAttribute('href', '/privacy')
   await user.click(within(banner).getByRole('button', { name: 'Я согласен' }))
-  expect(screen.queryByRole('region', { name: 'Настройки cookie' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('region', { name: 'Настройки куки (cookie)' })).not.toBeInTheDocument()
   expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({ version: 1, choice: 'all' })
 
   view.unmount()
   open('/catalog')
-  expect(screen.queryByRole('region', { name: 'Настройки cookie' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('region', { name: 'Настройки куки (cookie)' })).not.toBeInTheDocument()
 })
 
 it('reopens settings from the footer and lets the user change the choice', async () => {
   localStorage.setItem(storageKey, JSON.stringify({ version: 1, choice: 'necessary' }))
   const user = userEvent.setup()
   open()
-  await user.click(screen.getByRole('button', { name: 'Настройки cookie' }))
-  const banner = screen.getByRole('region', { name: 'Настройки cookie' })
+  await user.click(screen.getByRole('button', { name: 'Настройки куки (cookie)' }))
+  const banner = screen.getByRole('region', { name: 'Настройки куки (cookie)' })
   await user.click(within(banner).getByRole('button', { name: 'Я согласен' }))
   expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({ version: 1, choice: 'all' })
 })
@@ -41,7 +41,7 @@ it('keeps the site usable when storage is unavailable', async () => {
   const user = userEvent.setup()
   open()
   await user.click(screen.getByRole('button', { name: 'Я согласен' }))
-  expect(screen.queryByRole('region', { name: 'Настройки cookie' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('region', { name: 'Настройки куки (cookie)' })).not.toBeInTheDocument()
   expect(screen.getByRole('heading', { level: 1, name: 'Контакты' })).toBeVisible()
   write.mockRestore()
 })

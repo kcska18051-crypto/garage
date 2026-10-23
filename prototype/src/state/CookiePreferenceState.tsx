@@ -10,7 +10,7 @@ type CookiePreferenceValue = {
 }
 
 const storageKey = 'garage-cookie-preference'
-const storageVersion = 1
+const storageVersion = 2
 
 function readChoice(): CookieChoice | null {
   try {

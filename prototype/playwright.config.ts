@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test'
 const baseURL = 'http://127.0.0.1:43991'
 const acceptedCookieState = {
   cookies: [],
-  origins: [{ origin: baseURL, localStorage: [{ name: 'garage-cookie-preference', value: JSON.stringify({ version: 1, choice: 'necessary' }) }] }],
+  origins: [{ origin: baseURL, localStorage: [{ name: 'garage-cookie-preference', value: JSON.stringify({ version: 2, choice: 'necessary' }) }] }],
 }
 
 export default defineConfig({

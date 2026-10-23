@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
 
-beforeEach(() => localStorage.setItem('garage-cookie-preference', JSON.stringify({ version: 1, choice: 'necessary' })))
+beforeEach(() => localStorage.setItem('garage-cookie-preference', JSON.stringify({ version: 2, choice: 'necessary' })))
 
 it.each([
   ['/privacy', 'Политика конфиденциальности'],

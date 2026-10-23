@@ -16,13 +16,13 @@ test('cookie choice survives reload and settings can change it', async ({ page }
   await expect(banner.getByRole('link', { name: 'Подробнее' })).toHaveAttribute('href', '/privacy')
   await banner.getByRole('button', { name: 'Я согласен' }).click()
   await expect(banner).toBeHidden()
-  await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), storageKey)).toEqual({ version: 1, choice: 'all' })
+  await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), storageKey)).toEqual({ version: 2, choice: 'all' })
 
   await page.reload()
   await expect(banner).toBeHidden()
   await page.getByRole('button', { name: 'Настройки куки (cookie)' }).click()
   await banner.getByRole('button', { name: 'Я согласен' }).click()
-  await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), storageKey)).toEqual({ version: 1, choice: 'all' })
+  await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), storageKey)).toEqual({ version: 2, choice: 'all' })
 })
 
 for (const document of [
@@ -31,7 +31,7 @@ for (const document of [
   { path: '/personal-data-consent', title: 'Согласие на обработку персональных данных' },
 ]) {
   test(`opens legal document ${document.path}`, async ({ page }) => {
-    await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({ version: 1, choice: 'necessary' })), storageKey)
+    await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({ version: 2, choice: 'necessary' })), storageKey)
     await page.goto(document.path)
     await expect(page.getByRole('heading', { level: 1, name: document.title })).toBeVisible()
     await expect(page.getByText('Текст будет предоставлен заказчиком.')).toBeVisible()
@@ -39,7 +39,7 @@ for (const document of [
 }
 
 test('message form requires two independent consents', async ({ page }) => {
-  await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({ version: 1, choice: 'necessary' })), storageKey)
+  await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({ version: 2, choice: 'necessary' })), storageKey)
   await page.goto('/contacts')
   await page.getByRole('button', { name: 'Написать сообщение' }).click()
   const dialog = page.getByRole('dialog', { name: 'Написать сообщение' })
@@ -64,7 +64,7 @@ test('message form requires two independent consents', async ({ page }) => {
 })
 
 test('support modes start with two empty consents', async ({ page }) => {
-  await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({ version: 1, choice: 'necessary' })), storageKey)
+  await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({ version: 2, choice: 'necessary' })), storageKey)
   await page.goto('/profile/help')
   for (const action of ['Задать вопрос', 'Заказать звонок', 'Написать в чат']) {
     await page.getByRole('button', { name: action }).click()
@@ -95,7 +95,7 @@ for (const viewport of [{ width: 1920, height: 1080 }, { width: 1440, height: 90
 }
 
 test('auth and checkout remain available after the cookie choice', async ({ page }) => {
-  await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({ version: 1, choice: 'necessary' })), storageKey)
+  await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({ version: 2, choice: 'necessary' })), storageKey)
   await page.goto('/')
   await page.locator('button[aria-label="Профиль"]:visible').click()
   await expect(page.getByRole('dialog')).toBeVisible()

@@ -19,7 +19,7 @@ it('offers one concise cookie action on a direct URL and persists the selected v
   expect(within(banner).getByRole('link', { name: 'Подробнее' })).toHaveAttribute('href', '/privacy')
   await user.click(within(banner).getByRole('button', { name: 'Я согласен' }))
   expect(screen.queryByRole('region', { name: 'Настройки куки (cookie)' })).not.toBeInTheDocument()
-  expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({ version: 1, choice: 'all' })
+  expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({ version: 2, choice: 'all' })
 
   view.unmount()
   open('/catalog')
@@ -27,13 +27,19 @@ it('offers one concise cookie action on a direct URL and persists the selected v
 })
 
 it('reopens settings from the footer and lets the user change the choice', async () => {
-  localStorage.setItem(storageKey, JSON.stringify({ version: 1, choice: 'necessary' }))
+  localStorage.setItem(storageKey, JSON.stringify({ version: 2, choice: 'necessary' }))
   const user = userEvent.setup()
   open()
   await user.click(screen.getByRole('button', { name: 'Настройки куки (cookie)' }))
   const banner = screen.getByRole('region', { name: 'Настройки куки (cookie)' })
   await user.click(within(banner).getByRole('button', { name: 'Я согласен' }))
-  expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({ version: 1, choice: 'all' })
+  expect(JSON.parse(localStorage.getItem(storageKey)!)).toEqual({ version: 2, choice: 'all' })
+})
+
+it('shows the revised notice again when the browser only has the previous version', () => {
+  localStorage.setItem(storageKey, JSON.stringify({ version: 1, choice: 'all' }))
+  open()
+  expect(screen.getByRole('region', { name: 'Настройки куки (cookie)' })).toBeVisible()
 })
 
 it('keeps the site usable when storage is unavailable', async () => {

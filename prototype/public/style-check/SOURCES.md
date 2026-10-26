@@ -27,7 +27,7 @@
 
 - Первый баннер, работа в автосервисе: [Pexels, Jae Park](https://www.pexels.com/photo/mechanics-at-a-car-garage-15489247/).
 - Баннер подбора эмали и карточка услуги, оборудование для смешивания цвета: [Pexels, Renee Razumov](https://www.pexels.com/photo/color-mixing-equipment-on-industrial-shelves-33814684/).
-- Баннер сервиса, техника в работе: [Pexels, Bulat843](https://www.pexels.com/photo/technician-working-in-a-busy-workshop-34734503/).
+- Баннер сервиса, механик работает с двигателем: [Pexels, Sergei Starostin](https://www.pexels.com/photo/mechanic-working-on-engine-in-a-workshop-29181490/).
 - Услуга сервиса, механик ремонтирует устройство: [Pexels, Bulat843](https://www.pexels.com/photo/mechanic-repairing-machinery-in-workshop-32208769/).
 - Услуга аренды, электроинструменты в мастерской: [Pexels, Orhun Rüzgar ÖZ](https://www.pexels.com/photo/power-tools-on-a-wooden-surface-6154662/). Снимок иллюстрирует оборудование, а не фактическую передачу в аренду.
 - Баннер рабочего поста, инструмент и место работы: [Pexels, Artem Podrez](https://www.pexels.com/photo/angle-grinder-power-tool-near-a-toolbox-8986173/).

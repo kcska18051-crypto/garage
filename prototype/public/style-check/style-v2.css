@@ -102,7 +102,8 @@
 .app-shell[data-style-check] .product-teaser__dots { min-height: 1.3rem; }
 .app-shell[data-style-check] .product-teaser__dots button { height: 1.3rem; width: 1.3rem; }
 .app-shell[data-style-check] .product-teaser__name { font-size: .96rem; font-weight: 700; line-height: 1.2; }
-.app-shell[data-style-check] .product-teaser__sku { margin-top: .35rem; }
+.app-shell[data-style-check] .product-teaser__sku { font-size: .75rem; margin-top: .35rem; }
+.app-shell[data-style-check] .product-teaser__availability { font-size: .75rem; }
 .app-shell[data-style-check] .product-teaser__bottom { margin-top: auto; padding-top: .65rem; }
 .app-shell[data-style-check] .product-teaser__bottom strong { font-size: 1.3rem; letter-spacing: -.03em; }
 .app-shell[data-style-check] .product-teaser__cart { border-radius: .3rem; }

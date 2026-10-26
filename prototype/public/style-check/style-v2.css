@@ -1,0 +1,235 @@
+/* Second visual iteration, scoped to the temporary /style-check/ route. */
+.app-shell[data-style-check] {
+  --photo-hero-workshop: url('https://images.pexels.com/photos/15489247/pexels-photo-15489247.jpeg?auto=compress&cs=tinysrgb&w=1600');
+  --photo-hero-paint: url('https://images.pexels.com/photos/33814684/pexels-photo-33814684.jpeg?auto=compress&cs=tinysrgb&w=1600');
+  --photo-hero-service: url('https://images.pexels.com/photos/34734503/pexels-photo-34734503.jpeg?auto=compress&cs=tinysrgb&w=1600');
+  --photo-service-repair: url('https://images.pexels.com/photos/32208769/pexels-photo-32208769.jpeg?auto=compress&cs=tinysrgb&w=1200');
+  --photo-service-rental: url('https://images.pexels.com/photos/6154662/pexels-photo-6154662.jpeg?auto=compress&cs=tinysrgb&w=1200');
+  --photo-service-paint: url('https://images.pexels.com/photos/33814684/pexels-photo-33814684.jpeg?auto=compress&cs=tinysrgb&w=1200');
+  --product-jack: url('https://assets.cdn.jula.com/preset%3Ajpgoptimized/w%3A1920/DigizuiteCore/LegacyService/api/assetstream/201069/50137?lastmodified=20250516105346');
+  --product-toolset: url('https://www.truper.com/media/import/imagenes/SET-124%2BD2.jpg');
+  --product-diagnostic: url('https://ferdus-cdn.oxyshop.cloud/out/pictures/z1/23-01_0001_z1.png');
+  --product-trolley: url('https://assets.cdn.jula.com/v2/preset%3Ajpgoptimized/w%3A1920/215118?lastmodified=20250120084039');
+  --product-welder: url('https://assets.cdn.jula.com/v2/preset%3Ajpgoptimized/w%3A1920/257585?lastmodified=20250516105258');
+  --product-spray: url('https://assets.cdn.jula.com/preset%3Ajpgoptimized/w%3A1920/DigizuiteCore/LegacyService/api/assetstream/15999/50137?lastmodified=20250516095221');
+  --product-sander: url('https://resources.claroshop.com/medios-plazavip/mkt/618c3edb07ed2_m9204bjpg.jpg?qlty=75&scale=500');
+  --product-compressor: url('https://assets.cdn.jula.com/preset%3Ajpgoptimized/w%3A3840/DigizuiteCore/LegacyService/api/assetstream/131568/50137?lastmodified=20250516103521');
+  --product-dryer: url('https://azure-na-images.contentstack.com/v3/assets/blt20088cc99b632d6d/bltf97cbe9a2fd87a1d/681c71301267b35c959e842a/hdi-refrigerated-air-dryers-600-950.png');
+  --product-remeza-10: url('https://www.interauto72.ru/userfiles/shop/large/1386_kompressor-vintovoy-1000-lmi.jpg');
+  --product-remeza-20: url('https://cdn.vseinstrumenti.ru/images/goods/stroitelnyj-instrument/kompressory/1128405/1000x1000/52337093.jpg');
+  --product-remeza-piston: url('https://compressor.market/upload/iblock/58f/50vi091ywjwsiezrf1paww0fbxxh8iet.jpg');
+  --product-remeza-25: url('https://glavmehanika.ru/assets/images/products/13657/800x800/1.webp');
+  --product-remeza-60: url('https://www.remeza-logistic.ru/upload/iblock/905/qoxdd4k40dmeflqk6ruz69narpv08t3l/3.jpg');
+}
+
+/* A firm yellow field, an unfiltered working photo, and one clear headline. */
+.app-shell[data-style-check] .hero { margin-top: 1.3rem; }
+.app-shell[data-style-check] .hero__stage { border-radius: .35rem; }
+.app-shell[data-style-check] .hero__slide { height: clamp(21rem, 28vw, 27rem); }
+.app-shell[data-style-check] .hero__art { background-position: 70% center; }
+.app-shell[data-style-check] .hero__art--1 {
+  background-image: linear-gradient(90deg, #ffcc00 0 44%, transparent 44%), var(--photo-hero-workshop);
+}
+.app-shell[data-style-check] .hero__art--2 {
+  background-image: linear-gradient(90deg, #ffcc00 0 44%, transparent 44%), var(--photo-hero-paint);
+}
+.app-shell[data-style-check] .hero__art--3 {
+  background-image: linear-gradient(90deg, #ffcc00 0 44%, transparent 44%), var(--photo-hero-service);
+}
+.app-shell[data-style-check] .hero__art::before {
+  font-size: clamp(2.25rem, 3.5vw, 4rem);
+  left: clamp(1.5rem, 4.5vw, 4.5rem);
+  letter-spacing: -.052em;
+  line-height: .97;
+  max-width: 10ch;
+  top: 19%;
+}
+.app-shell[data-style-check] .hero__art::after {
+  bottom: 1.5rem;
+  height: 3.1rem;
+  left: clamp(1.5rem, 4.5vw, 4.5rem);
+  mix-blend-mode: multiply;
+  width: 6.1rem;
+}
+.app-shell[data-style-check] .hero__pagination { margin-top: .8rem; }
+
+/* Quiet catalogue grid: the photo and price lead, borders recede. */
+.app-shell[data-style-check] .home-section { margin-top: 3.4rem; }
+.app-shell[data-style-check] .section-heading { align-items: baseline; margin-bottom: 1.35rem; }
+.app-shell[data-style-check] .section-heading h2 {
+  font-size: clamp(1.9rem, 2.5vw, 2.8rem);
+  font-weight: 850;
+  letter-spacing: -.055em;
+  line-height: 1.02;
+}
+.app-shell[data-style-check] .category-grid { gap: 1rem; }
+.app-shell[data-style-check] .category-card {
+  background: #fff;
+  border: 0;
+  border-bottom: 2px solid #d7d7d2;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 13.2rem;
+  padding: .4rem .35rem .75rem;
+}
+.app-shell[data-style-check] .category-card__art { border-radius: .25rem; height: 9.1rem; margin: .25rem 0 .65rem; }
+.app-shell[data-style-check] .category-card strong { font-size: .98rem; font-weight: 750; line-height: 1.12; }
+
+.app-shell[data-style-check] .product-grid { gap: .9rem; }
+.app-shell[data-style-check] .product-teaser {
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid #d8d8d3;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 22.5rem;
+  padding: .65rem .7rem 1rem;
+}
+.app-shell[data-style-check] .product-teaser__media {
+  background: #fff;
+  height: clamp(10rem, 14vw, 13.3rem);
+  margin: -.65rem -.7rem .15rem;
+}
+.app-shell[data-style-check] .product-teaser__visual {
+  background-color: #fff;
+  background-image: var(--product-photo);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.app-shell[data-style-check] .product-teaser__visual i,
+.app-shell[data-style-check] .product-teaser__visual b { display: none; }
+.app-shell[data-style-check] .product-teaser__dots { min-height: 1.3rem; }
+.app-shell[data-style-check] .product-teaser__dots button { height: 1.3rem; width: 1.3rem; }
+.app-shell[data-style-check] .product-teaser__name { font-size: .96rem; font-weight: 700; line-height: 1.2; }
+.app-shell[data-style-check] .product-teaser__sku { margin-top: .35rem; }
+.app-shell[data-style-check] .product-teaser__bottom { margin-top: auto; padding-top: .65rem; }
+.app-shell[data-style-check] .product-teaser__bottom strong { font-size: 1.3rem; letter-spacing: -.03em; }
+.app-shell[data-style-check] .product-teaser__cart { border-radius: .3rem; }
+.app-shell[data-style-check] .product-teaser__actions button {
+  background: rgb(255 255 255 / .96);
+  border-color: rgb(255 255 255 / .9);
+}
+.app-shell[data-style-check] .useful-rail__control {
+  background: rgb(255 255 255 / .96);
+  border-color: rgb(255 255 255 / .9);
+}
+@supports (backdrop-filter: blur(8px)) {
+  .app-shell[data-style-check] .product-teaser__actions button,
+  .app-shell[data-style-check] .useful-rail__control {
+    background: rgb(255 255 255 / .82);
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Every visible product card receives a real photograph of its equipment type. */
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(1) .product-card:nth-child(1),
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(3) .product-card:nth-child(3) { --product-photo: var(--product-jack); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(1) .product-card:nth-child(2),
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(5) .product-card:nth-child(1) { --product-photo: var(--product-toolset); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(1) .product-card:nth-child(3),
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(5) .product-card:nth-child(3) { --product-photo: var(--product-diagnostic); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(1) .product-card:nth-child(4),
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(3) .product-card:nth-child(5),
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(5) .product-card:nth-child(4) { --product-photo: var(--product-trolley); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(1) .product-card:nth-child(5),
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(3) .product-card:nth-child(4) { --product-photo: var(--product-welder); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(3) .product-card:nth-child(1) { --product-photo: var(--product-spray); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(3) .product-card:nth-child(2) { --product-photo: var(--product-sander); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(5) .product-card:nth-child(2) { --product-photo: var(--product-compressor); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(5) .product-card:nth-child(5) { --product-photo: var(--product-dryer); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(7) .product-card:nth-child(1) { --product-photo: var(--product-remeza-10); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(7) .product-card:nth-child(2) { --product-photo: var(--product-remeza-piston); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(7) .product-card:nth-child(3) { --product-photo: var(--product-remeza-20); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(7) .product-card:nth-child(4) { --product-photo: var(--product-remeza-25); }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(7) .product-card:nth-child(5) { --product-photo: var(--product-remeza-60); }
+
+/* Distinct rhythm for the four existing promotional bands. */
+.app-shell[data-style-check] .divider-banner { border: 0; border-radius: .3rem; grid-template-columns: minmax(0, 60%) minmax(0, 40%); min-height: 13.5rem; }
+.app-shell[data-style-check] .divider-banner__copy { padding: 1.4rem 1.8rem; }
+.app-shell[data-style-check] .divider-banner h2 { font-size: clamp(1.4rem, 2vw, 2.1rem); font-weight: 850; line-height: 1; }
+.app-shell[data-style-check] .divider-banner__art { background-position: center; background-size: contain; background-repeat: no-repeat; }
+.app-shell[data-style-check] .divider-banner__art i,
+.app-shell[data-style-check] .divider-banner__art b { display: none; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:first-child { background: #171717; color: #fff; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:first-child p { color: #e2e2df; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:first-child .divider-banner__art { background-image: var(--photo-tools); background-size: cover; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:nth-child(2) { background: #ffcc00; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:nth-child(2) .divider-banner__art { background-image: var(--photo-paint); background-size: cover; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(4) .divider-banner { background: #ffcc00; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(4) .divider-banner__art { background-color: #ffcc00; background-image: var(--product-compressor); }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(6) .divider-banner { background: #f1f1ef; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(6) .divider-banner__art { background-color: #f1f1ef; background-image: var(--product-trolley); }
+
+/* Service has one large repair story and two precise supporting stories. */
+.app-shell[data-style-check] .service-cards {
+  gap: 1rem;
+  grid-template-columns: 1.35fr 1fr;
+  grid-template-rows: repeat(2, minmax(13rem, 1fr));
+}
+.app-shell[data-style-check] .service-cards article { border: 0; border-radius: .3rem; box-shadow: none; min-width: 0; }
+.app-shell[data-style-check] .service-cards article:first-child { background: #f2f2ef; grid-row: 1 / span 2; }
+.app-shell[data-style-check] .service-cards article:first-child { display: grid; grid-template-columns: 49% 51%; }
+.app-shell[data-style-check] .service-cards article:nth-child(2) { background: #171717; color: white; display: grid; grid-template-columns: 45% 55%; }
+.app-shell[data-style-check] .service-cards article:nth-child(3) { background: #ffcc00; display: grid; grid-template-columns: 45% 55%; }
+.app-shell[data-style-check] .service-cards article:first-child .service-cards__art { height: 100%; }
+.app-shell[data-style-check] .service-cards article:nth-child(n+2) .service-cards__art { height: 100%; min-height: 13rem; }
+.app-shell[data-style-check] .service-cards__art { background-size: cover; background-position: center; }
+.app-shell[data-style-check] .service-cards article:first-child .service-cards__art { background-image: var(--photo-service-repair); background-position: center 42%; }
+.app-shell[data-style-check] .service-cards article:nth-child(2) .service-cards__art { background-image: var(--photo-service-rental); }
+.app-shell[data-style-check] .service-cards article:nth-child(3) .service-cards__art { background-image: var(--photo-service-paint); }
+.app-shell[data-style-check] .service-cards article:nth-child(2) p { color: #ddd; }
+.app-shell[data-style-check] .service-cards article > div:last-child { align-self: center; padding: 1.35rem; }
+.app-shell[data-style-check] .service-cards h3 { font-size: clamp(1.3rem, 1.9vw, 2rem); line-height: 1.04; }
+.app-shell[data-style-check] .service-cards article:nth-child(2) a { color: #ffcc00; }
+.app-shell[data-style-check] .service-cards article:nth-child(3) a { color: #171717; }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(1) .product-card:nth-child(2) .product-teaser__visual,
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(5) .product-card:nth-child(1) .product-teaser__visual { background-size: 135%; }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(7) .product-card:nth-child(4) .product-teaser__visual { background-size: 145%; }
+
+.app-shell[data-style-check] .promotion-card__art { border-radius: .2rem; height: 12rem; }
+.app-shell[data-style-check] .about-section__art { border-radius: .25rem; }
+.app-shell[data-style-check] .business-section,
+.app-shell[data-style-check] .final-cta { border-radius: .3rem; }
+.app-shell[data-style-check] .final-cta { border-top: .35rem solid #ffcc00; }
+
+@media (max-width: 1023px) {
+  .app-shell[data-style-check] .hero__slide { height: 21rem; }
+  .app-shell[data-style-check] .hero__art::before { font-size: clamp(2rem, 4vw, 3rem); }
+  .app-shell[data-style-check] .product-teaser { min-height: 21rem; }
+  .app-shell[data-style-check] .product-teaser__media { height: 11rem; }
+}
+@media (max-width: 767px) {
+  .app-shell[data-style-check] .hero { margin-top: .75rem; }
+  .app-shell[data-style-check] .hero__slide { height: 21.5rem; }
+  .app-shell[data-style-check] .hero__art--1 { background-image: linear-gradient(180deg, #ffcc00 0 49%, transparent 49%), var(--photo-hero-workshop); }
+  .app-shell[data-style-check] .hero__art--2 { background-image: linear-gradient(180deg, #ffcc00 0 49%, transparent 49%), var(--photo-hero-paint); }
+  .app-shell[data-style-check] .hero__art--3 { background-image: linear-gradient(180deg, #ffcc00 0 49%, transparent 49%), var(--photo-hero-service); }
+  .app-shell[data-style-check] .hero__art { background-position: center 60%; }
+  .app-shell[data-style-check] .hero__art::before { font-size: clamp(1.55rem, 6vw, 2.3rem); left: 1rem; max-width: 12ch; top: 5%; }
+  .app-shell[data-style-check] .hero__art::after { bottom: auto; height: 2.5rem; left: 1rem; top: calc(49% - 2.9rem); width: 5rem; }
+  .app-shell[data-style-check] .home-section { margin-top: 2rem; }
+  .app-shell[data-style-check] .section-heading h2 { font-size: 1.65rem; }
+  .app-shell[data-style-check] .category-grid { gap: .7rem; }
+  .app-shell[data-style-check] .category-card { min-height: 12rem; }
+  .app-shell[data-style-check] .category-card__art { height: 7.6rem; }
+  .app-shell[data-style-check] .category-card strong { font-size: .82rem; }
+  .app-shell[data-style-check] .product-teaser { min-height: 20.5rem; }
+  .app-shell[data-style-check] .product-teaser__media { height: 10.2rem; }
+  .app-shell[data-style-check] .product-teaser__bottom strong { font-size: 1.1rem; }
+  .app-shell[data-style-check] .divider-banner { grid-template-columns: 56% 44%; min-height: 11.8rem; }
+  .app-shell[data-style-check] .divider-banner__copy { padding: 1rem; }
+  .app-shell[data-style-check] .divider-banner h2 { font-size: 1.25rem; }
+  .app-shell[data-style-check] .divider-banner p { white-space: normal; }
+  .app-shell[data-style-check] .service-cards { display: grid; grid-template-columns: 1fr; grid-template-rows: auto; }
+  .app-shell[data-style-check] .service-cards article:first-child { display: block; grid-row: auto; }
+  .app-shell[data-style-check] .service-cards article:first-child .service-cards__art { height: 14rem; }
+  .app-shell[data-style-check] .service-cards article:nth-child(n+2) { grid-template-columns: 43% 57%; }
+  .app-shell[data-style-check] .service-cards article:nth-child(n+2) .service-cards__art { min-height: 12rem; }
+  .app-shell[data-style-check] .service-cards article > div:last-child { padding: 1rem; }
+  .app-shell[data-style-check] .service-cards h3 { font-size: 1.35rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell[data-style-check] .product-teaser__actions button { transition: none; }
+}
+

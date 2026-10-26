@@ -18,7 +18,7 @@ try {
   await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 700) { scrollTo(0, y); await new Promise(r=>setTimeout(r,60)) } })
   await page.waitForFunction(() => [...document.images].every(image => image.complete))
   await page.evaluate(() => scrollTo(0,0))
-  for (const width of [1440, 1366, 1280, 1024, 768, 390, 375]) {
+  for (const width of [1920, 1440, 1366, 1280, 1024, 768, 390, 375]) {
     await page.setViewportSize({ width, height: 1000 })
     await page.evaluate(() => window.scrollTo(0, 0))
     const geometry = await page.evaluate(() => ({ width: innerWidth, scrollWidth: document.documentElement.scrollWidth, background: getComputedStyle(document.body).backgroundColor, cards: document.querySelectorAll('.sc-product').length, categories: document.querySelectorAll('.sc-category').length, overflow: [...document.querySelectorAll('body *')].filter(el => { const r = el.getBoundingClientRect(); return r.width && r.right > innerWidth + 1 && getComputedStyle(el).position !== 'fixed' && !el.closest('.sc-products,.sc-brands,.sc-promotions,.useful-grid,.third-level-nav__mobile,.third-level-nav__measure') }).slice(0,5).map(el=>el.className) }))
@@ -41,8 +41,9 @@ try {
       assert.ok(row.contained)
     }
     const slideHeights = []
+    const anchors = []
     for (const id of ['paint', 'intro', 'service']) {
-      await page.locator(`.sc-hero-dots button`).nth(['paint', 'intro', 'service'].indexOf(id)).click()
+      for (let attempt = 0; await page.locator('.sc-hero-panel').getAttribute('data-slide') !== id && attempt < 3; attempt++) await page.getByRole('button', { name: 'Следующий слайд', exact: true }).click()
       await page.waitForFunction(() => { const img = document.querySelector('.sc-hero-image'); return img.complete && img.naturalWidth > 0 })
       const hero = await page.locator('.sc-hero-panel').evaluate(panel => {
         const box = element => { const r = element.getBoundingClientRect(); return { top:r.top, bottom:r.bottom, left:r.left, right:r.right } }
@@ -50,10 +51,13 @@ try {
         const cta = panel.querySelector('.sc-hero-cta')
         const media = panel.querySelector('.sc-hero-media')
         const controls = panel.querySelector('.sc-hero-controls')
-        return { id: panel.dataset.slide, copy:box(copy), cta:box(cta), media:box(media), controls:box(controls), panel:box(panel), clip:getComputedStyle(panel,'::after').clipPath, ctaBackground:getComputedStyle(cta).backgroundColor }
+        const heading = panel.querySelector('h2'), description = panel.querySelector('.sc-hero-description')
+        return { id: panel.dataset.slide, copy:box(copy), cta:box(cta), heading:box(heading), description:box(description), textFits: heading.scrollHeight <= heading.clientHeight + 1 && description.scrollHeight <= description.clientHeight + 1, media:box(media), controls:box(controls), panel:box(panel), clip:getComputedStyle(panel,'::after').clipPath, ctaBackground:getComputedStyle(cta).backgroundColor }
       })
       report.hero.push({width,...hero})
       slideHeights.push(hero.panel.bottom - hero.panel.top)
+      anchors.push([hero.heading.top - hero.panel.top, hero.description.top - hero.panel.top, hero.cta.top - hero.panel.top])
+      assert.ok(hero.textFits, `Hero text overflows allocated rows at ${width}/${id}`)
       assert.equal(hero.clip, 'none')
       assert.equal(hero.ctaBackground, 'rgb(255, 204, 0)')
       assert.ok(hero.cta.bottom <= hero.copy.bottom && hero.cta.right <= hero.copy.right)
@@ -63,7 +67,10 @@ try {
       if ([1440, 375].includes(width)) await page.locator('.sc-hero-panel').screenshot({path:path.join(here,`review/hero-${id}-${width}.png`)})
     }
     assert.ok(Math.max(...slideHeights) - Math.min(...slideHeights) <= 1, `Hero height jumps at ${width}`)
-    await page.locator('.sc-hero-dots button').first().click()
+    assert.ok(anchors.every(values => values.every((value,index) => Math.abs(value - anchors[0][index]) < 1)), `Hero text/CTA anchors shift at ${width}`)
+    assert.equal(await page.locator('.sc-hero .sc-kicker').count(), 0)
+    assert.equal(await page.locator('.sc-hero-controls button').count(), 2)
+    for (let attempt = 0; await page.locator('.sc-hero-panel').getAttribute('data-slide') !== 'paint' && attempt < 3; attempt++) await page.getByRole('button', { name: 'Следующий слайд', exact: true }).click()
     await page.evaluate(() => scrollTo(0,0))
     if ([1440, 768, 390, 375].includes(width)) {
       await page.screenshot({ path: path.join(here, `review/${width}.png`), fullPage: true })
@@ -83,6 +90,15 @@ try {
   await page.waitForTimeout(2000)
   report.images = await page.locator('img').evaluateAll(images => images.filter(img=>!img.complete || !img.naturalWidth).map(img=>({src:img.src,alt:img.alt})))
   assert.equal(report.images.length, 0, 'Broken images')
+  const darkEquipment = await page.locator('.sc-promo--equipment').evaluate(promo => {
+    const previous = promo.dataset.background
+    promo.dataset.background = 'graphite'
+    const blend = getComputedStyle(promo.querySelector('img')).mixBlendMode
+    promo.dataset.background = previous
+    return blend
+  })
+  assert.equal(darkEquipment, 'normal', 'Equipment must stay visible on a configured graphite surface')
+  report.interactions.push('Configured graphite equipment promotion preserves normal image blending')
   await page.evaluate(() => scrollTo(0,0))
   await page.locator('.sc-product').first().getByRole('button', { name: /^Добавить в корзину:/ }).click()
   await page.locator('.sc-product').first().getByRole('link', { name: 'В корзине' }).waitFor()

@@ -1,5 +1,6 @@
-export type IconName = 'cart' | 'heart' | 'compare' | 'user' | 'menu' | 'search' | 'arrow' | 'left' | 'right' | 'check' | 'pin' | 'home' | 'grid' | 'truck' | 'shield' | 'case' | 'pickup' | 'close'
+export type IconName = 'cart' | 'heart' | 'compare' | 'user' | 'menu' | 'search' | 'arrow' | 'left' | 'right' | 'check' | 'pin' | 'home' | 'grid' | 'truck' | 'shield' | 'case' | 'pickup' | 'close' | 'wrench'
 const paths: Record<IconName, string> = {
+  wrench: 'M14 6a6 6 0 0 0-8 8L2 18a3 3 0 0 0 4 4l4-4a6 6 0 0 0 8-8l-4 4-4-4Z',
   cart: 'M3 4h2l2.2 11h11.6L21 7H6M9 20h.01M18 20h.01',
   heart: 'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z',
   compare: 'M5 20V10M12 20V4M19 20V7',

@@ -6,7 +6,7 @@ import { images } from './images'
 import { Icon } from './Icon'
 
 const slides = [prototypeData.slides[1], prototypeData.slides[0], prototypeData.slides[2]]
-const photos: Record<string, string> = { paint: images['photo-hero-paint'], intro: images['photo-hero-workshop'], service: images['photo-hero-service'] }
+const photos: Record<string, string> = { paint: images['photo-paint'], intro: images['photo-hero-workshop'], service: images['photo-hero-service'] }
 export function Hero() {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -17,9 +17,9 @@ export function Hero() {
   const slide = slides[active]
   return <section className="sc-hero" aria-label="Главные предложения" onPointerEnter={() => setPaused(true)} onPointerLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false) }} onPointerDown={event => { start.current = event.clientX }} onPointerUp={event => { if (start.current !== null && Math.abs(event.clientX - start.current) > 45) go(event.clientX < start.current ? 1 : -1); start.current = null }}>
     <div className="sc-hero-panel" data-slide={slide.id}>
-      <div className="sc-hero-copy"><p className="sc-kicker">Гараж · оборудование, инструмент, материалы</p><h2>{slide.title}</h2><p className="sc-hero-description">{slide.text}</p><Link to={slide.href} className="sc-hero-cta">{slide.cta}<Icon name="arrow" size={20} /></Link></div>
+      <div className="sc-hero-copy"><h2>{slide.title}</h2><p className="sc-hero-description">{slide.text}</p><Link to={slide.href} className="sc-hero-cta">{slide.cta}</Link></div>
       <div className="sc-hero-media"><img className="sc-hero-image" src={photos[slide.id]} alt="" fetchPriority="high" /></div>
-      <div className="sc-hero-controls"><div className="sc-hero-dots">{slides.map((item, index) => <button key={item.id} onClick={() => setActive(index)} aria-label={`Перейти к слайду ${index + 1}: ${item.title}`} aria-current={index === active ? 'true' : undefined} />)}</div><div className="sc-hero-arrows"><button aria-label="Предыдущий слайд" onClick={() => go(-1)}><Icon name="left" size={18} /></button><button aria-label="Следующий слайд" onClick={() => go(1)}><Icon name="right" size={18} /></button></div></div>
+      <div className="sc-hero-controls" role="group" aria-label="Переключение главных предложений"><button aria-label="Предыдущий слайд" onClick={() => go(-1)}><Icon name="left" size={18} /></button><span className="sc-hero-position" aria-live="off"><b>{String(active + 1).padStart(2, '0')}</b><span>/ {String(slides.length).padStart(2, '0')}</span></span><button aria-label="Следующий слайд" onClick={() => go(1)}><Icon name="right" size={18} /></button></div>
     </div>
   </section>
 }

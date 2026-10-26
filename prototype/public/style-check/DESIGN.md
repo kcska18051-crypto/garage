@@ -2,7 +2,22 @@
 
 Approved direction, 26 October 2026: balanced automotive retail on #FFFFFF, existing yellow #FFCC00, red #C92F29, graphite #171717. Preserve the supplied logo unchanged; retain Arial/Helvetica until licensed SkodaSans webfonts are supplied. Do not invent brand assets, inventory, prices, claims or technical specifications.
 
-The signature composition is an integrated paint-matching photographic hero, with a yellow copy field and an angled transition into the existing paint photograph. Navigation and product grids remain compact. Cards use contained images, 2-line names, aligned price zones and full-width cart actions. Radius scale: controls 10px, cards 14px, promotional panels 20px. Spacing follows a 4px base.
+V2 direction, 26 October 2026: preserve the V1 components, content, section order and interactions. The hero uses a light copy area, large inset photograph and yellow CTA, without diagonals, masks or overlay gradients. All three slides share this composition. Seasonal and workstation promotions become light; paint retains a restrained yellow CTA/accent; rental joins the light service-card system. Only the final consultation panel remains a large dark surface.
+
+## V2 token contract
+
+Colors: #FFFFFF page/card base, #F5F6F7 local neutral surface, #171717 primary text, #62666B secondary text, #E2E4E7 borders, #FFCC00 primary action, #C92F29 sales, #EDBE00 action hover. Existing colors are preserved; no new saturated palette is introduced.
+
+Geometry: controls 8px, cards 12px, promotional panels 16px. Spacing 4/8/12/16/24/32/40px. Buttons at least 44px tall; carousel buttons 44px square; product icon controls 40px square. Photo areas use contain for equipment and cover with per-slide focal points for scenes.
+
+Typography: inherited Arial/Helvetica pending licensed SkodaSans; section headings 24–30px, hero 34–48px, promo 24–34px, product names 15px desktop / 14px mobile, prices 26px / 24px, metadata 12px. Product names reserve two lines desktop, three mobile; stock, prices and purchase actions retain fixed alignment zones.
+
+## V2 sequence
+
+- [x] Update the shared hero composition and check all three slides on desktop and mobile.
+- [x] Adjust four existing promo compositions and rental service colors without changing order or content.
+- [x] Apply shared radius, spacing, control and typography tokens; refine categories and product alignment.
+- [x] Build and typecheck; verify all seven widths, every slide, price/action alignment, image loads and existing interactions; inspect desktop/mobile screenshots.
 
 ## Implementation plan
 

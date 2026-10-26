@@ -22,7 +22,7 @@ function Collection({ collection, onQuote }: { collection: ProductCollection; on
   return <section className="sc-section sc-collection"><SectionTitle title={collection.label} href={collection.href}><div className="sc-rail-controls"><button aria-label={`Предыдущие товары: ${collection.label}`} onClick={() => move(-1)}><Icon name="left" size={18} /></button><button aria-label={`Следующие товары: ${collection.label}`} onClick={() => move(1)}><Icon name="right" size={18} /></button></div></SectionTitle><div className="sc-products" ref={rail}>{collection.products.map(product => <ProductCard key={product.id} product={product} label={collection.id === 'new' ? 'Новинка' : collection.id === 'bestsellers' ? 'Хит' : undefined} onQuote={onQuote} />)}</div></section>
 }
 function Banner({ banner }: { banner: PromoBanner }) {
-  return <Link className={`sc-promo sc-promo--${banner.id}`} to={banner.href}><img src={images[bannerPhotos[banner.id]]} alt="" loading="lazy" /><div><h2>{banner.title}</h2><p>{banner.text}</p><span>{banner.cta}<Icon name="arrow" size={18} /></span></div></Link>
+  return <Link className={`sc-promo sc-promo--${banner.id}`} to={banner.href}><div className="sc-promo-copy"><h2>{banner.title}</h2><p>{banner.text}</p><span>{banner.cta}<Icon name="arrow" size={18} /></span></div><div className="sc-promo-media"><img src={images[bannerPhotos[banner.id]]} alt="" loading="lazy" /></div></Link>
 }
 function Brands() {
   const rail = useRef<HTMLDivElement>(null)
@@ -32,7 +32,7 @@ export function Home() {
   const [dialog, setDialog] = useState<'consultation' | 'callback' | null>(null)
   const benefits: IconName[] = ['truck', 'pickup', 'shield', 'case']
   return <main><h1 className="sr-only">Оборудование для автосервиса — Гараж</h1><Hero />
-    <section className="sc-section sc-categories"><SectionTitle title="Популярные категории" href="/catalog" link="Весь каталог" /><div className="sc-category-grid">{data.categories.map(item => <Link key={item.id} to={item.href} className="sc-category"><div><img src={images[categoryPhotos[item.id]]} alt="" loading="lazy" /></div><strong>{item.name}</strong><Icon name="arrow" size={17} /></Link>)}</div></section>
+    <section className="sc-section sc-categories"><SectionTitle title="Популярные категории" href="/catalog" link="Весь каталог" /><div className="sc-category-grid">{data.categories.map(item => <Link key={item.id} to={item.href} className="sc-category"><div><img src={images[categoryPhotos[item.id]]} alt="" loading="lazy" /></div><strong>{item.name}</strong></Link>)}</div></section>
     {data.homeMerchandising.filter(block => block.visible).map(block => { const collection = data.productCollections.find(item => item.id === block.collectionId); const banners = block.bannerIds.map(id => data.promoBanners.find(item => item.id === id)).filter((item): item is PromoBanner => Boolean(item)); return <Fragment key={block.id}>{collection && <Collection collection={collection} onQuote={() => setDialog('consultation')} />}{banners.length > 0 && <div className={`sc-banner-group sc-banner-group--${banners.length}`}>{banners.map(banner => <Banner key={banner.id} banner={banner} />)}</div>}</Fragment> })}
     <section className="sc-benefits" aria-label="Преимущества">{data.benefits.map((item, index) => <article key={item.id}><Icon name={benefits[index]} size={30} /><div><h2>{item.title}</h2><p>{item.text}</p></div></article>)}</section>
     <Brands />

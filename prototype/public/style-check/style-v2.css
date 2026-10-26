@@ -157,9 +157,9 @@
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:nth-child(2) { background: #ffcc00; }
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:nth-child(2) .divider-banner__art { background-image: var(--photo-paint); background-size: cover; }
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(4) .divider-banner { background: #ffcc00; }
-.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(4) .divider-banner__art { background-color: #ffcc00; background-image: var(--product-compressor); }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(4) .divider-banner__art { background-color: #fff; background-image: var(--product-compressor); background-size: 125%; }
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(6) .divider-banner { background: #f1f1ef; }
-.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(6) .divider-banner__art { background-color: #f1f1ef; background-image: var(--product-trolley); }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(6) .divider-banner__art { background-color: #dedbd5; background-image: url('https://images.pexels.com/photos/8986173/pexels-photo-8986173.jpeg?auto=compress&cs=tinysrgb&w=1200'); background-size: cover; }
 
 /* Service has one large repair story and two precise supporting stories. */
 .app-shell[data-style-check] .service-cards {
@@ -184,7 +184,7 @@
 .app-shell[data-style-check] .service-cards article:nth-child(2) a { color: #ffcc00; }
 .app-shell[data-style-check] .service-cards article:nth-child(3) a { color: #171717; }
 .app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(1) .product-card:nth-child(2) .product-teaser__visual,
-.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(5) .product-card:nth-child(1) .product-teaser__visual { background-size: 135%; }
+.app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(5) .product-card:nth-child(1) .product-teaser__visual { background-size: 115%; }
 .app-shell[data-style-check] .home-merchandising-stream > .product-showcase:nth-child(7) .product-card:nth-child(4) .product-teaser__visual { background-size: 145%; }
 
 .app-shell[data-style-check] .promotion-card__art { border-radius: .2rem; height: 12rem; }

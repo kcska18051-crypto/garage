@@ -30,6 +30,7 @@
 - Баннер сервиса, техника в работе: [Pexels, Bulat843](https://www.pexels.com/photo/technician-working-in-a-busy-workshop-34734503/).
 - Услуга сервиса, механик ремонтирует устройство: [Pexels, Bulat843](https://www.pexels.com/photo/mechanic-repairing-machinery-in-workshop-32208769/).
 - Услуга аренды, электроинструменты в мастерской: [Pexels, Orhun Rüzgar ÖZ](https://www.pexels.com/photo/power-tools-on-a-wooden-surface-6154662/). Снимок иллюстрирует оборудование, а не фактическую передачу в аренду.
+- Баннер рабочего поста, инструмент и место работы: [Pexels, Artem Podrez](https://www.pexels.com/photo/angle-grinder-power-tool-near-a-toolbox-8986173/).
 - Ранее использованные фото категорий, промо и блока о компании: [автосервис](https://unsplash.com/photos/black-cars-in-auto-repair-shop-JrC5BK-kWYE), [инструменты](https://unsplash.com/photos/workshop-tools-are-scattered-on-a-work-table-f0T-eGanP_4), [торцевой ключ](https://unsplash.com/photos/a-socket-wrench-rests-against-a-dark-background-TLmnnzIauBI), [окраска](https://www.pexels.com/photo/person-using-paint-spray-gun-6870314/), [сварка](https://unsplash.com/photos/a-person-welding-a-metal-object-with-a-welding-torch-dmgYI2uuOoY), [компрессор](https://www.pexels.com/photo/an-air-compressor-9754814/).
 
 Для сюжетных фото действуют [лицензия Pexels](https://www.pexels.com/license/) и [лицензия Unsplash](https://unsplash.com/license/); возможные права на видимые сторонние товарные знаки проверяются отдельно.

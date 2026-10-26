@@ -11,7 +11,8 @@ import {useProfile} from '../state/ProfileState'
 import { CookiePreferenceProvider } from '../state/CookiePreferenceState'
 import { CookieBanner } from '../features/cookie/CookieBanner'
 
-function blockStyleCheckInteraction(event: { preventDefault: () => void; stopPropagation: () => void }) {
+function blockStyleCheckInteraction(event: { target: EventTarget | null; preventDefault: () => void; stopPropagation: () => void }) {
+  if (event.target instanceof Element && event.target.closest('.cookie-banner__actions button')) return
   event.preventDefault()
   event.stopPropagation()
 }

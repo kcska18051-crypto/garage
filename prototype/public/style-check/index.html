@@ -18,6 +18,14 @@
         copy.href = new URL(link.getAttribute('href'), response.url).href
         document.head.append(copy)
       }
+      const styleCheck = document.createElement('link')
+      styleCheck.rel = 'stylesheet'
+      styleCheck.href = '/garage/style-check/style.css'
+      await new Promise((resolve) => {
+        styleCheck.onload = resolve
+        styleCheck.onerror = resolve
+        document.head.append(styleCheck)
+      })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')
       const script = document.createElement('script')

@@ -1,0 +1,222 @@
+/* Temporary visual layer. Loaded only by /garage/style-check/. */
+:root:has(.app-shell[data-style-check]) {
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f7f7f4;
+  --color-border: #deded8;
+  --color-text: #171717;
+  --color-text-muted: #555550;
+  --color-placeholder-1: #f4f3ef;
+  --color-placeholder-2: #eceae4;
+  --color-placeholder-3: #b7b7b2;
+  --color-placeholder-4: #71716d;
+  --color-accent: #c92f29;
+  --color-focus: #bd352a;
+  --radius-sm: .35rem;
+  --radius-md: .65rem;
+  --radius-lg: .9rem;
+  --space-section: 2.5rem;
+  --space-section-compact: 2.1rem;
+  --space-grid: .9rem;
+}
+
+html:has(.app-shell[data-style-check]),
+body:has(.app-shell[data-style-check]) { background: #fff; }
+.app-shell[data-style-check] {
+  --brand-yellow: #ffcc00; /* Screen approximation of print CMYK 0/20/100/0. */
+  --brand-red: #e43b31;    /* Screen approximation of print Warm Red. */
+  --photo-workshop: url('https://images.unsplash.com/photo-1792326103553-4e4e8964279e?auto=format&fit=crop&w=1400&q=82');
+  --photo-tools: url('https://images.unsplash.com/photo-1745449064670-94bd0fc13df8?auto=format&fit=crop&w=1000&q=82');
+  --photo-wrench: url('https://images.unsplash.com/photo-1741827866560-8dafa27f4bf8?auto=format&fit=crop&w=1000&q=82');
+  --photo-paint: url('https://images.pexels.com/photos/6870314/pexels-photo-6870314.jpeg?auto=compress&cs=tinysrgb&w=1000');
+  --photo-welding: url('https://images.unsplash.com/photo-1688138276772-987d4b62318c?auto=format&fit=crop&w=1000&q=82');
+  --photo-compressor: url('https://images.pexels.com/photos/9754814/pexels-photo-9754814.jpeg?auto=compress&cs=tinysrgb&w=1000');
+  color: var(--color-text);
+  font-family: Arial, 'Helvetica Neue', sans-serif; /* Temporary pending licensed SkodaSans. */
+}
+.app-shell[data-style-check] .site-header { border-top: .3rem solid var(--brand-yellow); }
+.app-shell[data-style-check] .service-row { min-height: 2.1rem; }
+.app-shell[data-style-check] .main-header-row { min-height: 5.9rem; }
+.app-shell[data-style-check] .logo {
+  background: url('/garage/style-check/logo-from-brandbook.png') center / contain no-repeat;
+  display: inline-block;
+  flex: 0 0 9rem;
+  font-size: 0;
+  height: 4.5rem;
+  letter-spacing: 0;
+  overflow: hidden;
+  width: 9rem;
+}
+.app-shell[data-style-check] .logo > span { display: none; }
+.app-shell[data-style-check] .catalog-button,
+.app-shell[data-style-check] .search-box__submit,
+.app-shell[data-style-check] .paint-service-link,
+.app-shell[data-style-check] .product-teaser__cart,
+.app-shell[data-style-check] .product-teaser__quote,
+.app-shell[data-style-check] .button--dark {
+  background: var(--brand-yellow);
+  border-color: var(--brand-yellow);
+  color: #171717;
+}
+.app-shell[data-style-check] .search-box input { background: #fff; border-color: #cfcfc9; }
+.app-shell[data-style-check] .search-box input::placeholder { color: #696963; }
+.app-shell[data-style-check] .service-link { border-color: #b9b9b2; border-radius: .5rem; }
+.app-shell[data-style-check] .third-level-nav { border-top-color: #e7e6e0; }
+.app-shell[data-style-check] .third-level-nav__link.active { box-shadow: inset 0 -3px var(--brand-yellow); }
+.app-shell[data-style-check] .third-level-nav__link--accent { background: #fff7d4; border-color: #f4de8d; }
+.app-shell[data-style-check] .header-action b,
+.app-shell[data-style-check] .mobile-bottom-nav b { background: var(--brand-red); }
+
+.app-shell[data-style-check] .hero { margin-top: 1.2rem; }
+.app-shell[data-style-check] .hero__stage { background: #f8f6ec; border-radius: .9rem; }
+.app-shell[data-style-check] .hero__slide { height: clamp(18rem, 22vw, 22rem); }
+.app-shell[data-style-check] .hero__art { background-color: #f8f6ec; background-position: center; background-size: cover; }
+.app-shell[data-style-check] .hero__art--1 {
+  background-image: linear-gradient(90deg, #fff8db 0%, #fff8db 27%, rgb(255 248 219 / .92) 42%, rgb(255 248 219 / .15) 76%), var(--photo-workshop);
+}
+.app-shell[data-style-check] .hero__art--2 {
+  background-image: linear-gradient(90deg, #fff8db 0%, #fff8db 27%, rgb(255 248 219 / .90) 43%, rgb(255 248 219 / .08) 78%), var(--photo-paint);
+}
+.app-shell[data-style-check] .hero__art--3 {
+  background-image: linear-gradient(90deg, #fff8db 0%, #fff8db 27%, rgb(255 248 219 / .90) 43%, rgb(255 248 219 / .08) 78%), var(--photo-tools);
+}
+.app-shell[data-style-check] .hero__art > span,
+.app-shell[data-style-check] .hero__art > i,
+.app-shell[data-style-check] .hero__art > b { display: none; }
+.app-shell[data-style-check] .hero__art::before {
+  color: #171717;
+  content: 'Оборудование для автосервиса';
+  display: block;
+  font-size: clamp(2rem, 3.5vw, 3.8rem);
+  font-weight: 900;
+  left: clamp(1.25rem, 5vw, 5rem);
+  letter-spacing: -.045em;
+  line-height: 1.03;
+  max-width: 11ch;
+  position: absolute;
+  top: 23%;
+  z-index: 1;
+}
+.app-shell[data-style-check] .hero__art--2::before { content: 'Подбор автоэмали'; }
+.app-shell[data-style-check] .hero__art--3::before { content: 'Сервисный центр по ремонту'; }
+.app-shell[data-style-check] .hero__art::after {
+  background: url('/garage/style-check/logo-from-brandbook.png') center / contain no-repeat;
+  bottom: 1.2rem;
+  content: '';
+  height: 3.7rem;
+  left: clamp(1.25rem, 5vw, 5rem);
+  position: absolute;
+  width: 7.3rem;
+}
+.app-shell[data-style-check] .hero__pagination button { border-color: #72726b; }
+.app-shell[data-style-check] .hero__pagination button[aria-current] { background: var(--brand-yellow); border-color: #171717; }
+
+.app-shell[data-style-check] .section-heading { margin-bottom: 1.15rem; }
+.app-shell[data-style-check] .section-heading h2 {
+  font-size: clamp(1.65rem, 2.4vw, 2.45rem);
+  font-weight: 850;
+  letter-spacing: -.035em;
+  line-height: 1.1;
+}
+.app-shell[data-style-check] .section-heading > a,
+.app-shell[data-style-check] .rail-actions > a { text-decoration-color: var(--brand-yellow); text-decoration-thickness: .18rem; }
+.app-shell[data-style-check] .category-card,
+.app-shell[data-style-check] .product-teaser,
+.app-shell[data-style-check] .service-cards article { border-color: #e0dfd9; box-shadow: 0 .25rem 1rem rgb(0 0 0 / .035); }
+.app-shell[data-style-check] .category-card { min-height: 11rem; padding: .9rem; }
+.app-shell[data-style-check] .category-card:hover { background: #fff9e5; border-color: #d8b739; }
+.app-shell[data-style-check] .category-card__code { color: #8b6a00; font-weight: 700; }
+.app-shell[data-style-check] .category-card__art {
+  background: #f4f3ee center / cover no-repeat;
+  border-radius: .45rem;
+  height: 5.5rem;
+  margin: .3rem 0 .55rem;
+}
+.app-shell[data-style-check] .category-card__art i,
+.app-shell[data-style-check] .category-card__art b { display: none; }
+.app-shell[data-style-check] .category-card:nth-child(1) .category-card__art { background-image: var(--photo-workshop); }
+.app-shell[data-style-check] .category-card:nth-child(2) .category-card__art { background-image: var(--photo-tools); }
+.app-shell[data-style-check] .category-card:nth-child(3) .category-card__art { background-image: var(--photo-paint); }
+.app-shell[data-style-check] .category-card:nth-child(4) .category-card__art { background-image: var(--photo-compressor); background-position: center 45%; }
+.app-shell[data-style-check] .category-card:nth-child(5) .category-card__art { background-image: var(--photo-wrench); background-position: center 60%; }
+.app-shell[data-style-check] .category-card:nth-child(6) .category-card__art { background-image: var(--photo-welding); background-position: center 40%; }
+.app-shell[data-style-check] .category-card strong { font-size: .9rem; font-weight: 800; }
+.app-shell[data-style-check] .category-card__arrow { color: #a82a24; }
+
+.app-shell[data-style-check] .product-teaser__media { background: #faf9f5; border-bottom: 1px solid #ecebe5; }
+.app-shell[data-style-check] .product-teaser__visual i { background: #d4d1c7; }
+.app-shell[data-style-check] .product-teaser__visual b { background: #ffedac; }
+.app-shell[data-style-check] .product-teaser__name { font-weight: 750; }
+.app-shell[data-style-check] .promotion-badge { background: var(--brand-red); }
+.app-shell[data-style-check] .product-teaser__actions button[aria-pressed=true] { background: var(--brand-yellow); color: #171717; }
+.app-shell[data-style-check] .product-teaser__dots button[aria-pressed=true]::before { background: var(--brand-yellow); }
+
+.app-shell[data-style-check] .divider-banner { border-color: #e1dfd5; border-radius: .7rem; min-height: 11.5rem; }
+.app-shell[data-style-check] .divider-banner--mid { background: #fff7d5; }
+.app-shell[data-style-check] .divider-banner__art { background: #f5f3eb center / cover no-repeat; }
+.app-shell[data-style-check] .divider-banner:nth-child(1) .divider-banner__art { background-image: var(--photo-tools); }
+.app-shell[data-style-check] .divider-banner:nth-child(2) .divider-banner__art { background-image: var(--photo-paint); }
+.app-shell[data-style-check] .compact-banner-group--1 .divider-banner__art { background-image: var(--photo-compressor); }
+.app-shell[data-style-check] .divider-banner__art i,
+.app-shell[data-style-check] .divider-banner__art b { display: none; }
+.app-shell[data-style-check] .divider-banner h2 { font-weight: 850; }
+.app-shell[data-style-check] .divider-banner__copy > span { border-bottom: .2rem solid var(--brand-yellow); padding-bottom: .15rem; }
+.app-shell[data-style-check] .benefits-strip article > span { color: #bd352a; }
+.app-shell[data-style-check] .benefits-strip h2 { font-size: .95rem; }
+.app-shell[data-style-check] .brand-symbol { background: var(--brand-yellow); }
+.app-shell[data-style-check] .promotion-card__art { background: #f2f0e9 center / cover no-repeat; border-radius: .55rem; height: 9rem; }
+.app-shell[data-style-check] .promotion-card:nth-child(1) .promotion-card__art { background-image: var(--photo-tools); }
+.app-shell[data-style-check] .promotion-card:nth-child(2) .promotion-card__art { background-image: var(--photo-paint); }
+.app-shell[data-style-check] .promotion-card:nth-child(3) .promotion-card__art { background-image: var(--photo-compressor); }
+.app-shell[data-style-check] .promotion-card__art span { display: none; }
+.app-shell[data-style-check] .service-cards__art { background: #f4f2ec center / cover no-repeat; height: 10rem; }
+.app-shell[data-style-check] .service-cards article:nth-child(1) .service-cards__art { background-image: var(--photo-workshop); }
+.app-shell[data-style-check] .service-cards article:nth-child(2) .service-cards__art { background-image: var(--photo-tools); }
+.app-shell[data-style-check] .service-cards article:nth-child(3) .service-cards__art { background-image: var(--photo-paint); }
+.app-shell[data-style-check] .service-cards__art span,
+.app-shell[data-style-check] .service-cards__art i { display: none; }
+.app-shell[data-style-check] .about-section__art { background: #eee center / cover no-repeat var(--photo-workshop); border-radius: .7rem; }
+.app-shell[data-style-check] .about-section__art span,
+.app-shell[data-style-check] .about-section__art i,
+.app-shell[data-style-check] .about-section__art b { display: none; }
+.app-shell[data-style-check] .business-section,
+.app-shell[data-style-check] .final-cta { background: #171717; border-radius: .7rem; }
+.app-shell[data-style-check] .final-cta__art { background: var(--photo-wrench) center / cover no-repeat; border-radius: .5rem; }
+.app-shell[data-style-check] .final-cta__art span,
+.app-shell[data-style-check] .final-cta__art i { display: none; }
+.app-shell[data-style-check] .cookie-banner { border-top: .3rem solid var(--brand-yellow); }
+.app-shell[data-style-check] .cookie-banner__actions .button { background: var(--brand-yellow); border-color: var(--brand-yellow); color: #171717; }
+
+@media (max-width: 1023px) {
+  .app-shell[data-style-check] .category-card { min-height: 10.5rem; }
+  .app-shell[data-style-check] .hero__slide { height: 17rem; }
+}
+@media (max-width: 767px) {
+  .app-shell[data-style-check] .mobile-header { padding-top: .45rem; }
+  .app-shell[data-style-check] .mobile-header .logo { flex-basis: 7.4rem; height: 3.6rem; width: 7.4rem; }
+  .app-shell[data-style-check] .mobile-header__top { margin-bottom: .3rem; }
+  .app-shell[data-style-check] .mobile-bottom-nav a.active { color: #a82923; }
+  .app-shell[data-style-check] .third-level-nav__mobile .third-level-nav__link { font-size: .8rem; }
+  .app-shell[data-style-check] .hero { margin-top: .7rem; }
+  .app-shell[data-style-check] .hero__slide { height: 15rem; }
+  .app-shell[data-style-check] .hero__art { background-position: 60% center; }
+  .app-shell[data-style-check] .hero__art--1,
+  .app-shell[data-style-check] .hero__art--2,
+  .app-shell[data-style-check] .hero__art--3 { background-image: linear-gradient(90deg, #fff8db 0%, rgb(255 248 219 / .9) 37%, rgb(255 248 219 / .3) 100%), var(--photo-workshop); }
+  .app-shell[data-style-check] .hero__art--2 { background-image: linear-gradient(90deg, #fff8db 0%, rgb(255 248 219 / .9) 37%, rgb(255 248 219 / .3) 100%), var(--photo-paint); }
+  .app-shell[data-style-check] .hero__art--3 { background-image: linear-gradient(90deg, #fff8db 0%, rgb(255 248 219 / .9) 37%, rgb(255 248 219 / .3) 100%), var(--photo-tools); }
+  .app-shell[data-style-check] .hero__art::before { font-size: clamp(1.55rem, 6vw, 2.25rem); left: 1rem; max-width: 11ch; top: 24%; }
+  .app-shell[data-style-check] .hero__art::after { bottom: .8rem; height: 2.8rem; left: 1rem; width: 5.5rem; }
+  .app-shell[data-style-check] .section-heading h2 { font-size: 1.5rem; }
+  .app-shell[data-style-check] .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .app-shell[data-style-check] .category-card { min-height: 10.5rem; padding: .65rem; }
+  .app-shell[data-style-check] .category-card__art { height: 5.2rem; margin: .15rem 0 .4rem; }
+  .app-shell[data-style-check] .category-card strong { font-size: .78rem; }
+  .app-shell[data-style-check] .benefits-strip article { flex-basis: 80%; }
+  .app-shell[data-style-check] .service-cards article { grid-template-columns: 7.2rem 1fr; }
+  .app-shell[data-style-check] .service-cards__art { height: auto; min-height: 10rem; }
+  .app-shell[data-style-check] .business-section,
+  .app-shell[data-style-check] .final-cta { border-radius: 0; }
+  .app-shell[data-style-check] .cookie-banner { border-radius: .65rem; }
+}
+

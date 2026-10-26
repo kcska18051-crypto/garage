@@ -1,0 +1,16 @@
+{
+  "source": "Original rendered interactive prototype",
+  "checks": [
+    "headings: original content and order preserved (18)",
+    "products: original content and order preserved (20)",
+    "categories: original content and order preserved (6)",
+    "brands: original content and order preserved (8)",
+    "promos: original content and order preserved (4)",
+    "services: original content and order preserved (3)",
+    "All 51 original main-content destinations preserved",
+    "Новости: same cards and destinations",
+    "Статьи: same cards and destinations",
+    "Обзоры: same cards and destinations"
+  ],
+  "passed": true
+}

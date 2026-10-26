@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.app.json",
+  "include": ["src", "../../src/vite-env.d.ts"],
+  "compilerOptions": { "tsBuildInfoFile": "./assets/.typecheck.tsbuildinfo" }
+}

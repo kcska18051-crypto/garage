@@ -1,0 +1,3 @@
+review/*.png
+!review/1440-viewport.png
+!review/375-viewport.png

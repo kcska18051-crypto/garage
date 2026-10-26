@@ -1,0 +1,52 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { CatalogMenu } from '../../../src/features/header/CatalogMenu'
+import { usePinnedHeaderHeight } from '../../../src/hooks/usePinnedHeaderHeight'
+import { useScrollThreshold } from '../../../src/hooks/useScrollThreshold'
+import { DesktopHeader, type HeaderCounts } from './HeaderViews'
+import { MobileBottomNav } from './HeaderViews'
+import { MobileHeader } from './HeaderViews'
+import { RegionDialog } from '../../../src/features/header/RegionDialog'
+import { useRegion } from '../../../src/state/RegionState'
+import { ThirdLevelNavigation } from '../../../src/features/header/ThirdLevelNavigation'
+import { compactHeaderScrollThreshold } from '../../../src/data/headerNavigationData'
+import '../../../src/features/header/Header.css'
+
+export function Header({ counts }: { counts: HeaderCounts }) {
+  const { region, setRegion } = useRegion()
+  const [regionOpen, setRegionOpen] = useState(false)
+  const [catalogOpen, setCatalogOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const compact = useScrollThreshold(compactHeaderScrollThreshold)
+  const header=useRef<HTMLElement>(null)
+  const opener=useRef<HTMLElement>(null)
+  const location=useLocation()
+  usePinnedHeaderHeight(header,compact)
+  const toggleMenu = useCallback(() => setMenuOpen((value) => !value), [])
+  const closeCatalog = useCallback((restoreFocus = true) => {
+    setCatalogOpen(false)
+    if (restoreFocus) requestAnimationFrame(() => {
+      const fallback = document.querySelector<HTMLElement>(innerWidth < 768 ? '.mobile-bottom-nav [aria-label="Каталог"]' : '.catalog-button')
+      ;(opener.current?.getClientRects().length ? opener.current : fallback)?.focus({ preventScroll: true })
+    })
+  }, [])
+  const toggleCatalog = () => {
+    if (catalogOpen) { closeCatalog(); return }
+    opener.current=document.activeElement as HTMLElement
+    // The mobile-menu opener is unmounted when the drawer replaces that menu.
+    if (opener.current?.closest('.mobile-menu')) opener.current=document.querySelector('.mobile-bottom-nav [aria-label="Каталог"]')
+    setMenuOpen(false); setRegionOpen(false); setCatalogOpen(true)
+  }
+  const openRegion = () => { closeCatalog(false); setMenuOpen(false); setRegionOpen(true) }
+  useEffect(() => { setCatalogOpen(false); setMenuOpen(false); setRegionOpen(false) }, [location])
+  return <>
+    <header className="site-header" ref={header} onFocusCapture={event => { if ((event.target as HTMLElement).closest('.search-box')) { closeCatalog(false); setRegionOpen(false); setMenuOpen(false) } }}>
+      <DesktopHeader region={region} onRegion={openRegion} counts={counts} compact={compact} catalogOpen={catalogOpen} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
+      <MobileHeader region={region} onRegion={openRegion} menuOpen={menuOpen} onMenu={toggleMenu} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
+      <ThirdLevelNavigation compact={compact} />
+    </header>
+    <MobileBottomNav favorites={counts.favorites} cart={counts.cart} catalogOpen={catalogOpen} onCatalog={toggleCatalog} />
+    {catalogOpen && <CatalogMenu header={header} opener={opener} compact={compact} onClose={closeCatalog} />}
+    {regionOpen && <RegionDialog onClose={() => setRegionOpen(false)} onSelect={(city) => { setRegion(city); setRegionOpen(false) }} />}
+  </>
+}

@@ -37,6 +37,7 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/style-check" element={<HomePage />} />
       <Route path="/services" element={<ServicesIndexPage/>}/>
       <Route path="/services/service-center" element={<ServiceCenterPage/>}/>
       <Route path="/services/service-center/compressor-repair" element={<CompressorRepairPage/>}/>

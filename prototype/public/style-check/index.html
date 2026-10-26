@@ -1,45 +1,12 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Главная — стайл-чек «Гараж»</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module">
-      const source = new URL('../', window.location.href)
-      const response = await fetch(source, { cache: 'no-store' })
-      if (!response.ok) throw new Error('Не удалось загрузить исходную страницу')
-      const documentSource = new DOMParser().parseFromString(await response.text(), 'text/html')
-      for (const link of documentSource.querySelectorAll('link[rel="stylesheet"], link[rel="modulepreload"]')) {
-        const copy = document.createElement('link')
-        for (const attribute of link.attributes) copy.setAttribute(attribute.name, attribute.value)
-        copy.href = new URL(link.getAttribute('href'), response.url).href
-        document.head.append(copy)
-      }
-      const styleCheck = document.createElement('link')
-      styleCheck.rel = 'stylesheet'
-      styleCheck.href = '/garage/style-check/style.css?v=20261026-contrast'
-      await new Promise((resolve) => {
-        styleCheck.onload = resolve
-        styleCheck.onerror = resolve
-        document.head.append(styleCheck)
-      })
-      const v2 = document.createElement('link')
-      v2.rel = 'stylesheet'
-      v2.href = '/garage/style-check/style-v2.css?v=20261026-v2e'
-      await new Promise((resolve) => {
-        v2.onload = resolve
-        v2.onerror = resolve
-        document.head.append(v2)
-      })
-      const sourceScript = documentSource.querySelector('script[type="module"][src]')
-      if (!sourceScript) throw new Error('Не найден скрипт прототипа')
-      const script = document.createElement('script')
-      script.type = 'module'
-      script.src = new URL(sourceScript.getAttribute('src'), response.url).href
-      document.body.append(script)
-    </script>
-  </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#ffcc00" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Гараж — Style Check · Industrial Precision</title>
+<link rel="stylesheet" href="./assets/app.css?v=industrial-1" />
+</head>
+<body><div id="root"></div><script type="module" src="./assets/app.js?v=industrial-1"></script></body>
 </html>

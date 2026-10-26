@@ -1,0 +1,73 @@
+{
+  "widths": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "background": "rgb(255, 255, 255)",
+      "cards": 20,
+      "categories": 6,
+      "overflow": []
+    },
+    {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "background": "rgb(255, 255, 255)",
+      "cards": 20,
+      "categories": 6,
+      "overflow": []
+    },
+    {
+      "width": 1280,
+      "scrollWidth": 1280,
+      "background": "rgb(255, 255, 255)",
+      "cards": 20,
+      "categories": 6,
+      "overflow": []
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "background": "rgb(255, 255, 255)",
+      "cards": 20,
+      "categories": 6,
+      "overflow": []
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "background": "rgb(255, 255, 255)",
+      "cards": 20,
+      "categories": 6,
+      "overflow": []
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "background": "rgb(255, 255, 255)",
+      "cards": 20,
+      "categories": 6,
+      "overflow": []
+    },
+    {
+      "width": 375,
+      "scrollWidth": 375,
+      "background": "rgb(255, 255, 255)",
+      "cards": 20,
+      "categories": 6,
+      "overflow": []
+    }
+  ],
+  "images": [],
+  "interactions": [
+    "Cart state updates and full cart action appears",
+    "Favorite toggles",
+    "Comparison toggles",
+    "Hero navigation works",
+    "Consultation dialog opens and closes",
+    "Catalog opens and Escape closes it",
+    "Existing search opens suggestions",
+    "Product route opens",
+    "Mobile menu and catalog work"
+  ],
+  "errors": []
+}

@@ -158,7 +158,7 @@
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:nth-child(2) { background: #ffcc00; }
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(2) .divider-banner:nth-child(2) .divider-banner__art { background-image: var(--photo-paint); background-size: cover; }
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(4) .divider-banner { background: #ffcc00; }
-.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(4) .divider-banner__art { background-color: #fff; background-image: var(--product-compressor); background-size: 125%; }
+.app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(4) .divider-banner__art { background-color: #fff; background-image: var(--product-compressor); background-size: contain; }
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(6) .divider-banner { background: #f1f1ef; }
 .app-shell[data-style-check] .home-merchandising-stream > .compact-banner-group:nth-child(6) .divider-banner__art { background-color: #dedbd5; background-image: url('https://images.pexels.com/photos/8986173/pexels-photo-8986173.jpeg?auto=compress&cs=tinysrgb&w=1200'); background-size: cover; }
 

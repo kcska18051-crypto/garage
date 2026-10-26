@@ -192,6 +192,8 @@ body:has(.app-shell[data-style-check]) { background: #fff; }
   .app-shell[data-style-check] .hero__slide { height: 17rem; }
 }
 @media (max-width: 767px) {
+  .app-shell[data-style-check] .section-heading { flex-wrap: wrap; }
+  .app-shell[data-style-check] .section-heading .rail-actions { margin-left: auto; }
   .app-shell[data-style-check] .mobile-header { padding-top: .45rem; }
   .app-shell[data-style-check] .mobile-header .logo { flex-basis: 7.4rem; height: 3.6rem; width: 7.4rem; }
   .app-shell[data-style-check] .mobile-header__top { margin-bottom: .3rem; }

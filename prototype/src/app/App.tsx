@@ -1,4 +1,4 @@
-import { BrowserRouter, useInRouterContext } from 'react-router-dom'
+import { BrowserRouter, useInRouterContext, useLocation } from 'react-router-dom'
 import { Header } from '../features/header/Header'
 import { CommerceProvider, useCommerce } from '../state/CommerceState'
 import { Footer } from '../features/footer/Footer'
@@ -11,13 +11,29 @@ import {useProfile} from '../state/ProfileState'
 import { CookiePreferenceProvider } from '../state/CookiePreferenceState'
 import { CookieBanner } from '../features/cookie/CookieBanner'
 
+function blockStyleCheckInteraction(event: { preventDefault: () => void; stopPropagation: () => void }) {
+  event.preventDefault()
+  event.stopPropagation()
+}
+
 function AppContent() {
+  const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
   const commerce = useCommerce()
   const {identity}=useAuth()
   const {claimServiceRequests}=useProfile()
   useEffect(()=>{if(identity)claimServiceRequests(identity)},[identity,claimServiceRequests])
   return (
-    <div className="app-shell">
+    <div
+      className="app-shell"
+      data-style-check={isStyleCheck || undefined}
+      onClickCapture={isStyleCheck ? blockStyleCheckInteraction : undefined}
+      onAuxClickCapture={isStyleCheck ? blockStyleCheckInteraction : undefined}
+      onSubmitCapture={isStyleCheck ? blockStyleCheckInteraction : undefined}
+      onContextMenuCapture={isStyleCheck ? blockStyleCheckInteraction : undefined}
+      onKeyDownCapture={isStyleCheck ? (event) => {
+        if (event.key === 'Enter' || event.key === ' ') blockStyleCheckInteraction(event)
+      } : undefined}
+    >
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />
       <Footer />

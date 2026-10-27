@@ -1,3 +1,4 @@
+import { StyleCheckHeaderSymbol } from './StyleCheckHeaderSymbol'
 import { Link } from 'react-router-dom'
 import { SearchBox } from './SearchBox'
 import { useAuth } from '../../state/AuthState'
@@ -14,10 +15,10 @@ export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, 
   const { isAuthenticated, openAuth } = useAuth()
   return (
     <div className={`desktop-header${compact ? ' desktop-header--compact' : ''}`}>
-      {!compact && <div className="service-row"><button onClick={onRegion} aria-label="Выбрать город">⌖ {region}</button><nav aria-label="Сервисная навигация"><Link to="/delivery">Доставка и оплата</Link><Link to="/about">О компании</Link><Link to="/contacts">Контакты</Link></nav><a href="tel:+70000000000">+7 (000) 000-00-00 <small>Пн–Пт, 9:00–18:00</small></a></div>}
+      {!compact && <div className="service-row"><button onClick={onRegion} aria-label="Выбрать город"><StyleCheckHeaderSymbol name="location" symbol="⌖" /> {region}</button><nav aria-label="Сервисная навигация"><Link to="/delivery">Доставка и оплата</Link><Link to="/about">О компании</Link><Link to="/contacts">Контакты</Link></nav><a href="tel:+70000000000">+7 (000) 000-00-00 <small>Пн–Пт, 9:00–18:00</small></a></div>}
       <div className="main-header-row">
         <Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link>
-        <button className="catalog-button" onClick={onCatalog} aria-expanded={catalogOpen} aria-controls={catalogOpen ? 'header-catalog-panel' : undefined} aria-haspopup="dialog">▦ <span>Каталог</span></button>
+        <button className="catalog-button" onClick={onCatalog} aria-expanded={catalogOpen} aria-controls={catalogOpen ? 'header-catalog-panel' : undefined} aria-haspopup="dialog"><StyleCheckHeaderSymbol name="menu" symbol="▦" /> <span>Каталог</span></button>
         <SearchBox compact={compact} suspended={searchSuspended} />
         {!compact && <Link className="service-link" to="/services">Услуги</Link>}
         {(compact || !headerQuickLinksConfig.enabled) && <PaintServiceLink className="paint-service-link--fallback" />}

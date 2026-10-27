@@ -26,6 +26,14 @@
         styleCheck.onerror = resolve
         document.head.append(styleCheck)
       })
+      const headerStyle = document.createElement('link')
+      headerStyle.rel = 'stylesheet'
+      headerStyle.href = '/garage/style-check/header-iteration-1.css?v=20261027-1'
+      await new Promise((resolve) => {
+        headerStyle.onload = resolve
+        headerStyle.onerror = resolve
+        document.head.append(headerStyle)
+      })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')
       const script = document.createElement('script')

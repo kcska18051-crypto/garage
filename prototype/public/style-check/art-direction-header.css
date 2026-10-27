@@ -1,25 +1,113 @@
-/* Art direction: a brand ribbon for identity and a navigation baseline.
-   Decoration is paint-only; the original layout, dimensions and text metrics remain authoritative. */
-.app-shell[data-style-check] .site-header .logo::before {
-  content: '';
-  position: absolute;
-  align-self: center;
-  inline-size: calc(100% + var(--gutter));
-  inset-inline-end: 0;
-  block-size: 70%;
-  background: #ffcc00;
-  pointer-events: none;
-}
+/* Approved image implementation. Header-only internal proportions; keep the original three-row frame. */
+.app-shell[data-style-check] .site-header { background: #fff; box-shadow: none; }
+.app-shell[data-style-check] .site-header .logo::before { content: none; }
 .app-shell[data-style-check] .site-header .logo::after { background-image: url('garage-logo.svg'); }
-.app-shell[data-style-check] .site-header .third-level-nav {
-  background: #f4f4f1;
-  box-shadow: inset 0 -2px #ffcc00;
+.app-shell[data-style-check] .site-header .third-level-nav,
+.app-shell[data-style-check] .site-header .desktop-header--compact { background: #fff; box-shadow: none; }
+.app-shell[data-style-check] .site-header .service-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #33332f;
 }
-.app-shell[data-style-check] .site-header .desktop-header--compact { box-shadow: inset 0 -2px #ffcc00; }
-.app-shell[data-style-check] .site-header .header-action small { text-shadow: .15px 0 currentColor; }
-@media (min-width: 1024px) {
-  .app-shell[data-style-check] .site-header { background: linear-gradient(#f4f4f1 0 2.4rem, #fff 2.4rem); }
+.app-shell[data-style-check] .site-header .service-row > button { justify-self: start; font-weight: 650; }
+.app-shell[data-style-check] .site-header .service-row > nav { gap: 24px; }
+.app-shell[data-style-check] .site-header .service-row > a {
+  justify-self: end;
+  padding-inline-start: 28px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 750;
+  background-position: left center;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
 }
-@media (max-width: 767px) {
-  .app-shell[data-style-check] .site-header .logo::before { inline-size: 100%; inset-inline-end: auto; }
+.app-shell[data-style-check] .site-header .service-row > a small { font-size: 10px; line-height: 14px; }
+.app-shell[data-style-check] .site-header .main-header-row { gap: 20px; }
+.app-shell[data-style-check] .site-header .desktop-header .logo { flex: 0 0 200px; inline-size: 200px; block-size: 86px; }
+.app-shell[data-style-check] .site-header .desktop-header .logo::after { inline-size: 100%; block-size: 100%; }
+.app-shell[data-style-check] .site-header .desktop-header .catalog-button { flex: 0 0 156px; min-height: 60px; font-size: 20px; padding-inline: 18px; }
+.app-shell[data-style-check] .site-header .desktop-header .search-box input { min-height: 60px; font-size: 17px; padding-inline-end: 62px; background: #fff; }
+.app-shell[data-style-check] .site-header .desktop-header .search-box__submit { width: 48px; height: 48px; top: 6px; right: 6px; background-size: 26px 26px; }
+.app-shell[data-style-check] .site-header .desktop-header .service-link {
+  flex: 0 0 120px;
+  min-height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-inline: 12px;
+  font-size: 16px;
+  line-height: 24px;
 }
+.app-shell[data-style-check] .site-header .desktop-header .service-link,
+.app-shell[data-style-check] .site-header .desktop-header .service-link:is(:hover,:active,:focus-visible) { background-image: none; }
+.app-shell[data-style-check] .site-header .desktop-header .service-link::before { content: ''; flex: 0 0 18px; width: 18px; height: 18px; background: #171717; mask: var(--approved-wrench) center / contain no-repeat; }
+.app-shell[data-style-check] .site-header .header-actions { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 4px; flex: 0 0 296px; }
+.app-shell[data-style-check] .site-header .header-actions .header-action { min-width: 0; padding: 4px; }
+.app-shell[data-style-check] .site-header .header-action small { font-size: 12px; line-height: 18px; color: #171717; text-shadow: none; }
+.app-shell[data-style-check] .site-header .header-action > span::after { inline-size: 28px; block-size: 28px; }
+.app-shell[data-style-check] .site-header .header-actions .header-action > b { inset-inline-start: calc(50% + 16px); }
+.app-shell[data-style-check] .site-header .third-level-nav__desktop { gap: 16px; }
+.app-shell[data-style-check] .site-header .third-level-nav__desktop > nav,
+.app-shell[data-style-check] .site-header .third-level-nav__measure { gap: clamp(14px, calc((100vw - 1280px) * .1 + 14px), 30px); }
+.app-shell[data-style-check] .site-header .third-level-nav__link,
+.app-shell[data-style-check] .site-header .third-level-nav__measure span,
+.app-shell[data-style-check] .site-header .third-level-nav__more > button { font-size: 13px; line-height: 20px; }
+.app-shell[data-style-check] .site-header .third-level-nav__link { min-height: 38px; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent,
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active,
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent:is(:hover,:active,:focus-visible),
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:is(:hover,:active,:focus-visible) { background-image: none; padding-inline: 12px; gap: 8px; font-size: 15px; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent::before { content: ''; width: 18px; height: 18px; flex: 0 0 18px; background: #c92f29; mask: var(--approved-percent) center / contain no-repeat; }
+.app-shell[data-style-check] .site-header .third-level-nav__measure span:first-child { display: inline-flex; align-items: center; gap: 8px; padding-inline: 12px; font-size: 15px; }
+.app-shell[data-style-check] .site-header .third-level-nav__measure span:first-child::before { content: ''; width: 18px; height: 18px; flex: 0 0 18px; }
+.app-shell[data-style-check] .site-header .paint-service-link { font-size: 14px; line-height: 20px; min-height: 40px; gap: 8px; padding-inline: 12px; border-color: #edcc64; }
+.app-shell[data-style-check] .site-header .paint-service-link svg { width: 20px; height: 20px; flex: 0 0 20px; }
+.app-shell[data-style-check] .site-header .desktop-header .catalog-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; }
+.app-shell[data-style-check] .site-header .desktop-header .catalog-button .style-check-header-symbol { inline-size: 24px; flex: 0 0 24px; }
+.app-shell[data-style-check] .site-header .desktop-header .catalog-button .style-check-header-symbol::after { inline-size: 24px; block-size: 24px; }
+.app-shell[data-style-check] .site-header .desktop-header--compact .logo { flex-basis: 140px; inline-size: 140px; block-size: 60px; }
+.app-shell[data-style-check] .site-header .desktop-header--compact .catalog-button,
+.app-shell[data-style-check] .site-header .desktop-header--compact .search-box input { min-height: 52px; }
+.app-shell[data-style-check] .site-header .desktop-header--compact .search-box__submit { width: 40px; height: 40px; background-size: 23px 23px; }
+@media (max-width:1279px) and (min-width:768px) {
+  .app-shell[data-style-check] .site-header .desktop-header--compact .search-box input { font-size: 14px; padding-inline-end: 54px; }
+  .app-shell[data-style-check] .site-header .desktop-header .catalog-button .style-check-header-symbol { inline-size: 20px; flex-basis: 20px; }
+  .app-shell[data-style-check] .site-header .desktop-header .catalog-button .style-check-header-symbol::after { inline-size: 20px; block-size: 20px; }
+
+  .app-shell[data-style-check] .site-header .main-header-row { gap: 12px; }
+  .app-shell[data-style-check] .site-header .desktop-header .logo { flex-basis: 140px; inline-size: 140px; block-size: 60px; }
+  .app-shell[data-style-check] .site-header .desktop-header .catalog-button { flex-basis: 116px; font-size: 16px; padding-inline: 12px; gap: 6px; }
+  .app-shell[data-style-check] .site-header .desktop-header .service-link { flex-basis: 96px; font-size: 14px; gap: 6px; }
+  .app-shell[data-style-check] .site-header .header-actions { display: flex; flex: 0 0 auto; gap: 8px; }
+  .app-shell[data-style-check] .site-header .header-actions .header-action { min-width: 40px; }
+  .app-shell[data-style-check] .site-header .header-action > span::after { inline-size: 24px; block-size: 24px; }
+  .app-shell[data-style-check] .site-header .header-actions .header-action > b { inset-inline-start: calc(50% + 14px); }
+}
+@media (max-width:1023px) and (min-width:768px) {
+  .app-shell[data-style-check] .site-header .service-row,
+  .app-shell[data-style-check] .site-header .desktop-header .service-link { display: none; }
+  .app-shell[data-style-check] .site-header .desktop-header .catalog-button .style-check-header-symbol { inline-size: 18px; flex-basis: 18px; }
+  .app-shell[data-style-check] .site-header .desktop-header .catalog-button .style-check-header-symbol::after { inline-size: 18px; block-size: 18px; }
+  .app-shell[data-style-check] .site-header .desktop-header--compact .paint-service-link--fallback { min-height: 38.4px; }
+  .app-shell[data-style-check] .site-header .desktop-header--compact .search-box input { font-size: 14px; }
+
+  .app-shell[data-style-check] .site-header .desktop-header .logo { flex-basis: 108px; inline-size: 108px; block-size: 47px; }
+  .app-shell[data-style-check] .site-header .desktop-header .catalog-button { flex-basis: 104px; font-size: 14px; padding-inline: 8px; }
+  .app-shell[data-style-check] .site-header .main-header-row { gap: 10px; }
+  .app-shell[data-style-check] .site-header .paint-service-link--fallback { font-size: 12px; }
+}
+@media (max-width:767px) {
+  .app-shell[data-style-check] .site-header .mobile-header__top { grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); }
+  .app-shell[data-style-check] .site-header .mobile-region { max-inline-size: 100%; min-inline-size: 0; }
+  .app-shell[data-style-check] .site-header .mobile-header .logo { inline-size: 116px; block-size: 44px; }
+  .app-shell[data-style-check] .site-header .mobile-header .logo::after { inline-size: 100%; block-size: 100%; }
+  .app-shell[data-style-check] .site-header .third-level-nav__mobile .third-level-nav__link { min-height: 44px; font-size: .78rem; }
+  .app-shell[data-style-check] .site-header .paint-service-link--mobile { min-height: 44px; font-size: .78rem; }
+}
+.app-shell[data-style-check] .site-header { --approved-wrench: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14.5%206.5a5%205%200%200%200-6%206L3%2018a2.1%202.1%200%200%200%203%203l5.5-5.5a5%205%200%200%200%206-6L14%2013l-3-3%203.5-3.5Z%22%2F%3E%3C%2Fsvg%3E"); --approved-percent: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23c92f29%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m5%2019%2014-14%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%226.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2217.5%22%20cy%3D%2217.5%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E"); }
+.app-shell[data-style-check] .site-header .service-row > a { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2016.9v3a2%202%200%200%201-2.2%202A19.8%2019.8%200%200%201%203.1%205.2%202%202%200%200%201%205.1%203h3a2%202%200%200%201%202%201.7c.1.9.4%201.7.7%202.5a2%202%200%200%201-.4%202.1L9.1%2010.6a16%2016%200%200%200%204.3%204.3l1.3-1.3a2%202%200%200%201%202.1-.4c.8.3%201.6.6%202.5.7a2%202%200%200%201%202%202Z%22%2F%3E%3C%2Fsvg%3E"); }
+.app-shell[data-style-check] .site-header .header-actions > :nth-child(2) { --header-symbol: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203v18M5%2021h14M3%207h18M5%207l-3%207h6L5%207Zm14%200-3%207h6l-3-7Z%22%2F%3E%3C%2Fsvg%3E"); }

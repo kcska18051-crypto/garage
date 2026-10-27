@@ -129,3 +129,47 @@
 .app-shell[data-style-check] .site-header .search-panel__empty > span { color: transparent; background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2210.5%22%20cy%3D%2210.5%22%20r%3D%226.5%22%2F%3E%3Cpath%20d%3D%22m16%2016%204.5%204.5%22%2F%3E%3C%2Fsvg%3E"); background-position: center; background-size: 18px 18px; background-repeat: no-repeat; }
 .app-shell[data-style-check] .site-header .search-suggestions__icon { color: transparent; background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2210.5%22%20cy%3D%2210.5%22%20r%3D%226.5%22%2F%3E%3Cpath%20d%3D%22m16%2016%204.5%204.5%22%2F%3E%3C%2Fsvg%3E"); background-position: center; background-size: 18px 18px; background-repeat: no-repeat; }
 .app-shell[data-style-check] .site-header .search-suggestions a > b { color: transparent; background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m9%206%206%206-6%206%22%2F%3E%3C%2Fsvg%3E"); background-position: center; background-size: 14px 14px; background-repeat: no-repeat; }
+
+/* Iteration 1.1 — targeted refinements, unchanged layout and click targets. */
+/* 30% larger artwork fits inside the existing header row; logo link metrics stay intact. */
+.app-shell[data-style-check] .site-header .logo {
+  background-image: none;
+  position: relative;
+  justify-content: center;
+}
+.app-shell[data-style-check] .site-header .logo::after {
+  content: '';
+  position: absolute;
+  align-self: center;
+  inline-size: 100%;
+  block-size: 130%;
+  background: url('logo-cropped.png') center / contain no-repeat;
+  pointer-events: none;
+}
+.app-shell[data-style-check] .site-header .service-link { background: #edede9; border-color: #c9c9c1; }
+.app-shell[data-style-check] .site-header .service-link:hover { background: #e3e3dc; border-color: #a5a59a; }
+.app-shell[data-style-check] .site-header .service-link:active { background: #d9d9d0; }
+/* All desktop badges use the icon centre, independent of label width.
+   12px = half of the 22px icon plus 1px of clearance. */
+.app-shell[data-style-check] .site-header .header-actions .header-action > b {
+  inset: auto;
+  inline-size: 20px;
+  block-size: 20px;
+  font-size: 8px;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+  inset-inline-start: calc(50% + 12px);
+  inset-block-start: 0;
+  z-index: 1;
+}
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent,
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active {
+  background: transparent;
+  color: #c92f29;
+  border-color: transparent;
+  box-shadow: none;
+}
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent:hover,
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:hover { background: #f3f3f1; color: #a32320; }
+.app-shell[data-style-check] .site-header .header-actions > :nth-child(2) { --header-symbol: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m8%203-4%204%204%204M4%207h16M16%2013l4%204-4%204M20%2017H4%22%2F%3E%3C%2Fsvg%3E"); }
+.app-shell[data-style-check] .site-header .paint-service-link svg { stroke: transparent; background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203a9%209%200%201%200%200%2018h1.4a2.6%202.6%200%200%200%202-4.3%201.5%201.5%200%200%201%201.2-2.5H18a3%203%200%200%200%203-3A8.7%208.7%200%200%200%2012%203Z%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%227%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%2215.5%22%20cy%3D%228%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2215%22%20r%3D%22.8%22%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; }

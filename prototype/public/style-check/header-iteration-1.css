@@ -173,3 +173,55 @@
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:hover { background: #f3f3f1; color: #a32320; }
 .app-shell[data-style-check] .site-header .header-actions > :nth-child(2) { --header-symbol: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m8%203-4%204%204%204M4%207h16M16%2013l4%204-4%204M20%2017H4%22%2F%3E%3C%2Fsvg%3E"); }
 .app-shell[data-style-check] .site-header .paint-service-link svg { stroke: transparent; background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203a9%209%200%201%200%200%2018h1.4a2.6%202.6%200%200%200%202-4.3%201.5%201.5%200%200%201%201.2-2.5H18a3%203%200%200%200%203-3A8.7%208.7%200%200%200%2012%203Z%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%227%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%2215.5%22%20cy%3D%228%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2215%22%20r%3D%22.8%22%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; }
+
+/* Targeted refinement: Actions and Services only. Paired padding adjustments
+   preserve the existing total padding, intrinsic widths and row heights. */
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent,
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active {
+  background-color: #fff0ee;
+  color: #c92f29;
+  border-color: transparent;
+  border-radius: .5rem;
+  padding-inline: calc(.65rem + 8px) calc(.65rem - 8px);
+  background-position: 4px center;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+}
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent:hover,
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:hover { background-color: #ffe1dc; color: #a32320; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent:focus-visible { outline: 2px solid #c92f29; outline-offset: 2px; }
+.app-shell[data-style-check] .site-header .service-link {
+  background-color: #fff5cc;
+  border-color: #f0dea0;
+  color: #171717;
+  border-radius: .5rem;
+  padding-inline: calc(.9rem + 8px) calc(.9rem - 8px);
+  background-position: 6px center;
+  background-size: 14px 14px;
+  background-repeat: no-repeat;
+}
+.app-shell[data-style-check] .site-header .service-link:hover { background-color: #ffeb99; border-color: #ddc474; }
+.app-shell[data-style-check] .site-header .service-link:active { background-color: #ffdf66; }
+.app-shell[data-style-check] .site-header .service-link:focus-visible { outline: 2px solid #9a6500; outline-offset: 3px; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent, .app-shell[data-style-check] .site-header .third-level-nav__link--accent.active { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23c92f29%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m5%2019%2014-14%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%226.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2217.5%22%20cy%3D%2217.5%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E"); }
+.app-shell[data-style-check] .site-header .service-link { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14.5%206.5a5%205%200%200%200-6%206L3%2018a2.1%202.1%200%200%200%203%203l5.5-5.5a5%205%200%200%200%206-6L14%2013l-3-3%203.5-3.5Z%22%2F%3E%3C%2Fsvg%3E"); }
+.app-shell[data-style-check] .site-header .third-level-nav__mobile .third-level-nav__link--accent { padding-inline: calc(.7rem + 8px) calc(.7rem - 8px); }
+.app-shell[data-style-check] .site-header .mobile-menu > a:is([href$="/actions"],[href$="/services"]) {
+  border-radius: .5rem;
+  border-bottom-color: transparent;
+  padding-inline-start: 1.75rem;
+  background-position: 8px center;
+  background-size: 14px 14px;
+  background-repeat: no-repeat;
+}
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"] { background-color: #fff0ee; color: #c92f29; }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"]:hover { background-color: #ffe1dc; }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"]:focus-visible { outline-color: #c92f29; }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/services"] { background-color: #fff5cc; color: #171717; }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/services"]:hover { background-color: #ffeb99; }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"] { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23c92f29%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m5%2019%2014-14%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%226.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2217.5%22%20cy%3D%2217.5%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E"); }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/services"] { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14.5%206.5a5%205%200%200%200-6%206L3%2018a2.1%202.1%200%200%200%203%203l5.5-5.5a5%205%200%200%200%206-6L14%2013l-3-3%203.5-3.5Z%22%2F%3E%3C%2Fsvg%3E"); }
+
+/* Preserve SVG artwork in interactive states. */
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent:is(:hover,:active,:focus-visible), .app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:is(:hover,:active,:focus-visible) { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23c92f29%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m5%2019%2014-14%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%226.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2217.5%22%20cy%3D%2217.5%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E"); background-position: 4px center; background-size: 12px 12px; background-repeat: no-repeat; }
+.app-shell[data-style-check] .site-header .service-link:is(:hover,:active,:focus-visible) { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14.5%206.5a5%205%200%200%200-6%206L3%2018a2.1%202.1%200%200%200%203%203l5.5-5.5a5%205%200%200%200%206-6L14%2013l-3-3%203.5-3.5Z%22%2F%3E%3C%2Fsvg%3E"); background-position: 6px center; background-size: 14px 14px; background-repeat: no-repeat; }

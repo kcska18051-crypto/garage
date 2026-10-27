@@ -34,6 +34,14 @@
         headerStyle.onerror = resolve
         document.head.append(headerStyle)
       })
+      const artDirection = document.createElement('link')
+      artDirection.rel = 'stylesheet'
+      artDirection.href = '/garage/style-check/art-direction-header.css?v=20261027-brand-lines'
+      await new Promise((resolve) => {
+        artDirection.onload = resolve
+        artDirection.onerror = resolve
+        document.head.append(artDirection)
+      })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')
       const script = document.createElement('script')

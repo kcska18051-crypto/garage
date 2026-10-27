@@ -1,0 +1,25 @@
+/* Art direction: a brand ribbon for identity and a navigation baseline.
+   Decoration is paint-only; the original layout, dimensions and text metrics remain authoritative. */
+.app-shell[data-style-check] .site-header .logo::before {
+  content: '';
+  position: absolute;
+  align-self: center;
+  inline-size: calc(100% + var(--gutter));
+  inset-inline-end: 0;
+  block-size: 70%;
+  background: #ffcc00;
+  pointer-events: none;
+}
+.app-shell[data-style-check] .site-header .logo::after { background-image: url('garage-logo.svg'); }
+.app-shell[data-style-check] .site-header .third-level-nav {
+  background: #f4f4f1;
+  box-shadow: inset 0 -2px #ffcc00;
+}
+.app-shell[data-style-check] .site-header .desktop-header--compact { box-shadow: inset 0 -2px #ffcc00; }
+.app-shell[data-style-check] .site-header .header-action small { text-shadow: .15px 0 currentColor; }
+@media (min-width: 1024px) {
+  .app-shell[data-style-check] .site-header { background: linear-gradient(#f4f4f1 0 2.4rem, #fff 2.4rem); }
+}
+@media (max-width: 767px) {
+  .app-shell[data-style-check] .site-header .logo::before { inline-size: 100%; inset-inline-end: auto; }
+}

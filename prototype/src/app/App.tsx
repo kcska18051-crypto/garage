@@ -11,12 +11,6 @@ import {useProfile} from '../state/ProfileState'
 import { CookiePreferenceProvider } from '../state/CookiePreferenceState'
 import { CookieBanner } from '../features/cookie/CookieBanner'
 
-function blockStyleCheckInteraction(event: { target: EventTarget | null; preventDefault: () => void; stopPropagation: () => void }) {
-  if (event.target instanceof Element && event.target.closest('.cookie-banner__actions button')) return
-  event.preventDefault()
-  event.stopPropagation()
-}
-
 function AppContent() {
   const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
   const commerce = useCommerce()
@@ -27,13 +21,6 @@ function AppContent() {
     <div
       className="app-shell"
       data-style-check={isStyleCheck || undefined}
-      onClickCapture={isStyleCheck ? blockStyleCheckInteraction : undefined}
-      onAuxClickCapture={isStyleCheck ? blockStyleCheckInteraction : undefined}
-      onSubmitCapture={isStyleCheck ? blockStyleCheckInteraction : undefined}
-      onContextMenuCapture={isStyleCheck ? blockStyleCheckInteraction : undefined}
-      onKeyDownCapture={isStyleCheck ? (event) => {
-        if (event.key === 'Enter' || event.key === ' ') blockStyleCheckInteraction(event)
-      } : undefined}
     >
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />

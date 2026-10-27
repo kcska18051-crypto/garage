@@ -1,8 +1,9 @@
 import { useState, type MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useCommerce } from '../../state/CommerceState'
 import './ProductTeaserCard.css'
 import { promotionPrice } from '../../data/promotionPricing'
+import { styleCheckProductPhotos } from '../../data/styleCheckAssets'
 
 export type ProductTeaser = {
   id: string
@@ -17,6 +18,8 @@ export type ProductTeaser = {
 
 export function ProductTeaserCard({ product, index, className = '' }: { product: ProductTeaser; index: number; className?: string }) {
   const commerce = useCommerce()
+  const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
+  const styleCheckPhoto = isStyleCheck ? styleCheckProductPhotos[product.name] : undefined
   const promo = promotionPrice(product.id, Number(product.price.replace(/\D/g, '')), product.purchaseMode === 'quote')
   const [frame, setFrame] = useState(0)
   const frames = [0, 1, 2]
@@ -29,7 +32,7 @@ export function ProductTeaserCard({ product, index, className = '' }: { product:
 
   return <article className={`product-teaser ${className}`.trim()}>
     <Link className="product-teaser__media product-card__media" to={product.href} aria-label={`Открыть товар: ${product.name}`} onMouseMove={selectFrameFromPointer} onMouseLeave={() => setFrame(0)}>
-      <span className={mediaClass} role="img" aria-label={`Изображение товара: ${product.name}`} data-testid="product-gallery" data-frame={frame}><i /><b /></span>
+      <span className={mediaClass} role="img" aria-label={`Изображение товара: ${product.name}`} data-testid="product-gallery" data-frame={frame}>{styleCheckPhoto ? <img className="style-check-product-photo" src={styleCheckPhoto} alt="" aria-hidden="true" loading="lazy" decoding="async" /> : <><i /><b /></>}</span>
     </Link>
     {promo.promotionHref && <Link className="promotion-badge" to={promo.promotionHref}>Акция</Link>}
     <div className="product-teaser__actions">

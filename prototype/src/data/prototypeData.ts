@@ -40,7 +40,7 @@ export const prototypeData: PrototypeData = {
     { id: 'season', title: 'Подготовьте мастерскую к сезону', text: 'Оборудование для обновления рабочего поста.', cta: 'Смотреть подборку', href: '/actions/season-workshop', tone: 'light' },
     { id: 'compressors', title: 'Компрессорное оборудование', text: 'Решения для разных рабочих задач.', cta: 'Перейти в категорию', href: '/catalog/compressor-equipment', tone: 'mid' },
     { id: 'paint', title: 'Материалы для кузовных работ', text: 'Подборка для подготовки и окраски.', cta: 'Перейти в категорию', href: '/catalog/paint', tone: 'mid' },
-    { id: 'workshop', title: 'Решения для рабочего поста', text: 'Компактная подборка оборудования и инструмента.', cta: 'Смотреть подборку', href: '/catalog?collection=service', tone: 'light' },
+    { id: 'workshop', title: 'Решения для рабочего поста', text: 'Компактная подборка оборудования и инструмента.', cta: 'Смотреть подборку', href: '/catalog?collection=service', tone: 'light', styleBackground: 'gray' },
   ],
   homeMerchandising: [
     { id: 'service-row', collectionId: 'service', bannerIds: ['season', 'paint'], visible: true },

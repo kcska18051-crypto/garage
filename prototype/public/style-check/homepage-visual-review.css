@@ -1,0 +1,140 @@
+/* Local review only. Keep the approved header, all grids, widths and content.
+   Product media/card height is the sole deliberate layout expansion. */
+.app-shell[data-style-check] main {
+  --review-red: #c92f29;
+  --review-red-hover: #a92320;
+  --review-ink: #202020;
+  --review-muted: #62625e;
+  --review-line: #e3e3de;
+  --review-soft: #f4f4f1;
+}
+
+/* Existing hero artwork, text and pagination; no new promotional claims. */
+.app-shell[data-style-check] main .hero__stage { border-radius: 12px; }
+.app-shell[data-style-check] main .hero__art { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); }
+.app-shell[data-style-check] main .hero__art::before { text-shadow: 0 2px 18px rgb(0 0 0 / .24); }
+.app-shell[data-style-check] main .hero__pagination button { border-color: #a3a39b; }
+.app-shell[data-style-check] main .hero__pagination button[aria-current] { background: #ffcc00; border-color: #b88f00; }
+.app-shell[data-style-check] main .section-heading h2 { text-shadow: none; color: var(--review-ink); }
+.app-shell[data-style-check] main .section-heading a,
+.app-shell[data-style-check] main .rail-actions > a { text-decoration-color: #bbbcb5; text-underline-offset: .25em; }
+.app-shell[data-style-check] main .section-heading a:hover,
+.app-shell[data-style-check] main .rail-actions > a:hover { color: var(--review-red); text-decoration-color: currentColor; }
+.app-shell[data-style-check] main .rail-actions > button { border-color: #deded8; color: #30302e; box-shadow: none; }
+.app-shell[data-style-check] main .rail-actions > button:hover { background: #fff3c2; border-color: #e6c855; }
+
+/* Same six categories, same image windows and responsive columns. */
+.app-shell[data-style-check] main .category-card { background: #f5f5f2; border-color: #e9e9e3; box-shadow: none; }
+.app-shell[data-style-check] main .category-card__code { color: #7b7b73; }
+.app-shell[data-style-check] main .category-card__art { border-radius: 5px; }
+.app-shell[data-style-check] main .category-card__arrow { color: #595950; }
+.app-shell[data-style-check] main .category-card:hover { background: #fff8dc; border-color: #e4c86c; box-shadow: none; }
+.app-shell[data-style-check] main .category-card:focus-visible { outline: 2px solid #9a6500; outline-offset: -3px; }
+
+/* Four desktop / two tablet / 82% mobile cards retain their original tracks.
+   The existing >=1680 five-card rule is also left intact. */
+.app-shell[data-style-check] main .product-showcase { background: var(--review-soft); }
+.app-shell[data-style-check] main .product-teaser {
+  min-height: 448px;
+  border-color: var(--review-line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: none;
+}
+.app-shell[data-style-check] main .product-teaser__media { height: 240px; flex: 0 0 240px; background: #fff; }
+.app-shell[data-style-check] main .style-check-product-photo { object-fit: contain; }
+.app-shell[data-style-check] main .product-teaser__dots { min-height: 28px; }
+.app-shell[data-style-check] main .product-teaser__dots button::before { background: #d7d7d0; }
+.app-shell[data-style-check] main .product-teaser__dots button[aria-pressed="true"]::before { background: #b38a00; }
+.app-shell[data-style-check] main .product-teaser__name { min-height: 42px; font-size: 16px; line-height: 21px; font-weight: 650; color: #292929; }
+.app-shell[data-style-check] main .product-teaser__name:hover { color: var(--review-red); }
+.app-shell[data-style-check] main .product-teaser__sku { font-size: 12px; line-height: 18px; color: #75756d; }
+.app-shell[data-style-check] main .product-teaser__availability { font-size: 12px; line-height: 18px; color: #595951; }
+/* Without changing data/JS, use neutral indicators: no false green promise
+   for unavailable, discontinued or made-to-order products. */
+.app-shell[data-style-check] main .product-teaser__availability i { background: #77776f; }
+.app-shell[data-style-check] main .product-teaser__bottom { min-height: 48px; margin-top: auto; padding-top: 8px; }
+.app-shell[data-style-check] main .product-teaser__bottom strong { font-size: 22px; line-height: 28px; font-weight: 750; color: #1d1d1d; text-shadow: none; }
+.app-shell[data-style-check] main .product-teaser__bottom del { font-size: 12px; line-height: 18px; color: #7c7c74; }
+.app-shell[data-style-check] main .product-teaser__cart,
+.app-shell[data-style-check] main .product-teaser__quote { background: var(--review-red); border-color: var(--review-red); color: #fff; border-radius: 8px; }
+.app-shell[data-style-check] main .product-teaser__cart:hover,
+.app-shell[data-style-check] main .product-teaser__quote:hover { background: var(--review-red-hover); }
+.app-shell[data-style-check] main .product-teaser__actions button { border-color: #e1e1db; background: #fff; color: transparent; position: relative; }
+.app-shell[data-style-check] main .product-teaser__actions button::after { content: ''; position: absolute; inset: 9px; background: #30302c; mask: var(--review-action-icon) center / contain no-repeat; }
+.app-shell[data-style-check] main .product-teaser__actions button:first-child { --review-action-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 5.5a5 5 0 0 0-7 0L12 7l-1.5-1.5a5 5 0 0 0-7 7L12 21l8.5-8.5a5 5 0 0 0 0-7Z'/%3E%3C/svg%3E"); }
+.app-shell[data-style-check] main .product-teaser__actions button:last-child { --review-action-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18M5 21h14M3 7h18M5 7l-3 7h6L5 7Zm14 0-3 7h6l-3-7Z'/%3E%3C/svg%3E"); }
+.app-shell[data-style-check] main .product-teaser__actions button:hover { background: #f5f5f0; }
+.app-shell[data-style-check] main .product-teaser__actions button[aria-pressed="true"] { background: #fff1b6; border-color: #e6c655; color: transparent; }
+.app-shell[data-style-check] main .promotion-badge { background: #c92f29; color: #fff; border-radius: 5px; }
+
+/* Existing promotional groups keep every column and rail item. */
+.app-shell[data-style-check] main .divider-banner { background: #f4f4f0; border-color: #e3e3dc; border-radius: 12px; box-shadow: none; }
+.app-shell[data-style-check] main .compact-banner-group--2 .divider-banner:nth-child(2) { background: #ffdd46; border-color: #edce52; }
+.app-shell[data-style-check] main .divider-banner__copy > span { color: #b52924; text-decoration: underline; text-decoration-color: #d6a09b; text-underline-offset: 4px; }
+.app-shell[data-style-check] main .compact-banner-group--2 .divider-banner:nth-child(2) .divider-banner__copy > span { color: #272720; text-decoration-color: #8a752c; }
+.app-shell[data-style-check] main .divider-banner:hover { border-color: #bdbdb3; }
+.app-shell[data-style-check] main .divider-banner__art { border-radius: 0; }
+
+.app-shell[data-style-check] main .benefits-strip { background: #fff9e5; }
+.app-shell[data-style-check] main .benefits-strip article { border-color: #e6dfc4; }
+.app-shell[data-style-check] main .benefits-strip h2 { color: #25251e; }
+.app-shell[data-style-check] main .benefits-strip p { color: #626052; }
+.app-shell[data-style-check] main .benefits-strip article > span { filter: none; }
+
+/* Manufacturer names remain plain text; no fabricated logos. */
+.app-shell[data-style-check] main .brand-grid > a { background: #fff; border-color: #e3e3dc; color: #30302b; font-weight: 750; }
+.app-shell[data-style-check] main .brand-symbol { background: transparent; border-radius: 0; clip-path: none; transform: none; position: relative; }
+.app-shell[data-style-check] main .brand-symbol::after { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 4px; border-radius: 2px; background: #ffcc00; }
+.app-shell[data-style-check] main .brand-grid > a:hover { background: #fff9e3; border-color: #e5d28c; }
+
+.app-shell[data-style-check] main .promotion-card__art { border-radius: 10px; }
+.app-shell[data-style-check] main .promotion-card__deadline { color: #b62c26; }
+.app-shell[data-style-check] main .promotion-card strong { color: #b62c26; text-decoration: underline; text-decoration-color: #ddb4af; text-underline-offset: 4px; }
+.app-shell[data-style-check] main .promotion-card:hover h3 { color: #b62c26; }
+.app-shell[data-style-check] main .service-cards article { background: #fff; border-color: #e1e1da; border-radius: 12px; }
+.app-shell[data-style-check] main .service-cards article:nth-child(2) { background: #f5f5f1; }
+.app-shell[data-style-check] main .service-cards article:nth-child(3) { background: #ffdd46; border-color: #edce52; }
+.app-shell[data-style-check] main .service-cards article a { color: #b32a24; text-decoration-color: #d5a19a; }
+.app-shell[data-style-check] main .service-cards article:nth-child(3) a { color: #29291f; text-decoration-color: #8f792d; }
+.app-shell[data-style-check] main .service-cards article a:hover { text-decoration-color: currentColor; }
+.app-shell[data-style-check] main .about-section__art { border-radius: 12px; }
+.app-shell[data-style-check] main .about-section__copy .button { background: #c92f29; border-color: #c92f29; color: #fff; border-radius: 8px; }
+.app-shell[data-style-check] main .about-section__copy .button:hover { background: #a92320; border-color: #a92320; }
+.app-shell[data-style-check] main .about-facts { border-top-color: #dcdcd4; }
+.app-shell[data-style-check] main .about-facts > div { background: #fafaf7; border-color: #e2e2d9; }
+.app-shell[data-style-check] main .about-facts > div > span { color: #9a7100; }
+.app-shell[data-style-check] main .useful-grid > a { border-radius: 12px; background: #f5f5f1; box-shadow: inset 0 0 0 1px #eaeae3; }
+.app-shell[data-style-check] main .useful-grid > a:hover h3 { color: #b32a24; }
+.app-shell[data-style-check] main .useful-grid__art b { background: #c92f29; }
+.app-shell[data-style-check] main .section-heading--with-tabs [role="tablist"] { background: #f2f2ed; }
+.app-shell[data-style-check] main .section-heading--with-tabs [role="tab"][aria-selected="true"] { border-color: #deded7; box-shadow: inset 0 -2px #ffcc00; }
+.app-shell[data-style-check] main .section-heading--with-tabs [role="tab"]:hover { background: #fff8da; }
+.app-shell[data-style-check] main .final-cta { background: #f4f4ef; color: #22221e; box-shadow: inset 0 3px #ffcc00; border-radius: 12px; }
+.app-shell[data-style-check] main .final-cta p { color: #626258; }
+.app-shell[data-style-check] main .final-cta .button--light { background: #c92f29; border-color: #c92f29; color: #fff; border-radius: 8px; }
+.app-shell[data-style-check] main .final-cta .button--light:hover { background: #a92320; border-color: #a92320; }
+.app-shell[data-style-check] main .final-cta .button:not(.button--light) { background: #fff; border-color: #d4d4ca; color: #292923; border-radius: 8px; }
+.app-shell[data-style-check] main .final-cta .button:not(.button--light):hover { background: #fff7d6; border-color: #c9af4e; }
+
+/* Footer is separate from the light consultation panel; layout is retained. */
+.app-shell[data-style-check] .site-footer { background: #252522; }
+.app-shell[data-style-check] .site-footer__top p,
+.app-shell[data-style-check] .footer-groups a { color: #c6c6bd; }
+.app-shell[data-style-check] .site-footer__bottom { color: #b1b1a6; }
+.app-shell[data-style-check] .footer-groups a:hover { color: #ffdd46; }
+.app-shell[data-style-check] .site-footer__top .logo { background-image: url('/garage/style-check/garage-logo.svg'); }
+.app-shell[data-style-check] .cookie-banner { box-shadow: inset 0 3px #ffcc00, 0 -5px 20px rgb(0 0 0 / .06); }
+
+.app-shell[data-style-check] main :is(a,button):focus-visible { outline: 2px solid #9a6500; outline-offset: -3px; }
+.app-shell[data-style-check] .site-footer :is(a,button):focus-visible { outline: 2px solid #ffcc00; outline-offset: 3px; }
+@media (max-width: 767px) {
+  .app-shell[data-style-check] main .hero__stage { border-radius: 10px; }
+  .app-shell[data-style-check] main .final-cta { border-radius: 0; }
+}
+@media (max-width: 519px) {
+  .app-shell[data-style-check] main .product-teaser { min-height: 448px; }
+  .app-shell[data-style-check] main .product-teaser__dots { min-height: 44px; }
+  .app-shell[data-style-check] main .product-teaser__name { font-size: 15px; line-height: 21px; }
+  .app-shell[data-style-check] main .product-teaser__bottom strong { font-size: 21px; }
+}

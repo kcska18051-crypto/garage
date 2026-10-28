@@ -42,6 +42,38 @@
         artDirection.onerror = resolve
         document.head.append(artDirection)
       })
+      const homepageVisualReview = document.createElement('link')
+      homepageVisualReview.rel = 'stylesheet'
+      homepageVisualReview.href = '/garage/style-check/homepage-visual-review.css?v=20261027-local-1'
+      await new Promise((resolve) => {
+        homepageVisualReview.onload = resolve
+        homepageVisualReview.onerror = resolve
+        document.head.append(homepageVisualReview)
+      })
+      const revisionTwo = document.createElement('link')
+      revisionTwo.rel = 'stylesheet'
+      revisionTwo.href = '/garage/style-check/homepage-review-v2.css?v=20261027-2'
+      await new Promise((resolve) => {
+        revisionTwo.onload = resolve
+        revisionTwo.onerror = resolve
+        document.head.append(revisionTwo)
+      })
+      const revisionThree = document.createElement('link')
+      revisionThree.rel = 'stylesheet'
+      revisionThree.href = '/garage/style-check/homepage-review-v3.css?v=20261027-3'
+      await new Promise(resolve => {
+        revisionThree.onload = resolve
+        revisionThree.onerror = resolve
+        document.head.append(revisionThree)
+      })
+      const revisionFive = document.createElement('link')
+      revisionFive.rel = 'stylesheet'
+      revisionFive.href = '/garage/style-check/homepage-review-v5.css?v=20261027-10'
+      await new Promise(resolve => { revisionFive.onload = resolve; revisionFive.onerror = resolve; document.head.append(revisionFive) })
+      const headerReview = document.createElement('link')
+      headerReview.rel = 'stylesheet'
+      headerReview.href = '/garage/style-check/header-review-v11.css?v=20261028-13'
+      await new Promise(resolve => { headerReview.onload = resolve; headerReview.onerror = resolve; document.head.append(headerReview) })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')
       const script = document.createElement('script')

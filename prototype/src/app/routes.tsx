@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { HomePage } from '../pages/HomePage'
+import { StyleCheckHomePage } from '../pages/StyleCheckHomePage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
 import { CatalogPage } from '../pages/CatalogPage'
@@ -37,7 +38,7 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/style-check" element={<HomePage />} />
+      <Route path="/style-check" element={<StyleCheckHomePage />} />
       <Route path="/services" element={<ServicesIndexPage/>}/>
       <Route path="/services/service-center" element={<ServiceCenterPage/>}/>
       <Route path="/services/service-center/compressor-repair" element={<CompressorRepairPage/>}/>

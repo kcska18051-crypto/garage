@@ -42,7 +42,7 @@ export function Header({ counts }: { counts: HeaderCounts }) {
   return <>
     <header className="site-header" ref={header} onFocusCapture={event => { if ((event.target as HTMLElement).closest('.search-box')) { closeCatalog(false); setRegionOpen(false); setMenuOpen(false) } }}>
       <DesktopHeader region={region} onRegion={openRegion} counts={counts} compact={compact} catalogOpen={catalogOpen} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
-      <MobileHeader region={region} onRegion={openRegion} menuOpen={menuOpen} onMenu={toggleMenu} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
+      <MobileHeader compact={compact && location.pathname.replace(/\/$/, '') === '/style-check'} compareCount={counts.compare} region={region} onRegion={openRegion} menuOpen={menuOpen} onMenu={toggleMenu} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
       <ThirdLevelNavigation compact={compact} />
     </header>
     <MobileBottomNav favorites={counts.favorites} cart={counts.cart} catalogOpen={catalogOpen} onCatalog={toggleCatalog} />

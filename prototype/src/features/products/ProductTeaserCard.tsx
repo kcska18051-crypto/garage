@@ -1,3 +1,4 @@
+import { RoundedIcon } from '../header/RoundedIcon'
 import { useState, type MouseEvent } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useCommerce } from '../../state/CommerceState'
@@ -20,6 +21,7 @@ export function ProductTeaserCard({ product, index, className = '' }: { product:
   const commerce = useCommerce()
   const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
   const styleCheckPhoto = isStyleCheck ? styleCheckProductPhotos[product.name] : undefined
+  const cartQuantity = commerce.cartItems.find(item => item.id === product.id)?.quantity ?? 0
   const promo = promotionPrice(product.id, Number(product.price.replace(/\D/g, '')), product.purchaseMode === 'quote')
   const [frame, setFrame] = useState(0)
   const frames = [0, 1, 2]
@@ -36,13 +38,13 @@ export function ProductTeaserCard({ product, index, className = '' }: { product:
     </Link>
     {promo.promotionHref && <Link className="promotion-badge" to={promo.promotionHref}>Акция</Link>}
     <div className="product-teaser__actions">
-      <button type="button" aria-label={`${commerce.favoriteIds.has(product.id) ? 'Убрать из избранного' : 'Добавить в избранное'}: ${product.name}`} aria-pressed={commerce.favoriteIds.has(product.id)} onClick={() => commerce.toggleFavorite(product.id)}>♡</button>
-      <button type="button" aria-label={`${commerce.compareIds.has(product.id) ? 'Убрать из сравнения' : 'Добавить в сравнение'}: ${product.name}`} aria-pressed={commerce.compareIds.has(product.id)} onClick={() => commerce.toggleCompare(product.id)}>≡</button>
+      <button type="button" aria-label={`${commerce.favoriteIds.has(product.id) ? 'Убрать из избранного' : 'Добавить в избранное'}: ${product.name}`} aria-pressed={commerce.favoriteIds.has(product.id)} onClick={() => commerce.toggleFavorite(product.id)}>{isStyleCheck ? <RoundedIcon name="favorite" /> : '♡'}</button>
+      <button type="button" aria-label={`${commerce.compareIds.has(product.id) ? 'Убрать из сравнения' : 'Добавить в сравнение'}: ${product.name}`} aria-pressed={commerce.compareIds.has(product.id)} onClick={() => commerce.toggleCompare(product.id)}>{isStyleCheck ? <RoundedIcon name="compare" /> : '≡'}</button>
     </div>
     <div className="product-teaser__dots" aria-label="Кадры товара">{frames.map((item) => <button key={item} type="button" data-testid="product-gallery-dot" aria-label={`Показать кадр ${item + 1}: ${product.name}`} aria-pressed={frame === item} onClick={() => setFrame(item)} />)}</div>
     <Link className="product-teaser__name" to={product.href}>{product.name}</Link>
     <p className="product-teaser__sku">Артикул: {product.sku}</p>
-    {product.availability ? <p className="product-teaser__availability"><i aria-hidden="true" />{product.availability}</p> : null}
-    <div className="product-teaser__bottom catalog-product-card__bottom"><div>{promo.oldPrice ? <del>{promo.oldPrice.toLocaleString('ru-RU')} ₽</del> : null}<strong>{product.purchaseMode === 'quote' ? 'Цена по запросу' : product.price}</strong></div>{product.purchaseMode === 'quote' ? <button className="product-teaser__quote" type="button">Запросить цену</button> : <button className="product-teaser__cart" type="button" aria-label={`${commerce.cartIds.has(product.id) ? 'Товар в корзине' : 'Добавить в корзину'}: ${product.name}`} onClick={() => commerce.addToCart(product.id)}>{commerce.cartIds.has(product.id) ? '✓' : '＋'}</button>}</div>
+    {product.availability ? <p className="product-teaser__availability" data-in-stock={product.availability.startsWith("В наличии в ")}><i aria-hidden="true" />{product.availability}</p> : null}
+    <div className="product-teaser__bottom catalog-product-card__bottom"><div>{promo.oldPrice ? <del>{promo.oldPrice.toLocaleString('ru-RU')} ₽</del> : null}<strong>{product.purchaseMode === 'quote' ? 'Цена по запросу' : product.price}</strong></div>{product.purchaseMode === 'quote' ? <button className="product-teaser__quote" type="button">Запросить цену</button> : <button className="product-teaser__cart" type="button" aria-pressed={commerce.cartIds.has(product.id)} aria-label={`${commerce.cartIds.has(product.id) ? 'Товар в корзине' : 'Добавить в корзину'}: ${product.name}`} onClick={() => commerce.addToCart(product.id)}>{isStyleCheck ? <><RoundedIcon name="cart" /><span className="review-cart-label">{cartQuantity ? 'В корзине' : 'В корзину'}</span>{cartQuantity > 0 && <b className="review-cart-quantity">{cartQuantity}</b>}</> : commerce.cartIds.has(product.id) ? '✓' : '＋'}</button>}</div>
   </article>
 }

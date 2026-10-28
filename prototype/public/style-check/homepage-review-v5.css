@@ -1,0 +1,92 @@
+/* Targeted product interactions, rounded icons and mobile navigation. */
+.app-shell[data-style-check] main.review-home-v2 .review-about .about-facts { gap: 16px; }
+.app-shell[data-style-check] main.review-home-v2 .review-about .about-facts > div { background: #fff; border: 0; border-top: 2px solid #ffcc00; border-radius: 0; padding: 24px 12px; min-height: 120px; display: grid; grid-template-columns: 40px minmax(0,1fr); grid-template-rows: auto auto; align-content: center; gap: 6px 14px; }
+.app-shell[data-style-check] main.review-home-v2 .review-about .about-facts svg { grid-column: 1; grid-row: 1 / 3; align-self: center; width: 32px; height: 32px; }
+.app-shell[data-style-check] main.review-home-v2 .review-about .about-facts strong { grid-column: 2; font-size: 17px; line-height: 22px; }
+.app-shell[data-style-check] main.review-home-v2 .review-about .about-facts .review-fact-detail { grid-column: 2; color: #777970; font-size: 12px; line-height: 18px; }
+.app-shell[data-style-check] main.review-home-v2 .section-heading--with-tabs [role=tablist] { display: flex; gap: 24px; background: transparent; padding: 0; border-radius: 0; border-bottom: 1px solid #e5e5df; }
+.app-shell[data-style-check] main.review-home-v2 .section-heading--with-tabs [role=tab] { position: relative; background: transparent; border: 0; border-bottom: 3px solid transparent; border-radius: 0; box-shadow: none; color: #73766f; padding: 12px 0; min-height: 46px; font-size: 16px; font-weight: 500; }
+.app-shell[data-style-check] main.review-home-v2 .section-heading--with-tabs [role=tab][aria-selected=true] { background: transparent; border: 0; border-bottom: 3px solid #ffcc00; border-radius: 0; box-shadow: none; color: #202020; font-weight: 700; }
+.app-shell[data-style-check] main.review-home-v2 .section-heading--with-tabs [role=tab]:hover { background: transparent; color: #202020; }
+.app-shell[data-style-check] main.review-home-v2 .section-heading--with-tabs [role=tab]:focus-visible { outline: 2px solid #74766f; outline-offset: 3px; }
+.app-shell[data-style-check] { --review-brand-accent: #ffcc00; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__dots button[aria-pressed=true]::before { background: var(--review-brand-accent); }
+.app-shell[data-style-check] main.review-home-v2 .review-about .button,
+.app-shell[data-style-check] main.review-home-v2 :is(.promotions,.services) .review-feature-action { background: var(--review-brand-accent); color: #202020; border-color: var(--review-brand-accent); }
+.app-shell[data-style-check] main.review-home-v2 .review-about .button:hover,
+.app-shell[data-style-check] main.review-home-v2 :is(.promotions,.services) .review-feature-card:hover .review-feature-action { background: #f0bf00; color: #202020; }
+.app-shell[data-style-check] main.review-home-v2 .review-about .about-facts svg { color: var(--review-brand-accent); }
+.app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-copy > .promotion-card__deadline { background: var(--review-brand-accent); color: #202020; border-radius: 4px; padding: 3px 7px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits article > .review-benefit-icon { color: #202020; }
+.app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control { position: absolute; top: 72px; }
+.app-shell[data-style-check] .site-header .search-box input:is(:focus,:focus-visible) { outline: none; box-shadow: none; border-color: #bdbdb6; }
+.app-shell[data-style-check] .site-header .mobile-menu > :is(a,button),
+.app-shell[data-style-check] .site-header .mobile-menu > a:is([href$="/actions"],[href$="/services"]) { background: #fff; color: #272723; border-radius: 0; border-bottom: 1px solid #ededeb; padding: 16px 4px; font-size: 15px; line-height: 22px; font-weight: 500; }
+.app-shell[data-style-check] .site-header .mobile-menu > a:is([href$="/actions"],[href$="/services"]):hover { background: #f7f7f4; }
+.app-shell[data-style-check] .site-header .mobile-menu > :is(a,button) > span { color: transparent; font-size: 18px; font-weight: 400; }
+.app-shell[data-style-check] .review-rounded-icon { display: block; width: 24px; height: 24px; flex: 0 0 24px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button { display: inline-flex; align-items: center; justify-content: center; color: #777b78; background: #fff; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button::after { content: none; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button[aria-pressed=true] { color: #c92f29; border-color: #edbcb9; background: #fff4f3; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart,
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart[aria-pressed=true] { position: relative; overflow: visible; background: #c92f29; color: #fff; border-radius: 12px; box-shadow: none; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart:hover { background: #a92320; }
+.app-shell[data-style-check] main.review-home-v2 .review-cart-label { font-size: 13px; font-weight: 700; white-space: nowrap; }
+.app-shell[data-style-check] main.review-home-v2 .review-cart-quantity { position: absolute; top: -7px; right: -5px; display: flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding-inline: 3px; border: 1.5px solid #c92f29; border-radius: 999px; background: #fff; color: #c92f29; font-size: 11px; line-height: 1; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits article > .review-benefit-icon { background: #ffcc00; color: #202020; border-radius: 18px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefit-icon svg { stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation { grid-template-columns: minmax(0,1fr); }
+@media (hover: hover) and (pointer: fine) and (min-width: 768px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__cart { width: 104px; flex: 0 0 104px; opacity: 0; pointer-events: none; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__cart .review-rounded-icon,
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__cart .review-cart-quantity { display: none; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser:hover .product-teaser__cart,
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser:focus-within .product-teaser__cart,
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__cart[aria-pressed=true] { opacity: 1; pointer-events: auto; }
+}
+@media (hover: none), (pointer: coarse), (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-cart-label { display: none; }
+}
+.app-shell[data-style-check] .review-mobile-pinned { display: none; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase { padding-inline: calc(var(--gutter) + 8px); }
+ .app-shell[data-style-check] main.review-home-v2 .style-check-product-photo { padding: 14px 18px; box-sizing: border-box; }
+ .app-shell[data-style-check] main.review-home-v2 :is(.review-hero,.review-image-banner) img { object-fit: fill; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits article { padding: 18px; gap: 12px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits article > .review-benefit-icon { width: 46px; height: 46px; border-radius: 14px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefit-icon svg { width: 25px; height: 25px; flex-basis: 25px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits h2 { font-size: 16px; line-height: 21px; margin-bottom: 6px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits p { font-size: 13px; line-height: 19px; }
+ .app-shell[data-style-check] main.review-home-v2 .brand-grid > a > .review-brand-logo { width: 50%; height: 27px; padding: 0; }
+ .app-shell[data-style-check] main.review-home-v2 .brand-grid > a > .review-brand-logo--wiederkraft { height: 34px; }
+ .app-shell[data-style-check] main.review-home-v2 .brand-grid > a > .review-brand-logo--sivik { height: 31px; padding: 5px; }
+ .app-shell[data-style-check] main.review-home-v2 :is(.promotions,.services) .review-feature-action { background: #ffcc00; }
+ .app-shell[data-style-check] main.review-home-v2 :is(.promotions,.services) .review-feature-card:hover .review-feature-action { background: #f0bf00; }
+ .app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-copy > .promotion-card__deadline { color: #272723; }
+ .app-shell[data-style-check] .mobile-bottom-nav { background: #fff; border-top: 1px solid #ededeb; box-shadow: 0 -3px 16px rgb(30 30 20 / .035); }
+ .app-shell[data-style-check] .mobile-bottom-nav > :is(a,button) { color: #727572; font-weight: 400; font-size: 10px; gap: 4px; }
+ .app-shell[data-style-check] .mobile-bottom-nav .mobile-bottom-nav__icon { display: flex; align-items: center; justify-content: center; width: 26px; height: 28px; color: inherit; font-size: 0; line-height: 1; }
+ .app-shell[data-style-check] .mobile-bottom-nav .mobile-bottom-nav__icon::after { content: none; }
+ .app-shell[data-style-check] .mobile-bottom-nav .review-rounded-icon { width: 24px; height: 24px; }
+ .app-shell[data-style-check] .mobile-bottom-nav > a.active,
+ .app-shell[data-style-check] .mobile-bottom-nav > button[aria-expanded=true] { color: #272723; font-weight: 500; }
+ .app-shell[data-style-check] .mobile-bottom-nav b { background: #ffcc00; color: #202020; font-weight: 600; right: -7px; top: -5px; }
+ .app-shell[data-style-check] .review-mobile-pinned { position: fixed; top: 0; left: 0; right: 0; height: 64px; padding-inline: var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; box-shadow: 0 2px 10px rgb(0 0 0 / .08); z-index: 90; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned .logo { width: 112px; height: 48px; flex: 0 0 112px; }
+ .app-shell[data-style-check] .review-mobile-pinned > div { display: flex; align-items: center; gap: 2px; }
+ .app-shell[data-style-check] .review-mobile-pinned :is(button,a:not(.logo)) { position: relative; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: none; border: 0; color: #737671; border-radius: 10px; }
+ .app-shell[data-style-check] .review-mobile-pinned button:last-child { color: #272723; }
+ .app-shell[data-style-check] .review-mobile-pinned b { position: absolute; right: 0; top: 0; display: grid; place-items: center; min-width: 18px; height: 18px; border-radius: 999px; font-size: 10px; background: #ffcc00; color: #202020; }
+ .app-shell[data-style-check] .site-header .review-mobile-menu-pinned { position: fixed; top: 64px; max-height: calc(100dvh - 144px); overflow-y: auto; }
+ body.search-overlay-open .app-shell[data-style-check] .review-mobile-pinned { display: none; }
+}
+
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { min-height: 380px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__media { height: 176px; flex-basis: 176px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__name { font-size: 14px; line-height: 19px; min-height: 38px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom strong { font-size: 20px; line-height: 26px; }
+}
+
+/* Approved neutral background for product collection frames. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { background: #f5f5f5; }

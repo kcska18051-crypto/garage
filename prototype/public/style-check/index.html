@@ -74,6 +74,10 @@
       headerReview.rel = 'stylesheet'
       headerReview.href = '/garage/style-check/header-review-v11.css?v=20261028-13'
       await new Promise(resolve => { headerReview.onload = resolve; headerReview.onerror = resolve; document.head.append(headerReview) })
+      const productScale = document.createElement('link')
+      productScale.rel = 'stylesheet'
+      productScale.href = '/garage/style-check/product-scale-v15.css?v=20261028-15'
+      await new Promise(resolve => { productScale.onload = resolve; productScale.onerror = resolve; document.head.append(productScale) })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')
       const script = document.createElement('script')

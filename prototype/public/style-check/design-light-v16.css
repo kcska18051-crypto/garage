@@ -1,0 +1,270 @@
+/* Local art-direction review, 29 October. No changes to offers or banner artwork. */
+.app-shell[data-style-check] { --gutter: 24px; }
+.app-shell[data-style-check] .site-header :is(.catalog-button,.service-link,.paint-service-link,.third-level-nav__link) { font-weight: 500; }
+.app-shell[data-style-check] main.review-home-v2 .home-section:not(.product-showcase):not(.promotions) { padding-block: 30px; }
+.app-shell[data-style-check] main.review-home-v2 .home-section:not(.promotions) .section-heading { margin-bottom: 20px; }
+.app-shell[data-style-check] main.review-home-v2 .home-section:not(.promotions) .section-heading h2 { font-size: 28px; line-height: 1.2; letter-spacing: -.025em; font-weight: 600; }
+.app-shell[data-style-check] main.review-home-v2 :is(.review-all-link,.rail-actions > a) { font-weight: 400; }
+.app-shell[data-style-check] main.review-home-v2 .category-grid { gap: 12px; }
+.app-shell[data-style-check] main.review-home-v2 .category-card { min-height: 194px; padding: 14px; gap: 14px; border-radius: 12px; box-shadow: none; }
+.app-shell[data-style-check] main.review-home-v2 .category-card .category-card__art { height: 120px; flex-basis: 120px; }
+.app-shell[data-style-check] main.review-home-v2 .category-card strong { font-size: 14px; line-height: 20px; font-weight: 500; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__name { font-weight: 400; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom strong { font-weight: 600; }
+.app-shell[data-style-check] main.review-home-v2 .review-cart-label { font-weight: 500; }
+.app-shell[data-style-check] main.review-home-v2 .brand-grid > a,
+.app-shell[data-style-check] main.review-home-v2 .brand-grid > a:hover { border: 0; outline: 0; box-shadow: none; background: transparent; border-radius: 0; min-height: 72px; padding: 12px; }
+.app-shell[data-style-check] main.review-home-v2 .brand-grid > a:focus-visible { outline: 2px solid #9a6500; outline-offset: -2px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits { gap: 12px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits article { padding: 18px; border-radius: 12px; gap: 12px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits h2 { font-size: 16px; line-height: 22px; font-weight: 500; margin-bottom: 6px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits p { font-size: 13px; line-height: 19px; }
+.app-shell[data-style-check] main.review-home-v2 .services .review-feature-copy h3 { font-weight: 500; font-size: 20px; }
+.app-shell[data-style-check] main.review-home-v2 .review-about h2 { font-size: 30px; font-weight: 600; }
+.app-shell[data-style-check] main.review-home-v2 .review-about .about-facts strong { font-weight: 500; }
+.app-shell[data-style-check] main.review-home-v2 .useful-card h3 { font-weight: 500; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation h2 { font-size: 28px; font-weight: 600; }
+.app-shell[data-style-check] .site-footer :is(h2,h3,strong) { font-weight: 500; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] { --gutter: 12px; }
+ .app-shell[data-style-check] main.review-home-v2 .home-section:not(.product-showcase):not(.promotions) { padding-block: 22px; }
+ .app-shell[data-style-check] main.review-home-v2 .home-section:not(.promotions) .section-heading { margin-bottom: 16px; }
+ .app-shell[data-style-check] main.review-home-v2 .home-section:not(.promotions) .section-heading h2 { font-size: 22px; line-height: 27px; }
+ .app-shell[data-style-check] main.review-home-v2 .category-card { min-height: 148px; padding: 10px; gap: 10px; }
+ .app-shell[data-style-check] main.review-home-v2 .category-card .category-card__art { height: 84px; flex-basis: 84px; }
+ .app-shell[data-style-check] main.review-home-v2 .category-card strong { font-size: 12px; line-height: 17px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits h2 { font-size: 15px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-about h2,
+ .app-shell[data-style-check] main.review-home-v2 .review-consultation h2 { font-size: 24px; }
+ .app-shell[data-style-check] main.review-home-v2 .brand-grid > a { min-height: 60px; padding: 8px; }
+}
+.app-shell[data-style-check] .site-header .desktop-header :is(.catalog-button,.service-link) { font-weight: 500; }
+.app-shell[data-style-check] .site-header .third-level-nav :is(a,button) { font-weight: 500; }
+/* Keep the pending offer artwork and promotion section at their approved gutters. */
+.app-shell[data-style-check] main.review-home-v2 :is(.review-hero,.promotions) { --gutter: 32px; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 :is(.review-hero,.promotions) { --gutter: 16px; }
+}
+/* Compact spacing around campaign banners; artwork and offers stay unchanged. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase { padding-block: 28px; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { inset-block: 8px; }
+.app-shell[data-style-check] main.review-home-v2 .compact-banner-group { margin-block: 12px; gap: 12px; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase { padding-block: 20px; }
+ .app-shell[data-style-check] main.review-home-v2 .compact-banner-group { margin-block: 8px; gap: 8px; }
+}
+/* Remove the standalone hero pagination row and its reserved spacing. */
+.app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination { display: none; }
+/* Promotions navigation: red text only, without a tinted chip or percent icon. */
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent,
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active,
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent:is(:hover,:active,:focus-visible),
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:is(:hover,:active,:focus-visible) { background: transparent; border-color: transparent; box-shadow: none; color: #c92f29; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent::before { content: none; }
+/* Navigation hierarchy: regular categories, bold promotions only. */
+.app-shell[data-style-check] .site-header :is(.third-level-nav,.third-level-nav__mobile) .third-level-nav__link { font-weight: 400; }
+.app-shell[data-style-check] .site-header :is(.third-level-nav,.third-level-nav__mobile) .third-level-nav__link--accent { font-weight: 700; }
+/* Open product shelves: remove the enclosing frame and grey surface. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase { background: transparent; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { content: none; }
+/* Give the collection frame breathing room rather than removing its grouping. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase { padding: 36px 40px; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { content: ''; inset: 0 8px; background: #f7f7f6; border: 0; border-radius: 18px; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase { padding: 24px 20px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase::before { inset: 0 6px; border-radius: 14px; }
+}
+/* Hoff-inspired demo: an open carousel over a quiet graphic surface. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase { overflow: hidden; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { background: radial-gradient(ellipse at 0 100%, #eaeae8 0 58%, transparent 58.2%), #f5f5f4; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid { margin-inline: -16px; padding: 0 16px 18px; scrollbar-width: thin; scrollbar-color: #a8a8a4 #e7e7e4; scroll-padding-inline: 16px; scroll-snap-type: x mandatory; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar { display: block; height: 3px; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar-track { background: #e7e7e4; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar-thumb { background: #a8a8a4; border-radius: 3px; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { border: 0; border-radius: 8px; }
+@media (min-width: 1024px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-grid { grid-auto-columns: calc((100% - 60px) / 5.25); }
+}
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-grid { margin-inline: -6px; padding-inline: 6px; scroll-padding-inline: 6px; grid-auto-columns: calc((100% - 10px) / 1.9); }
+}
+/* Uniform collection surface and equal inset on all four edges. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase { margin-inline: 8px; padding: 24px; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { inset: 0; background: #f5f5f4; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid { margin: 0; padding: 0; scroll-padding-inline: 0; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar { height: 3px; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase { margin-inline: 6px; padding: 14px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-grid { margin: 0; padding: 0; scroll-padding-inline: 0; }
+}
+/* Keep bounded shelves centred on wide screens, with equal outer gutters. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase { margin-inline: auto; width: calc(100% - 16px); }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase { margin-inline: auto; width: calc(100% - 12px); }
+}
+/* Glass carousel controls centred beside the product cards. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button { position: absolute; top: calc(50% + 28px); transform: translateY(-50%); z-index: 4; width: 44px; height: 44px; border: 1px solid rgb(255 255 255 / .85); border-radius: 50%; background: rgb(255 255 255 / .62); backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%); box-shadow: 0 3px 14px rgb(25 25 25 / .12), inset 0 1px 0 rgb(255 255 255 / .8); }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:first-of-type { left: 4px; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:last-of-type { right: 4px; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:hover { background: rgb(255 255 255 / .85); }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:focus-visible { outline: 2px solid #9a6500; outline-offset: 2px; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button { width: 36px; height: 36px; }
+}
+/* Product hierarchy: one image, price, name, review state, then purchase action. */
+.app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { min-height: 408px; padding: 14px; border-radius: 12px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__media { order: 0; height: 204px; flex-basis: 204px; margin: -14px -14px 12px; }
+.app-shell[data-style-check] main.review-home-v2 .style-check-product-photo { padding: 36px 14px 8px; object-fit: contain; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom { display: contents; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom > div { order: 1; min-height: 48px; margin-bottom: 6px; display: flex; flex-direction: column; justify-content: flex-end; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom strong { font-size: 21px; line-height: 27px; font-weight: 600; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__name { order: 2; min-height: 40px; font-size: 14px; line-height: 20px; -webkit-line-clamp: 2; }
+.app-shell[data-style-check] main.review-home-v2 :is(.product-teaser__sku,.product-teaser__availability) { display: none; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating { order: 3; display: flex; align-items: center; gap: 5px; color: #858580; font-size: 12px; line-height: 18px; margin: 10px 0 12px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating svg { flex-shrink: 0; }
+.app-shell[data-style-check] main.review-home-v2 .promotion-badge { top: 10px; left: 10px; padding: 5px 9px; border: 1px solid rgb(255 255 255 / .8); border-radius: 8px; background: rgb(201 47 41 / .77); color: #fff; backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); box-shadow: 0 2px 8px rgb(135 24 24 / .09); }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions { flex-direction: column; gap: 4px; top: 8px; right: 8px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button { width: 32px; height: 32px; border-color: transparent; background: rgb(255 255 255 / .8); }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart { order: 4; width: 100%; flex: 0 0 40px; min-height: 40px; margin-top: auto; border-radius: 8px; opacity: 1; pointer-events: auto; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart .review-cart-label { display: inline; font-size: 13px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart .review-rounded-icon { display: none; }
+@media (hover: hover) and (pointer: fine) and (min-width: 768px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__cart,
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__cart[aria-pressed=true] { opacity: 0; pointer-events: none; transition: opacity .15s ease; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser:hover .product-teaser__cart,
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser:focus-within .product-teaser__cart { opacity: 1; pointer-events: auto; }
+}
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { padding: 10px; min-height: 356px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__media { height: 156px; flex-basis: 156px; margin: -10px -10px 8px; }
+ .app-shell[data-style-check] main.review-home-v2 .style-check-product-photo { padding: 34px 10px 6px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom strong { font-size: 18px; line-height: 24px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom > div { min-height: 42px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__name { font-size: 13px; line-height: 18px; min-height: 36px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__rating { font-size: 11px; margin: 8px 0 10px; }
+ .app-shell[data-style-check] main.review-home-v2 .promotion-badge { left: 6px; top: 6px; font-size: 10px; padding: 4px 7px; }
+}
+/* Compact purchase action beside price, without a reserved bottom row. */
+.app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { min-height: 0; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom { order: 1; display: flex; position: relative; align-items: flex-end; gap: 8px; min-height: 44px; margin: 0 0 7px; padding: 0; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom > div { min-height: 0; margin: 0; flex: 1; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart { order: initial; width: 40px; height: 40px; min-height: 40px; flex: 0 0 40px; margin: 0; display: inline-flex; align-items: center; justify-content: center; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart .review-cart-label { display: none; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__cart .review-rounded-icon { display: block; width: 22px; height: 22px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating { margin: 8px 0 0; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__media { margin-bottom: 6px; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__cart { width: 36px; height: 36px; min-height: 36px; flex-basis: 36px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom { min-height: 40px; }
+}
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom > .product-teaser__cart { order: 2; }
+/* Stronger prices and a consistent two-line title slot. */
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom strong { font-size: 25px; line-height: 30px; font-weight: 700; letter-spacing: -.025em; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__name { height: 40px; min-height: 40px; max-height: 40px; flex: 0 0 40px; line-height: 20px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom strong { font-size: 21px; line-height: 27px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__name { height: 36px; min-height: 36px; max-height: 36px; flex-basis: 36px; line-height: 18px; }
+}
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions { justify-content: flex-end; }
+ .app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > a { margin-left: auto; margin-right: 0; }
+}
+/* Bestsellers sit on the page without the surrounding grey frame. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase[data-collection-source="automatic-bestseller"]::before { content: none; }
+/* Quieter product action pictograms; preserve the existing hit areas. */
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions .review-rounded-icon { width: 18px; height: 18px; flex: 0 0 18px; }
+/* Orange selected actions without circular borders or tinted discs. */
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button,
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button[aria-pressed=true] { border: 0; background: transparent; box-shadow: none; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button[aria-pressed=true] { color: #e87817; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button { border: 0; box-shadow: 0 3px 12px rgb(25 25 25 / .07); }
+/* News controls stay fully inside the image edges, symmetrically centred. */
+.app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control { top: 72px; width: 40px; height: 40px; transform: translateY(-50%); border: 0; background: rgb(255 255 255 / .7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 3px 12px rgb(25 25 25 / .08); }
+.app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--previous { left: 10px; right: auto; }
+.app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--next { right: 10px; left: auto; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control { width: 36px; height: 36px; }
+ .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--previous { left: 8px; }
+ .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--next { right: 8px; }
+}
+/* Rounded editorial cards and individually rounded photos across all tabs. */
+.app-shell[data-style-check] main.review-home-v2 .useful-grid > a { border-radius: 20px; overflow: hidden; }
+.app-shell[data-style-check] main.review-home-v2 .useful-grid > a .useful-grid__art { border-radius: 20px; overflow: hidden; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .useful-grid > a,
+ .app-shell[data-style-check] main.review-home-v2 .useful-grid > a .useful-grid__art { border-radius: 16px; }
+}
+/* Remove the inherited heading margin that inflated the top inset. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .section-heading { align-items: flex-start; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .section-heading h2 { margin: 0; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .section-heading > div:first-child { margin: 0; padding: 0; }
+/* Equal price rows keep promotional and regular cards on one baseline. */
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom { height: 48px; min-height: 48px; flex: 0 0 48px; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom { height: 44px; min-height: 44px; flex-basis: 44px; }
+}
+/* Fine card outlines and sample reviews on the first three cards per shelf. */
+.app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { border: 1px solid #e7e7e5; border-radius: 16px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating svg { color: #c92f29; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating-score { color: #343432; font-weight: 500; }
+/* Hide rail scrollbars while keeping native scrolling and arrow controls. */
+.app-shell[data-style-check] main.review-home-v2 :is(.product-grid,.brand-grid,.useful-grid,.compact-banner-group) { scrollbar-width: none; }
+.app-shell[data-style-check] main.review-home-v2 :is(.product-grid,.brand-grid,.useful-grid,.compact-banner-group)::-webkit-scrollbar { display: none; width: 0; height: 0; }
+/* Editorial controls straddle the rail edges; orange video play buttons. */
+.app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control { background: rgb(255 255 255 / .86); }
+.app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--previous { left: -20px; right: auto; }
+.app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--next { right: -20px; left: auto; }
+.app-shell[data-style-check] main.review-home-v2 .useful-grid__art b { background: #e87817; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--previous { left: -10px; }
+ .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--next { right: -10px; }
+}
+/* Centre editorial arrows against the complete card rail, not its photo strip. */
+.app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control { top: 50%; transform: translateY(-50%); }
+/* Anchor product controls to the actual card rail, independently of heading height. */
+.app-shell[data-style-check] main.review-home-v2 .product-carousel { position: relative; min-width: 0; }
+.app-shell[data-style-check] main.review-home-v2 .product-carousel__controls { position: absolute; inset: 0; pointer-events: none; margin: 0; padding: 0; }
+.app-shell[data-style-check] main.review-home-v2 .product-carousel .rail-actions > button { top: 50%; pointer-events: auto; }
+.app-shell[data-style-check] main.review-home-v2 .product-carousel .rail-actions > button:first-of-type { left: -20px; }
+.app-shell[data-style-check] main.review-home-v2 .product-carousel .rail-actions > button:last-of-type { right: -20px; }
+@media (max-width: 767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-carousel .rail-actions > button:first-of-type { left: -10px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-carousel .rail-actions > button:last-of-type { right: -10px; }
+}
+/* Fixed-size, optically centred chevrons for CSS-drawn controls. */
+.app-shell[data-style-check] main.review-home-v2 :is(.rail-actions > button:not(:has(svg)),.useful-rail__control)::after { width: 18px; height: 18px; inset: 0; margin: auto; }
+@font-face { font-family: 'Manrope'; src: url('fonts/Manrope-Variable.ttf') format('truetype'); font-style: normal; font-weight: 200 800; font-display: swap; }
+.app-shell[data-style-check], .app-shell[data-style-check] :is(button,input,textarea,select) { font-family: 'Manrope', sans-serif; }
+.app-shell[data-style-check] main.review-home-v2 .services .service-banner { display: block; overflow: hidden; border-radius: 16px; line-height: 0; }
+.app-shell[data-style-check] main.review-home-v2 .services .service-banner img { display: block; width: 100%; height: auto; }
+.app-shell[data-style-check] main.review-home-v2 .services .service-banner:focus-visible { outline: 2px solid #9a6500; outline-offset: 3px; }
+@media (max-width:767px) { .app-shell[data-style-check] main.review-home-v2 .services .review-feature-grid { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; } .app-shell[data-style-check] main.review-home-v2 .services .service-banner { flex: 0 0 92%; scroll-snap-align: start; } }
+.app-shell[data-style-check] main.review-home-v2 .services .review-feature-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.app-shell[data-style-check] main.review-home-v2 .services .service-banner { min-width: 0; }
+.app-shell[data-style-check] main.review-home-v2 .services .service-banner img { aspect-ratio: 1816 / 866; }
+@media (max-width:767px) { .app-shell[data-style-check] main.review-home-v2 .services .review-feature-grid { display: flex; gap: 12px; } }
+/* Frameless bestsellers need no extra block inset beside campaign banners. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase[data-collection-source="automatic-bestseller"] { padding-block: 0; }
+/* Consistent page rhythm for all ordinary homepage sections. */
+.app-shell[data-style-check] main.review-home-v2 > :is(.home-section,.review-benefits) { padding: 30px 24px; }
+.app-shell[data-style-check] main.review-home-v2 .home-section:not(.product-showcase) .section-heading h2 { margin: 0; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation { padding: 24px; margin-block: 30px; }
+@media (max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 > :is(.home-section,.review-benefits) { padding: 22px 12px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-consultation { padding: 14px; margin-block: 22px; }
+}
+/* Open the service shelf and place current / previous prices on one baseline. */
+.app-shell[data-style-check] main.review-home-v2 .product-showcase[data-collection-source="category"]::before { content: none; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom > div { flex-direction: row; align-items: baseline; justify-content: flex-start; gap: 7px; min-width: 0; white-space: nowrap; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom strong { order: 0; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom del { order: 1; white-space: nowrap; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom > .product-teaser__cart { position: absolute; right: 0; bottom: calc(100% + 8px); }
+@media (max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom > div { gap: 5px; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom:has(del) strong { font-size: 18px; letter-spacing: -.035em; }
+ .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom del { font-size: 10px; letter-spacing: -.025em; }
+}
+/* Responsive banner artwork has its own mobile composition and fixed 160px canvas. */
+.app-shell[data-style-check] main.review-home-v2 .review-image-banner img { width: 100%; height: 160px; object-fit: fill; }
+/* One artwork per campaign: only decorative edges crop on narrow screens. */
+.app-shell[data-style-check] main.review-home-v2 .review-image-banner img { width:100%; height:160px; object-fit:cover; object-position:center; }

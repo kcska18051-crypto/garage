@@ -27,7 +27,8 @@ function Heading({ title, href, all }: { title: string; href: string; all: strin
   return <div className="section-heading"><div><h2>{title}</h2></div><Link className="review-all-link" to={href}>{all}<Icon name="arrow" /></Link></div>
 }
 function BannerPicture({ name, alt, hero = false }: { name: string; alt: string; hero?: boolean }) {
-  return <picture><source media="(max-width: 767px)" srcSet={`${assets}${name}-mobile-v4.svg`} /><img src={`${assets}${name}-v4.svg`} alt={alt} loading={hero ? 'eager' : 'lazy'} decoding="async" /></picture>
+  const revision = hero ? 'v4' : 'v20'
+  return <picture>{hero && <source media="(max-width: 767px)" srcSet={`${assets}${name}-mobile-${revision}.svg`} />}<img src={`${assets}${name}-${revision}.svg`} alt={alt} loading={hero ? 'eager' : 'lazy'} decoding="async" /></picture>
 }
 function ReviewHero() {
   const [active, setActive] = useState(0)
@@ -59,7 +60,7 @@ function ReviewMerchandising() {
     const collection = prototypeData.productCollections.find(item => item.id === block.collectionId)
     if (!collection) return null
     const banners = block.bannerIds.map(id => prototypeData.promoBanners.find(item => item.id === id)).filter((item): item is PromoBanner => !!item)
-    return <div className="review-merchandising-group" key={block.id}><ProductShowcase collection={collection} />{banners.length > 0 && <div className={`compact-banner-group compact-banner-group--${banners.length}`}>{banners.map(item => <ReviewBanner key={item.id} item={item} />)}</div>}</div>
+    return <div className="review-merchandising-group" key={block.id}><ProductShowcase collection={collection} demoCopies={3} />{banners.length > 0 && <div className={`compact-banner-group compact-banner-group--${banners.length}`}>{banners.map(item => <ReviewBanner key={item.id} item={item} />)}</div>}</div>
   })}</div>
 }
 function ReviewBenefits() {
@@ -72,9 +73,10 @@ function ReviewBrands() {
   return <section className="home-section home-section--brands"><div className="section-heading"><div><h2>Популярные бренды</h2></div><div className="rail-actions"><Link to="/brands">Все бренды</Link><button type="button" aria-label="Предыдущие бренды" onClick={() => move(-1)}><Icon name="chevron" className="review-icon--back" /></button><button type="button" aria-label="Следующие бренды" onClick={() => move(1)}><Icon name="chevron" /></button></div></div><div className="brand-grid" ref={rail}>{prototypeData.brands.map(brand => <Link key={brand.id} to={brand.href} aria-label={brand.name}><img className={`review-brand-logo review-brand-logo--${brand.id}`} src={assets + brandPictures[brand.id]} alt={brand.name} loading="lazy" /></Link>)}</div></section>
 }
 const featurePictures = ['tools-photo.jpg', 'paint-photo.jpg', 'product-compressor.jpg']
-const servicePictures = ['repair-photo.jpg', 'rental-photo.jpg', 'mixing-photo.jpg']
+const servicePictures = ['service-manrope-v1.svg', 'rental-manrope-v1.svg', 'paint-manrope-v1.svg']
 function ReviewFeatures({ services = false }: { services?: boolean }) {
   const items = services ? prototypeData.services.map((item, i) => ({ id: item.id, title: item.name, text: item.text, href: item.href, cta: item.cta, label: '', photo: servicePictures[i] })) : prototypeData.promotions.filter(item => item.showOnHome).map((item, i) => ({ ...item, cta: 'Подробнее', label: item.deadline, photo: featurePictures[i] }))
+  if (services) return <section className="home-section services"><Heading title="Услуги" href="/services" all="Все услуги" /><div className="review-feature-grid">{items.map(item => <Link className="service-banner" key={item.id} to={item.href} aria-label={`${item.title}. ${item.cta}`}><img src={assets + item.photo} alt={`${item.title}. ${item.text}`} width="1816" height="866" loading="lazy" /></Link>)}</div></section>
   return <section className={`home-section ${services ? 'services' : 'promotions'}`} aria-label={services ? 'Основные услуги' : undefined}><Heading title={services ? 'Услуги' : 'Акции'} href={services ? '/services' : '/actions'} all={services ? 'Все услуги' : 'Все акции'} /><div className={`${services ? 'service-cards' : 'promotions__grid'} review-feature-grid`}>{items.map(item => <Link className={`review-feature-card${services ? '' : ' promotion-card'}`} key={item.id} to={item.href}><div className="review-feature-photo"><img src={assets + item.photo} alt="" loading="lazy" /></div><div className="review-feature-copy">{item.label && <p className="promotion-card__deadline">{item.label}</p>}<h3>{item.title}</h3><p>{item.text}</p><span className="review-feature-action">{item.cta}<Icon name="arrow" /></span></div></Link>)}</div></section>
 }
 function ReviewAbout() {

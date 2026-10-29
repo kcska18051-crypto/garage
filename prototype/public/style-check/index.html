@@ -78,6 +78,10 @@
       productScale.rel = 'stylesheet'
       productScale.href = '/garage/style-check/product-scale-v15.css?v=20261028-15'
       await new Promise(resolve => { productScale.onload = resolve; productScale.onerror = resolve; document.head.append(productScale) })
+      const designLight = document.createElement('link')
+      designLight.rel = 'stylesheet'
+      designLight.href = '/garage/style-check/design-light-v16.css?v=20261029-local'
+      await new Promise(resolve => { designLight.onload = resolve; designLight.onerror = resolve; document.head.append(designLight) })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')
       const script = document.createElement('script')

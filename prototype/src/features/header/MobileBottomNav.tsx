@@ -7,6 +7,11 @@ const links = [['⌂', 'Главная', '/'], ['▦', 'Каталог', '/catal
 export function MobileBottomNav({ favorites, cart, catalogOpen, onCatalog }: { favorites: number; cart: number; catalogOpen: boolean; onCatalog(): void }) {
   const { isAuthenticated, openAuth } = useAuth()
   const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
+  if (isStyleCheck) return <nav className="mobile-bottom-nav reference-bottom-nav" aria-label="Мобильная навигация">{[['home','Главная','/'],['catalog','Каталог','/catalog'],['service','Услуги','/services'],['paint','Подбор','/services/paint-matching'],['favorite','Избранное','/favorites'],['cart','Корзина','/cart']].map(([icon,label,href]) => {
+    const count = icon === 'favorite' ? favorites : icon === 'cart' ? cart : 0
+    const content = <><span className="mobile-bottom-nav__icon" aria-hidden="true"><RoundedIcon name={icon} />{count > 0 && <b>{count}</b>}</span><span>{label}</span></>
+    return icon === 'catalog' ? <button key={icon} type="button" aria-label="Каталог" aria-haspopup="dialog" aria-expanded={catalogOpen} onClick={onCatalog}>{content}</button> : <NavLink key={icon} to={href} aria-label={count ? `${label}: ${count}` : label} className={icon === 'service' || icon === 'paint' ? 'reference-bottom-service' : icon === 'home' ? 'active' : undefined}>{content}</NavLink>
+  })}</nav>
   return (
     <nav className="mobile-bottom-nav" aria-label="Мобильная навигация">
       {links.map(([icon, label, href]) => {

@@ -1,0 +1,182 @@
+[
+  {
+    "width": 320,
+    "overflow": false,
+    "columns": "143px 143px",
+    "cards": [
+      {
+        "title": "Годы работы",
+        "detail": "данные клиента",
+        "w": 141,
+        "h": 138,
+        "overflow": true
+      },
+      {
+        "title": "Магазины",
+        "detail": "данные клиента",
+        "w": 141,
+        "h": 138,
+        "overflow": true
+      },
+      {
+        "title": "Направления",
+        "detail": "данные клиента",
+        "w": 141,
+        "h": 138,
+        "overflow": true
+      },
+      {
+        "title": "Бренды",
+        "detail": "данные клиента",
+        "w": 141,
+        "h": 138,
+        "overflow": true
+      }
+    ],
+    "link": "/garage/about"
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "columns": "178px 178px",
+    "cards": [
+      {
+        "title": "Годы работы",
+        "detail": "данные клиента",
+        "w": 176,
+        "h": 138,
+        "overflow": true
+      },
+      {
+        "title": "Магазины",
+        "detail": "данные клиента",
+        "w": 176,
+        "h": 138,
+        "overflow": true
+      },
+      {
+        "title": "Направления",
+        "detail": "данные клиента",
+        "w": 176,
+        "h": 138,
+        "overflow": true
+      },
+      {
+        "title": "Бренды",
+        "detail": "данные клиента",
+        "w": 176,
+        "h": 138,
+        "overflow": true
+      }
+    ],
+    "link": "/garage/about"
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "columns": "352px 352px",
+    "cards": [
+      {
+        "title": "Годы работы",
+        "detail": "данные клиента",
+        "w": 350,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Магазины",
+        "detail": "данные клиента",
+        "w": 350,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Направления",
+        "detail": "данные клиента",
+        "w": 350,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Бренды",
+        "detail": "данные клиента",
+        "w": 350,
+        "h": 114,
+        "overflow": true
+      }
+    ],
+    "link": "/garage/about"
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "columns": "235px 235px 235px 235px",
+    "cards": [
+      {
+        "title": "Годы работы",
+        "detail": "данные клиента",
+        "w": 233,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Магазины",
+        "detail": "данные клиента",
+        "w": 233,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Направления",
+        "detail": "данные клиента",
+        "w": 233,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Бренды",
+        "detail": "данные клиента",
+        "w": 233,
+        "h": 114,
+        "overflow": true
+      }
+    ],
+    "link": "/garage/about"
+  },
+  {
+    "width": 1440,
+    "overflow": false,
+    "columns": "336px 336px 336px 336px",
+    "cards": [
+      {
+        "title": "Годы работы",
+        "detail": "данные клиента",
+        "w": 334,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Магазины",
+        "detail": "данные клиента",
+        "w": 334,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Направления",
+        "detail": "данные клиента",
+        "w": 334,
+        "h": 114,
+        "overflow": true
+      },
+      {
+        "title": "Бренды",
+        "detail": "данные клиента",
+        "w": 334,
+        "h": 114,
+        "overflow": true
+      }
+    ],
+    "link": "/garage/about"
+  }
+]

@@ -82,6 +82,42 @@
       designLight.rel = 'stylesheet'
       designLight.href = '/garage/style-check/design-light-v16.css?v=20261029-local'
       await new Promise(resolve => { designLight.onload = resolve; designLight.onerror = resolve; document.head.append(designLight) })
+      const localHeader = document.createElement('link')
+      localHeader.rel = 'stylesheet'
+      localHeader.href = '/garage/style-check/header-local-v17.css?v=20261030-local-1'
+      await new Promise(resolve => { localHeader.onload = resolve; localHeader.onerror = resolve; document.head.append(localHeader) })
+      const referenceHeader = document.createElement('link')
+      referenceHeader.rel = 'stylesheet'
+      referenceHeader.href = '/garage/style-check/header-reference-v18.css?v=20261030-2'
+      await new Promise(resolve => { referenceHeader.onload = resolve; referenceHeader.onerror = resolve; document.head.append(referenceHeader) })
+      const campaigns = document.createElement('link')
+      campaigns.rel = 'stylesheet'
+      campaigns.href = '/garage/style-check/campaigns-responsive-v24.css?v=20261030-1'
+      await new Promise(resolve => { campaigns.onload = resolve; campaigns.onerror = resolve; document.head.append(campaigns) })
+      const categoryVariants = document.createElement('link')
+      categoryVariants.rel = 'stylesheet'
+      categoryVariants.href = '/garage/style-check/category-variants-v25.css?v=20261030-3'
+      await new Promise(resolve => { categoryVariants.onload = resolve; categoryVariants.onerror = resolve; document.head.append(categoryVariants) })
+      const aboutReview = document.createElement('link')
+      aboutReview.rel = 'stylesheet'
+      aboutReview.href = '/garage/style-check/about-reference-v29.css?v=20261030-1'
+      await new Promise(resolve => { aboutReview.onload = resolve; aboutReview.onerror = resolve; document.head.append(aboutReview) })
+      const benefitReview = document.createElement('link')
+      benefitReview.rel = 'stylesheet'
+      benefitReview.href = '/garage/style-check/benefits-variants-v30.css?v=20261030-2'
+      await new Promise(resolve => { benefitReview.onload = resolve; benefitReview.onerror = resolve; document.head.append(benefitReview) })
+      const mobileReview = document.createElement('link')
+      mobileReview.rel = 'stylesheet'
+      mobileReview.href = '/garage/style-check/mobile-unified-v31.css?v=20261030-1'
+      await new Promise(resolve => { mobileReview.onload = resolve; mobileReview.onerror = resolve; document.head.append(mobileReview) })
+      const lowerSpacing = document.createElement('link')
+      lowerSpacing.rel = 'stylesheet'
+      lowerSpacing.href = '/garage/style-check/lower-spacing-v35.css?v=20261030-1'
+      await new Promise(resolve => { lowerSpacing.onload = resolve; lowerSpacing.onerror = resolve; document.head.append(lowerSpacing) })
+      const serviceTiles = document.createElement('link')
+      serviceTiles.rel = 'stylesheet'
+      serviceTiles.href = '/garage/style-check/service-tiles-v37.css?v=20261030-1'
+      await new Promise(resolve => { serviceTiles.onload = resolve; serviceTiles.onerror = resolve; document.head.append(serviceTiles) })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')
       const script = document.createElement('script')

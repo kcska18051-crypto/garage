@@ -1,0 +1,122 @@
+[
+  {
+    "width": 320,
+    "variant": "calm",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 320,
+    "variant": "expressive",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 390,
+    "variant": "calm",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 390,
+    "variant": "expressive",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 768,
+    "variant": "calm",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 768,
+    "variant": "expressive",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 1024,
+    "variant": "calm",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 1024,
+    "variant": "expressive",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 1440,
+    "variant": "calm",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  },
+  {
+    "width": 1440,
+    "variant": "expressive",
+    "overflow": false,
+    "cards": 4,
+    "links": [
+      "/garage/delivery",
+      "/garage/contacts",
+      "/garage/warranty",
+      "/garage/contacts"
+    ]
+  }
+]

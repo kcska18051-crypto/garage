@@ -1,0 +1,282 @@
+[
+  {
+    "width": 320,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 446,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 446,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 446,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-mobile.webp"
+  },
+  {
+    "width": 360,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 428,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 428,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 428,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-mobile.webp"
+  },
+  {
+    "width": 375,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 428,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 428,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 428,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-mobile.webp"
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 428,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 428,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 428,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-mobile.webp"
+  },
+  {
+    "width": 430,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 428,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 428,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 428,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-mobile.webp"
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 414,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 414,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 414,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-desktop.webp"
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 472,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 472,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 472,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-desktop.webp"
+  },
+  {
+    "width": 1280,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 472,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 472,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 472,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-desktop.webp"
+  },
+  {
+    "width": 1440,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 451,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 451,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 451,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-desktop.webp"
+  },
+  {
+    "width": 1920,
+    "overflow": false,
+    "promos": [
+      {
+        "height": 451,
+        "copy": "До 30 сентября · демонстрация\n\nОборудование для сервисного поста\n\nДемонстрационная подборка для главной страницы.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-service-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 451,
+        "copy": "Осталось 12 дней · демонстрация\n\nНеделя материалов для покраски\n\nУсловия и ассортимент уточняются клиентом.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-paint-cover.webp",
+        "complete": true
+      },
+      {
+        "height": 451,
+        "copy": "Срок завершения · данные клиента\n\nКомпрессорное оборудование\n\nВыбранное предложение для профессиональных задач.\n\nПодробнее",
+        "images": 1,
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/promotion-compressor-cover.webp",
+        "complete": true
+      }
+    ],
+    "hero": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-desktop.webp"
+  }
+]

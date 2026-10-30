@@ -1,0 +1,17 @@
+[
+  {
+    "variant": "calm",
+    "transform": "matrix(1.025, 0, 0, 1.025, 0, -3)",
+    "transition": "0.35s"
+  },
+  {
+    "variant": "expressive",
+    "transform": "matrix(1.05484, -0.0184123, 0.0184123, 1.05484, 0, -4)",
+    "transition": "0.35s"
+  },
+  {
+    "reducedMotion": true,
+    "transform": "none",
+    "transition": "0s"
+  }
+]

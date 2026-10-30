@@ -1,0 +1,19 @@
+/* Keep collection title and its all-products link on one heading row. */
+@media (max-width:767px) {
+  .app-shell[data-style-check] main.review-home-v2 .product-showcase > .section-heading {
+    display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center;
+    gap:12px; margin-bottom:16px;
+  }
+  .app-shell[data-style-check] main.review-home-v2 .product-showcase > .section-heading > div {
+    width:auto; min-width:0; margin:0; padding:0;
+  }
+  .app-shell[data-style-check] main.review-home-v2 .product-showcase > .section-heading h2 {
+    font-size:22px; line-height:1.2; margin:0; overflow-wrap:normal;
+  }
+  .app-shell[data-style-check] main.review-home-v2 .product-showcase > .section-heading .rail-actions {
+    display:flex; align-self:center; width:auto; justify-content:flex-end;
+  }
+  .app-shell[data-style-check] main.review-home-v2 .product-showcase > .section-heading .rail-actions > a {
+    margin:0; font-size:12px; line-height:18px; white-space:nowrap;
+  }
+}

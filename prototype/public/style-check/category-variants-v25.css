@@ -1,0 +1,110 @@
+/* Local comparison only. Card/grid geometry and product/text content stay intact. */
+.app-shell[data-style-check] main.review-home-v2 .popular-categories .category-style-switch {
+  display:flex; width:max-content; max-width:100%; gap:4px; padding:4px;
+  margin:0 0 18px; border:1px solid #e8e9e5; border-radius:12px;
+  background:#f5f6f3;
+}
+.app-shell[data-style-check] main.review-home-v2 .category-style-switch button {
+  min-height:36px; padding:8px 14px; border:0; border-radius:8px;
+  background:transparent; color:#555c57; font:inherit; font-size:13px;
+  cursor:pointer; white-space:nowrap;
+}
+.app-shell[data-style-check] main.review-home-v2 .category-style-switch button[aria-pressed=true] {
+  color:#222923; background:#fff; box-shadow:0 2px 7px #26352a12;
+}
+.app-shell[data-style-check] main.review-home-v2 .category-style-switch button:focus-visible {
+  outline:2px solid #8a6800; outline-offset:2px;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card {
+  position:relative; isolation:isolate; border-color:#edf0ed;
+  background:radial-gradient(ellipse at 18% 5%,#fff 0%,#fff0 62%),linear-gradient(135deg,#f8faf9,#f1f3f1);
+  box-shadow:0 5px 15px -10px #20372e25,inset 0 1px 0 #fff;
+  transition:box-shadow .28s ease,border-color .28s ease;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card::before,
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card::after {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  transition:transform .5s ease,opacity .35s ease;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card::before {
+  background:linear-gradient(128deg,#fff0 22%,#ffffffb8 22.3%,#ffffff38 55%,#fff0 55.3%);
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card::after {
+  background:linear-gradient(0deg,#ffffffa6,#fff0 48%); box-shadow:inset 0 0 0 1px #ffffff96;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card .category-card__art {
+  position:relative; background:transparent; isolation:auto;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card__art::before {
+  content:""; position:absolute; left:14%; right:14%; bottom:0; height:15%;
+  background:radial-gradient(ellipse,#283b302e,#283b3000 70%); filter:blur(3px);
+  transition:opacity .3s ease,transform .3s ease;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card__art img {
+  position:relative; mix-blend-mode:multiply; object-fit:contain;
+  transform:translateY(0); transition:transform .35s cubic-bezier(.2,.75,.25,1);
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card strong {
+  position:relative; color:#252c28;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style=expressive] .category-card {
+  border-color:#f4e9b9;
+  background:radial-gradient(ellipse at 85% 5%,#ffe259 0%,#fff4bd80 42%,#fff0 72%),linear-gradient(145deg,#fffefa,#f8f8ef);
+  box-shadow:0 7px 18px -12px #77590b47,inset 0 1px 0 #fff;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style=expressive] .category-card:nth-child(even) {
+  background:radial-gradient(ellipse at 10% 8%,#ffe259 0%,#fff4bd80 42%,#fff0 72%),linear-gradient(145deg,#fffefa,#f8f8ef);
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style=expressive] .category-card::before {
+  background:linear-gradient(122deg,#fff0 25%,#ffce00b8 25.3%,#ffdf4590 34%,#fff0 34.3%,#fff0 65%,#ffffffc4 65.3%,#ffffff40 84%,#fff0 84.3%);
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style=expressive] .category-card::after {
+  background:linear-gradient(0deg,#ffffffeb,#ffffff6b 30%,#fff0 57%);
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card:focus-visible {
+  outline:2px solid #937000; outline-offset:3px;
+}
+@media (hover:hover) and (pointer:fine) {
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card:hover {
+    border-color:#d7dfd8; box-shadow:0 10px 22px -12px #20372e3d,inset 0 1px 0 #fff;
+  }
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card:hover img { transform:translateY(-3px) scale(1.025); }
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card:hover::before { transform:translateX(7%); }
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style=expressive] .category-card:hover {
+    border-color:#e8c63c; box-shadow:0 12px 25px -12px #926c0052,inset 0 1px 0 #fff;
+  }
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style=expressive] .category-card:hover img { transform:translateY(-4px) scale(1.055) rotate(-1deg); }
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style=expressive] .category-card:hover::before { transform:translateX(14%); }
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card:hover .category-card__art::before { opacity:.7; transform:scale(.9); }
+}
+@media (max-width:767px) {
+  .app-shell[data-style-check] main.review-home-v2 .category-style-switch button { font-size:12px; min-height:36px; padding:8px 11px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card,
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card::before,
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card::after,
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card__art::before,
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card__art img { transition:none; }
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card:hover img,
+  .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card:hover::before { transform:none; }
+}
+
+/* Product/copy foreground is independent of decorative light layers. */
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card::before,
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card::after { z-index:-1; }
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card .category-card__art { z-index:auto; isolation:auto; }
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style=expressive] .category-card .category-card__art {
+  background:radial-gradient(ellipse at 50% 48%,#ffffff 0%,#fffffff5 34%,#ffffffb8 54%,#ffffff00 75%);
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card__art::before { z-index:0; }
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card__art img { z-index:auto; }
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card strong { z-index:2; }
+
+/* Generated PNGs have real alpha: no color blending or whitening workaround. */
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card .category-card__art {
+  background:transparent; z-index:1; isolation:isolate;
+}
+.app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-card__art img {
+  mix-blend-mode:normal; z-index:1; filter:drop-shadow(0 4px 3px #23352a14);
+}

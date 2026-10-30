@@ -1,0 +1,69 @@
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] { display:block; overflow:visible; background:#fff; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits .benefit-style-switch { display:flex; gap:4px; width:max-content; max-width:100%; padding:4px; margin:0 0 18px; border:1px solid #e8e9e5; border-radius:12px; background:#f5f6f3; }
+.app-shell[data-style-check] main.review-home-v2 .benefit-style-switch button { min-height:36px; padding:8px 14px; border:0; border-radius:8px; font:inherit; font-size:13px; color:#555c57; background:transparent; cursor:pointer; white-space:nowrap; }
+.app-shell[data-style-check] main.review-home-v2 .benefit-style-switch button[aria-pressed=true] { color:#222923; background:#fff; box-shadow:0 2px 7px #26352a12; }
+.app-shell[data-style-check] main.review-home-v2 .benefit-style-switch button:focus-visible { outline:2px solid #8a6800; outline-offset:2px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefits-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] article {
+  position:relative; isolation:isolate; overflow:hidden; min-width:0; min-height:206px; padding:18px;
+  display:flex; flex-direction:column; align-items:flex-start; gap:18px; border:1px solid #eceee9; border-radius:16px;
+  background:linear-gradient(145deg,#fff,#f8f9f6); box-shadow:0 7px 20px -14px #33462f26;
+}
+.app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefit-copy { position:relative; z-index:1; min-width:0; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] article .review-benefit-icon { position:relative; z-index:1; flex-shrink:0; width:48px; height:48px; border-radius:13px; background:linear-gradient(135deg,#fff1b3,#ffe786); color:#242b26; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefit-icon svg { width:27px; height:27px; flex-basis:auto; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] h2 { font-size:16px; line-height:22px; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; color:#282e29; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] p { font-size:13px; line-height:20px; margin:0; color:#737a72; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefit-decor { display:none; position:absolute; z-index:0; width:125px; height:140px; object-fit:contain; right:-27px; bottom:-15px; opacity:.23; pointer-events:none; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefit-link { position:absolute; z-index:2; right:14px; bottom:14px; display:grid; place-items:center; width:36px; height:36px; border-radius:50%; color:#30372f; background:#fff; box-shadow:0 3px 10px #414b3520; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefit-link svg { width:19px; height:19px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefit-link:focus-visible { outline:2px solid #947000; outline-offset:3px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=calm] .review-benefit-link { background:transparent; box-shadow:none; bottom:28px; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=expressive] article { min-height:206px; flex-direction:row; align-items:center; gap:14px; padding:18px 52px 18px 18px; background:radial-gradient(ellipse at 110% 0%,#ffe47880,#fff0 70%),linear-gradient(140deg,#fff,#fbfaf4); }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=expressive] article::before { content:""; position:absolute; z-index:-1; inset:0; background:linear-gradient(125deg,#fff0 77%,#ffd73d30 77.3%,#fff0 98%); pointer-events:none; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=expressive] .review-benefit-icon { background:#ffcc00; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=expressive] .review-benefit-decor { display:block; }
+@media (min-width:901px) and (max-width:1199px) {
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefits-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:900px) {
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefits-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+}
+@media (max-width:767px) {
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits .benefit-style-switch button { font-size:12px; padding:8px 11px; }
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] article,
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=expressive] article { min-height:216px; flex-direction:column; align-items:flex-start; justify-content:flex-start; padding:16px 14px 52px; gap:14px; }
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] article .review-benefit-icon { width:40px; height:40px; border-radius:11px; }
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefit-icon svg { width:24px; height:24px; }
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] h2 { font-size:14px; line-height:19px; }
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] p { font-size:12px; line-height:18px; }
+  .app-shell[data-style-check] main.review-home-v2 .review-benefits .review-benefit-decor { width:100px; height:110px; opacity:.15; }
+}
+
+/* Match the page gutter rhythm, independently of the comparison layout. */
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] { padding:30px 24px; }
+@media (max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] { padding:22px 12px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=calm] .review-benefit-link { bottom:22px; }
+}
+/* Mobile: no arrow row or reserved space beneath the benefit copy. */
+@media (max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] .review-benefit-link { display:none; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] article,
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=expressive] article { min-height:0; padding:16px 14px; }
+}
+/* Both comparison variants omit arrows on desktop as well. */
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] .review-benefit-link { display:none; }
+@media (min-width:768px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] article { min-height:190px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=expressive] article { padding-right:18px; }
+}
+
+/* Compact, top-aligned comparison cards with the same desktop geometry. */
+@media (min-width:768px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] article,
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style=expressive] article {
+  min-height:148px; flex-direction:row; align-items:flex-start; justify-content:flex-start;
+  gap:14px; padding:18px;
+ }
+}

@@ -1,0 +1,13 @@
+/* Shared frame and icon treatment for the two priority services. */
+.app-shell[data-style-check] :is(.reference-desktop-services > a,.reference-bottom-nav > .reference-bottom-service) {
+  box-sizing:border-box; border:1px solid #f2e5af; border-radius:10px;
+  background:#fff3bf; color:#303933; box-shadow:none;
+}
+.app-shell[data-style-check] :is(.reference-desktop-services > a,.reference-bottom-nav > .reference-bottom-service) .review-rounded-icon {
+  width:22px; height:22px; color:#303933; stroke-width:1.65;
+}
+.app-shell[data-style-check] :is(.reference-desktop-services > a,.reference-bottom-nav > .reference-bottom-service):hover { background:#ffe78a; }
+/* Beat the earlier mobile frame rule without changing the bottom bar layout. */
+.app-shell[data-style-check] .reference-bottom-nav > a.reference-bottom-service { border-radius:10px; background:#fff3bf; border:1px solid #f2e5af; }
+.app-shell[data-style-check] .desktop-header--compact .reference-desktop-services > a .review-rounded-icon { width:22px; height:22px; }
+.app-shell[data-style-check] .mobile-bottom-nav.reference-bottom-nav > a.reference-bottom-service .review-rounded-icon { width:22px; height:22px; stroke-width:1.65; }

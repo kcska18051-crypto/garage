@@ -1,0 +1,104 @@
+/* Local proposal, 30 October. Scope: Style Check header only. */
+/* Approved mobile density follow-up. */
+.app-shell[data-style-check] .review-brand-rail { position: relative; padding-inline: 24px; }
+.app-shell[data-style-check] .review-brand-rail > button { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid #e8e8e5; border-radius: 50%; background: #fff; color: #626660; cursor: pointer; }
+.app-shell[data-style-check] .review-brand-prev { left: 0; }
+.app-shell[data-style-check] .review-brand-next { right: 0; }
+.app-shell[data-style-check] .review-brand-rail > button svg { width: 20px; height: 20px; }
+@media (min-width: 768px) {
+ .app-shell[data-style-check] .site-header { min-height: 148px; }
+}
+.app-shell[data-style-check] .site-header .desktop-header .main-header-row { min-height: 72px; gap: 12px; }
+.app-shell[data-style-check] .site-header .desktop-header .logo { flex: 0 0 154px; inline-size: 154px; block-size: 60px; }
+.app-shell[data-style-check] .site-header .desktop-header .catalog-button { flex: 0 0 116px; min-height: 44px; font-size: 14px; padding: 0 14px; }
+.app-shell[data-style-check] .site-header .desktop-header .search-box input { min-height: 44px; height: 44px; font-size: 14px; padding-inline: 14px 48px; }
+.app-shell[data-style-check] .site-header .desktop-header .search-box__submit { width: 36px; height: 36px; top: 4px; right: 4px; background-size: 21px; }
+.app-shell[data-style-check] .site-header .desktop-header .service-row { min-height: 28px; }
+.app-shell[data-style-check] .site-header .desktop-header .header-actions { gap: 4px; }
+.app-shell[data-style-check] .site-header .desktop-header .header-action { min-width: 48px; padding: 4px; }
+.app-shell[data-style-check] .site-header .desktop-header .header-action small { font-size: 11px; }
+.app-shell[data-style-check] .site-header .desktop-header .header-action > span::after { inline-size: 22px; block-size: 22px; }
+.app-shell[data-style-check] .site-header :is(.service-link,.paint-service-link) { min-height: 38px; padding: 8px 12px; font-size: 13px; border-radius: 8px; background: #fff5cc; border: 0; }
+.app-shell[data-style-check] .site-header .desktop-header .service-link { display: inline-flex; flex: 0 0 auto; gap: 7px; align-items: center; }
+.app-shell[data-style-check] .site-header .desktop-header .service-link::before { width: 18px; height: 18px; flex-basis: 18px; }
+.app-shell[data-style-check] .site-header .third-level-nav__desktop > nav { min-height: 40px; }
+.app-shell[data-style-check] .site-header .desktop-header--compact .main-header-row { min-height: 60px; flex-wrap: nowrap; padding-block: 0; }
+.app-shell[data-style-check] .site-header .desktop-header--compact .logo { flex-basis: 112px; inline-size: 112px; block-size: 44px; }
+.app-shell[data-style-check] .site-header .desktop-header--compact .header-action { min-width: 36px; }
+.app-shell[data-style-check] .site-header .desktop-header--compact .header-action small { display: none; }
+.app-shell[data-style-check] .site-header .desktop-header--compact .paint-service-link--fallback { flex-basis: auto; order: initial; }
+@media (max-width: 1023px) and (min-width: 768px) {
+ .app-shell[data-style-check] .site-header { min-height: 114px; }
+ .app-shell[data-style-check] .site-header .desktop-header .logo { flex-basis: 100px; inline-size: 100px; block-size: 44px; }
+ .app-shell[data-style-check] .site-header .desktop-header .catalog-button { flex-basis: 92px; font-size: 13px; padding-inline: 10px; }
+ .app-shell[data-style-check] .site-header .desktop-header .main-header-row { gap: 8px; }
+ .app-shell[data-style-check] .site-header .desktop-header .search-box { min-width: 110px; }
+ .app-shell[data-style-check] .site-header .desktop-header .header-action small { display: none; }
+ .app-shell[data-style-check] .site-header .desktop-header--compact .service-link { display: inline-flex; }
+ .app-shell[data-style-check] .site-header .desktop-header--compact :is(.service-link,.paint-service-link--fallback) { font-size: 12px; padding-inline: 8px; gap: 5px; }
+}
+@media (max-width: 767px) {
+ .app-shell[data-style-check] .site-header .review-mobile-header { padding: 4px 12px 8px; }
+ .app-shell[data-style-check] .review-mobile-header .review-mobile-main { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 8px; }
+ .app-shell[data-style-check] .site-header .review-mobile-header .logo { flex: 0 0 100px; inline-size: 100px; block-size: 42px; }
+ .app-shell[data-style-check] .review-mobile-actions { display: flex; align-items: center; gap: 0; }
+ .app-shell[data-style-check] .review-mobile-actions :is(a,button) { display: inline-flex; position: relative; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 10px; background: none; border: 0; border-radius: 8px; color: #626660; }
+ .app-shell[data-style-check] .review-mobile-actions .review-rounded-icon { width: 22px; height: 22px; }
+ .app-shell[data-style-check] .review-mobile-actions b { position: absolute; right: 1px; top: 1px; min-width: 17px; height: 17px; border-radius: 20px; background: #ffcc00; color: #272723; font-size: 10px; display: grid; place-items: center; }
+ .app-shell[data-style-check] .review-mobile-actions :is(a,button):hover { background: #f5f5f3; }
+ .app-shell[data-style-check] .review-mobile-header .search-box input { min-height: 44px; height: 44px; font-size: 14px; }
+ .app-shell[data-style-check] .review-mobile-header .search-box__submit { width: 36px; height: 36px; top: 4px; right: 4px; }
+ .app-shell[data-style-check] .review-service-shortcuts { display: grid; grid-template-columns: .8fr 1.2fr; gap: 8px; margin-top: 8px; }
+ .app-shell[data-style-check] .site-header .review-service-shortcuts > a { display: flex; width: auto; min-height: 44px; height: 44px; align-items: center; justify-content: center; gap: 7px; padding: 8px; background: #fff5cc; color: #363832; border: 0; border-radius: 8px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+ .app-shell[data-style-check] .review-service-shortcuts .review-rounded-icon, .app-shell[data-style-check] .review-service-shortcuts .paint-service-link svg { width: 18px; height: 18px; flex: 0 0 18px; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned { height: 96px; padding: 0 12px; display: block; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned > .review-mobile-main { display: flex; height: 52px; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned > .review-service-shortcuts { margin: 0; display: grid; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned .review-service-shortcuts > a { width: auto; }
+ .app-shell[data-style-check] .site-header .review-mobile-menu-pinned { top: 96px; max-height: calc(100dvh - 168px); }
+ .app-shell[data-style-check] .site-header .third-level-nav__mobile { padding-block: 0; }
+ body.search-overlay-open .app-shell[data-style-check] .site-header .review-mobile-pinned { display: none; }
+ .app-shell[data-style-check] .review-mobile-header .search-box--open { padding: 12px; }
+ .app-shell[data-style-check] .review-mobile-header .search-box--open .search-box__submit { top: 16px; right: 58px; }
+}
+@media (max-width: 767px) {
+ .app-shell[data-style-check] .site-header .review-mobile-pinned { height: 60px; padding-inline: 10px; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned > .review-mobile-main { height: 60px; gap: 4px; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned .logo { flex: 0 0 56px; inline-size: 56px; block-size: 36px; }
+ .app-shell[data-style-check] .review-pinned-services { display: flex; align-items: center; flex: 0 0 104px; }
+ .app-shell[data-style-check] .site-header .review-pinned-services > a { width: 52px; height: 48px; padding: 4px 0; display: flex; flex-direction: column; gap: 3px; font-size: 9px; line-height: 12px; color: #63532c; text-decoration: none; }
+ .app-shell[data-style-check] .review-pinned-services svg { width: 20px; height: 20px; }
+ .app-shell[data-style-check] .review-mobile-pinned .review-mobile-actions { flex-shrink: 0; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned .review-mobile-actions :is(a,button) { width: 36px; height: 44px; padding: 7px; }
+ .app-shell[data-style-check] .site-header .review-mobile-menu-pinned { top: 60px; max-height: calc(100dvh - 132px); }
+ .app-shell[data-style-check] main.review-home-v2 .product-grid { gap: 10px; grid-auto-columns: calc((100% - 10px) / 2); }
+ .app-shell[data-style-check] main.review-home-v2 .brand-grid { gap: 8px; }
+ .app-shell[data-style-check] main.review-home-v2 .brand-grid > a { flex: 0 0 calc((100% - 16px) / 3); min-width: 0; min-height: 72px; padding: 6px; }
+ .app-shell[data-style-check] main.review-home-v2 .brand-grid > a > .review-brand-logo { width: 100%; height: 30px; }
+ .app-shell[data-style-check] main.review-home-v2 .brand-grid > a > .review-brand-logo--wiederkraft { height: 34px; }
+}
+/* Header hierarchy refinement: aligned desktop controls and mobile service accent. */
+@media (min-width: 768px) {
+ .app-shell[data-style-check] .site-header .desktop-header :is(.service-link,.paint-service-link--fallback) { height: 38px; min-height: 38px; align-self: center; align-items: center; justify-content: center; padding: 0 12px; line-height: 20px; font-size: 13px; font-weight: 500; }
+ .app-shell[data-style-check] .site-header .desktop-header .header-actions { flex: 0 0 auto; gap: 2px; justify-content: flex-end; }
+ .app-shell[data-style-check] .site-header .desktop-header--compact .header-action { flex: 0 0 36px; width: 36px; min-width: 36px; }
+ .app-shell[data-style-check] .site-header .desktop-header--compact .main-header-row { column-gap: 10px; }
+}
+@media (max-width: 1023px) and (min-width: 768px) {
+ .app-shell[data-style-check] .site-header .desktop-header--compact :is(.service-link,.paint-service-link--fallback) { padding-inline: 8px; font-size: 12px; }
+ .app-shell[data-style-check] .site-header .desktop-header--compact .main-header-row { column-gap: 8px; }
+}
+@media (max-width: 767px) {
+ .app-shell[data-style-check] .site-header .review-mobile-header .logo { flex-basis: 112px; inline-size: 112px; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned .logo { flex: 0 0 84px; inline-size: 84px; block-size: 44px; }
+ .app-shell[data-style-check] .review-pinned-services { flex-basis: 100px; }
+ .app-shell[data-style-check] .site-header .review-pinned-services > a { width: 50px; color: #c45316; font-weight: 600; }
+ .app-shell[data-style-check] .site-header .review-service-shortcuts > a { color: #c45316; background: #fff4e9; }
+ .app-shell[data-style-check] .site-header .review-service-shortcuts .paint-service-link svg { background: #c45316; }
+ .app-shell[data-style-check] .review-mobile-actions .review-rounded-icon { width: 18px; height: 18px; }
+ .app-shell[data-style-check] .site-header .review-mobile-pinned .review-mobile-actions :is(a,button) { width: 32px; padding-inline: 6px; }
+}
+@media (max-width: 767px) {
+ .app-shell[data-style-check] .site-header .review-pinned-services .review-rounded-icon,
+ .app-shell[data-style-check] .site-header .review-service-shortcuts .review-rounded-icon { color: #c45316; }
+}

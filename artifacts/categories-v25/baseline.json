@@ -1,0 +1,522 @@
+[
+  {
+    "width": 320,
+    "cards": [
+      {
+        "w": 91,
+        "h": 167,
+        "padding": "10px",
+        "text": "Подъёмное оборудование",
+        "href": "/garage/catalog/lifting"
+      },
+      {
+        "w": 91,
+        "h": 167,
+        "padding": "10px",
+        "text": "Кузовной ремонт",
+        "href": "/garage/catalog/body"
+      },
+      {
+        "w": 91,
+        "h": 167,
+        "padding": "10px",
+        "text": "Покраска и подготовка",
+        "href": "/garage/catalog/paint"
+      },
+      {
+        "w": 91,
+        "h": 184,
+        "padding": "10px",
+        "text": "Компрессорное оборудование",
+        "href": "/garage/catalog/compressor-equipment"
+      },
+      {
+        "w": 91,
+        "h": 184,
+        "padding": "10px",
+        "text": "Инструмент",
+        "href": "/garage/catalog/tools"
+      },
+      {
+        "w": 91,
+        "h": 184,
+        "padding": "10px",
+        "text": "Сварочное оборудование",
+        "href": "/garage/catalog/welding"
+      }
+    ],
+    "blocks": [
+      {
+        "class": "sr-only",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "class": "hero review-hero",
+        "w": 288,
+        "h": 184
+      },
+      {
+        "class": "home-section popular-categories",
+        "w": 320,
+        "h": 477
+      },
+      {
+        "class": "home-merchandising-stream",
+        "w": 320,
+        "h": 2080
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "w": 320,
+        "h": 228
+      },
+      {
+        "class": "home-section home-section--brands",
+        "w": 320,
+        "h": 159
+      },
+      {
+        "class": "home-section promotions",
+        "w": 320,
+        "h": 542
+      },
+      {
+        "class": "home-section services",
+        "w": 320,
+        "h": 217
+      },
+      {
+        "class": "home-section about-section review-about",
+        "w": 320,
+        "h": 702
+      },
+      {
+        "class": "home-section useful-section",
+        "w": 320,
+        "h": 498
+      },
+      {
+        "class": "final-cta review-consultation",
+        "w": 296,
+        "h": 321
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "cards": [
+      {
+        "w": 114,
+        "h": 150,
+        "padding": "10px",
+        "text": "Подъёмное оборудование",
+        "href": "/garage/catalog/lifting"
+      },
+      {
+        "w": 114,
+        "h": 150,
+        "padding": "10px",
+        "text": "Кузовной ремонт",
+        "href": "/garage/catalog/body"
+      },
+      {
+        "w": 114,
+        "h": 150,
+        "padding": "10px",
+        "text": "Покраска и подготовка",
+        "href": "/garage/catalog/paint"
+      },
+      {
+        "w": 114,
+        "h": 167,
+        "padding": "10px",
+        "text": "Компрессорное оборудование",
+        "href": "/garage/catalog/compressor-equipment"
+      },
+      {
+        "w": 114,
+        "h": 167,
+        "padding": "10px",
+        "text": "Инструмент",
+        "href": "/garage/catalog/tools"
+      },
+      {
+        "w": 114,
+        "h": 167,
+        "padding": "10px",
+        "text": "Сварочное оборудование",
+        "href": "/garage/catalog/welding"
+      }
+    ],
+    "blocks": [
+      {
+        "class": "sr-only",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "class": "hero review-hero",
+        "w": 358,
+        "h": 184
+      },
+      {
+        "class": "home-section popular-categories",
+        "w": 390,
+        "h": 416
+      },
+      {
+        "class": "home-merchandising-stream",
+        "w": 390,
+        "h": 2053
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "w": 390,
+        "h": 206
+      },
+      {
+        "class": "home-section home-section--brands",
+        "w": 390,
+        "h": 159
+      },
+      {
+        "class": "home-section promotions",
+        "w": 390,
+        "h": 524
+      },
+      {
+        "class": "home-section services",
+        "w": 390,
+        "h": 248
+      },
+      {
+        "class": "home-section about-section review-about",
+        "w": 390,
+        "h": 654
+      },
+      {
+        "class": "home-section useful-section",
+        "w": 390,
+        "h": 456
+      },
+      {
+        "class": "final-cta review-consultation",
+        "w": 366,
+        "h": 297
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "cards": [
+      {
+        "w": 232,
+        "h": 194,
+        "padding": "14px",
+        "text": "Подъёмное оборудование",
+        "href": "/garage/catalog/lifting"
+      },
+      {
+        "w": 232,
+        "h": 194,
+        "padding": "14px",
+        "text": "Кузовной ремонт",
+        "href": "/garage/catalog/body"
+      },
+      {
+        "w": 232,
+        "h": 194,
+        "padding": "14px",
+        "text": "Покраска и подготовка",
+        "href": "/garage/catalog/paint"
+      },
+      {
+        "w": 232,
+        "h": 204,
+        "padding": "14px",
+        "text": "Компрессорное оборудование",
+        "href": "/garage/catalog/compressor-equipment"
+      },
+      {
+        "w": 232,
+        "h": 204,
+        "padding": "14px",
+        "text": "Инструмент",
+        "href": "/garage/catalog/tools"
+      },
+      {
+        "w": 232,
+        "h": 204,
+        "padding": "14px",
+        "text": "Сварочное оборудование",
+        "href": "/garage/catalog/welding"
+      }
+    ],
+    "blocks": [
+      {
+        "class": "sr-only",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "class": "hero review-hero",
+        "w": 768,
+        "h": 208
+      },
+      {
+        "class": "home-section popular-categories",
+        "w": 768,
+        "h": 524
+      },
+      {
+        "class": "home-merchandising-stream",
+        "w": 768,
+        "h": 2298
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "w": 768,
+        "h": 420
+      },
+      {
+        "class": "home-section home-section--brands",
+        "w": 768,
+        "h": 206
+      },
+      {
+        "class": "home-section promotions",
+        "w": 768,
+        "h": 1383
+      },
+      {
+        "class": "home-section services",
+        "w": 768,
+        "h": 223
+      },
+      {
+        "class": "home-section about-section review-about",
+        "w": 768,
+        "h": 874
+      },
+      {
+        "class": "home-section useful-section",
+        "w": 768,
+        "h": 457
+      },
+      {
+        "class": "final-cta review-consultation",
+        "w": 768,
+        "h": 186
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "cards": [
+      {
+        "w": 153,
+        "h": 204,
+        "padding": "14px",
+        "text": "Подъёмное оборудование",
+        "href": "/garage/catalog/lifting"
+      },
+      {
+        "w": 153,
+        "h": 204,
+        "padding": "14px",
+        "text": "Кузовной ремонт",
+        "href": "/garage/catalog/body"
+      },
+      {
+        "w": 153,
+        "h": 204,
+        "padding": "14px",
+        "text": "Покраска и подготовка",
+        "href": "/garage/catalog/paint"
+      },
+      {
+        "w": 153,
+        "h": 204,
+        "padding": "14px",
+        "text": "Компрессорное оборудование",
+        "href": "/garage/catalog/compressor-equipment"
+      },
+      {
+        "w": 153,
+        "h": 204,
+        "padding": "14px",
+        "text": "Инструмент",
+        "href": "/garage/catalog/tools"
+      },
+      {
+        "w": 153,
+        "h": 204,
+        "padding": "14px",
+        "text": "Сварочное оборудование",
+        "href": "/garage/catalog/welding"
+      }
+    ],
+    "blocks": [
+      {
+        "class": "sr-only",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "class": "hero review-hero",
+        "w": 1024,
+        "h": 208
+      },
+      {
+        "class": "home-section popular-categories",
+        "w": 1024,
+        "h": 318
+      },
+      {
+        "class": "home-merchandising-stream",
+        "w": 1024,
+        "h": 2298
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "w": 1024,
+        "h": 275
+      },
+      {
+        "class": "home-section home-section--brands",
+        "w": 1024,
+        "h": 206
+      },
+      {
+        "class": "home-section promotions",
+        "w": 1024,
+        "h": 588
+      },
+      {
+        "class": "home-section services",
+        "w": 1024,
+        "h": 264
+      },
+      {
+        "class": "home-section about-section review-about",
+        "w": 1024,
+        "h": 536
+      },
+      {
+        "class": "home-section useful-section",
+        "w": 1024,
+        "h": 518
+      },
+      {
+        "class": "final-cta review-consultation",
+        "w": 1024,
+        "h": 186
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "cards": [
+      {
+        "w": 222,
+        "h": 204,
+        "padding": "14px",
+        "text": "Подъёмное оборудование",
+        "href": "/garage/catalog/lifting"
+      },
+      {
+        "w": 222,
+        "h": 204,
+        "padding": "14px",
+        "text": "Кузовной ремонт",
+        "href": "/garage/catalog/body"
+      },
+      {
+        "w": 222,
+        "h": 204,
+        "padding": "14px",
+        "text": "Покраска и подготовка",
+        "href": "/garage/catalog/paint"
+      },
+      {
+        "w": 222,
+        "h": 204,
+        "padding": "14px",
+        "text": "Компрессорное оборудование",
+        "href": "/garage/catalog/compressor-equipment"
+      },
+      {
+        "w": 222,
+        "h": 204,
+        "padding": "14px",
+        "text": "Инструмент",
+        "href": "/garage/catalog/tools"
+      },
+      {
+        "w": 222,
+        "h": 204,
+        "padding": "14px",
+        "text": "Сварочное оборудование",
+        "href": "/garage/catalog/welding"
+      }
+    ],
+    "blocks": [
+      {
+        "class": "sr-only",
+        "w": 1,
+        "h": 1
+      },
+      {
+        "class": "hero review-hero",
+        "w": 1376,
+        "h": 208
+      },
+      {
+        "class": "home-section popular-categories",
+        "w": 1440,
+        "h": 318
+      },
+      {
+        "class": "home-merchandising-stream",
+        "w": 1440,
+        "h": 2298
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "w": 1440,
+        "h": 234
+      },
+      {
+        "class": "home-section home-section--brands",
+        "w": 1440,
+        "h": 206
+      },
+      {
+        "class": "home-section promotions",
+        "w": 1440,
+        "h": 577
+      },
+      {
+        "class": "home-section services",
+        "w": 1440,
+        "h": 330
+      },
+      {
+        "class": "home-section about-section review-about",
+        "w": 1440,
+        "h": 550
+      },
+      {
+        "class": "home-section useful-section",
+        "w": 1440,
+        "h": 457
+      },
+      {
+        "class": "final-cta review-consultation",
+        "w": 1392,
+        "h": 186
+      }
+    ]
+  }
+]

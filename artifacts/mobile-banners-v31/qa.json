@@ -1,0 +1,530 @@
+[
+  {
+    "width": 320,
+    "overflow": false,
+    "headings": [
+      {
+        "title": "Оборудование для автосервиса",
+        "sameRow": true,
+        "height": 54
+      },
+      {
+        "title": "Новинки",
+        "sameRow": true,
+        "height": 27
+      },
+      {
+        "title": "Хиты продаж",
+        "sameRow": true,
+        "height": 27
+      },
+      {
+        "title": "Товары Remeza",
+        "sameRow": true,
+        "height": 27
+      }
+    ],
+    "banners": [
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-intro.webp",
+        "loaded": true,
+        "w": 288,
+        "h": 184
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-paint.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-service.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-season.webp",
+        "loaded": true,
+        "w": 243,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-paint.webp",
+        "loaded": true,
+        "w": 243,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-compressors.webp",
+        "loaded": true,
+        "w": 296,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-workshop.webp",
+        "loaded": true,
+        "w": 296,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-center.webp",
+        "loaded": true,
+        "w": 272,
+        "h": 130
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-rental.webp",
+        "loaded": true,
+        "w": 272,
+        "h": 130
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-paint.webp",
+        "loaded": true,
+        "w": 272,
+        "h": 130
+      }
+    ]
+  },
+  {
+    "width": 360,
+    "overflow": false,
+    "headings": [
+      {
+        "title": "Оборудование для автосервиса",
+        "sameRow": true,
+        "height": 54
+      },
+      {
+        "title": "Новинки",
+        "sameRow": true,
+        "height": 27
+      },
+      {
+        "title": "Хиты продаж",
+        "sameRow": true,
+        "height": 27
+      },
+      {
+        "title": "Товары Remeza",
+        "sameRow": true,
+        "height": 27
+      }
+    ],
+    "banners": [
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-intro.webp",
+        "loaded": true,
+        "w": 328,
+        "h": 184
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-paint.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-service.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-season.webp",
+        "loaded": true,
+        "w": 276,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-paint.webp",
+        "loaded": true,
+        "w": 276,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-compressors.webp",
+        "loaded": true,
+        "w": 336,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-workshop.webp",
+        "loaded": true,
+        "w": 336,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-center.webp",
+        "loaded": true,
+        "w": 309,
+        "h": 147
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-rental.webp",
+        "loaded": true,
+        "w": 309,
+        "h": 147
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-paint.webp",
+        "loaded": true,
+        "w": 309,
+        "h": 147
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "headings": [
+      {
+        "title": "Оборудование для автосервиса",
+        "sameRow": true,
+        "height": 54
+      },
+      {
+        "title": "Новинки",
+        "sameRow": true,
+        "height": 27
+      },
+      {
+        "title": "Хиты продаж",
+        "sameRow": true,
+        "height": 27
+      },
+      {
+        "title": "Товары Remeza",
+        "sameRow": true,
+        "height": 27
+      }
+    ],
+    "banners": [
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-intro.webp",
+        "loaded": true,
+        "w": 358,
+        "h": 184
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-paint.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-service.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-season.webp",
+        "loaded": true,
+        "w": 300,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-paint.webp",
+        "loaded": true,
+        "w": 300,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-compressors.webp",
+        "loaded": true,
+        "w": 366,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-workshop.webp",
+        "loaded": true,
+        "w": 366,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-center.webp",
+        "loaded": true,
+        "w": 337,
+        "h": 161
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-rental.webp",
+        "loaded": true,
+        "w": 337,
+        "h": 161
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-paint.webp",
+        "loaded": true,
+        "w": 337,
+        "h": 161
+      }
+    ]
+  },
+  {
+    "width": 430,
+    "overflow": false,
+    "headings": [
+      {
+        "title": "Оборудование для автосервиса",
+        "sameRow": true,
+        "height": 54
+      },
+      {
+        "title": "Новинки",
+        "sameRow": true,
+        "height": 27
+      },
+      {
+        "title": "Хиты продаж",
+        "sameRow": true,
+        "height": 27
+      },
+      {
+        "title": "Товары Remeza",
+        "sameRow": true,
+        "height": 27
+      }
+    ],
+    "banners": [
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-intro.webp",
+        "loaded": true,
+        "w": 398,
+        "h": 184
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-paint.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/hero-service.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-season.webp",
+        "loaded": true,
+        "w": 333,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-paint.webp",
+        "loaded": true,
+        "w": 333,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-compressors.webp",
+        "loaded": true,
+        "w": 406,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-workshop.webp",
+        "loaded": true,
+        "w": 406,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-center.webp",
+        "loaded": true,
+        "w": 374,
+        "h": 178
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-rental.webp",
+        "loaded": true,
+        "w": 374,
+        "h": 178
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/service-paint.webp",
+        "loaded": true,
+        "w": 374,
+        "h": 178
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "headings": [
+      {
+        "title": "Оборудование для автосервиса",
+        "sameRow": true,
+        "height": 34
+      },
+      {
+        "title": "Новинки",
+        "sameRow": true,
+        "height": 34
+      },
+      {
+        "title": "Хиты продаж",
+        "sameRow": true,
+        "height": 34
+      },
+      {
+        "title": "Товары Remeza",
+        "sameRow": true,
+        "height": 34
+      }
+    ],
+    "banners": [
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-desktop.webp",
+        "loaded": true,
+        "w": 768,
+        "h": 208
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-paint-desktop.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-service-desktop.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-season.webp",
+        "loaded": true,
+        "w": 378,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/mobile-raster-v31/banner-paint.webp",
+        "loaded": true,
+        "w": 378,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/banner-compressors-desktop.webp",
+        "loaded": true,
+        "w": 768,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/banner-workshop-desktop.webp",
+        "loaded": true,
+        "w": 768,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/service-center-desktop.webp",
+        "loaded": true,
+        "w": 229,
+        "h": 109
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/service-rental-desktop.webp",
+        "loaded": true,
+        "w": 229,
+        "h": 109
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/service-paint-desktop.webp",
+        "loaded": true,
+        "w": 229,
+        "h": 109
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "overflow": false,
+    "headings": [
+      {
+        "title": "Оборудование для автосервиса",
+        "sameRow": true,
+        "height": 34
+      },
+      {
+        "title": "Новинки",
+        "sameRow": true,
+        "height": 34
+      },
+      {
+        "title": "Хиты продаж",
+        "sameRow": true,
+        "height": 34
+      },
+      {
+        "title": "Товары Remeza",
+        "sameRow": true,
+        "height": 34
+      }
+    ],
+    "banners": [
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-intro-desktop.webp",
+        "loaded": true,
+        "w": 1376,
+        "h": 208
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-paint-desktop.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/hero-service-desktop.webp",
+        "loaded": true,
+        "w": 0,
+        "h": 0
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/banner-season-desktop.webp",
+        "loaded": true,
+        "w": 690,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/banner-paint-desktop.webp",
+        "loaded": true,
+        "w": 690,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/banner-compressors-desktop.webp",
+        "loaded": true,
+        "w": 1392,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/banner-workshop-desktop.webp",
+        "loaded": true,
+        "w": 1392,
+        "h": 160
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/service-center-desktop.webp",
+        "loaded": true,
+        "w": 453,
+        "h": 216
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/service-rental-desktop.webp",
+        "loaded": true,
+        "w": 453,
+        "h": 216
+      },
+      {
+        "src": "http://127.0.0.1:4196/garage/style-check/review-assets/raster-responsive-v24/service-paint-desktop.webp",
+        "loaded": true,
+        "w": 453,
+        "h": 216
+      }
+    ]
+  }
+]

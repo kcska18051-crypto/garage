@@ -1,0 +1,107 @@
+{
+  "report": [
+    {
+      "width": 320,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 360,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 375,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 430,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 768,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1024,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1280,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1440,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1920,
+      "dimensionsUnchanged": true,
+      "protectedUnchanged": true,
+      "noClipping": true,
+      "noOverlaps": true,
+      "minTextSize12": true,
+      "sameAssets": true,
+      "noHorizontalOverflow": true
+    }
+  ],
+  "swipe": true,
+  "autoplay": true,
+  "errors": []
+}

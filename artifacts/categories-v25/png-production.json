@@ -1,0 +1,38 @@
+[
+  {
+    "name": "jack",
+    "path": "C:\\Users\\Admin\\.codex\\generated_images\\01a178ab-be7d-7f43-999e-6aef757bf653\\exec-d7ca94e2-ceaf-4c45-8658-9aff9ecd02d4.png",
+    "prompt": "Use case: background-extraction / premium catalog product image. Input image is the exact product identity and composition reference. Create a polished photorealistic PNG cutout of this SAME product, with a genuinely transparent alpha background. Preserve its exact shape, colors, markings, branding, equipment configuration and camera angle. Improve studio lighting and crisp material detail subtly, do not redesign or substitute the product. Keep the whole object, including handles, wheels and all tools, inside a square canvas with 5% clear padding. No extra objects, floor, backdrop, text, labels, borders or graphic effects. White parts of the product remain solid white, not transparent. A very subtle soft contact shadow only if it has proper transparent alpha. This asset will sit above CSS white and yellow backgrounds in two category card variants.",
+    "savedPath": "C:\\Users\\Admin\\garage-design\\prototype\\public\\style-check\\review-assets\\category-products-png-v27\\jack.png"
+  },
+  {
+    "name": "cabinet",
+    "path": "C:\\Users\\Admin\\.codex\\generated_images\\01a178ab-be7d-7f43-999e-6aef757bf653\\exec-2e31f635-94a9-401a-9a70-f285ca18bcd0.png",
+    "prompt": "Use case: background-extraction / premium catalog product image. Input image is the exact product identity and composition reference. Create a polished photorealistic PNG cutout of this SAME product, with a genuinely transparent alpha background. Preserve its exact shape, colors, markings, branding, equipment configuration and camera angle. Improve studio lighting and crisp material detail subtly, do not redesign or substitute the product. Keep the whole object, including handles, wheels and all tools, inside a square canvas with 5% clear padding. No extra objects, floor, backdrop, text, labels, borders or graphic effects. White parts of the product remain solid white, not transparent. A very subtle soft contact shadow only if it has proper transparent alpha. This asset will sit above CSS white and yellow backgrounds in two category card variants.",
+    "savedPath": "C:\\Users\\Admin\\garage-design\\prototype\\public\\style-check\\review-assets\\category-products-png-v27\\cabinet.png"
+  },
+  {
+    "name": "spraygun",
+    "path": "C:\\Users\\Admin\\.codex\\generated_images\\01a178ab-be7d-7f43-999e-6aef757bf653\\exec-1a0c76a9-404c-4295-bb7a-826576fa2fb1.png",
+    "prompt": "Use case: background-extraction / premium catalog product image. Input image is the exact product identity and composition reference. Create a polished photorealistic PNG cutout of this SAME product, with a genuinely transparent alpha background. Preserve its exact shape, colors, markings, branding, equipment configuration and camera angle. Improve studio lighting and crisp material detail subtly, do not redesign or substitute the product. Keep the whole object, including handles, wheels and all tools, inside a square canvas with 5% clear padding. No extra objects, floor, backdrop, text, labels, borders or graphic effects. White parts of the product remain solid white, not transparent. A very subtle soft contact shadow only if it has proper transparent alpha. This asset will sit above CSS white and yellow backgrounds in two category card variants.",
+    "savedPath": "C:\\Users\\Admin\\garage-design\\prototype\\public\\style-check\\review-assets\\category-products-png-v27\\spraygun.png"
+  },
+  {
+    "name": "compressor",
+    "path": "C:\\Users\\Admin\\.codex\\generated_images\\01a178ab-be7d-7f43-999e-6aef757bf653\\exec-a02e5af8-e76d-4b23-85f5-03ebd0352db0.png",
+    "prompt": "Use case: background-extraction / premium catalog product image. Input image is the exact product identity and composition reference. Create a polished photorealistic PNG cutout of this SAME product, with a genuinely transparent alpha background. Preserve its exact shape, colors, markings, branding, equipment configuration and camera angle. Improve studio lighting and crisp material detail subtly, do not redesign or substitute the product. Keep the whole object, including handles, wheels and all tools, inside a square canvas with 5% clear padding. No extra objects, floor, backdrop, text, labels, borders or graphic effects. White parts of the product remain solid white, not transparent. A very subtle soft contact shadow only if it has proper transparent alpha. This asset will sit above CSS white and yellow backgrounds in two category card variants.",
+    "savedPath": "C:\\Users\\Admin\\garage-design\\prototype\\public\\style-check\\review-assets\\category-products-png-v27\\compressor.png"
+  },
+  {
+    "name": "toolset",
+    "path": "C:\\Users\\Admin\\.codex\\generated_images\\01a178ab-be7d-7f43-999e-6aef757bf653\\exec-b4bb96d8-eedd-4754-a751-8761c8257ce8.png",
+    "prompt": "Use case: background-extraction / premium catalog product image. Input image is the exact product identity and composition reference. Create a polished photorealistic PNG cutout of this SAME product, with a genuinely transparent alpha background. Preserve its exact shape, colors, markings, branding, equipment configuration and camera angle. Improve studio lighting and crisp material detail subtly, do not redesign or substitute the product. Keep the whole object, including handles, wheels and all tools, inside a square canvas with 5% clear padding. No extra objects, floor, backdrop, text, labels, borders or graphic effects. White parts of the product remain solid white, not transparent. A very subtle soft contact shadow only if it has proper transparent alpha. This asset will sit above CSS white and yellow backgrounds in two category card variants.",
+    "savedPath": "C:\\Users\\Admin\\garage-design\\prototype\\public\\style-check\\review-assets\\category-products-png-v27\\toolset.png"
+  },
+  {
+    "name": "welder",
+    "path": "C:\\Users\\Admin\\.codex\\generated_images\\01a178ab-be7d-7f43-999e-6aef757bf653\\exec-53534c77-8cc6-4b19-8d16-533fab560af4.png",
+    "prompt": "Use case: background-extraction / premium catalog product image. Input image is the exact product identity and composition reference. Create a polished photorealistic PNG cutout of this SAME product, with a genuinely transparent alpha background. Preserve its exact shape, colors, markings, branding, equipment configuration and camera angle. Improve studio lighting and crisp material detail subtly, do not redesign or substitute the product. Keep the whole object, including handles, wheels and all tools, inside a square canvas with 5% clear padding. No extra objects, floor, backdrop, text, labels, borders or graphic effects. White parts of the product remain solid white, not transparent. A very subtle soft contact shadow only if it has proper transparent alpha. This asset will sit above CSS white and yellow backgrounds in two category card variants.",
+    "savedPath": "C:\\Users\\Admin\\garage-design\\prototype\\public\\style-check\\review-assets\\category-products-png-v27\\welder.png"
+  }
+]

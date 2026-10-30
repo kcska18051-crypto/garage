@@ -1,0 +1,72 @@
+[
+  {
+    "width": 320,
+    "name": "1 · Спокойный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 320,
+    "name": "2 · Выразительный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 390,
+    "name": "1 · Спокойный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 390,
+    "name": "2 · Выразительный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 768,
+    "name": "1 · Спокойный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 768,
+    "name": "2 · Выразительный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 1024,
+    "name": "1 · Спокойный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 1024,
+    "name": "2 · Выразительный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 1440,
+    "name": "1 · Спокойный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  },
+  {
+    "width": 1440,
+    "name": "2 · Выразительный",
+    "overflow": false,
+    "sameCards": true,
+    "pngs": true
+  }
+]

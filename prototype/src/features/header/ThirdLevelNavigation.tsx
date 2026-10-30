@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { getVisibleHeaderQuickLinks, headerQuickLinksConfig, type HeaderQuickLink, type HeaderQuickLinksConfig } from '../../data/headerNavigationData'
 import { PaintServiceLink } from './PaintServiceLink'
 
@@ -8,6 +8,7 @@ function QuickLink({ item, onClick }: { item: HeaderQuickLink; onClick?: () => v
 }
 
 export function ThirdLevelNavigation({ compact, config = headerQuickLinksConfig }: { compact: boolean; config?: HeaderQuickLinksConfig }) {
+  const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
   const desktopItems = useMemo(() => getVisibleHeaderQuickLinks(config), [config])
   const mobileItems = useMemo(() => getVisibleHeaderQuickLinks(config, true), [config])
   const [visibleCount, setVisibleCount] = useState(desktopItems.length)
@@ -81,7 +82,7 @@ export function ThirdLevelNavigation({ compact, config = headerQuickLinksConfig 
           {moreOpen && <nav aria-label="Дополнительные быстрые ссылки">{overflowItems.map((item) => <QuickLink key={item.id} item={item} onClick={() => setMoreOpen(false)} />)}</nav>}
         </div>}
       </nav>
-      <PaintServiceLink />
+      {!isStyleCheck && <PaintServiceLink />}
       <div className="third-level-nav__measure" ref={measureRef} aria-hidden="true">
         {desktopItems.map((item) => <span key={item.id} data-measure-link>{item.label}</span>)}
         <span data-measure-more>Ещё ⌄</span>

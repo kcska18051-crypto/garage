@@ -1,0 +1,96 @@
+{
+  "refs": {
+    "workshop": "artifacts/source-images-20261030/exec-91d7952d-bced-4438-adaf-1a8a89c97743.png",
+    "paint": "artifacts/source-images-20261030/exec-7ec49c8f-c21e-4433-a647-b8c002d81b95.png",
+    "compressor": "artifacts/source-images-20261030/exec-974ea1fe-8b4f-4dde-95ee-1a42edef8bba.png",
+    "service": "prototype/public/style-check/review-assets/service-fix-v36/mechanism.png",
+    "rental": "artifacts/source-images-20261030/exec-49b59215-f753-4903-ae79-db5fdcf7ea52.png"
+  },
+  "bgs": {
+    "workshop": "artifacts/source-images-20261030/exec-26570064-85d5-47ef-af12-236757324272.png",
+    "paint": "artifacts/source-images-20261030/exec-9789f0ae-a720-4199-8fec-db06b6113385.png",
+    "service": "artifacts/source-images-20261030/exec-cf96790e-17d0-4d57-9ca8-442760fadbf4.png"
+  },
+  "specs": [
+    {
+      "id": "hero-intro",
+      "kind": "wide",
+      "ref": "workshop",
+      "title": "Оборудование для автосервиса",
+      "text": "Всё необходимое для рабочих постов и мастерских",
+      "cta": "В каталог"
+    },
+    {
+      "id": "hero-paint",
+      "kind": "wide",
+      "ref": "paint",
+      "title": "Подбор автоэмали",
+      "text": "Материалы и помощь с подбором цвета под задачу",
+      "cta": "Об услуге"
+    },
+    {
+      "id": "hero-service",
+      "kind": "wide",
+      "ref": "service",
+      "title": "Сервисный центр по ремонту",
+      "text": "Знакомство с направлением ремонта оборудования мастерской",
+      "cta": "Посмотреть направление"
+    },
+    {
+      "id": "banner-season",
+      "kind": "wide",
+      "ref": "workshop",
+      "title": "Подготовьте мастерскую к сезону",
+      "text": "Оборудование для обновления рабочего поста",
+      "cta": "Смотреть подборку"
+    },
+    {
+      "id": "banner-paint",
+      "kind": "wide",
+      "ref": "paint",
+      "title": "Материалы для кузовных работ",
+      "text": "Подборка для подготовки и окраски",
+      "cta": "Перейти в категорию"
+    },
+    {
+      "id": "banner-compressors",
+      "kind": "wide",
+      "ref": "compressor",
+      "title": "Компрессорное оборудование",
+      "text": "Решения для разных рабочих задач",
+      "cta": "Перейти в категорию"
+    },
+    {
+      "id": "banner-workshop",
+      "kind": "wide",
+      "ref": "rental",
+      "title": "Решения для рабочего поста",
+      "text": "Компактная подборка оборудования и инструмента",
+      "cta": "Смотреть подборку"
+    },
+    {
+      "id": "service-center",
+      "kind": "service",
+      "ref": "service",
+      "title": "Сервисный центр",
+      "text": "Диагностика и обслуживание оборудования",
+      "cta": "Подробнее"
+    },
+    {
+      "id": "service-rental",
+      "kind": "service",
+      "ref": "rental",
+      "title": "Аренда оборудования",
+      "text": "Техника для временных и проектных задач",
+      "cta": "Условия аренды"
+    },
+    {
+      "id": "service-paint",
+      "kind": "service",
+      "ref": "paint",
+      "title": "Подбор автоэмали",
+      "text": "Подбор цвета и материалов для ремонта покрытия",
+      "cta": "Узнать о подборе"
+    }
+  ]
+}

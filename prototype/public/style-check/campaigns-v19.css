@@ -1,0 +1,73 @@
+/* Premium Industrial Glass: isolated campaign artwork, unchanged page geometry. */
+.app-shell[data-style-check] main.review-home-v2 .campaign-artwork { --campaign-ink: #20272b; --campaign-muted: #535b60; position: relative; isolation: isolate; width: 100%; height: 100%; overflow: hidden; container-type: inline-size; color: var(--campaign-ink); background: radial-gradient(ellipse at 85% 0%,#fff 0%,transparent 55%),linear-gradient(125deg,#e9edef,#f9f9f6 55%,#d9dee0); line-height: 1.3; box-shadow: inset 0 0 0 1px #ffffff7a; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-artwork[data-tone=dark] { --campaign-ink: #fff; --campaign-muted: #d5dbde; background: radial-gradient(ellipse at 82% 0%,#546167 0%,transparent 53%),linear-gradient(115deg,#11191e,#29343b 65%,#121b21); }
+.app-shell[data-style-check] main.review-home-v2 .campaign-artwork::before { content: ''; position: absolute; z-index: -1; width: 48%; height: 180%; top: -80%; right: -4%; transform: rotate(28deg); border: 1px solid #ffffff26; border-radius: 42px; background: linear-gradient(90deg,#ffffff02,#ffffff12,#ffffff02); pointer-events: none; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-artwork::after { content: ''; position: absolute; z-index: -1; inset: auto 0 0; height: 1px; background: linear-gradient(90deg,transparent,#ffcc0070,transparent); }
+.app-shell[data-style-check] main.review-home-v2 .campaign-safe-zone { position: relative; display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); align-items: center; gap: 16px; width: 100%; max-width: 800px; height: 100%; padding: 16px 24px; margin: 0 auto; box-sizing: border-box; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-copy { position: relative; z-index: 2; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-copy :is(h2,h3) { margin: 0; padding: 0; color: var(--campaign-ink); font-size: clamp(15px,3.5cqw,23px); font-weight: 650; line-height: 1.12; letter-spacing: -.035em; text-wrap: balance; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-copy p { margin: 0; color: var(--campaign-muted); font-size: 12px; line-height: 1.4; max-width: 36ch; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-cta { display: inline-flex; align-items: center; justify-content: center; gap: 8px; max-width: 100%; min-height: 30px; padding: 6px 12px; border-radius: 8px; background: linear-gradient(#ffda39,#ffcc00); color: #202620; font-size: 11px; font-weight: 650; line-height: 1.25; box-sizing: border-box; box-shadow: inset 0 1px #ffffff70,0 3px 8px #00000012; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-cta svg { flex: 0 0 15px; width: 15px; height: 15px; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-subject { position: relative; isolation: isolate; align-self: stretch; min-height: 0; min-width: 0; border-radius: 16px; background: linear-gradient(145deg,#fffffff2,#dce2e5e8); box-shadow: inset 0 1px 0 #fff,0 9px 22px #00000016; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-subject::before { content: ''; position: absolute; inset: 8px; border: 1px solid #ffffffb0; border-radius: 11px; pointer-events: none; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-subject::after { content: ''; position: absolute; z-index: -1; width: 75%; height: 10%; bottom: 7%; left: 12%; border-radius: 50%; background: #252a3233; filter: blur(9px); }
+.app-shell[data-style-check] main.review-home-v2 .campaign-subject > img { position: absolute; inset: 10%; width: 80%; height: 80%; display: block; object-fit: contain; object-position: center; mix-blend-mode: multiply; transition: transform .25s ease; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-subject--pair > .campaign-product { inset: 6% auto 7% 4%; width: 64%; height: 87%; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-subject--pair > .campaign-product-secondary { inset: auto 3% 8% auto; width: 55%; height: 54%; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-subject--photo > img { inset: 8%; width: 84%; height: 84%; border-radius: 8px; mix-blend-mode: normal; }
+@supports (backdrop-filter: blur(6px)) { .app-shell[data-style-check] main.review-home-v2 .campaign-subject { backdrop-filter: blur(6px); } }
+.app-shell[data-style-check] main.review-home-v2 .review-hero .hero__slide > a { height: 208px; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-artwork--hero .campaign-safe-zone { max-width: 1000px; padding: 20px 32px; gap: 36px; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-artwork--hero .campaign-copy :is(h2,h3) { font-size: 30px; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-artwork--hero .campaign-copy p { font-size: 14px; }
+.app-shell[data-style-check] main.review-home-v2 .campaign-artwork--hero .campaign-cta { font-size: 13px; min-height: 34px; padding-inline: 16px; }
+.app-shell[data-style-check] main.review-home-v2 .review-image-banner { height: 160px; }
+.app-shell[data-style-check] main.review-home-v2 .services .service-banner { aspect-ratio: 1816 / 866; }
+.app-shell[data-style-check] main.review-home-v2 .services .campaign-artwork { height: 100%; }
+.app-shell[data-style-check] main.review-home-v2 .services .campaign-safe-zone { gap: 10px; padding: 14px; }
+.app-shell[data-style-check] main.review-home-v2 .services .campaign-copy { gap: 6px; }
+.app-shell[data-style-check] main.review-home-v2 .services .campaign-copy h3 { font-size: clamp(14px,4.8cqw,22px); }
+.app-shell[data-style-check] main.review-home-v2 .services .campaign-copy p { font-size: clamp(10px,2.7cqw,12px); }
+.app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-card { border-color: #dce1e4; background: linear-gradient(135deg,#fff,#f0f2f2); box-shadow: 0 5px 18px #18232c08; }
+.app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-photo { position: relative; padding: 14px; background: radial-gradient(at 70% 20%,#fbfbf8,#dbe1e4); }
+.app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-photo .campaign-subject { width: 100%; height: 100%; background: #ffffff80; }
+.app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-action { border-radius: 8px; box-shadow: inset 0 1px #ffffff70,0 3px 8px #00000012; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation { background: radial-gradient(ellipse at 95% 0%,#626c6f,transparent 60%),linear-gradient(115deg,#151f25,#29373d); color: #fff; box-shadow: inset 0 0 0 1px #ffffff20; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation h2 { color: #fff; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation p { color: #d9dfe1; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation .button--light { background: #ffcc00; color: #202620; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:not(.button--light) { background: #ffffff14; border: 1px solid #ffffff50; color: #fff; }
+.app-shell[data-style-check] main.review-home-v2 :is(.review-image-banner,.service-banner,.hero__slide > a):focus-visible { outline: 2px solid #9a6500; outline-offset: 3px; }
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+ .app-shell[data-style-check] main.review-home-v2 :is(.review-image-banner,.service-banner,.promotion-card):hover .campaign-subject > img { transform: translateY(-2px); }
+}
+@container (max-width: 330px) {
+ .app-shell[data-style-check] main.review-home-v2 .campaign-safe-zone { padding: 12px; gap: 8px; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); }
+ .app-shell[data-style-check] main.review-home-v2 .campaign-copy { gap: 6px; }
+ .app-shell[data-style-check] main.review-home-v2 .campaign-copy p { font-size: 10px; }
+ .app-shell[data-style-check] main.review-home-v2 .campaign-cta { font-size: 10px; padding: 5px 7px; gap: 4px; min-height: 27px; }
+ .app-shell[data-style-check] main.review-home-v2 .campaign-subject { border-radius: 12px; }
+}
+@container (max-width: 260px) {
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-safe-zone { padding: 8px; gap: 6px; }
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-copy { gap: 4px; }
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-copy h3 { font-size: 12px; }
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-copy p { font-size: 9px; line-height: 1.2; }
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-cta { min-height: 22px; padding: 4px 5px; font-size: 9px; }
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-cta svg { display: none; }
+}
+@media (max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__slide > a { height: 184px; }
+ .app-shell[data-style-check] main.review-home-v2 .campaign-artwork--hero .campaign-safe-zone { padding: 14px; gap: 12px; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); }
+ .app-shell[data-style-check] main.review-home-v2 .campaign-artwork--hero .campaign-copy :is(h2,h3) { font-size: 19px; }
+ .app-shell[data-style-check] main.review-home-v2 .campaign-artwork--hero .campaign-copy p { font-size: 11px; line-height: 1.35; }
+ .app-shell[data-style-check] main.review-home-v2 .campaign-artwork--hero .campaign-cta { font-size: 11px; min-height: 30px; padding: 6px 10px; }
+}
+.app-shell[data-style-check] main.review-home-v2 :is(.review-image-banner,.service-banner,.hero__slide > a) { text-decoration: none; }
+.app-shell[data-style-check] main.review-home-v2 .services .service-banner .campaign-subject > img { width: 84%; height: 84%; aspect-ratio: auto; object-fit: contain; }
+@container (max-width: 260px) {
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-safe-zone { grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); }
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-copy p { font-size: 10px; line-height: 1.2; }
+ .app-shell[data-style-check] main.review-home-v2 .services .campaign-cta { font-size: 10px; }
+}

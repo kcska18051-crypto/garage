@@ -1,0 +1,262 @@
+[
+  {
+    "id": "hero-intro",
+    "variant": "desktop",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      780,
+      16,
+      2108,
+      400
+    ],
+    "bytes": 120950
+  },
+  {
+    "id": "hero-intro",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      1100,
+      24,
+      1652,
+      392
+    ],
+    "bytes": 51568,
+    "variant": "mobile"
+  },
+  {
+    "id": "hero-paint",
+    "variant": "desktop",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      780,
+      16,
+      2108,
+      400
+    ],
+    "bytes": 153322
+  },
+  {
+    "id": "hero-paint",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      1100,
+      24,
+      1652,
+      392
+    ],
+    "bytes": 54626,
+    "variant": "mobile"
+  },
+  {
+    "id": "hero-service",
+    "variant": "desktop",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      780,
+      16,
+      2108,
+      400
+    ],
+    "bytes": 172942
+  },
+  {
+    "id": "hero-service",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      1100,
+      24,
+      1652,
+      392
+    ],
+    "bytes": 65146,
+    "variant": "mobile"
+  },
+  {
+    "id": "banner-season",
+    "variant": "desktop",
+    "width": 1380,
+    "height": 320,
+    "safeBox": [
+      210,
+      25,
+      1170,
+      295
+    ],
+    "bytes": 51090
+  },
+  {
+    "id": "banner-season",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      1152,
+      0,
+      1632,
+      320
+    ],
+    "bytes": 49940,
+    "variant": "mobile"
+  },
+  {
+    "id": "banner-paint",
+    "variant": "desktop",
+    "width": 1380,
+    "height": 320,
+    "safeBox": [
+      210,
+      26,
+      1170,
+      293
+    ],
+    "bytes": 49896
+  },
+  {
+    "id": "banner-paint",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      1152,
+      0,
+      1632,
+      320
+    ],
+    "bytes": 43506,
+    "variant": "mobile"
+  },
+  {
+    "id": "banner-compressors",
+    "variant": "desktop",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      820,
+      12,
+      1922,
+      308
+    ],
+    "bytes": 112154
+  },
+  {
+    "id": "banner-compressors",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      1152,
+      0,
+      1632,
+      320
+    ],
+    "bytes": 45316,
+    "variant": "mobile"
+  },
+  {
+    "id": "banner-workshop",
+    "variant": "desktop",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      820,
+      12,
+      1922,
+      308
+    ],
+    "bytes": 100246
+  },
+  {
+    "id": "banner-workshop",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      1152,
+      0,
+      1632,
+      320
+    ],
+    "bytes": 48730,
+    "variant": "mobile"
+  },
+  {
+    "id": "service-center",
+    "variant": "desktop",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      36,
+      56,
+      870,
+      380
+    ],
+    "bytes": 41726
+  },
+  {
+    "id": "service-center",
+    "variant": "mobile",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      36,
+      56,
+      870,
+      380
+    ],
+    "bytes": 41726
+  },
+  {
+    "id": "service-rental",
+    "variant": "desktop",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      36,
+      56,
+      870,
+      380
+    ],
+    "bytes": 40238
+  },
+  {
+    "id": "service-rental",
+    "variant": "mobile",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      36,
+      56,
+      870,
+      380
+    ],
+    "bytes": 40238
+  },
+  {
+    "id": "service-paint",
+    "variant": "desktop",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      36,
+      56,
+      870,
+      380
+    ],
+    "bytes": 35664
+  },
+  {
+    "id": "service-paint",
+    "variant": "mobile",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      36,
+      56,
+      870,
+      380
+    ],
+    "bytes": 35664
+  }
+]

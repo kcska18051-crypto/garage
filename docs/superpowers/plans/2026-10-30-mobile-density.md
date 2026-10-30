@@ -1,0 +1,2 @@
+# Mobile density follow-up — approved 30 October
+Local only. Approved in chat: one-row pinned header with compact named service icons; two complete mobile product cards; three brand logos with centered side arrows. Keep full services in normal header and existing actions. Edit MobileHeader, ReviewBrands, final local stylesheet. Verify build, header tests and browser geometry/swipes at 360/390/768/1440.

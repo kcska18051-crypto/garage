@@ -1,0 +1,152 @@
+[
+  {
+    "width": 320,
+    "variants": [
+      {
+        "variant": "calm",
+        "padding": "22px 12px",
+        "heights": [
+          242,
+          242,
+          243,
+          243
+        ],
+        "arrowBottom": "22px",
+        "overflow": false
+      },
+      {
+        "variant": "expressive",
+        "padding": "22px 12px",
+        "heights": [
+          242,
+          242,
+          243,
+          243
+        ],
+        "arrowBottom": "14px",
+        "overflow": false
+      }
+    ],
+    "equal": true
+  },
+  {
+    "width": 390,
+    "variants": [
+      {
+        "variant": "calm",
+        "padding": "22px 12px",
+        "heights": [
+          216,
+          216,
+          224,
+          224
+        ],
+        "arrowBottom": "22px",
+        "overflow": false
+      },
+      {
+        "variant": "expressive",
+        "padding": "22px 12px",
+        "heights": [
+          216,
+          216,
+          224,
+          224
+        ],
+        "arrowBottom": "14px",
+        "overflow": false
+      }
+    ],
+    "equal": true
+  },
+  {
+    "width": 768,
+    "variants": [
+      {
+        "variant": "calm",
+        "padding": "30px 24px",
+        "heights": [
+          206,
+          206,
+          206,
+          206
+        ],
+        "arrowBottom": "28px",
+        "overflow": false
+      },
+      {
+        "variant": "expressive",
+        "padding": "30px 24px",
+        "heights": [
+          206,
+          206,
+          206,
+          206
+        ],
+        "arrowBottom": "14px",
+        "overflow": false
+      }
+    ],
+    "equal": true
+  },
+  {
+    "width": 1024,
+    "variants": [
+      {
+        "variant": "calm",
+        "padding": "30px 24px",
+        "heights": [
+          206,
+          206,
+          206,
+          206
+        ],
+        "arrowBottom": "28px",
+        "overflow": false
+      },
+      {
+        "variant": "expressive",
+        "padding": "30px 24px",
+        "heights": [
+          206,
+          206,
+          206,
+          206
+        ],
+        "arrowBottom": "14px",
+        "overflow": false
+      }
+    ],
+    "equal": true
+  },
+  {
+    "width": 1440,
+    "variants": [
+      {
+        "variant": "calm",
+        "padding": "30px 24px",
+        "heights": [
+          206,
+          206,
+          206,
+          206
+        ],
+        "arrowBottom": "28px",
+        "overflow": false
+      },
+      {
+        "variant": "expressive",
+        "padding": "30px 24px",
+        "heights": [
+          206,
+          206,
+          206,
+          206
+        ],
+        "arrowBottom": "14px",
+        "overflow": false
+      }
+    ],
+    "equal": true
+  }
+]

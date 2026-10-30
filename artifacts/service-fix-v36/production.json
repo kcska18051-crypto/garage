@@ -1,0 +1,8 @@
+{
+  "tool": "built-in imagegen",
+  "subject": "C:/Users/Admin/garage-design/prototype/public/style-check/review-assets/service-fix-v36/mechanism.png",
+  "subjectPrompt": "Remove both hands, gloves, arms and sleeves; preserve the open silver mechanism and ratchet, entire object within transparent padding.",
+  "heroPrompt": "Edit image 1 ONLY by replacing the entire mechanism-and-hands subject on the right with the clean mechanism-and-ratchet composition from image 2. REMOVE all hands, gloves, arms and sleeves, no people at all. Keep ALL existing Russian text exactly unchanged, same typography, line breaks, sizes, positions and yellow button. Preserve the light neutral background and finished ad format. Fit the ENTIRE replacement mechanism and ratchet naturally on the right with visible padding, no cut edges, nothing overlaps lettering. Soft natural shadows. Image 1 is the finished ad edit target, image 2 is the replacement subject. No new text, no terminal punctuation, no extra objects or graphic effects.",
+  "assets": "C:/Users/Admin/garage-design/prototype/public/style-check/review-assets/service-fix-v36",
+  "checks": "Build passed; desktop1440/mobile390 visual screenshots; no page overflow; hero and service-center variants show mechanism/tools without hands."
+}

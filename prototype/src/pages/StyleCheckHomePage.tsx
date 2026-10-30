@@ -6,6 +6,7 @@ import { UsefulSection } from '../features/home/UsefulSection'
 import { ContactDialog } from '../features/forms/ContactDialog'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import type { PromoBanner } from '../data/types'
+import { CampaignRaster } from '../features/home/CampaignRaster'
 
 const assets = '/garage/style-check/review-assets/'
 const paths: Record<string, string> = {
@@ -26,10 +27,6 @@ function Icon({ name, className = '' }: { name: string; className?: string }) {
 function Heading({ title, href, all }: { title: string; href: string; all: string }) {
   return <div className="section-heading"><div><h2>{title}</h2></div><Link className="review-all-link" to={href}>{all}<Icon name="arrow" /></Link></div>
 }
-function BannerPicture({ name, alt, hero = false }: { name: string; alt: string; hero?: boolean }) {
-  const revision = hero ? 'v4' : 'v20'
-  return <picture>{hero && <source media="(max-width: 767px)" srcSet={`${assets}${name}-mobile-${revision}.svg`} />}<img src={`${assets}${name}-${revision}.svg`} alt={alt} loading={hero ? 'eager' : 'lazy'} decoding="async" /></picture>
-}
 function ReviewHero() {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -43,17 +40,25 @@ function ReviewHero() {
     return () => clearInterval(timer)
   }, [paused, reduced, slides.length])
   return <section className="hero review-hero" aria-label="Главные предложения" onPointerEnter={() => setPaused(true)} onPointerLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false) }} onPointerDown={e => { start.current = e.clientX; swiped.current = false }} onPointerCancel={() => { start.current = null }} onPointerUp={e => { if (start.current === null) return; const distance = e.clientX - start.current; start.current = null; if (Math.abs(distance) > 45) { swiped.current = true; setActive(i => (i + (distance > 0 ? slides.length - 1 : 1)) % slides.length) } }}>
-    <div className="hero__stage">{slides.map((slide, i) => <article className="hero__slide" key={slide.id} hidden={i !== active} aria-label={`Слайд ${i + 1} из ${slides.length}: ${slide.title}`}><Link to={slide.href} aria-label={`${slide.title}. ${slide.cta}`} onClick={e => { if (swiped.current) { e.preventDefault(); swiped.current = false } }}><BannerPicture name={`hero-${slide.id}`} alt={`${slide.title}. ${slide.text}. ${slide.cta}`} hero /></Link></article>)}</div>
+    <div className="hero__stage">{slides.map((slide, i) => <article className="hero__slide" key={slide.id} hidden={i !== active} aria-label={`Слайд ${i + 1} из ${slides.length}: ${slide.title}`}><Link to={slide.href} onClick={e => { if (swiped.current) { e.preventDefault(); swiped.current = false } }}><CampaignRaster file={`hero-${slide.id}`} alt={`${slide.title}. ${slide.text} ${slide.cta}`} eager /></Link></article>)}</div>
     <div className="hero__pagination">{slides.map((slide, i) => <button key={slide.id} type="button" onClick={() => setActive(i)} aria-label={`Перейти к слайду ${i + 1}`} aria-current={i === active ? 'true' : undefined} />)}</div>
   </section>
 }
-const categoryPictures = ['product-jack.jpg', 'product-cabinet.jpg', 'product-spraygun.jpg', 'product-compressor.jpg', 'product-toolset.jpg', 'product-welder.jpg']
+const categoryPictures = ['jack', 'cabinet', 'spraygun', 'compressor', 'toolset', 'welder']
 function ReviewCategories() {
-  return <section className="home-section popular-categories"><Heading title="Популярные категории" href="/catalog" all="Весь каталог" /><div className="category-grid">{prototypeData.categories.map((item, i) => <Link className="category-card" key={item.id} to={item.href} aria-label={`Перейти в категорию ${item.name}`}><div className="category-card__art"><img src={assets + categoryPictures[i]} alt="" loading="lazy" /></div><strong>{item.name}</strong></Link>)}</div></section>
+  const [variant, setVariant] = useState<'calm' | 'expressive'>('calm')
+  return <section className="home-section popular-categories" data-category-style={variant}>
+    <Heading title="Популярные категории" href="/catalog" all="Весь каталог" />
+    <div className="category-style-switch" role="group" aria-label="Временное сравнение оформления категорий">
+      <button type="button" aria-pressed={variant === 'calm'} onClick={() => setVariant('calm')}>1 · Спокойный</button>
+      <button type="button" aria-pressed={variant === 'expressive'} onClick={() => setVariant('expressive')}>2 · Выразительный</button>
+    </div>
+    <div className="category-grid">{prototypeData.categories.map((item, i) => <Link className="category-card" key={item.id} to={item.href} aria-label={`Перейти в категорию ${item.name}`}><div className="category-card__art"><img src={`${assets}category-products-png-v27/${categoryPictures[i]}.png`} alt="" loading="lazy" /></div><strong>{item.name}</strong></Link>)}</div>
+  </section>
 }
-const bannerNames: Record<string, string> = { season: 'banner-season', paint: 'banner-paint', compressors: 'banner-compressors', workshop: 'banner-workshop' }
+
 function ReviewBanner({ item }: { item: PromoBanner }) {
-  return <Link className="divider-banner review-image-banner" to={item.href} aria-label={`${item.title}. Подробнее`}><BannerPicture name={bannerNames[item.id]} alt={`${item.title}. ${item.text}. Подробнее`} /></Link>
+  return <Link className="divider-banner review-image-banner" to={item.href}><CampaignRaster file={`banner-${item.id}`} alt={`${item.title}. ${item.text} ${item.cta}`} /></Link>
 }
 function ReviewMerchandising() {
   return <div className="home-merchandising-stream">{prototypeData.homeMerchandising.filter(block => block.visible).map(block => {
@@ -64,25 +69,39 @@ function ReviewMerchandising() {
   })}</div>
 }
 function ReviewBenefits() {
-  return <section className="benefits-strip review-benefits" aria-label="Преимущества">{prototypeData.benefits.map(item => <article key={item.id}><span className="review-benefit-icon"><Icon name={item.id} /></span><div><h2>{item.title}</h2><p>{item.text}</p></div></article>)}</section>
+  const [variant, setVariant] = useState<'calm' | 'expressive'>('calm')
+  const links: Record<string, string> = { delivery: '/delivery', pickup: '/contacts', support: '/warranty', clients: '/contacts' }
+  return <section className="benefits-strip review-benefits" aria-label="Преимущества" data-benefit-style={variant}>
+    <div className="benefit-style-switch" role="group" aria-label="Временное сравнение оформления преимуществ">
+      <button type="button" aria-pressed={variant === 'calm'} onClick={() => setVariant('calm')}>1 · Спокойный</button>
+      <button type="button" aria-pressed={variant === 'expressive'} onClick={() => setVariant('expressive')}>2 · Выразительный</button>
+    </div>
+    <div className="review-benefits-grid">{prototypeData.benefits.map(item => <article key={item.id}><span className="review-benefit-icon"><Icon name={item.id} /></span><div className="review-benefit-copy"><h2>{item.title}</h2><p>{item.text}</p></div><img className="review-benefit-decor" src={`${assets}benefits-v30/${item.id}.png`} alt="" loading="lazy" /><Link className="review-benefit-link" to={links[item.id]} aria-label={item.title}><Icon name="arrow" /></Link></article>)}</div>
+  </section>
 }
+
 const brandPictures: Record<string, string> = { nordberg: 'logo-nordberg.svg', trommelberg: 'logo-trommelberg.png', jtc: 'logo-jtc.png', rupes: 'logo-rupes.png', wiederkraft: 'logo-wiederkraft.jpg', jonnesway: 'logo-jonnesway.svg', sivik: 'logo-sivik.svg', 'car-tool': 'logo-car-tool.png' }
 function ReviewBrands() {
   const rail = useRef<HTMLDivElement>(null)
-  const move = (direction: number) => rail.current?.scrollBy({ left: direction * rail.current.clientWidth * .7, behavior: 'smooth' })
-  return <section className="home-section home-section--brands"><div className="section-heading"><div><h2>Популярные бренды</h2></div><div className="rail-actions"><Link to="/brands">Все бренды</Link><button type="button" aria-label="Предыдущие бренды" onClick={() => move(-1)}><Icon name="chevron" className="review-icon--back" /></button><button type="button" aria-label="Следующие бренды" onClick={() => move(1)}><Icon name="chevron" /></button></div></div><div className="brand-grid" ref={rail}>{prototypeData.brands.map(brand => <Link key={brand.id} to={brand.href} aria-label={brand.name}><img className={`review-brand-logo review-brand-logo--${brand.id}`} src={assets + brandPictures[brand.id]} alt={brand.name} loading="lazy" /></Link>)}</div></section>
+  const move = (direction: number) => rail.current?.scrollBy({ left: direction * rail.current.clientWidth, behavior: 'smooth' })
+  return <section className="home-section home-section--brands"><div className="section-heading"><div><h2>Популярные бренды</h2></div><div className="rail-actions"><Link to="/brands">Все бренды</Link></div></div><div className="review-brand-rail"><button className="review-brand-prev" type="button" aria-label="Предыдущие бренды" onClick={() => move(-1)}><Icon name="chevron" className="review-icon--back" /></button><div className="brand-grid" ref={rail}>{prototypeData.brands.map(brand => <Link key={brand.id} to={brand.href} aria-label={brand.name}><img className={`review-brand-logo review-brand-logo--${brand.id}`} src={assets + brandPictures[brand.id]} alt={brand.name} loading="lazy" /></Link>)}</div><button className="review-brand-next" type="button" aria-label="Следующие бренды" onClick={() => move(1)}><Icon name="chevron" /></button></div></section>
 }
-const featurePictures = ['tools-photo.jpg', 'paint-photo.jpg', 'product-compressor.jpg']
-const servicePictures = ['service-manrope-v1.svg', 'rental-manrope-v1.svg', 'paint-manrope-v1.svg']
+const serviceRasterFiles: Record<string,string> = { 'service-center':'service-center', rental:'service-rental', 'paint-matching':'service-paint' }
+const promotionRasterFiles: Record<string,string> = { 'service-tools':'promotion-service', 'paint-week':'promotion-paint', 'compressor-season':'promotion-compressor' }
 function ReviewFeatures({ services = false }: { services?: boolean }) {
-  const items = services ? prototypeData.services.map((item, i) => ({ id: item.id, title: item.name, text: item.text, href: item.href, cta: item.cta, label: '', photo: servicePictures[i] })) : prototypeData.promotions.filter(item => item.showOnHome).map((item, i) => ({ ...item, cta: 'Подробнее', label: item.deadline, photo: featurePictures[i] }))
-  if (services) return <section className="home-section services"><Heading title="Услуги" href="/services" all="Все услуги" /><div className="review-feature-grid">{items.map(item => <Link className="service-banner" key={item.id} to={item.href} aria-label={`${item.title}. ${item.cta}`}><img src={assets + item.photo} alt={`${item.title}. ${item.text}`} width="1816" height="866" loading="lazy" /></Link>)}</div></section>
-  return <section className={`home-section ${services ? 'services' : 'promotions'}`} aria-label={services ? 'Основные услуги' : undefined}><Heading title={services ? 'Услуги' : 'Акции'} href={services ? '/services' : '/actions'} all={services ? 'Все услуги' : 'Все акции'} /><div className={`${services ? 'service-cards' : 'promotions__grid'} review-feature-grid`}>{items.map(item => <Link className={`review-feature-card${services ? '' : ' promotion-card'}`} key={item.id} to={item.href}><div className="review-feature-photo"><img src={assets + item.photo} alt="" loading="lazy" /></div><div className="review-feature-copy">{item.label && <p className="promotion-card__deadline">{item.label}</p>}<h3>{item.title}</h3><p>{item.text}</p><span className="review-feature-action">{item.cta}<Icon name="arrow" /></span></div></Link>)}</div></section>
+  if (services) return <section className="home-section services"><Heading title="Услуги" href="/services" all="Все услуги" /><div className="review-feature-grid">{prototypeData.services.map(item => <Link className="service-banner" key={item.id} to={item.href}><CampaignRaster file={serviceRasterFiles[item.id]} alt={`${item.name}. ${item.text} ${item.cta}`} /></Link>)}</div></section>
+  return <section className="home-section promotions"><Heading title="Акции" href="/actions" all="Все акции" /><div className="promotions__grid review-feature-grid">{prototypeData.promotions.filter(item=>item.showOnHome).map(item=><Link className="review-feature-card promotion-card" key={item.id} to={item.href}><div className="review-feature-photo"><img src={`/garage/style-check/review-assets/raster-responsive-v24/${promotionRasterFiles[item.id]}-cover.webp`} alt="" loading="lazy" decoding="async" /></div><div className="review-feature-copy"><p className="promotion-card__deadline">{item.deadline}</p><h3>{item.title}</h3><p>{item.text}</p><span className="review-feature-action">Подробнее<Icon name="arrow" /></span></div></Link>)}</div></section>
 }
 function ReviewAbout() {
-  const facts = ['Годы работы — данные клиента', 'Магазины — данные клиента', 'Направления — данные клиента', 'Бренды — данные клиента']
-  return <section className="home-section about-section review-about"><div className="about-section__art" aria-hidden="true" /><div className="about-section__copy"><h2>Знаем оборудование изнутри</h2><p>«Гараж» работает с профессиональным оборудованием, инструментом и материалами для автосервисов, кузовного ремонта и производственных задач.</p><Link className="button" to="/about">Подробнее о компании<Icon name="arrow" /></Link></div><div className="about-facts">{facts.map((fact, i) => <div key={fact}><Icon name={['clock', 'pickup', 'tools', 'brands'][i]} /><strong>{fact.split(" — ")[0]}</strong><span className="review-fact-detail">{fact.split(" — ")[1]}</span></div>)}</div></section>
+  const facts = [
+    { id: 'years', title: 'Годы работы', icon: 'clock' },
+    { id: 'stores', title: 'Магазины', icon: 'pickup' },
+    { id: 'directions', title: 'Направления', icon: 'tools' },
+    { id: 'brands', title: 'Бренды', icon: 'brands' },
+  ]
+  return <section className="home-section about-section review-about"><div className="about-section__art" aria-hidden="true" /><div className="about-section__copy"><h2>Знаем оборудование изнутри</h2><p>«Гараж» работает с профессиональным оборудованием, инструментом и материалами для автосервисов, кузовного ремонта и производственных задач.</p><Link className="button" to="/about">Подробнее о компании<Icon name="arrow" /></Link></div><div className="about-facts">{facts.map(fact => <div key={fact.id} className="review-about-fact"><span className="review-about-fact__icon"><Icon name={fact.icon} /></span><strong>{fact.title}</strong><span className="review-fact-detail">данные клиента</span><img className="review-about-fact__decor" src={`${assets}about-v29/${fact.id}.png`} alt="" loading="lazy" /></div>)}</div></section>
 }
+
 function ReviewConsultation({ onConsult, onCallback }: { onConsult(): void; onCallback(): void }) {
   return <section className="final-cta review-consultation"><div><h2>Не уверены, какое оборудование или материал выбрать?</h2><p>Опишите задачу — специалист поможет определить подходящее направление.</p><div><button className="button button--light" type="button" onClick={onConsult}>Получить консультацию</button><button className="button" type="button" onClick={onCallback}>Заказать обратный звонок</button></div></div></section>
 }

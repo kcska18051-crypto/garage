@@ -1,0 +1,158 @@
+[
+  {
+    "id": "hero-intro",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      1100,
+      24,
+      1652,
+      392
+    ],
+    "bytes": 51568
+  },
+  {
+    "id": "hero-paint",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      1100,
+      24,
+      1652,
+      392
+    ],
+    "bytes": 54626
+  },
+  {
+    "id": "hero-service",
+    "width": 2752,
+    "height": 416,
+    "safeBox": [
+      1100,
+      24,
+      1652,
+      392
+    ],
+    "bytes": 65146
+  },
+  {
+    "id": "banner-season",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      1152,
+      0,
+      1632,
+      320
+    ],
+    "bytes": 49940
+  },
+  {
+    "id": "banner-paint",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      1152,
+      0,
+      1632,
+      320
+    ],
+    "bytes": 43506
+  },
+  {
+    "id": "banner-compressors",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      1152,
+      0,
+      1632,
+      320
+    ],
+    "bytes": 45316
+  },
+  {
+    "id": "banner-workshop",
+    "width": 2784,
+    "height": 320,
+    "safeBox": [
+      1152,
+      0,
+      1632,
+      320
+    ],
+    "bytes": 48730
+  },
+  {
+    "id": "service-center",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      0,
+      0,
+      906,
+      432
+    ],
+    "bytes": 108896
+  },
+  {
+    "id": "service-rental",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      0,
+      0,
+      906,
+      432
+    ],
+    "bytes": 82812
+  },
+  {
+    "id": "service-paint",
+    "width": 906,
+    "height": 432,
+    "safeBox": [
+      0,
+      0,
+      906,
+      432
+    ],
+    "bytes": 72726
+  },
+  {
+    "id": "promotion-service",
+    "width": 1440,
+    "height": 902,
+    "safeBox": [
+      480,
+      91,
+      960,
+      811
+    ],
+    "bytes": 83140
+  },
+  {
+    "id": "promotion-paint",
+    "width": 1440,
+    "height": 902,
+    "safeBox": [
+      480,
+      91,
+      960,
+      811
+    ],
+    "bytes": 82912
+  },
+  {
+    "id": "promotion-compressor",
+    "width": 1440,
+    "height": 902,
+    "safeBox": [
+      480,
+      91,
+      960,
+      811
+    ],
+    "bytes": 85610
+  }
+]

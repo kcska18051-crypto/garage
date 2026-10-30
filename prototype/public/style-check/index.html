@@ -118,6 +118,18 @@
       serviceTiles.rel = 'stylesheet'
       serviceTiles.href = '/garage/style-check/service-tiles-v37.css?v=20261030-1'
       await new Promise(resolve => { serviceTiles.onload = resolve; serviceTiles.onerror = resolve; document.head.append(serviceTiles) })
+      const categoryArt = document.createElement('link')
+      categoryArt.rel = 'stylesheet'
+      categoryArt.href = '/garage/style-check/category-art-v38.css?v=20261030-1'
+      await new Promise(resolve => { categoryArt.onload = resolve; categoryArt.onerror = resolve; document.head.append(categoryArt) })
+      const unifiedSpacing = document.createElement('link')
+      unifiedSpacing.rel = 'stylesheet'
+      unifiedSpacing.href = '/garage/style-check/section-spacing-v41.css?v=20261030-1'
+      await new Promise(resolve => { unifiedSpacing.onload = resolve; unifiedSpacing.onerror = resolve; document.head.append(unifiedSpacing) })
+      const finalPolish = document.createElement('link')
+      finalPolish.rel = 'stylesheet'
+      finalPolish.href = '/garage/style-check/final-polish-v42.css?v=20261030-1'
+      await new Promise(resolve => { finalPolish.onload = resolve; finalPolish.onerror = resolve; document.head.append(finalPolish) })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')
       const script = document.createElement('script')

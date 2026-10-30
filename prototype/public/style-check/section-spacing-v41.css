@@ -1,0 +1,13 @@
+/* One symmetric section rhythm, including nested product shelves. */
+.app-shell[data-style-check] main.review-home-v2.review-home-v2 section.home-section.home-section,
+.app-shell[data-style-check] main.review-home-v2.review-home-v2 > .review-benefits[data-benefit-style] { padding-top:16px; padding-bottom:16px; }
+.app-shell[data-style-check] main.review-home-v2.review-home-v2 .product-showcase[data-collection-source="automatic-bestseller"] { padding-top:16px; padding-bottom:16px; }
+.app-shell[data-style-check] main.review-home-v2.review-home-v2 > .review-hero { margin-top:16px; margin-bottom:16px; }
+.app-shell[data-style-check] main.review-home-v2.review-home-v2 .compact-banner-group { margin-top:16px; margin-bottom:16px; }
+@media (max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2.review-home-v2 section.home-section.home-section,
+ .app-shell[data-style-check] main.review-home-v2.review-home-v2 > .review-benefits[data-benefit-style] { padding-top:12px; padding-bottom:12px; }
+ .app-shell[data-style-check] main.review-home-v2.review-home-v2 .product-showcase[data-collection-source="automatic-bestseller"] { padding-top:12px; padding-bottom:12px; }
+ .app-shell[data-style-check] main.review-home-v2.review-home-v2 > .review-hero { margin-top:12px; margin-bottom:12px; }
+ .app-shell[data-style-check] main.review-home-v2.review-home-v2 .compact-banner-group { margin-top:12px; margin-bottom:12px; }
+}

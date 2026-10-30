@@ -44,7 +44,14 @@ function ReviewHero() {
     <div className="hero__pagination">{slides.map((slide, i) => <button key={slide.id} type="button" onClick={() => setActive(i)} aria-label={`Перейти к слайду ${i + 1}`} aria-current={i === active ? 'true' : undefined} />)}</div>
   </section>
 }
-const categoryPictures = ['jack', 'cabinet', 'spraygun', 'compressor', 'toolset', 'welder']
+const categoryArtCards = [
+  { id: 'body', name: 'Материалы для кузовного ремонта', href: '/catalog/body' },
+  { id: 'tools', name: 'Инструмент', href: '/catalog/tools' },
+  { id: 'detailing', name: 'Материалы для мойки и детейлинга', href: '/catalog?q=мойка' },
+  { id: 'lifts', name: 'Подъёмники', href: '/catalog/lifting' },
+  { id: 'compressors', name: 'Компрессоры', href: '/catalog/compressor-equipment' },
+  { id: 'tools-extra', name: 'Инструмент', href: '/catalog/tools' },
+]
 function ReviewCategories() {
   const [variant, setVariant] = useState<'calm' | 'expressive'>('calm')
   return <section className="home-section popular-categories" data-category-style={variant}>
@@ -53,7 +60,7 @@ function ReviewCategories() {
       <button type="button" aria-pressed={variant === 'calm'} onClick={() => setVariant('calm')}>1 · Спокойный</button>
       <button type="button" aria-pressed={variant === 'expressive'} onClick={() => setVariant('expressive')}>2 · Выразительный</button>
     </div>
-    <div className="category-grid">{prototypeData.categories.map((item, i) => <Link className="category-card" key={item.id} to={item.href} aria-label={`Перейти в категорию ${item.name}`}><div className="category-card__art"><img src={`${assets}category-products-png-v27/${categoryPictures[i]}.png`} alt="" loading="lazy" /></div><strong>{item.name}</strong></Link>)}</div>
+    <div className="category-grid category-art-grid">{categoryArtCards.map(item => <Link className="category-card category-art-card" key={item.id} to={item.href} aria-label={`Перейти в категорию ${item.name}`}><img src={`${assets}category-cards-v38/${variant}-${item.id}.webp`} alt={item.name} loading="lazy" /></Link>)}</div>
   </section>
 }
 

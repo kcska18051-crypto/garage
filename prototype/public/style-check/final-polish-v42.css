@@ -1,0 +1,16 @@
+/* Fine typography only: preserve colors, artwork, navigation and layouts. */
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] .review-benefit-icon svg { width:28px; height:28px; stroke-width:2; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] h2 { font-weight:650; }
+.app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] p { font-weight:500; }
+.app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-copy > p:not(.promotion-card__deadline) { font-weight:500; }
+.app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-action { font-weight:600; }
+@media (min-width:1280px) {
+ .app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-copy h3 { min-height:58px; }
+}
+@media (min-width:1024px) and (max-width:1279px) {
+ .app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-copy h3 { min-height:87px; }
+}
+@media (max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-benefits[data-benefit-style] .review-benefit-icon svg { width:26px; height:26px; }
+ .app-shell[data-style-check] main.review-home-v2 .promotions .review-feature-copy h3 { min-height:52px; }
+}

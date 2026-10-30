@@ -1,0 +1,164 @@
+[
+  {
+    "width": 375,
+    "overflow": false,
+    "rails": [
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      }
+    ],
+    "promoDescriptions": [
+      1623,
+      1623,
+      1623
+    ]
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "rails": [
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      }
+    ],
+    "promoDescriptions": [
+      1624,
+      1624,
+      1624
+    ]
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "rails": [
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      }
+    ],
+    "promoDescriptions": [
+      1636,
+      2063,
+      2490
+    ]
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "rails": [
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      }
+    ],
+    "promoDescriptions": [
+      1662,
+      1662,
+      1662
+    ]
+  },
+  {
+    "width": 1440,
+    "overflow": false,
+    "rails": [
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      }
+    ],
+    "promoDescriptions": [
+      1537,
+      1537,
+      1537
+    ]
+  },
+  {
+    "width": 1920,
+    "overflow": false,
+    "rails": [
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      },
+      {
+        "moves": true,
+        "lastFits": true
+      }
+    ],
+    "promoDescriptions": [
+      1542,
+      1542,
+      1542
+    ]
+  }
+]

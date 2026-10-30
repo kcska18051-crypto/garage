@@ -1,0 +1,327 @@
+[
+  {
+    "width": 320,
+    "overflow": false,
+    "sections": [
+      {
+        "class": "home-section popular-categories",
+        "top": "22px",
+        "bottom": "22px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section home-section--brands",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section promotions",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section services",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section about-section review-about",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section useful-section",
+        "top": "12px",
+        "bottom": "12px"
+      }
+    ],
+    "cta": [
+      "14px",
+      "14px"
+    ]
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "sections": [
+      {
+        "class": "home-section popular-categories",
+        "top": "22px",
+        "bottom": "22px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section home-section--brands",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section promotions",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section services",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section about-section review-about",
+        "top": "12px",
+        "bottom": "12px"
+      },
+      {
+        "class": "home-section useful-section",
+        "top": "12px",
+        "bottom": "12px"
+      }
+    ],
+    "cta": [
+      "14px",
+      "14px"
+    ]
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "sections": [
+      {
+        "class": "home-section popular-categories",
+        "top": "30px",
+        "bottom": "30px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section home-section--brands",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section promotions",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section services",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section about-section review-about",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section useful-section",
+        "top": "16px",
+        "bottom": "16px"
+      }
+    ],
+    "cta": [
+      "24px",
+      "24px"
+    ]
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "sections": [
+      {
+        "class": "home-section popular-categories",
+        "top": "30px",
+        "bottom": "30px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section home-section--brands",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section promotions",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section services",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section about-section review-about",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section useful-section",
+        "top": "16px",
+        "bottom": "16px"
+      }
+    ],
+    "cta": [
+      "24px",
+      "24px"
+    ]
+  },
+  {
+    "width": 1440,
+    "overflow": false,
+    "sections": [
+      {
+        "class": "home-section popular-categories",
+        "top": "30px",
+        "bottom": "30px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section product-showcase",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "benefits-strip review-benefits",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section home-section--brands",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section promotions",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section services",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section about-section review-about",
+        "top": "16px",
+        "bottom": "16px"
+      },
+      {
+        "class": "home-section useful-section",
+        "top": "16px",
+        "bottom": "16px"
+      }
+    ],
+    "cta": [
+      "24px",
+      "24px"
+    ]
+  }
+]

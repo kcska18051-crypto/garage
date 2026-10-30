@@ -12,3 +12,8 @@
 @media (max-width:767px) {
  .app-shell[data-style-check] main.review-home-v2 > section.home-section:not(.product-showcase):is(.home-section--brands,.promotions,.services,.review-about,.useful-section) { padding-top:12px; padding-bottom:12px; }
 }
+/* The preceding section already contributes half of the top gap. */
+.app-shell[data-style-check] main.review-home-v2 > .final-cta.review-consultation { margin-top:16px; margin-bottom:32px; }
+@media (max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 > .final-cta.review-consultation { margin-top:12px; margin-bottom:24px; }
+}

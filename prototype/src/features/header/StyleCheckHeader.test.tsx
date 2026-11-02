@@ -41,3 +41,11 @@ it('keeps the full paint matching label in the expanded desktop row', () => {
  expect(screen.getByRole('link',{name:'Подбор автоэмалей'})).toHaveAttribute('href','/services/paint-matching')
  expect(document.querySelector('.reference-desktop-services a[href="/services"]')).not.toBeInTheDocument()
 })
+it('shows the selected city and telephone in the shared mobile menu panel', () => {
+ const onRegion=vi.fn()
+ render(<MemoryRouter initialEntries={['/style-check/']}><MobileHeader region="Вологда" onRegion={onRegion} menuOpen onMenu={()=>{}} onCatalog={()=>{}} /></MemoryRouter>)
+ const menu=within(screen.getByRole('dialog',{name:'Мобильное меню'}))
+ expect(menu.getByRole('button',{name:'Ваш город: Вологда. Изменить город'})).toBeInTheDocument()
+ expect(menu.getByRole('link',{name:/Позвонить нам/})).toHaveAttribute('href','tel:+70000000000')
+ expect(menu.getByRole('navigation',{name:'Разделы сайта'})).toBeInTheDocument()
+})

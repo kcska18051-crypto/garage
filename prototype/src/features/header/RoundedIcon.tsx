@@ -1,4 +1,7 @@
 const paths: Record<string, React.ReactNode> = {
+ sale: <><path d="m4 20 16-16"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/></>,
+ delivery: <><path d="M3 5h11v12H3ZM14 10h4l3 4v3h-7"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></>,
+ contacts: <><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></>,
   paint: <><path d="M12 3a9 9 0 1 0 0 18h1.4a2.6 2.6 0 0 0 2-4.3 1.5 1.5 0 0 1 1.2-2.5H18a3 3 0 0 0 3-3A8.7 8.7 0 0 0 12 3Z"/><circle cx="7.5" cy="10" r=".8"/><circle cx="11" cy="7" r=".8"/><circle cx="15.5" cy="8" r=".8"/><circle cx="7.5" cy="15" r=".8"/></>,
   phone: <path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.7.7 2.5a2 2 0 0 1-.4 2.1l-1.3 1.3a16 16 0 0 0 4.3 4.3l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.6.6 2.5.7a2 2 0 0 1 2 2Z" />,
   service: <path d="m14.5 6.5-3.5 3.5 3 3 3.5-3.5a5 5 0 0 1-6 6L6 21a2.1 2.1 0 0 1-3-3l5.5-5.5a5 5 0 0 1 6-6Z" />,

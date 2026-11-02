@@ -1,3 +1,7 @@
+import { useLocation } from 'react-router-dom'
+import { MobileMenuRegion } from './MobileMenuRegion'
+import { RoundedIcon } from './RoundedIcon'
+import './UnifiedMobileMenu.css'
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
@@ -5,13 +9,17 @@ import { headerCatalogTree, type CatalogMenuNode } from './catalogMenuData'
 import './CatalogMenu.css'
 
 type Props = {
+  region?: string
+  onRegion?(): void
   header: RefObject<HTMLElement | null>
   opener: RefObject<HTMLElement | null>
   compact: boolean
   onClose(restoreFocus?: boolean): void
 }
 
-export function CatalogMenu({ header, opener, compact, onClose }: Props) {
+export function CatalogMenu({ header, opener, compact, onClose, region='Ярославль', onRegion }: Props) {
+  const isStyleCheck=useLocation().pathname.replace(/\/$/,'')==='/style-check'
+  const [query,setQuery]=useState('')
   const [active, setActive] = useState(headerCatalogTree[0].id)
   const [path, setPath] = useState<CatalogMenuNode[]>([])
   const [narrow, setNarrow] = useState(() => innerWidth < 768)
@@ -73,20 +81,21 @@ export function CatalogMenu({ header, opener, compact, onClose }: Props) {
   }, [path, active, narrow])
 
   const link = (node: CatalogMenuNode, className?: string) => <Link className={className} key={node.id} to={node.href} onClick={() => onClose(false)}>{node.name}</Link>
-  return createPortal(<div className="catalog-menu-layer" style={{ '--catalog-menu-top': `${top}px` } as React.CSSProperties}>
+  return createPortal(<div className={`catalog-menu-layer${isStyleCheck ? ' unified-catalog-layer' : ''}`} style={{ '--catalog-menu-top': `${top}px` } as React.CSSProperties}>
     <div className="catalog-menu-backdrop" aria-hidden="true" />
     <section className="catalog-mega" id="header-catalog-panel" role="dialog" aria-modal="true" aria-label="Каталог товаров" ref={panel}>
       <div className="catalog-mega__toolbar">
-        {narrow && current ? <button type="button" onClick={() => setPath(items => items.slice(0, -1))}><span aria-hidden="true">← </span><span>Назад</span></button> : <Link to="/catalog" onClick={() => onClose(false)}>Весь каталог →</Link>}
+        {isStyleCheck && narrow ? <div className="unified-catalog-heading">{current && <button type="button" aria-label="Назад" onClick={()=>{setPath(items=>items.slice(0,-1));setQuery('')}}>←</button>}<h2>{current?.name ?? 'Каталог'}</h2></div> : narrow && current ? <button type="button" onClick={() => setPath(items => items.slice(0, -1))}><span aria-hidden="true">← </span><span>Назад</span></button> : <Link to="/catalog" onClick={() => onClose(false)}>Весь каталог →</Link>}
         <button type="button" aria-label="Закрыть каталог" onClick={() => onClose()}>×</button>
       </div>
       {narrow ? <>
-        <h2 className="catalog-mega__mobile-title" tabIndex={-1} ref={title}>{current?.name ?? 'Каталог'}</h2>
+        {isStyleCheck ? <><MobileMenuRegion region={region} onRegion={()=>onRegion?.()}/><label className="unified-catalog-search"><RoundedIcon name="search"/><input aria-label="Найти в каталоге" placeholder="Найти в каталоге" value={query} onChange={e=>setQuery(e.target.value)}/></label></> : <h2 className="catalog-mega__mobile-title" tabIndex={-1} ref={title}>{current?.name ?? 'Каталог'}</h2>}
         <div className="catalog-mega__mobile-body" ref={scroll}>
+          {!current && isStyleCheck && <Link className="catalog-mega__all" to="/catalog" onClick={()=>onClose(false)}>Весь каталог →</Link>}
           {current && <Link className="catalog-mega__all" to={current.href} onClick={() => onClose(false)}>Все товары раздела →</Link>}
           <nav aria-label="Разделы каталога">
-            {(current?.children ?? headerCatalogTree).map(node => node.children.length || !current
-              ? <button className="catalog-mega__step" type="button" key={node.id} onClick={() => setPath(items => [...items, node])}>{node.name}<span aria-hidden="true">→</span></button>
+            {(current?.children ?? headerCatalogTree).filter(node=>node.name.toLocaleLowerCase('ru').includes(query.toLocaleLowerCase('ru'))).map(node => node.children.length || !current
+              ? <button className="catalog-mega__step" type="button" key={node.id} onClick={() => {setPath(items => [...items, node]);setQuery('')}}>{isStyleCheck && <RoundedIcon name="catalog"/>}{node.name}<span aria-hidden="true">›</span></button>
               : link(node, 'catalog-mega__step'))}
           </nav>
         </div>

@@ -1,3 +1,4 @@
+import { MobileSiteMenu } from './MobileSiteMenu'
 import { StyleCheckHeaderSymbol } from './StyleCheckHeaderSymbol'
 import { RoundedIcon } from './RoundedIcon'
 import { useEffect } from 'react'
@@ -19,7 +20,7 @@ export function MobileHeader({ compact = false, compareCount = 0, region, onRegi
     return <div className="mobile-header review-mobile-header reference-mobile-header">
       {compact && <div className="review-mobile-pinned">{main(true)}</div>}
       {main(false)}<SearchBox suspended={searchSuspended} />
-      {menuOpen && <nav className={compact ? 'mobile-menu review-mobile-menu-pinned' : 'mobile-menu'} aria-label="Мобильное меню"><button type="button" onClick={onRegion} aria-label="Выбрать город">{region}<span>Изменить город</span></button><button type="button" onClick={onCatalog} aria-haspopup="dialog">Каталог</button>{[['Профиль','/profile'],['Сравнение','/compare'],['Услуги','/services'],['Подбор автоэмали','/services/paint-matching'],['Акции','/actions'],['Доставка и оплата','/delivery'],['Контакты','/contacts']].map(([label,href])=><Link key={href} to={href} onClick={onMenu}>{label}</Link>)}<a href="tel:+70000000000">+7 (000) 000-00-00</a></nav>}
+      {menuOpen && <MobileSiteMenu region={region} onRegion={onRegion} onClose={onMenu} onCatalog={onCatalog} />}
     </div>
   }
   return (

@@ -72,3 +72,31 @@
  .app-shell[data-style-check] .site-header .reference-mobile-header > .search-box input { height:44px; min-height:44px; }
  .app-shell[data-style-check] .site-header .reference-mobile-header > .search-box .search-box__submit { width:36px; height:36px; }
 }
+
+/* Local review: a white header with a subtle lower shadow instead of a grey surround. */
+.app-shell[data-style-check] .site-header { background:#fff; box-shadow:0 3px 14px -8px rgb(24 35 44 / .18); }
+.app-shell[data-style-check] .site-header .third-level-nav__desktop { border-top:0; border-bottom:0; }
+.app-shell[data-style-check] .site-header .desktop-header.desktop-header--compact .main-header-row { box-shadow:0 3px 14px -8px rgb(24 35 44 / .18); }
+
+/* Local review: fine contours around the white header rows. */
+.app-shell[data-style-check] .site-header .desktop-header:not(.desktop-header--compact) .main-header-row,
+.app-shell[data-style-check] .site-header .third-level-nav__desktop { outline:1px solid #e9ecec; outline-offset:-1px; border-radius:14px; box-shadow:0 2px 8px -5px rgb(24 35 44 / .12); }
+
+/* Keep the soft shadow without a visible outline. */
+.app-shell[data-style-check] .site-header .desktop-header:not(.desktop-header--compact) .main-header-row,
+.app-shell[data-style-check] .site-header .third-level-nav__desktop { outline:none; }
+/* Desktop contact shortcuts are present only in the pinned header. */
+.app-shell[data-style-check] .reference-compact-contact { display:flex; flex:0 0 auto; flex-direction:column; align-items:flex-end; gap:3px; }
+.app-shell[data-style-check] .reference-compact-phone { color:#26312e; font-size:13px; line-height:18px; font-weight:700; white-space:nowrap; text-decoration:none; }
+.app-shell[data-style-check] .reference-compact-contacts { padding:2px 10px; border-radius:6px; background:#f3f5f2; color:#39413b; font-size:11px; line-height:18px; text-decoration:none; }
+.app-shell[data-style-check] .reference-compact-contacts:hover { background:#fff3bf; }
+.app-shell[data-style-check] .reference-compact-phone:hover { color:#a16a12; }
+@media(min-width:768px) and (max-width:1100px) { .app-shell[data-style-check] .site-header .desktop-header--compact .main-header-row { gap:8px; } .app-shell[data-style-check] .reference-compact-phone { font-size:12px; } }
+
+@media(max-width:1023px) { .app-shell[data-style-check] .reference-compact-contact { display:none; } }
+.app-shell[data-style-check] .reference-contact-tile { flex-direction:row; align-items:center; gap:8px; padding:7px 10px; border-radius:10px; background:#fff3bf; color:#303933; text-decoration:none; white-space:nowrap; }
+.app-shell[data-style-check] .reference-contact-tile > .review-rounded-icon { width:20px; height:20px; flex-shrink:0; }
+.app-shell[data-style-check] .reference-contact-tile > span { display:flex; flex-direction:column; font-size:12px; line-height:17px; }
+.app-shell[data-style-check] .reference-contact-tile strong { font-weight:650; }
+.app-shell[data-style-check] .reference-contact-tile:hover { background:#ffe78a; }
+.app-shell[data-style-check] .reference-contact-tile:focus-visible { outline:2px solid #8a6800; outline-offset:2px; }

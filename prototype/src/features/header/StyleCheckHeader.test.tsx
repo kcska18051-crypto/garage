@@ -31,3 +31,13 @@ it('orders the six bottom destinations and highlights both services', () => {
  expect(within(nav).getByRole('link',{name:'Услуги'})).toHaveClass('reference-bottom-service')
  expect(within(nav).getByRole('link',{name:'Подбор'})).toHaveAttribute('href','/services/paint-matching')
 })
+it('hides the mobile search shortcut until the search row scrolls away', () => {
+ render(<MemoryRouter initialEntries={['/style-check/']}><MobileHeader region="Ярославль" onRegion={()=>{}} menuOpen={false} onMenu={()=>{}} onCatalog={()=>{}} /></MemoryRouter>)
+ expect(screen.queryByRole('button',{name:'Открыть поиск'})).not.toBeInTheDocument()
+ expect(screen.getByPlaceholderText('Товары, бренды, артикулы')).toBeInTheDocument()
+})
+it('keeps the full paint matching label in the expanded desktop row', () => {
+ render(<MemoryRouter initialEntries={['/style-check/']}><AuthProvider><DesktopHeader region="Ярославль" onRegion={()=>{}} counts={counts} compact={false} catalogOpen={false} onCatalog={()=>{}} /></AuthProvider></MemoryRouter>)
+ expect(screen.getByRole('link',{name:'Подбор автоэмалей'})).toHaveAttribute('href','/services/paint-matching')
+ expect(document.querySelector('.reference-desktop-services a[href="/services"]')).not.toBeInTheDocument()
+})

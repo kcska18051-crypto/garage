@@ -40,7 +40,7 @@ function ReviewHero() {
     return () => clearInterval(timer)
   }, [paused, reduced, slides.length])
   return <section className="hero review-hero" aria-label="Главные предложения" onPointerEnter={() => setPaused(true)} onPointerLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false) }} onPointerDown={e => { start.current = e.clientX; swiped.current = false }} onPointerCancel={() => { start.current = null }} onPointerUp={e => { if (start.current === null) return; const distance = e.clientX - start.current; start.current = null; if (Math.abs(distance) > 45) { swiped.current = true; setActive(i => (i + (distance > 0 ? slides.length - 1 : 1)) % slides.length) } }}>
-    <div className="hero__stage">{slides.map((slide, i) => <article className="hero__slide" key={slide.id} hidden={i !== active} aria-label={`Слайд ${i + 1} из ${slides.length}: ${slide.title}`}><Link to={slide.href} onClick={e => { if (swiped.current) { e.preventDefault(); swiped.current = false } }}><CampaignRaster file={`hero-${slide.id}`} alt={`${slide.title}. ${slide.text} ${slide.cta}`} eager /></Link></article>)}</div>
+    <div className="hero__stage">{slides.map((slide, i) => <article className="hero__slide" key={slide.id} hidden={i !== active} aria-label={`Слайд ${i + 1} из ${slides.length}: ${slide.title}`}><Link to={slide.href} onClick={e => { if (swiped.current) { e.preventDefault(); swiped.current = false } }}><CampaignRaster file={`hero-${slide.id}`} alt={`${slide.title}. ${slide.text} ${slide.cta}`} eager /></Link></article>)}<div className="review-hero-arrows"><button type="button" aria-label="Предыдущий баннер" onClick={() => setActive(i => (i + slides.length - 1) % slides.length)}><Icon name="chevron" className="review-icon--back" /></button><button type="button" aria-label="Следующий баннер" onClick={() => setActive(i => (i + 1) % slides.length)}><Icon name="chevron" /></button></div></div>
     <div className="hero__pagination">{slides.map((slide, i) => <button key={slide.id} type="button" onClick={() => setActive(i)} aria-label={`Перейти к слайду ${i + 1}`} aria-current={i === active ? 'true' : undefined} />)}</div>
   </section>
 }
@@ -54,13 +54,9 @@ const categoryArtCards = [
 ]
 function ReviewCategories() {
   const [variant, setVariant] = useState<'calm' | 'expressive'>('calm')
-  return <section className="home-section popular-categories" data-category-style={variant}>
+  return <section className="home-section popular-categories" data-category-style="calm">
     <Heading title="Популярные категории" href="/catalog" all="Весь каталог" />
-    <div className="category-style-switch" role="group" aria-label="Временное сравнение оформления категорий">
-      <button type="button" aria-pressed={variant === 'calm'} onClick={() => setVariant('calm')}>1 · Спокойный</button>
-      <button type="button" aria-pressed={variant === 'expressive'} onClick={() => setVariant('expressive')}>2 · Выразительный</button>
-    </div>
-    <div className="category-grid category-art-grid">{categoryArtCards.map(item => <Link className="category-card category-art-card" key={item.id} to={item.href} aria-label={`Перейти в категорию ${item.name}`}><img src={`${assets}category-cards-v38/${variant}-${item.id}.webp`} alt={item.name} loading="lazy" /></Link>)}</div>
+    <div className="category-grid category-art-grid">{categoryArtCards.map(item => <Link className="category-card category-art-card" key={item.id} to={item.href} aria-label={`Перейти в категорию ${item.name}`}><img src={`${assets}category-cards-v38/calm-${item.id}.webp`} alt={item.name} loading="lazy" /></Link>)}</div>
   </section>
 }
 
@@ -78,11 +74,7 @@ function ReviewMerchandising() {
 function ReviewBenefits() {
   const [variant, setVariant] = useState<'calm' | 'expressive'>('calm')
   const links: Record<string, string> = { delivery: '/delivery', pickup: '/contacts', support: '/warranty', clients: '/contacts' }
-  return <section className="benefits-strip review-benefits" aria-label="Преимущества" data-benefit-style={variant}>
-    <div className="benefit-style-switch" role="group" aria-label="Временное сравнение оформления преимуществ">
-      <button type="button" aria-pressed={variant === 'calm'} onClick={() => setVariant('calm')}>1 · Спокойный</button>
-      <button type="button" aria-pressed={variant === 'expressive'} onClick={() => setVariant('expressive')}>2 · Выразительный</button>
-    </div>
+  return <section className="benefits-strip review-benefits" aria-label="Преимущества" data-benefit-style="expressive">
     <div className="review-benefits-grid">{prototypeData.benefits.map(item => <article key={item.id}><span className="review-benefit-icon"><Icon name={item.id} /></span><div className="review-benefit-copy"><h2>{item.title}</h2><p>{item.text}</p></div><img className="review-benefit-decor" src={`${assets}benefits-v30/${item.id}.png`} alt="" loading="lazy" /><Link className="review-benefit-link" to={links[item.id]} aria-label={item.title}><Icon name="arrow" /></Link></article>)}</div>
   </section>
 }

@@ -1,5 +1,6 @@
+import { RoundedIcon } from './RoundedIcon'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { getVisibleHeaderQuickLinks, headerQuickLinksConfig, type HeaderQuickLink, type HeaderQuickLinksConfig } from '../../data/headerNavigationData'
 import { PaintServiceLink } from './PaintServiceLink'
 
@@ -83,6 +84,7 @@ export function ThirdLevelNavigation({ compact, config = headerQuickLinksConfig 
         </div>}
       </nav>
       {!isStyleCheck && <PaintServiceLink />}
+      {isStyleCheck && !compact && <div className="reference-desktop-services reference-third-services"><Link to="/services"><RoundedIcon name="service" /><span>Услуги</span></Link></div>}
       <div className="third-level-nav__measure" ref={measureRef} aria-hidden="true">
         {desktopItems.map((item) => <span key={item.id} data-measure-link>{item.label}</span>)}
         <span data-measure-more>Ещё ⌄</span>

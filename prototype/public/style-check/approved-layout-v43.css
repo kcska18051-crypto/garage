@@ -103,3 +103,11 @@
 
 /* Compact counters stay attached to their icon buttons. */
 .app-shell[data-style-check] .site-header .desktop-header--compact .header-action b { left:auto; right:0; top:-2px; width:18px; height:18px; min-width:18px; padding:0; font-size:9px; line-height:14px; }
+
+/* Shared outer grid for the hero and all promotional banner groups. */
+.app-shell[data-style-check] main.review-home-v2 .review-hero,
+.app-shell[data-style-check] main.review-home-v2 .compact-banner-group { width:calc(100% - 48px); max-width:calc(var(--container) - 48px); margin-inline:auto; }
+@media(max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-hero,
+ .app-shell[data-style-check] main.review-home-v2 .compact-banner-group { width:calc(100% - 24px); max-width:calc(var(--container) - 24px); }
+}

@@ -64,3 +64,11 @@
  .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination button { width:14px; }
  .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination button::before { width:4px; height:4px; }
 }
+/* A shorter expanded mobile header; pinned controls retain their geometry. */
+@media(max-width:767px) {
+ .app-shell[data-style-check] .site-header .reference-mobile-header { padding:4px 12px 8px; }
+ .app-shell[data-style-check] .site-header .reference-mobile-header > .reference-mobile-main { height:52px; }
+ .app-shell[data-style-check] .site-header .reference-mobile-header > .reference-mobile-main .logo { block-size:46px; max-width:132px; }
+ .app-shell[data-style-check] .site-header .reference-mobile-header > .search-box input { height:44px; min-height:44px; }
+ .app-shell[data-style-check] .site-header .reference-mobile-header > .search-box .search-box__submit { width:36px; height:36px; }
+}

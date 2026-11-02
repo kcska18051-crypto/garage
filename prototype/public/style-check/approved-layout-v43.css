@@ -111,3 +111,10 @@
  .app-shell[data-style-check] main.review-home-v2 .review-hero,
  .app-shell[data-style-check] main.review-home-v2 .compact-banner-group { width:calc(100% - 24px); max-width:calc(var(--container) - 24px); }
 }
+
+/* Align banner edges with section surfaces, rather than inset product cards. */
+@media(min-width:768px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-hero,
+ .app-shell[data-style-check] main.review-home-v2 .compact-banner-group,
+ .app-shell[data-style-check] main.review-home-v2 .review-consultation { width:100%; max-width:var(--container); margin-inline:auto; }
+}

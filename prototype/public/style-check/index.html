@@ -132,7 +132,7 @@
       await new Promise(resolve => { finalPolish.onload = resolve; finalPolish.onerror = resolve; document.head.append(finalPolish) })
       const approvedHeader = document.createElement('link')
       approvedHeader.rel = 'stylesheet'
-      approvedHeader.href = '/garage/style-check/approved-layout-v43.css?v=20261102-15'
+      approvedHeader.href = '/garage/style-check/approved-layout-v43.css?v=20261102-16'
       await new Promise(resolve => { approvedHeader.onload = resolve; approvedHeader.onerror = resolve; document.head.append(approvedHeader) })
       const sourceScript = documentSource.querySelector('script[type="module"][src]')
       if (!sourceScript) throw new Error('Не найден скрипт прототипа')

@@ -100,3 +100,6 @@
 .app-shell[data-style-check] .reference-contact-tile strong { font-weight:650; }
 .app-shell[data-style-check] .reference-contact-tile:hover { background:#ffe78a; }
 .app-shell[data-style-check] .reference-contact-tile:focus-visible { outline:2px solid #8a6800; outline-offset:2px; }
+
+/* Compact counters stay attached to their icon buttons. */
+.app-shell[data-style-check] .site-header .desktop-header--compact .header-action b { left:auto; right:0; top:-2px; width:18px; height:18px; min-width:18px; padding:0; font-size:9px; line-height:14px; }

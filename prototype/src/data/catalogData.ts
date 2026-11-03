@@ -153,7 +153,7 @@ const performances = performanceValues
 const pressures = ['8', '10', '12']
 const countries = ['belarus', 'italy', 'china', 'russia']
 
-export const catalogProducts: CatalogProduct[] = Array.from({ length: 32 }, (_, index) => {
+export const catalogProducts: CatalogProduct[] = Array.from({ length: 128 }, (_, index) => {
   const brandId = brands[index % brands.length]
   const subcategoryId = subcategories[index % subcategories.length]
   const price = 185000 + index * 23750

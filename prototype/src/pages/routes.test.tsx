@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
@@ -82,11 +82,28 @@ describe('prototype routes', () => {
     expect(childSections.querySelectorAll('a')).toHaveLength(6)
     expect(childSections.querySelectorAll('.catalog-child-sections__art')).toHaveLength(6)
     expect(childSections).toHaveTextContent('Винтовые компрессоры на ресивере')
-    expect(screen.queryByRole('button', { name: /Показать ещё|Свернуть/ })).not.toBeInTheDocument()
+    expect(within(childSections).queryByRole('button', { name: /Показать ещё|Свернуть/ })).not.toBeInTheDocument()
     expect(childSections.compareDocumentPosition(listing) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(listing).toContainElement(tags)
     expect(listing.compareDocumentPosition(seo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
   })
+
+  it('appends more products and replaces them when choosing a page', async () => {
+    render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/screw-compressors']}><App /></MemoryRouter>)
+    const results = screen.getByTestId('catalog-results')
+    const firstLink = results.querySelector('a')!.getAttribute('href')
+    expect(results.querySelectorAll('article')).toHaveLength(12)
+    fireEvent.click(screen.getByRole('button', { name: 'Показать ещё 12' }))
+    expect(results.querySelectorAll('article')).toHaveLength(24)
+    expect(results.querySelector('a')).toHaveAttribute('href', firstLink)
+    expect(screen.getByRole('button', { name: 'Страница 2' })).toHaveAttribute('aria-current', 'page')
+    fireEvent.click(screen.getByRole('button', { name: 'Страница 4' }))
+    expect(results.querySelectorAll('article')).toHaveLength(12)
+    expect(results.querySelector('a')).not.toHaveAttribute('href', firstLink)
+    expect(screen.queryByRole('button', { name: 'Показать ещё 12' })).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Предыдущая страница' }))
+    expect(screen.getByRole('button', { name: 'Страница 3' })).toHaveAttribute('aria-current', 'page')
+  }, 15000)
 
   it('uses compact shared product teasers on the third catalog level', () => {
     render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/screw-compressors']}><App /></MemoryRouter>)

@@ -1,4 +1,12 @@
 .catalog-listing-approved { --color-border: #e4e8e0; --color-text: #29312c; --color-text-muted: #737a70; --color-focus: #8a6800; }
+.catalog-listing-approved .catalog-pagination { display: flex; flex-direction: column; gap: 22px; align-items: stretch; padding-top: 28px; }
+.catalog-listing-approved .catalog-pagination__more { width: 100%; min-height: 48px; border: 1px solid #e7e7e5; border-radius: 12px; background: #fff; color: #737a70; box-shadow: 0 2px 5px rgb(41 49 44 / .13); font-size: 14px; font-weight: 600; }
+.catalog-listing-approved .catalog-pagination nav { display: flex; justify-content: center; align-items: center; gap: 4px; }
+.catalog-listing-approved .catalog-pagination__item { display: inline-flex; align-items: center; gap: 4px; }
+.catalog-listing-approved .catalog-pagination nav button { display: grid; place-items: center; width: 40px; height: 40px; min-height: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #29312c; font-size: 14px; }
+.catalog-listing-approved .catalog-pagination nav button[aria-current=page] { background: #ffcc00; }
+.catalog-listing-approved .catalog-pagination nav button:hover { background: #fff3bc; }
+.catalog-listing-approved .catalog-pagination nav svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .catalog-listing-approved .catalog-page__header p { margin: 8px 0 0; font-size: 14px; line-height: 22px; color: #737a70; }
 .catalog-listing-approved .catalog-child-sections { padding-bottom: 28px; }
 .catalog-listing-approved .catalog-child-sections__grid { grid-template-columns: repeat(6,minmax(0,1fr)); gap: 12px; }

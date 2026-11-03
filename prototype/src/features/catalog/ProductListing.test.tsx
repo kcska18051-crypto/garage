@@ -4,7 +4,7 @@ import { catalogProducts, compressorSubcategories, fullFilterGroups, reducedFilt
 import { CommerceProvider } from '../../state/CommerceState'
 import { ProductListing } from './ProductListing'
 
-const renderListing = (mode: 'reduced' | 'full' = 'full') => render(<MemoryRouter><CommerceProvider><ProductListing products={catalogProducts} filterGroups={mode === 'full' ? fullFilterGroups : reducedFilterGroups} mode={mode} /></CommerceProvider></MemoryRouter>)
+const renderListing = (mode: 'reduced' | 'full' = 'full') => render(<MemoryRouter><CommerceProvider><ProductListing products={catalogProducts.slice(0, 32)} filterGroups={mode === 'full' ? fullFilterGroups : reducedFilterGroups} mode={mode} /></CommerceProvider></MemoryRouter>)
 
 describe('catalog product listing', () => {
   it('keeps reset outside the independently scrollable desktop filter region',()=>{

@@ -16,3 +16,8 @@
 .header-actions-menu .actions-dropdown__list--drawer { position: static; width: 100%; max-width: none; margin-bottom: 10px; border: 0; border-radius: 10px; box-shadow: none; background: #f7f8f5; }
 .header-actions-menu .actions-dropdown__list--drawer::before { display: none; }
 .actions-dropdown__list--touch { position: fixed; left: 12px; right: 12px; z-index: 100; display: grid; padding: 8px; border: 1px solid #ececec; border-radius: 14px; background: #fff; color: #29312c; box-shadow: 0 8px 28px rgb(0 0 0 / .14); max-height: 65dvh; overflow-y: auto; }
+
+@media (min-width: 768px) {
+  .header-actions-menu:not(.header-actions-menu--drawer) .actions-dropdown__toggle { display: none; }
+  .third-level-nav__measure [data-measure-actions=true]::after { display: none; }
+}

@@ -2,6 +2,7 @@ import { isApprovedHomepage } from '../../app/approvedHomepage'
 import { useLocation } from 'react-router-dom'
 import { MobileMenuRegion } from './MobileMenuRegion'
 import { RoundedIcon } from './RoundedIcon'
+import { CatalogCategoryIcon } from './CatalogCategoryIcon'
 import './UnifiedMobileMenu.css'
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { createPortal } from 'react-dom'
@@ -99,13 +100,13 @@ export function CatalogMenu({ header, opener, compact, onClose, hoverOpened = fa
           {current && <Link className="catalog-mega__all" to={current.href} onClick={() => onClose(false)}>Все товары раздела →</Link>}
           <nav aria-label="Разделы каталога">
             {(current?.children ?? headerCatalogTree).filter(node=>node.name.toLocaleLowerCase('ru').includes(query.toLocaleLowerCase('ru'))).map(node => node.children.length || !current
-              ? <button className="catalog-mega__step" type="button" key={node.id} onClick={() => {setPath(items => [...items, node]);setQuery('')}}>{isStyleCheck && <RoundedIcon name="catalog"/>}{node.name}<span aria-hidden="true">›</span></button>
+              ? <button className="catalog-mega__step" type="button" key={node.id} onClick={() => {setPath(items => [...items, node]);setQuery('')}}>{!current && <CatalogCategoryIcon category={node.id} />}{node.name}<span aria-hidden="true">›</span></button>
               : link(node, 'catalog-mega__step'))}
           </nav>
         </div>
       </> : <div className="catalog-mega__layout">
         <nav className="catalog-mega__roots" aria-label="Направления каталога">
-          {headerCatalogTree.map(node => <button type="button" key={node.id} aria-pressed={active === node.id} aria-controls="catalog-mega-details" onMouseEnter={() => { if (window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) setActive(node.id) }} onFocus={() => setActive(node.id)} onClick={() => setActive(node.id)}>{node.name}<span aria-hidden="true">→</span></button>)}
+          {headerCatalogTree.map(node => <button type="button" key={node.id} aria-pressed={active === node.id} aria-controls="catalog-mega-details" onMouseEnter={() => { if (window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) setActive(node.id) }} onFocus={() => setActive(node.id)} onClick={() => setActive(node.id)}><CatalogCategoryIcon category={node.id} /><span className="catalog-mega__root-label">{node.name}</span><svg className="catalog-mega__root-arrow" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m8 5 5 5-5 5" /></svg></button>)}
         </nav>
         <div className="catalog-mega__details" id="catalog-mega-details" ref={scroll}>
           <h2>{selected.name}</h2>

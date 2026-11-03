@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { CatalogDestination } from './CatalogDestination'
 import { formatProductCount } from '../../data/catalogData'
 import type { CatalogRootSubcategory } from '../../data/catalogTypes'
+import { compressorCategoryImages } from './compressorCategoryImages'
 
 type SectionItem = CatalogRootSubcategory & { count?: number }
 
@@ -17,7 +18,7 @@ export function CatalogSectionGrid({ items }: { items: SectionItem[] }) {
         return (
           <Link aria-label={count ? `${item.name}, ${count}` : item.name} className="catalog-subcategory-card" data-testid="catalog-subcategory-card" key={item.id} to={item.href}>
             <span className="catalog-subcategory-card__copy"><strong>{item.name}</strong>{count ? <small>{count}</small> : null}</span>
-            <span className={`catalog-subcategory-card__art catalog-art--${item.artVariant}`} aria-hidden="true"><i /><b /></span>
+            <span className={`catalog-subcategory-card__art catalog-art--${item.artVariant}`} aria-hidden="true">{compressorCategoryImages[item.id] ? <img src={compressorCategoryImages[item.id]} alt="" loading="lazy" /> : <><i /><b /></>}</span>
             <span className="catalog-subcategory-card__arrow" aria-hidden="true">↗</span>
           </Link>
         )
@@ -31,7 +32,7 @@ export function CatalogSectionList({ items, className = '' }: { items: SectionIt
     <nav className={`catalog-section-list ${className}`.trim()} aria-label="Подкатегории">
       {items.map((item) => (
         <CatalogDestination className="catalog-section-row" data-testid="catalog-section-row" key={item.id} href={item.href} arrow>
-          <span className={`catalog-row-art catalog-art--${item.artVariant}`} aria-hidden="true"><i /><b /></span>
+          <span className={`catalog-row-art catalog-art--${item.artVariant}`} aria-hidden="true">{compressorCategoryImages[item.id] ? <img src={compressorCategoryImages[item.id]} alt="" loading="lazy" /> : <><i /><b /></>}</span>
           <span>{item.name}{itemCount(item) ? <small>{itemCount(item)}</small> : null}</span>
         </CatalogDestination>
       ))}

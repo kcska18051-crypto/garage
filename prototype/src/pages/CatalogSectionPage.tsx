@@ -4,6 +4,8 @@ import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { CatalogSectionGrid, CatalogSectionList } from '../features/catalog/CatalogSectionList'
 import { NotFoundPage } from './NotFoundPage'
 import '../features/catalog/Catalog.css'
+import '../features/catalog/CatalogLanding.css'
+import '../features/catalog/CompressorLanding.css'
 
 export function CatalogSectionPage() {
   const { categorySlug } = useParams()
@@ -14,7 +16,7 @@ export function CatalogSectionPage() {
   const usesCompactGrid = category.slug === 'compressor-equipment'
 
   return (
-    <main className="catalog-page catalog-section-page">
+    <main className={`catalog-page catalog-section-page${usesCompactGrid ? ' catalog-landing compressor-landing' : ''}`}>
       <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: 'Каталог', to: '/catalog' }, { label: category.name }]} />
       <header className="catalog-page__header catalog-page__header--category">
         {usesCompactGrid ? <h1>{category.name}</h1> : <div><h1>{category.name}</h1><p>{category.description}</p></div>}

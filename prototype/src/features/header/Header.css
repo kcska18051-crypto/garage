@@ -156,3 +156,12 @@
   .mobile-bottom-nav b { right: -.55rem; top: -.2rem; }
   .app-shell { padding-bottom: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom)); }
 }
+.catalog-button__icon { position: relative; display: inline-block; width: 20px; height: 20px; flex: 0 0 20px; vertical-align: middle; }
+.catalog-button__icon i { position: absolute; left: 2px; width: 16px; height: 1.6px; background: currentColor; border-radius: 2px; transition: transform 180ms ease, opacity 180ms ease; }
+.catalog-button__icon i:nth-child(1) { top: 4px; }
+.catalog-button__icon i:nth-child(2) { top: 9px; }
+.catalog-button__icon i:nth-child(3) { top: 14px; }
+.catalog-button[aria-expanded=true] .catalog-button__icon i:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.catalog-button[aria-expanded=true] .catalog-button__icon i:nth-child(2) { opacity: 0; transform: scaleX(.5); }
+.catalog-button[aria-expanded=true] .catalog-button__icon i:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) { .catalog-button__icon i { transition: none; } }

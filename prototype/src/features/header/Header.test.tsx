@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { Header } from './Header'
@@ -17,6 +17,43 @@ function RegionEcho() {
 }
 
 describe('responsive header', () => {
+  it('opens the catalog on desktop hover, keeps it open inside, switches sections and closes on leaving', () => {
+    vi.stubGlobal('ResizeObserver', class { observe() {} unobserve() {} disconnect() {} })
+    vi.useFakeTimers()
+    vi.stubGlobal('matchMedia', (query: string) => ({ matches: query.includes('hover: hover'), media: query, onchange: null, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent: () => true }))
+    try {
+      renderHeader()
+      const button = document.querySelector<HTMLButtonElement>('.catalog-button')!
+      fireEvent.mouseEnter(button)
+      const catalog = screen.getByRole('dialog', { name: 'Каталог товаров' })
+      expect(button).toHaveAttribute('aria-expanded', 'true')
+      expect(screen.getByRole('button', { name: 'Закрыть каталог' })).not.toHaveFocus()
+      fireEvent.mouseLeave(button)
+      fireEvent.mouseEnter(catalog)
+      act(() => vi.advanceTimersByTime(350))
+      expect(catalog).toBeInTheDocument()
+      const roots = within(screen.getByRole('navigation', { name: 'Направления каталога' }))
+      fireEvent.mouseEnter(roots.getByRole('button', { name: /Инструмент/ }))
+      expect(within(catalog).getByRole('heading', { name: 'Инструмент' })).toBeInTheDocument()
+      fireEvent.mouseLeave(catalog)
+      act(() => vi.advanceTimersByTime(350))
+      expect(screen.queryByRole('dialog', { name: 'Каталог товаров' })).not.toBeInTheDocument()
+    } finally { vi.unstubAllGlobals(); vi.useRealTimers() }
+  })
+
+  it('does not open the catalog on hover on a touch device', () => {
+    vi.stubGlobal('ResizeObserver', class { observe() {} unobserve() {} disconnect() {} })
+    vi.stubGlobal('matchMedia', (query: string) => ({ matches: false, media: query, onchange: null, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent: () => true }))
+    try {
+      renderHeader()
+      const button = document.querySelector<HTMLButtonElement>('.catalog-button')!
+      fireEvent.mouseEnter(button)
+      expect(screen.queryByRole('dialog', { name: 'Каталог товаров' })).not.toBeInTheDocument()
+      fireEvent.click(button)
+      expect(screen.getByRole('dialog', { name: 'Каталог товаров' })).toBeInTheDocument()
+    } finally { vi.unstubAllGlobals() }
+  })
+
   it('offers a separate paint service entry even when quick navigation is disabled', () => {
     const enabled = headerQuickLinksConfig.enabled
     headerQuickLinksConfig.enabled = false

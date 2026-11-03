@@ -15,10 +15,13 @@ type Props = {
   header: RefObject<HTMLElement | null>
   opener: RefObject<HTMLElement | null>
   compact: boolean
+  hoverOpened?: boolean
+  onMouseEnter?(): void
+  onMouseLeave?(): void
   onClose(restoreFocus?: boolean): void
 }
 
-export function CatalogMenu({ header, opener, compact, onClose, region='Ярославль', onRegion }: Props) {
+export function CatalogMenu({ header, opener, compact, onClose, hoverOpened = false, onMouseEnter, onMouseLeave, region='Ярославль', onRegion }: Props) {
   const isStyleCheck=isApprovedHomepage(useLocation().pathname)
   const [query,setQuery]=useState('')
   const [active, setActive] = useState(headerCatalogTree[0].id)
@@ -50,7 +53,7 @@ export function CatalogMenu({ header, opener, compact, onClose, region='Ярос
     const gap = innerWidth - document.documentElement.clientWidth
     if (!globalThis.CSS?.supports?.('scrollbar-gutter: stable') && gap > 0) document.body.style.paddingRight = `${gap + parseFloat(getComputedStyle(document.body).paddingRight || '0')}px`
     document.body.classList.add('catalog-overlay-open')
-    panel.current?.querySelector<HTMLButtonElement>('[aria-label="Закрыть каталог"]')?.focus({ preventScroll: true })
+    if (!hoverOpened) panel.current?.querySelector<HTMLButtonElement>('[aria-label="Закрыть каталог"]')?.focus({ preventScroll: true })
     const focusable = () => Array.from(panel.current?.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),[tabindex="0"]') ?? []).filter(node => node.getClientRects().length > 0)
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); onClose(); return }
@@ -74,7 +77,7 @@ export function CatalogMenu({ header, opener, compact, onClose, region='Ярос
       document.removeEventListener('keydown', onKey, true)
       document.removeEventListener('pointerdown', outside)
     }
-  }, [onClose, narrow, opener, header])
+  }, [onClose, narrow, opener, header, hoverOpened])
 
   useLayoutEffect(() => {
     if (narrow) title.current?.focus({ preventScroll: true })
@@ -84,7 +87,7 @@ export function CatalogMenu({ header, opener, compact, onClose, region='Ярос
   const link = (node: CatalogMenuNode, className?: string) => <Link className={className} key={node.id} to={node.href} onClick={() => onClose(false)}>{node.name}</Link>
   return createPortal(<div className={`catalog-menu-layer${isStyleCheck ? ' unified-catalog-layer' : ''}`} style={{ '--catalog-menu-top': `${top}px` } as React.CSSProperties}>
     <div className="catalog-menu-backdrop" aria-hidden="true" />
-    <section className="catalog-mega" id="header-catalog-panel" role="dialog" aria-modal="true" aria-label="Каталог товаров" ref={panel}>
+    <section className="catalog-mega" id="header-catalog-panel" role="dialog" aria-modal="true" aria-label="Каталог товаров" ref={panel} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="catalog-mega__toolbar">
         {isStyleCheck && narrow ? <div className="unified-catalog-heading">{current && <button type="button" aria-label="Назад" onClick={()=>{setPath(items=>items.slice(0,-1));setQuery('')}}>←</button>}<h2>{current?.name ?? 'Каталог'}</h2></div> : narrow && current ? <button type="button" onClick={() => setPath(items => items.slice(0, -1))}><span aria-hidden="true">← </span><span>Назад</span></button> : <Link to="/catalog" onClick={() => onClose(false)}>Весь каталог →</Link>}
         <button type="button" aria-label="Закрыть каталог" onClick={() => onClose()}>×</button>
@@ -102,7 +105,7 @@ export function CatalogMenu({ header, opener, compact, onClose, region='Ярос
         </div>
       </> : <div className="catalog-mega__layout">
         <nav className="catalog-mega__roots" aria-label="Направления каталога">
-          {headerCatalogTree.map(node => <button type="button" key={node.id} aria-pressed={active === node.id} aria-controls="catalog-mega-details" onClick={() => setActive(node.id)}>{node.name}<span aria-hidden="true">→</span></button>)}
+          {headerCatalogTree.map(node => <button type="button" key={node.id} aria-pressed={active === node.id} aria-controls="catalog-mega-details" onMouseEnter={() => { if (window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) setActive(node.id) }} onFocus={() => setActive(node.id)} onClick={() => setActive(node.id)}>{node.name}<span aria-hidden="true">→</span></button>)}
         </nav>
         <div className="catalog-mega__details" id="catalog-mega-details" ref={scroll}>
           <h2>{selected.name}</h2>

@@ -36,7 +36,7 @@ export function ActionsDropdown({ drawer = false, mobile = false, onNavigate }: 
   return <div ref={root} className={`header-actions-menu${drawer ? ' header-actions-menu--drawer' : ''}`} onMouseEnter={() => { if (!drawer && (window.matchMedia?.('(hover: hover)').matches ?? true)) setOpen(true) }} onMouseLeave={() => { if (!drawer && (window.matchMedia?.('(hover: hover)').matches ?? true)) close() }} onBlur={blur}>
     <div className="actions-dropdown__row">
       <NavLink className={drawer ? 'actions-dropdown__main' : 'third-level-nav__link third-level-nav__link--accent'} to="/actions" onClick={navigate} onFocus={() => { if (!drawer && !mobile) setOpen(true) }}>{drawer && <RoundedIcon name="sale" />}<span>Акции</span></NavLink>
-      <button className="actions-dropdown__toggle" type="button" aria-label="Показать список акций" aria-expanded={open} aria-controls={open ? id : undefined} onClick={() => setOpen(value => !value)}><span aria-hidden="true">⌄</span></button>
+      <button className="actions-dropdown__toggle" type="button" aria-label="Показать список акций" aria-expanded={open} aria-controls={open ? id : undefined} onClick={() => setOpen(value => !value)}><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="m6 8 4 4 4-4" /></svg></button>
     </div>
     {mobile && !drawer ? createPortal(panel, document.body) : panel}
   </div>

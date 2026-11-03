@@ -94,7 +94,8 @@ describe('prototype routes', () => {
 
     expect(card).toHaveClass('product-teaser')
     expect(card.querySelector('[data-testid="product-gallery"]')).toBeInTheDocument()
-    expect(card.querySelectorAll('[data-testid="product-gallery-dot"]')).toHaveLength(3)
+    expect(card.querySelector('.style-check-product-photo')).toBeInTheDocument()
+    expect(card.querySelectorAll('[data-testid="product-gallery-dot"]')).toHaveLength(0)
     expect(card.querySelector('dl')).toBeNull()
     expect(card).toHaveTextContent(/В наличии в \d+ магазин|Под заказ|Нет в наличии|Снят с производства/)
     expect(card).toHaveTextContent('Артикул:')

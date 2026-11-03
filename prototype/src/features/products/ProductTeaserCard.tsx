@@ -16,12 +16,13 @@ export type ProductTeaser = {
   oldPrice?: string
   purchaseMode?: 'cart' | 'quote'
   availability?: string
+  image?: string
 }
 
-export function ProductTeaserCard({ product, index, className = '' }: { product: ProductTeaser; index: number; className?: string }) {
+export function ProductTeaserCard({ product, index, className = '', approved = false }: { product: ProductTeaser; index: number; className?: string; approved?: boolean }) {
   const commerce = useCommerce()
-  const isStyleCheck = isApprovedHomepage(useLocation().pathname)
-  const styleCheckPhoto = isStyleCheck ? styleCheckProductPhotos[product.name] : undefined
+  const isStyleCheck = isApprovedHomepage(useLocation().pathname) || approved
+  const styleCheckPhoto = isStyleCheck ? product.image || styleCheckProductPhotos[product.name] : undefined
   const cartQuantity = commerce.cartItems.find(item => item.id === product.id)?.quantity ?? 0
   const promo = promotionPrice(product.id, Number(product.price.replace(/\D/g, '')), product.purchaseMode === 'quote')
   const [frame, setFrame] = useState(0)
@@ -44,7 +45,7 @@ export function ProductTeaserCard({ product, index, className = '' }: { product:
     </div>
     {!isStyleCheck && <div className="product-teaser__dots" aria-label="Кадры товара">{frames.map((item) => <button key={item} type="button" data-testid="product-gallery-dot" aria-label={`Показать кадр ${item + 1}: ${product.name}`} aria-pressed={frame === item} onClick={() => setFrame(item)} />)}</div>}
     <Link className="product-teaser__name" to={product.href}>{product.name}</Link>
-    {isStyleCheck && index < 3 && <div className="product-teaser__rating" title="Демонстрационные оценки и количество отзывов" aria-label={`Демонстрационный рейтинг ${['4,9', '4,8', '5'][index]}, отзывов: ${[30, 18, 12][index]}`}><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z" /></svg><span className="product-teaser__rating-score">{['4,9', '4,8', '5'][index]}</span><span>({[30, 18, 12][index]})</span></div>}
+    {isStyleCheck && !approved && index < 3 && <div className="product-teaser__rating" title="Демонстрационные оценки и количество отзывов" aria-label={`Демонстрационный рейтинг ${['4,9', '4,8', '5'][index]}, отзывов: ${[30, 18, 12][index]}`}><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z" /></svg><span className="product-teaser__rating-score">{['4,9', '4,8', '5'][index]}</span><span>({[30, 18, 12][index]})</span></div>}
     <p className="product-teaser__sku">Артикул: {product.sku}</p>
     {product.availability ? <p className="product-teaser__availability" data-in-stock={product.availability.startsWith("В наличии в ")}><i aria-hidden="true" />{product.availability}</p> : null}
     <div className="product-teaser__bottom catalog-product-card__bottom"><div>{promo.oldPrice ? <del>{promo.oldPrice.toLocaleString('ru-RU')} ₽</del> : null}<strong>{product.purchaseMode === 'quote' ? 'Цена по запросу' : product.price}</strong></div>{product.purchaseMode === 'quote' ? <button className="product-teaser__quote" type="button">Запросить цену</button> : <button className="product-teaser__cart" type="button" aria-pressed={commerce.cartIds.has(product.id)} aria-label={`${commerce.cartIds.has(product.id) ? 'Товар в корзине' : 'Добавить в корзину'}: ${product.name}`} onClick={() => commerce.addToCart(product.id)}>{isStyleCheck ? <><RoundedIcon name="cart" /><span className="review-cart-label">{cartQuantity ? 'В корзине' : 'В корзину'}</span>{cartQuantity > 0 && <b className="review-cart-quantity">{cartQuantity}</b>}</> : commerce.cartIds.has(product.id) ? '✓' : '＋'}</button>}</div>

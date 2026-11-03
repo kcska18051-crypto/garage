@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { findSearchSuggestions, searchPromoItems, type SearchSuggestion } from '../../data/searchData'
 import { addSearchHistory, clearSearchHistory, readSearchHistory, removeSearchHistory } from '../../utils/searchHistory'
 import { SearchPanel } from './SearchPanel'
+import { useSearchPlaceholder } from '../../hooks/useSearchPlaceholder'
 
 const popular = ['Компрессоры', 'Инструмент для мастерской', 'Краскопульты']
 
@@ -11,6 +12,7 @@ export function SearchBox({ compact = false, suspended = false }: { compact?: bo
   const [open, setOpen] = useState(false)
   const [history, setHistory] = useState(readSearchHistory)
   const [active, setActive] = useState(-1)
+  const placeholder = useSearchPlaceholder(!open && !query && !suspended)
   const inputId = useId()
   const navigate = useNavigate()
   const root = useRef<HTMLFormElement>(null)
@@ -45,7 +47,7 @@ export function SearchBox({ compact = false, suspended = false }: { compact?: bo
     <input
       id={inputId}
       type="search"
-      placeholder="Товары, бренды, артикулы"
+      placeholder={placeholder}
       value={query}
       onFocus={() => setOpen(true)}
       onChange={(event) => { setQuery(event.target.value); setOpen(true); setActive(-1) }}

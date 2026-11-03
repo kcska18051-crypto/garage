@@ -4,8 +4,10 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { getVisibleHeaderQuickLinks, headerQuickLinksConfig, type HeaderQuickLink, type HeaderQuickLinksConfig } from '../../data/headerNavigationData'
 import { PaintServiceLink } from './PaintServiceLink'
+import { ActionsDropdown } from './ActionsDropdown'
 
-function QuickLink({ item, onClick }: { item: HeaderQuickLink; onClick?: () => void }) {
+function QuickLink({ item, onClick, mobile = false }: { item: HeaderQuickLink; onClick?: () => void; mobile?: boolean }) {
+  if (item.id === 'actions') return <ActionsDropdown mobile={mobile} onNavigate={onClick} />
   return <NavLink className={`third-level-nav__link${item.tone === 'accent' ? ' third-level-nav__link--accent' : ''}`} to={item.href} onClick={onClick}>{item.label}</NavLink>
 }
 
@@ -87,12 +89,12 @@ export function ThirdLevelNavigation({ compact, config = headerQuickLinksConfig 
       {!isStyleCheck && <PaintServiceLink />}
       {isStyleCheck && !compact && <div className="reference-desktop-services reference-third-services"><Link to="/services"><RoundedIcon name="service" /><span>Услуги</span></Link></div>}
       <div className="third-level-nav__measure" ref={measureRef} aria-hidden="true">
-        {desktopItems.map((item) => <span key={item.id} data-measure-link>{item.label}</span>)}
+        {desktopItems.map((item) => <span key={item.id} data-measure-link data-measure-actions={item.id === 'actions' || undefined}>{item.label}</span>)}
         <span data-measure-more>Ещё ⌄</span>
       </div>
     </div>
     {config.mobileEnabled && <nav className="third-level-nav__mobile" aria-label="Быстрые ссылки на мобильных">
-      {mobileItems.map((item) => <QuickLink key={item.id} item={item} />)}
+      {mobileItems.map((item) => <QuickLink key={item.id} item={item} mobile />)}
     </nav>}
   </div>
 }

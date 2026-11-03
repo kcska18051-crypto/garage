@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { CatalogDestination } from './CatalogDestination'
 import { formatProductCount } from '../../data/catalogData'
 import type { CatalogRootCategory } from '../../data/catalogTypes'
+import { catalogCategoryImages } from './catalogCategoryImages'
 
 function moreCategoriesLabel(count: number) {
   const lastTwo = count % 100
@@ -17,18 +18,17 @@ function moreCategoriesLabel(count: number) {
   return `Ещё ${count} ${word}`
 }
 
-export function CatalogRootCard({ category }: { category: CatalogRootCategory }) {
+export function CatalogRootCard({ category, showAll = false }: { category: CatalogRootCategory; showAll?: boolean }) {
   const [expanded, setExpanded] = useState(false)
   const extraId = useId()
   const titleId = useId()
-  const primary = category.subcategories.slice(0, 5)
-  const extra = category.subcategories.slice(5)
+  const primary = showAll ? category.subcategories : category.subcategories.slice(0, 5)
+  const extra = showAll ? [] : category.subcategories.slice(5)
 
   return (
     <article className="catalog-root-card" data-testid="catalog-root-card" aria-labelledby={titleId}>
       <div className={`catalog-root-card__art catalog-art--${category.artVariant}`} aria-hidden="true">
-        <i />
-        <b />
+        <img src={catalogCategoryImages[category.id]} alt="" loading="lazy" />
       </div>
       <h2 className="catalog-root-card__heading" id={titleId}>
         <Link className="catalog-root-card__title" to={category.href}>{category.name}</Link>

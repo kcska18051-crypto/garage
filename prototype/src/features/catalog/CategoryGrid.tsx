@@ -9,5 +9,5 @@ export function CatalogCategoryGrid({ items, compact = false }: { items: Catalog
 }
 
 export function CatalogRootGrid({ items }: { items: CatalogRootCategory[] }) {
-  return <div className="catalog-root-grid">{items.map((item) => <CatalogRootCard category={item} key={item.id} />)}</div>
+  return <div className="catalog-root-grid">{items.map((item) => <CatalogRootCard category={item} showAll key={item.id} />)}</div>
 }

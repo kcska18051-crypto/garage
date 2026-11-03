@@ -11,7 +11,7 @@ describe('prototype routes', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('heading', { name: 'Каталог' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Каталог товаров' })).toBeInTheDocument()
     const desktopCatalog = document.querySelector<HTMLElement>('.catalog-root-desktop')!
     expect(within(desktopCatalog).getByRole('link', { name: 'Компрессоры' })).toHaveAttribute('href', '/catalog/compressor-equipment')
   })
@@ -19,7 +19,7 @@ describe('prototype routes', () => {
   it('renders the catalog root from the normalized six-category model', () => {
     render(<MemoryRouter initialEntries={['/catalog']}><App /></MemoryRouter>)
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Каталог' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Каталог товаров' })).toBeInTheDocument()
     expect(document.querySelector('.catalog-page__header p')).toBeNull()
     expect(screen.getAllByTestId('catalog-mobile-row')).toHaveLength(6)
     expect(screen.getAllByTestId('catalog-root-card')).toHaveLength(6)

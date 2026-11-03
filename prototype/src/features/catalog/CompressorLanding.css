@@ -22,3 +22,16 @@
   .compressor-landing .catalog-section-row small { margin-top: 6px; font-size: 11px; line-height: 16px; color: #8a9086; }
   .compressor-landing .catalog-section-row > span:last-child { display: none; }
 }
+
+/* Compact horizontal category cards. */
+.compressor-landing .catalog-subcategory-card { flex-direction: row; align-items: center; gap: 16px; min-height: 126px; padding: 16px; }
+.compressor-landing .catalog-subcategory-card__art { order: 0; width: 76px; height: 86px; margin: 0; flex: 0 0 76px; }
+.compressor-landing .catalog-subcategory-card__copy { order: 1; flex: 1; min-width: 0; align-self: center; }
+.compressor-landing .catalog-subcategory-card__copy strong { font-size: 14px; line-height: 20px; }
+.compressor-landing .catalog-subcategory-card__copy small { margin-top: 6px; font-size: 11px; line-height: 16px; }
+@media(max-width:767px) {
+  .compressor-landing .catalog-section-list--mobile-only { grid-template-columns: minmax(0,1fr); gap: 10px; }
+  .compressor-landing .catalog-section-row { flex-direction: row; align-items: center; gap: 16px; min-height: 94px; padding: 12px 16px; }
+  .compressor-landing .catalog-row-art { width: 64px; height: 64px; flex: 0 0 64px; }
+  .compressor-landing .catalog-section-row > span:nth-child(2) { flex: 1; min-width: 0; font-size: 14px; line-height: 20px; }
+}

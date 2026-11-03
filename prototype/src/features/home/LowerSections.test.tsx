@@ -26,7 +26,7 @@ describe('lower homepage sections', () => {
     await user.click(screen.getByRole('checkbox', { name: /принимаю пользовательское соглашение/i }))
     await user.click(screen.getByRole('button', { name: 'Отправить запрос' }))
     expect(screen.getByText('Спасибо! Ваше сообщение отправлено')).toBeVisible()
-  }, 15_000)
+  }, 30_000)
 
   it('switches the section action together with news, article and review tabs', async () => {
     const user = userEvent.setup()

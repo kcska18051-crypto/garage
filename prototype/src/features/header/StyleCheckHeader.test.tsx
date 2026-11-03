@@ -19,8 +19,8 @@ it('keeps calling and search in the pinned mobile header without service buttons
   expect(pinned.getByRole('button',{name:'Открыть поиск'})).toBeInTheDocument()
   expect(pinned.getByRole('button',{name:'Открыть меню'})).toBeInTheDocument()
 })
-it('leaves the original compact desktop header unchanged outside Style Check', () => {
-  render(<MemoryRouter><AuthProvider><DesktopHeader region="Ярославль" onRegion={()=>{}} counts={counts} compact catalogOpen={false} onCatalog={()=>{}} /></AuthProvider></MemoryRouter>)
+it('leaves the original compact desktop header unchanged on internal pages', () => {
+  render(<MemoryRouter initialEntries={['/catalog']}><AuthProvider><DesktopHeader region="Ярославль" onRegion={()=>{}} counts={counts} compact catalogOpen={false} onCatalog={()=>{}} /></AuthProvider></MemoryRouter>)
   expect(screen.queryByRole('link',{name:'Услуги'})).not.toBeInTheDocument()
   expect(screen.getByRole('link',{name:'Подбор автоэмали'})).toBeInTheDocument()
 })

@@ -1,3 +1,4 @@
+import { isApprovedHomepage } from '../../app/approvedHomepage'
 import { RoundedIcon } from '../header/RoundedIcon'
 import { useState, type MouseEvent } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -19,7 +20,7 @@ export type ProductTeaser = {
 
 export function ProductTeaserCard({ product, index, className = '' }: { product: ProductTeaser; index: number; className?: string }) {
   const commerce = useCommerce()
-  const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
+  const isStyleCheck = isApprovedHomepage(useLocation().pathname)
   const styleCheckPhoto = isStyleCheck ? styleCheckProductPhotos[product.name] : undefined
   const cartQuantity = commerce.cartItems.find(item => item.id === product.id)?.quantity ?? 0
   const promo = promotionPrice(product.id, Number(product.price.replace(/\D/g, '')), product.purchaseMode === 'quote')

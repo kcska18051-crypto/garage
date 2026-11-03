@@ -1,3 +1,4 @@
+import { isApprovedHomepage } from '../../app/approvedHomepage'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { CatalogMenu } from './CatalogMenu'
@@ -43,11 +44,11 @@ export function Header({ counts }: { counts: HeaderCounts }) {
   return <>
     <header className="site-header" ref={header} onFocusCapture={event => { if ((event.target as HTMLElement).closest('.search-box')) { closeCatalog(false); setRegionOpen(false); setMenuOpen(false) } }}>
       <DesktopHeader region={region} onRegion={openRegion} counts={counts} compact={compact} catalogOpen={catalogOpen} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
-      <MobileHeader compact={compact && location.pathname.replace(/\/$/, '') === '/style-check'} compareCount={counts.compare} region={region} onRegion={openRegion} menuOpen={menuOpen} onMenu={toggleMenu} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
+      <MobileHeader compact={compact && isApprovedHomepage(location.pathname)} compareCount={counts.compare} region={region} onRegion={openRegion} menuOpen={menuOpen} onMenu={toggleMenu} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
       <ThirdLevelNavigation compact={compact} />
     </header>
     <MobileBottomNav favorites={counts.favorites} cart={counts.cart} catalogOpen={catalogOpen} onCatalog={toggleCatalog} />
-    {showBackToTop && location.pathname.replace(/\/$/, '') === '/style-check' && !catalogOpen && !regionOpen && !menuOpen && <button className="reference-back-to-top" type="button" aria-label="Наверх" title="Наверх" onClick={() => window.scrollTo({top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'})}><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="m6 11 6-6 6 6M12 5v14" /></svg></button>}
+    {showBackToTop && isApprovedHomepage(location.pathname) && !catalogOpen && !regionOpen && !menuOpen && <button className="reference-back-to-top" type="button" aria-label="Наверх" title="Наверх" onClick={() => window.scrollTo({top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'})}><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="m6 11 6-6 6 6M12 5v14" /></svg></button>}
     {catalogOpen && <CatalogMenu region={region} onRegion={openRegion} header={header} opener={opener} compact={compact} onClose={closeCatalog} />}
     {regionOpen && <RegionDialog onClose={() => setRegionOpen(false)} onSelect={(city) => { setRegion(city); setRegionOpen(false) }} />}
   </>

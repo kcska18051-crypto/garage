@@ -7,7 +7,7 @@ describe('homepage merchandising stream', () => {
     const { container } = render(<MemoryRouter><App /></MemoryRouter>)
 
     expect(screen.getByRole('heading', { level: 2, name: 'Хиты продаж' })).toBeVisible()
-    expect(Array.from(container.querySelectorAll('.home-merchandising-stream > .product-showcase h2'), (heading) => heading.textContent))
+    expect(Array.from(container.querySelectorAll('.home-merchandising-stream .product-showcase h2'), (heading) => heading.textContent))
       .toEqual(['Оборудование для автосервиса', 'Новинки', 'Хиты продаж', 'Товары Remeza'])
   })
 })

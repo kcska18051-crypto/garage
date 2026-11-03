@@ -1,3 +1,4 @@
+import { ApprovedHomepageStyles, isApprovedHomepage } from './approvedHomepage'
 import { BrowserRouter, useInRouterContext, useLocation } from 'react-router-dom'
 import { Header } from '../features/header/Header'
 import { CommerceProvider, useCommerce } from '../state/CommerceState'
@@ -12,7 +13,7 @@ import { CookiePreferenceProvider } from '../state/CookiePreferenceState'
 import { CookieBanner } from '../features/cookie/CookieBanner'
 
 function AppContent() {
-  const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
+  const isStyleCheck = isApprovedHomepage(useLocation().pathname)
   const commerce = useCommerce()
   const {identity}=useAuth()
   const {claimServiceRequests}=useProfile()
@@ -22,6 +23,7 @@ function AppContent() {
       className="app-shell"
       data-style-check={isStyleCheck || undefined}
     >
+      {isStyleCheck && <ApprovedHomepageStyles />}
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />
       <Footer />

@@ -1,3 +1,4 @@
+import { isApprovedHomepage } from '../../app/approvedHomepage'
 import { StyleCheckHeaderSymbol } from './StyleCheckHeaderSymbol'
 import { Link, useLocation } from 'react-router-dom'
 import { SearchBox } from './SearchBox'
@@ -17,7 +18,7 @@ function ActionLink({ to, label, symbol, count }: { to: string; label: string; s
 export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, onCatalog, searchSuspended = false }: { region: string; onRegion(): void; counts: HeaderCounts; compact: boolean; catalogOpen: boolean; onCatalog(): void; searchSuspended?: boolean }) {
   const { isAuthenticated, openAuth } = useAuth()
   const [callbackOpen, setCallbackOpen] = useState(false)
-  const isStyleCheck = useLocation().pathname.replace(/\/$/, '') === '/style-check'
+  const isStyleCheck = isApprovedHomepage(useLocation().pathname)
   return (
     <div className={`desktop-header${compact ? ' desktop-header--compact' : ''}`}>
       {!compact && <div className="service-row"><button onClick={onRegion} aria-label="Выбрать город">{isStyleCheck ? <svg className="reference-geo" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg> : <StyleCheckHeaderSymbol name="location" symbol="⌖" />} {region}{isStyleCheck && <svg className="reference-city-chevron" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="m5 6.5 3 3 3-3"/></svg>}</button><nav aria-label="Сервисная навигация"><Link to="/delivery">Доставка и оплата</Link><Link to="/about">О компании</Link>{isStyleCheck && <Link to="/services">Сервис и ремонт</Link>}<Link to="/contacts">Контакты</Link></nav><a href="tel:+70000000000">+7 (000) 000-00-00 <small>Пн–Пт, 9:00–18:00</small></a>{isStyleCheck && <button className="reference-callback" type="button" onClick={() => setCallbackOpen(true)}>Заказать звонок</button>}</div>}

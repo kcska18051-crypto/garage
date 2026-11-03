@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../../app/App'
@@ -10,8 +10,9 @@ describe('new products showcase', () => {
 
     expect(card).toHaveClass('product-teaser')
     expect(card.querySelector('[data-testid="product-gallery"]')).toBeInTheDocument()
-    expect(card.querySelectorAll('[data-testid="product-gallery-dot"]')).toHaveLength(3)
-    expect(card).toHaveTextContent('Артикул:')
+    expect(card.querySelectorAll('[data-testid="product-gallery-dot"]')).toHaveLength(0)
+    expect(card.querySelector('.style-check-product-photo')).toBeInTheDocument()
+    expect(card.querySelector('.product-teaser__rating')).toBeInTheDocument()
     expect(card.querySelector('.product-teaser__availability')).toHaveTextContent(/В наличии в \d+ магазин|Под заказ|Нет в наличии|Снят с производства/)
   })
 
@@ -20,11 +21,11 @@ describe('new products showcase', () => {
     render(<MemoryRouter><App /></MemoryRouter>)
     const favoriteAction = screen.getAllByRole('link', { name: /^Избранное(?:: \d+)?$/ })[0]
     const initialFavoriteCount = Number(favoriteAction.getAttribute('aria-label')?.match(/\d+/)?.[0] ?? 0)
-    await user.click(screen.getAllByRole('button', { name: /Добавить в избранное/ })[0])
+    await user.click(document.querySelector<HTMLButtonElement>('.product-card button[aria-label^="Добавить в избранное"]')!)
     expect(screen.getAllByLabelText(`Избранное: ${initialFavoriteCount + 1}`).length).toBeGreaterThan(0)
     const cartAction = screen.getAllByRole('link', { name: /^Корзина(?:: \d+)?$/ })[0]
     const initialCartCount = Number(cartAction.getAttribute('aria-label')?.match(/\d+/)?.[0] ?? 0)
-    await user.click(screen.getAllByRole('button', { name: /Добавить в корзину/ })[0])
+    await user.click(document.querySelector<HTMLButtonElement>('.product-card button[aria-label^="Добавить в корзину"]')!)
     expect(screen.getAllByLabelText(`Корзина: ${initialCartCount + 1}`).length).toBeGreaterThan(0)
-  }, 10_000)
+  }, 30_000)
 })

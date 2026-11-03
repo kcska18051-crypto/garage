@@ -48,7 +48,7 @@ export function CatalogMenu({ header, opener, compact, onClose, region='Ярос
   useEffect(() => {
     const previous = { paddingRight: document.body.style.paddingRight }
     const gap = innerWidth - document.documentElement.clientWidth
-    if (gap > 0) document.body.style.paddingRight = `${gap + parseFloat(getComputedStyle(document.body).paddingRight || '0')}px`
+    if (!globalThis.CSS?.supports?.('scrollbar-gutter: stable') && gap > 0) document.body.style.paddingRight = `${gap + parseFloat(getComputedStyle(document.body).paddingRight || '0')}px`
     document.body.classList.add('catalog-overlay-open')
     panel.current?.querySelector<HTMLButtonElement>('[aria-label="Закрыть каталог"]')?.focus({ preventScroll: true })
     const focusable = () => Array.from(panel.current?.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),[tabindex="0"]') ?? []).filter(node => node.getClientRects().length > 0)

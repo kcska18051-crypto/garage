@@ -1,6 +1,8 @@
 import { catalogCategories, catalogBrands, compressorSubcategories } from './catalogData'
 import { prototypeData } from './prototypeData'
 import { demoProducts, matchesSearch, money } from './productRegistry'
+import { styleCheckProductPhotos } from './styleCheckAssets'
+import { promotionPrice } from './promotionPricing'
 
 export type SearchSuggestion = {
   id: string
@@ -8,6 +10,7 @@ export type SearchSuggestion = {
   name: string
   meta: string
   href: string
+  image?: string
 }
 
 export type SearchPromoItem = {
@@ -19,17 +22,22 @@ export type SearchPromoItem = {
   price?: string
   oldPrice?: string
   badge?: string
+  image?: string
 }
 
 export const searchPromoItems: SearchPromoItem[] = [
-  { id: 'promo-compressor', kind: 'product', title: 'Компрессор Remeza ВК 10', caption: 'Товар специальной подборки', href: '/product/remeza-vk-10-gr-0001', price: '185 000 ₽', oldPrice: '207 200 ₽', badge: 'Акция' },
-  { id: 'promo-tools', kind: 'product', title: 'Набор инструмента для мастерской', caption: 'Комплектация для рабочего поста', href: '/product/product-2', price: '27 900 ₽', oldPrice: '31 248 ₽', badge: 'Акция' },
-  { id: 'promo-workshop', kind: 'section', title: 'Оснащение мастерской', caption: 'Специальное предложение на комплект', href: '/actions/professional-workshop', badge: 'Акция' },
-  { id: 'promo-new', kind: 'section', title: 'Новинки оборудования', caption: 'Свежие позиции каталога', href: '/new', badge: 'Раздел' },
-]
+  'remeza-vk-10-gr-0001', 'product-2', 'product-1', 'product-3', 'product-6', 'product-8',
+].flatMap(id => {
+  const product = demoProducts.find(item => item.id === id)
+  if (!product) return []
+  const price = promotionPrice(product.id, product.price, product.purchaseMode === 'quote')
+  return [{ id: product.id, kind: 'product' as const, title: product.name, caption: '', href: product.href,
+    image: styleCheckProductPhotos[product.name], price: money(product.price),
+    oldPrice: price.oldPrice ? money(price.oldPrice) : undefined, badge: price.promotionHref ? 'Акция' : undefined }]
+})
 
 const productSuggestions: SearchSuggestion[] = [
-  ...demoProducts.map(item=>({id:item.id,kind:'Товар' as const,name:item.name,meta:`${item.sku} · ${item.brand??''} · ${item.searchTerms??''} · ${item.purchaseMode==='quote'?'Цена по запросу':money(item.price)}`,href:item.href})),
+  ...demoProducts.map(item=>({id:item.id,kind:'Товар' as const,name:item.name,meta:`${item.sku} · ${item.brand??''} · ${item.searchTerms??''} · ${item.purchaseMode==='quote'?'Цена по запросу':money(item.price)}`,href:item.href,image:styleCheckProductPhotos[item.name]})),
 ]
 
 const categorySuggestions: SearchSuggestion[] = [

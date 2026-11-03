@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { SearchPromoItem, SearchSuggestion } from '../../data/searchData'
+import './SearchPanel.css'
 
 type Props = {
   query: string
@@ -17,14 +18,13 @@ type Props = {
 }
 
 function PromoCard({ item, onClose }: { item: SearchPromoItem; onClose(): void }) {
-  return <Link className={`search-promo-card search-promo-card--${item.kind}`} data-testid="search-promo-card" to={item.href} onClick={onClose}>
-    <span className="search-promo-card__art" aria-hidden="true"><i /><b /></span>
-    <span className="search-promo-card__copy">
-      {item.badge && <small>{item.badge}</small>}
-      <strong>{item.title}</strong>
-      <span>{item.caption}</span>
-      {item.price && <span className="search-promo-card__price">{item.oldPrice && <del>{item.oldPrice}</del>}<b>{item.price}</b></span>}
+  return <Link className="search-product-card" data-testid="search-promo-card" to={item.href} onClick={onClose}>
+    <span className="search-product-card__art">
+      {item.image && <img src={item.image} alt={item.title} decoding="async" />}
+      {item.badge && <small className="search-product-card__badge">{item.badge}</small>}
     </span>
+    {item.price && <span className="search-product-card__price"><strong>{item.price}</strong>{item.oldPrice && <del>{item.oldPrice}</del>}</span>}
+    <span className="search-product-card__name">{item.title}</span>
   </Link>
 }
 
@@ -38,7 +38,7 @@ export function SearchPanel(props: Props) {
         {props.suggestions.length ? <ul className="search-suggestions" role="listbox" aria-label="Подсказки поиска">
           {props.suggestions.map((item, index) => <li id={`search-option-${index}`} key={item.id} role="option" aria-selected={props.active === index}>
             <Link to={item.href} onClick={() => props.onSuggestion(item)}>
-              <span className="search-suggestions__icon" aria-hidden="true">{item.kind === 'Товар' ? '▱' : item.kind === 'Категория' ? '▦' : '◎'}</span>
+              <span className="search-suggestions__icon" aria-hidden="true">{item.image ? <img className="search-suggestions__photo" src={item.image} alt="" /> : item.kind === 'Товар' ? '▱' : item.kind === 'Категория' ? '▦' : '◎'}</span>
               <span><strong>{item.name}</strong><small>{item.kind} · {item.meta}</small></span>
               <b aria-hidden="true">→</b>
             </Link>
@@ -55,8 +55,8 @@ export function SearchPanel(props: Props) {
       </>}
     </section>
     <section className="search-panel__promos" aria-label="Специальные предложения">
-      <header className="search-panel__heading"><div><small>Управляемый блок</small><h2>Сейчас выгодно</h2></div><Link to="/actions" onClick={props.onClose}>Все акции →</Link></header>
-      <div className="search-panel__promo-grid">{props.promotions.map((item) => <PromoCard item={item} key={item.id} onClose={props.onClose} />)}</div>
+      <header className="search-panel__heading"><div><h2>Сейчас выгодно</h2></div><Link to="/actions" onClick={props.onClose}>Все акции →</Link></header>
+      <div className="search-products-grid">{props.promotions.map((item) => <PromoCard item={item} key={item.id} onClose={props.onClose} />)}</div>
     </section>
   </div>
 }

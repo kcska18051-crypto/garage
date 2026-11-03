@@ -15,7 +15,12 @@ describe('search experience', () => {
     expect(screen.getByRole('region', { name: 'История и подсказки поиска' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Специальные предложения' })).toBeInTheDocument()
     expect(screen.getByText('Компрессор')).toBeInTheDocument()
-    expect(screen.getAllByTestId('search-promo-card')).toHaveLength(4)
+    const cards = screen.getAllByTestId('search-promo-card')
+    expect(cards).toHaveLength(6)
+    expect(within(cards[0]).getByRole('img')).toHaveAttribute('src', '/garage/style-check/review-assets/product-remeza1.jpg')
+    expect(within(cards[1]).getByRole('img')).toHaveAttribute('src', '/garage/style-check/review-assets/product-toolset.jpg')
+    expect(cards[1]).not.toHaveTextContent('31 248')
+    expect(cards.every(card => card.getAttribute('href')?.startsWith('/product/'))).toBe(true)
     expect(document.querySelector('.search-backdrop')).toBeInTheDocument()
   })
 

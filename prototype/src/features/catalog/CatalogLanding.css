@@ -52,3 +52,16 @@
 }
 
 html:has(.catalog-landing), body:has(.catalog-landing), .app-shell:has(> .catalog-landing), .catalog-page.catalog-landing { background: #fff; }
+
+/* Approved catalog refinement: white cards with a fine outline and soft depth. */
+.catalog-landing :is(.catalog-root-card,.catalog-root-row) {
+  border-color: #dce1dc;
+  box-shadow: 0 6px 20px rgb(41 49 44 / .09);
+}
+@media (hover: hover) and (pointer: fine) {
+  .catalog-landing :is(.catalog-root-card,.catalog-root-row):hover {
+    border-color: #cdd5cd;
+    background: #fff;
+    box-shadow: 0 8px 24px rgb(41 49 44 / .13);
+  }
+}

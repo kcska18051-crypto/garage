@@ -8,13 +8,14 @@ import { DesktopHeader, type HeaderCounts } from './DesktopHeader'
 import { MobileBottomNav } from './MobileBottomNav'
 import { MobileHeader } from './MobileHeader'
 import { RegionDialog } from './RegionDialog'
+import { RegionConfirmation } from './RegionConfirmation'
 import { useRegion } from '../../state/RegionState'
 import { ThirdLevelNavigation } from './ThirdLevelNavigation'
 import { compactHeaderScrollThreshold } from '../../data/headerNavigationData'
 import './Header.css'
 
 export function Header({ counts }: { counts: HeaderCounts }) {
-  const { region, setRegion } = useRegion()
+  const { region, setRegion, needsConfirmation } = useRegion()
   const [regionOpen, setRegionOpen] = useState(false)
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [catalogHovered, setCatalogHovered] = useState(false)
@@ -71,6 +72,7 @@ export function Header({ counts }: { counts: HeaderCounts }) {
       <DesktopHeader region={region} onRegion={openRegion} counts={counts} compact={compact} catalogOpen={catalogOpen} onCatalog={toggleCatalog} onCatalogHover={hoverCatalog} onCatalogLeave={leaveCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
       <MobileHeader compact={compact && isApprovedHomepage(location.pathname)} compareCount={counts.compare} region={region} onRegion={openRegion} menuOpen={menuOpen} onMenu={toggleMenu} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
       <ThirdLevelNavigation compact={compact} />
+      {needsConfirmation && !regionOpen && !catalogOpen && !menuOpen && <RegionConfirmation onChoose={openRegion} />}
     </header>
     <MobileBottomNav favorites={counts.favorites} cart={counts.cart} catalogOpen={catalogOpen} onCatalog={toggleCatalog} />
     {showBackToTop && isApprovedHomepage(location.pathname) && !catalogOpen && !regionOpen && !menuOpen && <button className="reference-back-to-top" type="button" aria-label="Наверх" title="Наверх" onClick={() => window.scrollTo({top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'})}><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="m6 11 6-6 6 6M12 5v14" /></svg></button>}

@@ -4,6 +4,11 @@ export function isApprovedHomepage(pathname: string) {
   return path === '' || path === '/style-check'
 }
 
+/** All application routes share the approved header and footer. */
+export function isApprovedChrome(pathname: string) {
+  return pathname.startsWith('/')
+}
+
 // Preserve the exact cascade of the client-approved style check.
 const stylesheets = [
   '/garage/style-check/style-v3.css?v=20261027-geometry',

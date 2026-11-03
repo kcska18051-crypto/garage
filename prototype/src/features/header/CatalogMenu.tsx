@@ -1,4 +1,4 @@
-import { isApprovedHomepage } from '../../app/approvedHomepage'
+import { isApprovedChrome } from '../../app/approvedHomepage'
 import { useLocation } from 'react-router-dom'
 import { MobileMenuRegion } from './MobileMenuRegion'
 import { RoundedIcon } from './RoundedIcon'
@@ -23,7 +23,7 @@ type Props = {
 }
 
 export function CatalogMenu({ header, opener, compact, onClose, hoverOpened = false, onMouseEnter, onMouseLeave, region='Ярославль', onRegion }: Props) {
-  const isStyleCheck=isApprovedHomepage(useLocation().pathname)
+  const isStyleCheck=isApprovedChrome(useLocation().pathname)
   const [query,setQuery]=useState('')
   const [active, setActive] = useState(headerCatalogTree[0].id)
   const [path, setPath] = useState<CatalogMenuNode[]>([])

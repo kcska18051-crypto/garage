@@ -29,11 +29,13 @@ describe('auth dialog entry points', () => {
     expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/checkout/review')
   })
 
-  it('opens from mobile navigation and keeps all five destinations', async () => {
+  it('opens from the approved mobile menu and keeps all six bottom destinations', async () => {
     const user = userEvent.setup(); open('/catalog')
     const navigation = document.querySelector<HTMLElement>('[aria-label="Мобильная навигация"]')!
-    expect(navigation.querySelectorAll('a,button')).toHaveLength(5)
-    await user.click(within(navigation).getByRole('button', { name: 'Профиль', hidden: true }))
+    expect(navigation.querySelectorAll('a,button')).toHaveLength(6)
+    await user.click(screen.getByRole('button', { name: 'Открыть меню', hidden: true }))
+    await user.click(within(screen.getByRole('dialog', { name: 'Мобильное меню' })).getByRole('link', { name: /Профиль/ }))
+    await user.click(within(screen.getByRole('navigation', { name: 'Разделы личного кабинета' })).getByRole('button', { name: 'Войти / зарегистрироваться' }))
     expect(screen.getByRole('dialog', { name: 'Вход и регистрация' })).toBeInTheDocument()
   })
 

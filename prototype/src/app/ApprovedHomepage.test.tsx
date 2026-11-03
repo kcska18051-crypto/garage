@@ -15,10 +15,15 @@ describe('approved homepage promotion', () => {
     expect(document.querySelector('.reference-bottom-nav a[href="/services"]')).toHaveTextContent('Услуги')
   })
 
-  it('keeps the catalog on its existing design', () => {
-    render(<MemoryRouter initialEntries={['/catalog']}><App /></MemoryRouter>)
+  it.each(['/catalog', '/contacts', '/services', '/cart'])('shares approved navigation at %s without changing the page design', (path) => {
+    render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
     expect(document.querySelector('.app-shell')).not.toHaveAttribute('data-style-check')
-    expect(screen.getByRole('heading', { level: 1, name: 'Каталог' })).toBeInTheDocument()
+    expect(document.querySelector('.app-shell')).toHaveAttribute('data-approved-chrome', 'true')
+    expect(document.querySelector('.style-check-footer')).toBeInTheDocument()
+    expect(document.querySelector('.reference-mobile-header')).toBeInTheDocument()
+    expect(document.querySelector('.reference-bottom-nav')).toBeInTheDocument()
+    expect(screen.getByRole('main')).not.toHaveClass('review-home-v2')
+    expect(document.querySelector('link[href*="approved-chrome.css"]')).toBeInTheDocument()
     expect(document.querySelector('link[href*="approved-layout-v43.css"]')).not.toBeInTheDocument()
   })
 })

@@ -1,4 +1,4 @@
-import { isApprovedHomepage } from '../../app/approvedHomepage'
+import { isApprovedChrome } from '../../app/approvedHomepage'
 import { MobileSiteMenu } from './MobileSiteMenu'
 import { StyleCheckHeaderSymbol } from './StyleCheckHeaderSymbol'
 import { RoundedIcon } from './RoundedIcon'
@@ -8,7 +8,7 @@ import { SearchBox } from './SearchBox'
 import { PaintServiceLink } from './PaintServiceLink'
 
 export function MobileHeader({ compact = false, compareCount = 0, region, onRegion, menuOpen, onMenu, onCatalog, searchSuspended = false }: { compact?: boolean; compareCount?: number; region: string; onRegion(): void; menuOpen: boolean; onMenu(): void; onCatalog(): void; searchSuspended?: boolean }) {
-  const isStyleCheck = isApprovedHomepage(useLocation().pathname)
+  const isStyleCheck = isApprovedChrome(useLocation().pathname)
   useEffect(() => {
     if (!menuOpen) return
     const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') onMenu() }

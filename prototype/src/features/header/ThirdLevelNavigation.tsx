@@ -1,4 +1,4 @@
-import { isApprovedHomepage } from '../../app/approvedHomepage'
+import { isApprovedChrome } from '../../app/approvedHomepage'
 import { RoundedIcon } from './RoundedIcon'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
@@ -12,7 +12,7 @@ function QuickLink({ item, onClick, mobile = false }: { item: HeaderQuickLink; o
 }
 
 export function ThirdLevelNavigation({ compact, config = headerQuickLinksConfig }: { compact: boolean; config?: HeaderQuickLinksConfig }) {
-  const isStyleCheck = isApprovedHomepage(useLocation().pathname)
+  const isStyleCheck = isApprovedChrome(useLocation().pathname)
   const desktopItems = useMemo(() => getVisibleHeaderQuickLinks(config), [config])
   const mobileItems = useMemo(() => getVisibleHeaderQuickLinks(config, true), [config])
   const [visibleCount, setVisibleCount] = useState(desktopItems.length)

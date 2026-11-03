@@ -59,15 +59,15 @@ describe('responsive header', () => {
     headerQuickLinksConfig.enabled = false
     try {
       renderHeader()
-      expect(document.querySelector('.main-header-row a[href="/services/paint-matching"]')).toHaveTextContent('Подбор автоэмали')
-      expect(document.querySelector('.mobile-header a[href="/services/paint-matching"]')).toHaveTextContent('Подбор автоэмали')
-      expect(document.querySelector('.main-header-row a[href="/services"]')).toHaveTextContent('Услуги')
+      expect(document.querySelector('.main-header-row a[href="/services/paint-matching"]')).toHaveTextContent('Подбор автоэмалей')
+      expect(document.querySelector('.reference-bottom-nav a[href="/services/paint-matching"]')).toHaveTextContent('Подбор')
+      expect(document.querySelector('.reference-bottom-nav a[href="/services"]')).toHaveTextContent('Услуги')
     } finally { headerQuickLinksConfig.enabled = enabled }
   })
 
   it('keeps the paint entry in the compact header', () => {
     render(<MemoryRouter initialEntries={['/catalog']}><AuthProvider><DesktopHeader region="Ярославль" onRegion={() => {}} counts={{ favorites: 0, compare: 0, cart: 0 }} compact catalogOpen={false} onCatalog={() => {}} /></AuthProvider></MemoryRouter>)
-    expect(screen.getByRole('link', { name: 'Подбор автоэмали' })).toHaveAttribute('href', '/services/paint-matching')
+    expect(screen.getByRole('link', { name: 'Подбор' })).toHaveAttribute('href', '/services/paint-matching')
   })
 
   it('changes the selected region from the region dialog', async () => {
@@ -92,15 +92,15 @@ describe('responsive header', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('exposes the five approved mobile destinations and closes its menu with Escape', async () => {
+  it('exposes the six approved mobile destinations and closes its menu with Escape', async () => {
     const user = userEvent.setup()
     renderHeader()
     const mobileNav = document.querySelector<HTMLElement>('[aria-label="Мобильная навигация"]')!
-    expect(mobileNav.querySelectorAll('a,button')).toHaveLength(5)
+    expect(mobileNav.querySelectorAll('a,button')).toHaveLength(6)
     await user.click(screen.getByLabelText('Открыть меню'))
     expect(document.querySelector('[aria-label="Мобильное меню"]')).toBeInTheDocument()
     await user.keyboard('{Escape}')
-    expect(screen.queryByRole('navigation', { name: 'Мобильное меню' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('dialog', { name: 'Мобильное меню' })).not.toBeInTheDocument()
   })
 
   it('renders configured quick links while excluding hidden demonstration items', () => {

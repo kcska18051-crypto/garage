@@ -22,8 +22,10 @@ function AppContent() {
     <div
       className="app-shell"
       data-style-check={isStyleCheck || undefined}
+      data-approved-chrome="true"
     >
       {isStyleCheck && <ApprovedHomepageStyles />}
+      <link rel="stylesheet" href="/garage/style-check/approved-chrome.css?v=20261103" />
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />
       <Footer />

@@ -77,7 +77,7 @@ describe('profile help', () => {
     await user.click(screen.getByRole('button', { name: 'Задать вопрос' }))
     expect(within(screen.getByRole('region', { name: 'Форма обращения' })).getByRole('heading', { name: 'Задать вопрос' })).toBeVisible()
 
-    await user.click(screen.getByRole('button', { name: 'Заказать звонок' }))
+    await user.click(within(screen.getByRole('main')).getByRole('button', { name: 'Заказать звонок' }))
     expect(within(screen.getByRole('region', { name: 'Форма обращения' })).getByRole('heading', { name: 'Заказать звонок' })).toBeVisible()
     expect(screen.getByLabelText('Предпочтительный способ ответа')).toHaveValue('Телефон')
 

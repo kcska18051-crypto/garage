@@ -107,7 +107,7 @@ describe('contacts page', () => {
   it('reuses the callback form with required name and phone', async () => {
     const user = userEvent.setup()
     open()
-    await user.click(screen.getByRole('button', { name: 'Заказать звонок' }))
+    await user.click(within(screen.getByRole('main')).getByRole('button', { name: 'Заказать звонок' }))
     const dialog = screen.getByRole('dialog', { name: 'Заказать звонок' })
     await user.click(within(dialog).getByRole('button', { name: 'Отправить запрос' }))
     expect(within(dialog).getByText('Укажите имя')).toBeInTheDocument()

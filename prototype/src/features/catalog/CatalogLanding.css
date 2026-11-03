@@ -50,3 +50,5 @@
   .catalog-landing .catalog-brand-grid > div { font-size: 14px; }
   .catalog-landing .catalog-info { padding-top: 28px; }
 }
+
+html:has(.catalog-landing), body:has(.catalog-landing), .app-shell:has(> .catalog-landing), .catalog-page.catalog-landing { background: #fff; }

@@ -7,6 +7,7 @@ import { ChildCategoryGrid } from '../features/catalog/ChildCategoryGrid'
 import '../features/catalog/Catalog.css'
 import '../features/catalog/CatalogLanding.css'
 import '../features/catalog/CatalogListingApproved.css'
+import '../features/catalog/ApprovedProductCards.css'
 
 export function CatalogSubcategoryPage() {
   const { subcategorySlug, childSlug } = useParams()

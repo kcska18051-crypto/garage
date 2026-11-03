@@ -49,7 +49,7 @@ describe('contacts page', () => {
   it('shows an empty state for a site city without contact points', async () => {
     const user = userEvent.setup(); open()
     await user.click(screen.getAllByRole('button', { name: 'Выбрать город' })[0])
-    await user.click(screen.getByRole('button', { name: 'Другой город' }))
+    await user.click(screen.getByRole('button', { name: 'Москва' }))
     expect(screen.getAllByRole('tab').every(tab => tab.getAttribute('aria-selected') === 'false')).toBe(true)
     expect(screen.queryByTestId('contact-point')).not.toBeInTheDocument()
     expect(screen.getByText(/контактные точки пока не указаны/)).toBeInTheDocument()

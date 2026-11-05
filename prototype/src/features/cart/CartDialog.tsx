@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 
-export function CartDialog({ title, children, onClose }: { title: string; children: ReactNode; onClose(): void }) {
+export function CartDialog({ title, children, onClose, className = '' }: { title: string; children: ReactNode; onClose(): void; className?: string }) {
   const ref = useRef<HTMLDialogElement>(null)
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null
@@ -11,7 +11,7 @@ export function CartDialog({ title, children, onClose }: { title: string; childr
     dialog.querySelector<HTMLButtonElement>('button')?.focus()
     return () => { document.body.style.overflow = overflow; if (typeof dialog.close === 'function') dialog.close(); if (opener?.isConnected) opener.focus() }
   }, [])
-  return createPortal(<dialog ref={ref} className="cart-dialog" aria-label={title} onCancel={event => { event.preventDefault(); onClose() }} onKeyDown={event => {
+  return createPortal(<dialog ref={ref} className={`cart-dialog ${className}`.trim()} aria-label={title} onCancel={event => { event.preventDefault(); onClose() }} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); onClose() }
     if (event.key !== 'Tab') return
     const items = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]),input:not([disabled]),a[href]')]

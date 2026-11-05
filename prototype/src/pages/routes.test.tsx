@@ -109,10 +109,10 @@ describe('prototype routes', () => {
     render(<MemoryRouter initialEntries={['/catalog/compressor-equipment/screw-compressors']}><App /></MemoryRouter>)
     const card = document.querySelector<HTMLElement>('.catalog-product-card')!
 
-    expect(card).toHaveClass('product-teaser')
-    expect(card.querySelector('[data-testid="product-gallery"]')).toBeInTheDocument()
-    expect(card.querySelector('.style-check-product-photo')).toBeInTheDocument()
-    expect(card.querySelectorAll('[data-testid="product-gallery-dot"]')).toHaveLength(0)
+    expect(card).toHaveClass('catalog-rich-card')
+    expect(card.querySelector('.catalog-rich-card__media img')).toBeInTheDocument()
+    expect(card.querySelector('.catalog-rich-card__name')).toHaveTextContent('Винтовой компрессор Remeza')
+    expect(card.querySelectorAll('.catalog-rich-card__gallery button')).toHaveLength(3)
     expect(card.querySelector('dl')).toBeNull()
     expect(card).toHaveTextContent(/В наличии в \d+ магазин|Под заказ|Нет в наличии|Снят с производства/)
     expect(card).toHaveTextContent('Артикул:')

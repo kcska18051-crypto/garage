@@ -1,0 +1,33 @@
+.catalog-results .catalog-rich-card { position: relative; display: flex; flex-direction: column; gap: 0; min-width: 0; min-height: 0; padding: 12px; border: 1px solid #e7e7e5; border-radius: 16px; background: #fff; color: #29312c; overflow: hidden; }
+.catalog-rich-card__media { display: grid; place-items: center; width: 100%; height: 184px; padding: 18px 12px 0; touch-action: pan-y; }
+.catalog-rich-card__media img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.catalog-rich-card__badge { position: absolute; top: 10px; left: 10px; padding: 3px 7px; border-radius: 6px; background: #fff0ed; color: #c92f29; font-size: 10px; text-decoration: none; }
+.catalog-rich-card__actions { position: absolute; right: 7px; top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.catalog-rich-card__actions button { display: grid; place-items: center; width: 30px; height: 30px; padding: 6px; border: 0; background: #fff; color: #737a70; border-radius: 6px; }
+.catalog-rich-card__actions svg { width: 18px; height: 18px; }
+.catalog-rich-card__actions button[aria-pressed=true] { color: #c92f29; }
+.catalog-rich-card__gallery { display: flex; align-items: center; justify-content: center; height: 26px; flex-shrink: 0; }
+.catalog-rich-card__gallery button { position: relative; width: 20px; height: 26px; padding: 0; border: 0; background: transparent; }
+.catalog-rich-card__gallery button::after { content: ''; position: absolute; inset: 0; margin: auto; width: 4px; height: 4px; border-radius: 50%; background: #d9ddda; }
+.catalog-rich-card__gallery button[aria-pressed=true]::after { background: #29312c; }
+.catalog-rich-card__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; min-height: 29px; margin-top: 5px; }
+.catalog-rich-card__price strong { font-size: 19px; line-height: 26px; font-weight: 700; letter-spacing: -.35px; }
+.catalog-rich-card__price del { font-size: 11px; color: #8a908c; white-space: nowrap; }
+.catalog-rich-card__name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; min-height: 57px; margin-top: 3px; font-size: 13px; line-height: 19px; font-weight: 400; text-decoration: none; }
+.catalog-rich-card__name:hover { color: #c92f29; }
+.catalog-rich-card__meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 3px 8px; min-height: 38px; padding-block: 5px; font-size: 11px; }
+.catalog-rich-card__rating { white-space: nowrap; }
+.catalog-rich-card__rating > span { color: #c92f29; font-size: 14px; }
+.catalog-rich-card__rating small,.catalog-rich-card__sku { color: #8a908c; font-size: 10px; }
+.catalog-rich-card__availability { margin: auto 0 12px; padding-top: 8px; min-height: 32px; font-size: 12px; line-height: 18px; color: #737a70; }
+.catalog-rich-card__availability[data-in-stock=true] { color: #38884b; }
+.catalog-rich-card__cart { align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; min-height: 36px; padding: 8px 14px; border: 0; border-radius: 9px; background: #c92f29; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; }
+.catalog-rich-card__cart:hover { background: #a92320; }
+.catalog-results--list .catalog-rich-card { display: grid; grid-template-columns: 170px minmax(0,1fr) 190px; gap: 5px 16px; }
+.catalog-results--list .catalog-rich-card__media { grid-column: 1; grid-row: 1 / 6; height: 170px; }
+.catalog-results--list .catalog-rich-card__gallery { grid-column: 1; }
+.catalog-results--list .catalog-rich-card__name { grid-column: 2; grid-row: 1 / 3; min-height: 0; align-self: center; }
+.catalog-results--list :is(.catalog-rich-card__meta,.catalog-rich-card__availability) { grid-column: 2; }
+.catalog-results--list :is(.catalog-rich-card__price,.catalog-rich-card__cart) { grid-column: 3; align-self: center; }
+@media(max-width:1100px) { .catalog-results--list .catalog-rich-card { grid-template-columns: 120px minmax(0,1fr); } .catalog-results--list :is(.catalog-rich-card__price,.catalog-rich-card__cart) { grid-column: 2; } }
+@media(max-width:767px) { .catalog-results .catalog-rich-card { padding: 10px; border-radius: 12px; } .catalog-rich-card__media { height: 145px; padding: 14px 6px 0; } .catalog-rich-card__price strong { font-size: 17px; line-height: 24px; } .catalog-rich-card__price del { font-size: 10px; } .catalog-rich-card__name { font-size: 12px; line-height: 18px; min-height: 54px; } .catalog-rich-card__availability { font-size: 11px; } .catalog-rich-card__cart { padding: 8px 12px; font-size: 12px; } .catalog-results--list .catalog-rich-card__media { height: 140px; } }

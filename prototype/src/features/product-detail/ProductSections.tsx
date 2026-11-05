@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom'
+import { catalogProducts } from '../../data/catalogData'
+import type { CatalogProduct } from '../../data/catalogTypes'
+import { CatalogProductCard } from '../catalog/CatalogProductCard'
 import { productDetail } from '../../data/productDetailData'
 import { useRegion } from '../../state/RegionState'
 import { ProductExtras } from './ProductExtras'
 import type { ProductOffer } from '../../data/productDetailData'
 
-const Rail = ({ title, id, items }: { title: string; id?: string; items: string[] }) => <section className="product-rail" id={id}><h2>{title}</h2><div>{items.map((item, index) => <article key={item}><div className={`product-rail__art product-rail__art--${index % 3}`} aria-hidden="true"><span /><i /></div><h3>{item}</h3><p>Информационная карточка прототипа</p><button type="button">Подробнее</button></article>)}</div></section>
+const relatedProducts = catalogProducts.filter(product => product.subcategoryId === 'screw-compressors' && product.id !== productDetail.id)
+const analogProducts = relatedProducts.slice(0, 4)
+const similarProducts = relatedProducts.filter(product => product.brandId === 'remeza').slice(0, 4)
+const Rail = ({ title, id, items }: { title: string; id?: string; items: CatalogProduct[] }) => <section className="product-content-section product-recommendations" id={id} aria-label={title}><h2>{title}</h2><div className="catalog-results">{items.map((product, index) => <CatalogProductCard key={product.id} product={product} index={index}/>)}</div></section>
 
 export function ProductSections({ offer }: { offer?: ProductOffer }) {
   const { region } = useRegion()
@@ -20,7 +26,8 @@ export function ProductSections({ offer }: { offer?: ProductOffer }) {
     <section id="delivery" className="product-content-section product-delivery"><h2>Доставка и оплата</h2><div><strong>{region}</strong><p>Ожидаемый способ и срок получения уточняются с учётом выбранного варианта и адреса. Внутренняя складская логика пользователю не показывается.</p><div className="product-info-links"><Link to="/delivery">Подробнее о доставке</Link><Link to="/payment">Подробнее об оплате</Link></div></div></section>
     <section id="service" className="product-content-section"><h2>Сервис и гарантия</h2><p>Условия гарантии, пусконаладки и сервисного обслуживания уточняются для конкретной комплектации. Здесь будут опубликованы подтверждённые регламенты и контакты поддержки.</p><div className="product-info-links"><Link to="/warranty">Подробнее о гарантии</Link></div></section>
 
-    <Rail id="analogs" title="Аналоги" items={['Винтовой компрессор — аналог 01', 'Винтовой компрессор — аналог 02', 'Комплектное решение — аналог 03']} />
-    <Rail title="Похожие товары" items={['Компрессор серии ВК 11', 'Компрессор серии ВК 15', 'Компрессорная станция']} />
+    <Rail id="analogs" title="Аналоги" items={analogProducts} />
+    <Rail title="Похожие товары" items={similarProducts} />
   </div>
 }
+

@@ -10,6 +10,17 @@ const longName = 'Винтовой компрессор Remeza ВК 10-8 с ре
 const renderPage = () => render(<MemoryRouter initialEntries={[route]}><App /></MemoryRouter>)
 
 describe('Remeza product detail redesign', () => {
+  it('renders four catalog cards in each related product group', () => {
+    renderPage()
+    for (const name of ['Аналоги', 'Похожие товары']) {
+      const group = screen.getByRole('region', { name })
+      expect(within(group).getAllByRole('article')).toHaveLength(4)
+      expect(group.querySelectorAll('.catalog-rich-card')).toHaveLength(4)
+      expect(within(group).getAllByRole('link', { name: /Открыть товар:/ })).toHaveLength(4)
+      expect(group).not.toHaveTextContent('Информационная карточка прототипа')
+    }
+  })
+
   it('places the long product heading and compact metadata above the three-column hero', () => {
     const { container } = renderPage()
     const heading = screen.getByRole('heading', { level: 1, name: longName })

@@ -48,8 +48,9 @@ describe('Remeza product detail redesign', () => {
     const gallery = screen.getByRole('region', { name: 'Галерея товара' })
     expect(within(gallery).getByRole('button', { name: 'Предыдущее изображение' })).toBeInTheDocument()
     await user.click(within(gallery).getByRole('button', { name: 'Следующее изображение' }))
-    expect(within(gallery).getByText(/2 из 5/)).toBeInTheDocument()
-    expect(within(gallery).getByRole('button', { name: 'Видео о товаре' })).toBeInTheDocument()
+    expect(within(gallery).getByText(/2 из 3/)).toBeInTheDocument()
+    expect(within(gallery).queryByRole('button', { name: 'Видео о товаре' })).not.toBeInTheDocument()
+    expect(within(gallery).getAllByRole('button', { name: /Миниатюра/ })).toHaveLength(3)
 
     await user.click(within(gallery).getByRole('button', { name: 'Увеличить изображение' }))
     const modal = screen.getByRole('dialog', { name: 'Увеличенный просмотр товара' })

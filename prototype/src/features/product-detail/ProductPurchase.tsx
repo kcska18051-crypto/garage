@@ -38,19 +38,26 @@ export function ProductPurchase({ offer, state, onStateChange, quantity, onQuant
     else if (state === 'unavailable') setFeedback('Уведомление о поступлении включено в демонстрационном режиме.')
     else document.querySelector('#analogs')?.scrollIntoView()
   }
-  return <aside className="product-purchase" aria-label="Покупка товара">
-    <div className="product-state-switch" role="group" aria-label="Демонстрация статуса товара">
-      <span>Показать состояние</span><div>{(Object.keys(stateMap) as CommercialState[]).map((key) => <button type="button" key={key} aria-label={stateMap[key].switchLabel ?? stateMap[key].label} aria-pressed={state === key} onClick={() => { onStateChange(key); setFeedback('') }}>{stateMap[key].switchLabel ?? stateMap[key].label}</button>)}</div>
-    </div>
+  return <aside className="product-purchase-shell" aria-label="Покупка товара">
+    <div className="product-purchase product-purchase__box">
     <div className="product-purchase__price"><del>{money(offer.oldPrice)}</del><strong>{money(offer.price)}</strong><span>Выгода {money(saving)}</span></div>
-    <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" /><strong>{current.label}</strong></p>
-    <div className="product-stock" aria-label="Наличие по городам">{current.stocks.map(([city, note]) => <div key={city}><strong className="product-stock__city">{city}</strong><span>{note}</span></div>)}</div>
     {state === 'available' && <div className="product-purchase__buy-row"><div className="product-quantity" aria-label="Количество товара"><button type="button" aria-label="Уменьшить количество" onClick={() => onQuantityChange(Math.max(1, quantity - 1))}>−</button><output>{quantity}</output><button type="button" aria-label="Увеличить количество" onClick={() => onQuantityChange(Math.min(999, quantity + 1))}>+</button></div><button className="button button--dark" type="button" onClick={primaryAction}>{inCart ? 'В корзине' : current.action}</button></div>}
     {state !== 'available' && <button className="button button--dark" type="button" onClick={primaryAction}>{current.action}</button>}
     {(state === 'available' || state === 'order') && <button className="button" type="button" onClick={() => setFeedback('Быстрый заказ подготовлен. Менеджер свяжется для подтверждения.')}>Купить в один клик</button>}
-    <button className="product-purchase__proposal" type="button" onClick={() => setProposalOpen(true)}>Коммерческое предложение</button>
+
     <div className="product-finance" aria-label="Способы финансирования">{['Купить в кредит', 'В рассрочку', 'В лизинг'].map((label) => <button type="button" key={label} aria-label={label} onClick={() => setFeedback(`${label}: условия будут рассчитаны после подтверждения данных.`)}><span aria-hidden="true">○</span>{label}<small>Условия уточняются</small></button>)}</div>
-    <div className="product-help"><strong>Нужна помощь?</strong><p>Специалист поможет подобрать комплектацию.</p><div><button type="button" aria-label="Написать в Telegram" onClick={() => setFeedback('Telegram показан в демонстрационном режиме.')}>TG</button><button type="button" aria-label="Написать в WhatsApp" onClick={() => setFeedback('WhatsApp показан в демонстрационном режиме.')}>WA</button><button type="button" aria-label="Заказать звонок" onClick={() => setFeedback('Обратный звонок подготовлен.')}>☎</button></div></div>
+    </div>
+    <div className="product-fulfillment">
+    <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" /><strong>{current.label}</strong></p>
+    <div className="product-stock" aria-label="Наличие по городам">{current.stocks.map(([city, note]) => <div key={city}><strong className="product-stock__city">{city}</strong><span>{note}</span></div>)}</div>
+    </div>
+    <button className="product-purchase__proposal" type="button" onClick={() => setProposalOpen(true)}>Коммерческое предложение</button>
+    <details className="product-purchase__support"><summary>Нужна помощь с подбором?</summary>    <div className="product-help"><strong>Нужна помощь?</strong><p>Специалист поможет подобрать комплектацию.</p><div><button type="button" aria-label="Написать в Telegram" onClick={() => setFeedback('Telegram показан в демонстрационном режиме.')}>TG</button><button type="button" aria-label="Написать в WhatsApp" onClick={() => setFeedback('WhatsApp показан в демонстрационном режиме.')}>WA</button><button type="button" aria-label="Заказать звонок" onClick={() => setFeedback('Обратный звонок подготовлен.')}>☎</button></div></div>
+</details>
+    <details className="product-purchase__demo"><summary>Состояния товара · демонстрация</summary>    <div className="product-state-switch" role="group" aria-label="Демонстрация статуса товара">
+      <span>Показать состояние</span><div>{(Object.keys(stateMap) as CommercialState[]).map((key) => <button type="button" key={key} aria-label={stateMap[key].switchLabel ?? stateMap[key].label} aria-pressed={state === key} onClick={() => { onStateChange(key); setFeedback('') }}>{stateMap[key].switchLabel ?? stateMap[key].label}</button>)}</div>
+    </div>
+</details>
     {feedback && <p className="product-feedback" role="status">{feedback}</p>}
     {proposalOpen && <CommercialProposal offer={offer} quantity={quantity} onClose={() => setProposalOpen(false)} />}
   </aside>

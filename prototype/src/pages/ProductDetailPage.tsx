@@ -41,11 +41,10 @@ export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string }
       <ProductHeadingTools sku={offer.sku} favorite={favorite} compared={compared} onToggleFavorite={() => commerce.toggleFavorite(productDetail.id)} onToggleCompare={() => commerce.toggleCompare(productDetail.id)} productPath={`/product/${offer.id}/`}>
         <strong>★ {productDetail.rating}</strong><button type="button" onClick={() => document.querySelector('#reviews')?.scrollIntoView()}>{productDetail.reviewCount}</button><button type="button" onClick={() => document.querySelector('#questions')?.scrollIntoView()}>{productDetail.questionCount}</button><span>{productDetail.warranty}</span>
       </ProductHeadingTools>
-      <RentalAvailability key={offer.id} productId={offer.id}/>
     </header>
     <section className="product-hero">
       <ProductGallery images={productDetail.gallery} name={productDetail.name} offer={offer} state={commercialState} quantity={quantity} />
-      <div className="product-identity"><Link className="product-identity__brand" to="/brand/remeza/">{productDetail.brand}</Link><ProductVariants groups={productDetail.variantGroups} selections={selections} offers={productDetail.offers} onChange={selectVariant} /><h2>Ключевые характеристики</h2><dl className="product-key-specs">{productDetail.keySpecs.map(([name, value]) => <div key={name}><dt>{name}</dt><dd>{value}</dd></div>)}</dl><a className="product-all-specs" href="#characteristics">Все характеристики ↓</a></div>
+      <div className="product-identity"><Link className="product-identity__brand" to="/brand/remeza/">{productDetail.brand}</Link><ProductVariants groups={productDetail.variantGroups} selections={selections} offers={productDetail.offers} onChange={selectVariant} /><h2>Ключевые характеристики</h2><dl className="product-key-specs">{productDetail.keySpecs.map(([name, value]) => <div key={name}><dt>{name}</dt><dd>{value}</dd></div>)}</dl><a className="product-all-specs" href="#characteristics">Все характеристики ↓</a><RentalAvailability key={offer.id} productId={offer.id}/></div>
       <ProductPurchase offer={offer} state={commercialState} onStateChange={setCommercialState} quantity={quantity} onQuantityChange={setQuantity} />
     </section>
     <nav className="product-anchor-nav" aria-label="Разделы товара">{productDetail.sections.map((section) => <a key={section.id} href={`#${section.id}`}>{section.label}</a>)}</nav>

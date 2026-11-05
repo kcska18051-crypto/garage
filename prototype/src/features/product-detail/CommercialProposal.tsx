@@ -32,7 +32,7 @@ export function CommercialProposal({ offer = productDetail.offers[0], quantity =
       <p className="proposal-modal__eyebrow">Предпросмотр документа</p>
       <h2>Коммерческое предложение</h2>
       <div className="proposal-modal__sheet">
-        <span>ГАРАЖ · ПРОТОТИП</span>
+        <span>ГАРАЖ</span>
         {lines ? <><table><thead><tr><th>Товар / артикул</th><th>Кол-во</th><th>Цена</th><th>Сумма</th></tr></thead><tbody>{lines.map(line => { const p = checkoutProducts.find(p => p.id === line.id); return <tr key={line.id}><td>{p?.name} / {p?.sku}</td><td>{line.quantity}</td><td>{!p || p.purchaseMode === 'quote' ? 'По запросу' : money(p?.price ?? 0)}</td><td>{!p || p.purchaseMode === 'quote' ? 'По запросу' : money((p?.price ?? 0)*line.quantity)}</td></tr> })}</tbody></table><strong>Итого: {pricing?.rows.every(row => row.quote) ? 'Уточняется' : money((pricing?.totalCents ?? 0) / 100)}</strong></> : <><h3>{productDetail.name}</h3><dl><div><dt>Артикул</dt><dd>{offer.sku}</dd></div><div><dt>Вариант</dt><dd>{Object.values(offer.options).join(' · ')}</dd></div><div><dt>Количество</dt><dd>{quantity} шт.</dd></div><div><dt>Стоимость</dt><dd>{money(offer.price * quantity)}</dd></div></dl></>}
         {pricing && pricing.promoDiscountCents > 0 && <p>Промокод 123 (10%): −{money(pricing.promoDiscountCents / 100)}</p>}
         {pricing?.rows.some(row => row.quote) && <p>Позиции с запросом цены не включены в сумму.</p>}

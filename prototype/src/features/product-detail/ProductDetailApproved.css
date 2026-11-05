@@ -114,8 +114,9 @@ html:has(.product-page-approved),body:has(.product-page-approved),.app-shell:has
 .product-page-approved .product-purchase__box { display: grid; grid-template-columns: 1fr; position: static; align-self: stretch; width: 100%; padding: 18px; gap: 10px; box-shadow: 0 4px 18px rgb(41 49 44 / .08); }
 .product-page-approved .product-purchase__box > * { grid-column: 1 / -1; }
 .product-page-approved .product-purchase__box .product-purchase__price { grid-template-columns: auto 1fr; }
-.product-page-approved .product-purchase__box .product-finance { gap: 4px; }
-.product-page-approved .product-purchase__box .product-finance button { padding: 7px 5px; font-size: 10px; }
+.product-page-approved .product-purchase__box .product-finance { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; }
+.product-page-approved .product-purchase__box .product-finance button { display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0; min-height: 36px; padding: 6px 4px; border: 1px solid #e9ece5; border-radius: 8px; background: #f7f8f5; color: #555f52; font-size: 11px; line-height: 16px; font-weight: 500; text-align: center; }
+.product-page-approved .product-purchase__box .product-finance button:hover { background: #fff9e2; border-color: #f1e3a5; }
 .product-page-approved .product-purchase__box .product-finance small { display: none; }
 .product-page-approved .product-fulfillment { padding: 0 4px; }
 .product-page-approved .product-fulfillment .product-status { margin-bottom: 8px; }

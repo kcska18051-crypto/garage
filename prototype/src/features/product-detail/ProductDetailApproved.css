@@ -111,7 +111,7 @@ html:has(.product-page-approved),body:has(.product-page-approved),.app-shell:has
  .product-page-approved .product-mobile-purchase .button { min-height: 40px; }
 }
 .product-page-approved .product-purchase-shell { min-width: 0; display: flex; flex-direction: column; gap: 14px; align-self: start; }
-.product-page-approved .product-purchase__box { display: grid; grid-template-columns: 1fr; position: static; align-self: stretch; width: 100%; padding: 18px; gap: 10px; box-shadow: 0 4px 18px rgb(41 49 44 / .08); }
+.product-page-approved .product-purchase__box { display: grid; grid-template-columns: 1fr; position: static; order: 0; align-self: stretch; width: 100%; padding: 18px; gap: 10px; box-shadow: 0 4px 18px rgb(41 49 44 / .08); }
 .product-page-approved .product-purchase__box > * { grid-column: 1 / -1; }
 .product-page-approved .product-purchase__box .product-purchase__price { grid-template-columns: auto 1fr; }
 .product-page-approved .product-purchase__box .product-finance { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; }
@@ -158,3 +158,8 @@ html:has(.product-page-approved),body:has(.product-page-approved),.app-shell:has
 .product-page-approved .product-recommendations > .catalog-results { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; }
 @media(max-width:900px) { .product-page-approved .product-recommendations > .catalog-results { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; } }
 @media(max-width:767px) { .product-page-approved .product-recommendations > .catalog-results { gap: 10px; } }
+.product-page-approved .product-purchase-shell > .rental-availability { margin: 0; }
+.product-page-approved .product-purchase-shell > .rental-availability > button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 12px 16px; border: 1px solid #ead16c; border-radius: 12px; background: #fff3bc; color: #675300; font-size: 14px; line-height: 20px; font-weight: 600; text-align: left; }
+.product-page-approved .rental-availability__icon { flex: 0 0 24px; width: 24px; height: 24px; }
+.product-page-approved .rental-availability__arrow { margin-left: auto; font-size: 22px; font-weight: 400; }
+.product-page-approved .product-purchase-shell > .rental-availability > button:hover { background: #ffed9b; }

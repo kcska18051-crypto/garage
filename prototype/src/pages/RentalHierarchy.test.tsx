@@ -35,7 +35,7 @@ it('uses the approved sale → message → compressor category → direct form p
   localStorage.setItem('garage-cart-v2', JSON.stringify([{id: 'product-2', quantity: 2}]))
   const user = userEvent.setup(); const view = open('/product/remeza-vk-10-gr-0001/')
   const before = localStorage.getItem('garage-cart-v2')
-  const trigger = screen.getByRole('button', {name: 'Можно взять в аренду'})
+  const trigger = screen.getByRole('button', {name: 'Взять в аренду'})
   await user.click(trigger)
   const info = within(screen.getByRole('dialog', {name: 'Можно взять в аренду'}))
   expect(info.queryByLabelText('Дата начала')).not.toBeInTheDocument()
@@ -64,7 +64,7 @@ it('uses the approved sale → message → compressor category → direct form p
 
 it.each(['product-3', 'remeza-vk-10-220-55'])('does not mark an unlinked sale SKU %s as available for rental', id => {
   open(`/product/${id}`)
-  expect(screen.queryByRole('button', {name: 'Можно взять в аренду'})).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', {name: /^(Можно взять в аренду|Взять в аренду)$/})).not.toBeInTheDocument()
 })
 
 it.each([

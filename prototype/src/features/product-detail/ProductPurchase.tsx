@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { RentalAvailability } from '../services/RentalAvailability'
 import { money, productDetail, type ProductOffer } from '../../data/productDetailData'
 import { useCommerce } from '../../state/CommerceState'
 import { CommercialProposal } from './CommercialProposal'
@@ -47,6 +48,7 @@ export function ProductPurchase({ offer, state, onStateChange, quantity, onQuant
 
     <div className="product-finance" aria-label="Способы финансирования">{['Купить в кредит', 'В рассрочку', 'В лизинг'].map((label) => <button type="button" key={label} aria-label={label} onClick={() => setFeedback(`${label}: условия будут рассчитаны после подтверждения данных.`)}><span aria-hidden="true">○</span>{label}<small>Условия уточняются</small></button>)}</div>
     </div>
+    <RentalAvailability key={offer.id} productId={offer.id} prominent/>
     <div className="product-fulfillment">
     <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" /><strong>{current.label}</strong></p>
     <div className="product-stock" aria-label="Наличие по городам">{current.stocks.map(([city, note]) => <div key={city}><strong className="product-stock__city">{city}</strong><span>{note}</span></div>)}</div>

@@ -14,9 +14,7 @@ export function InfoPage({ page }: { page: InfoPageKey }) {
         <div>{infoPageEntries.map(([, item]) => <NavLink key={item.path} to={item.path}>{item.title}</NavLink>)}</div>
       </nav>
       <article className="info-main">
-        <header className="info-heading">
-          <p>{currentPage.eyebrow}</p>
-          <h1>{currentPage.title}</h1>
+        <header className="info-heading">          <h1>{currentPage.title}</h1>
           <div>{currentPage.lead}</div>
         </header>
         <div className="info-sections">

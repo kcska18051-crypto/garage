@@ -10,6 +10,7 @@ import { ProductVariants } from '../features/product-detail/ProductVariants'
 import { RentalAvailability } from '../features/services/RentalAvailability'
 import { useCommerce } from '../state/CommerceState'
 import '../features/product-detail/ProductDetail.css'
+import '../features/product-detail/ProductDetailApproved.css'
 
 export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string } = {}) {
   const [commercialState, setCommercialState] = useState<CommercialState>('available')
@@ -31,7 +32,7 @@ export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string }
     params.set('variant',next.id)
     navigate({pathname:location.pathname,search:`?${params}`,hash:location.hash},{replace:true,preventScrollReset:true})
   }
-  return <main className="product-page">
+  return <main className="product-page product-page-approved">
     <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: 'Каталог', to: '/catalog' }, { label: 'Компрессорное оборудование', to: '/catalog/compressor-equipment' }, { label: 'Винтовые компрессоры', to: '/catalog/compressor-equipment/screw-compressors' }, { label: productDetail.brand }]} />
     <header className="product-heading">
       <div className="product-labels">{productDetail.labels.map((label) => <span key={label}>{label}</span>)}</div>

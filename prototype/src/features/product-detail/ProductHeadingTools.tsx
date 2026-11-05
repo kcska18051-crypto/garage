@@ -1,3 +1,4 @@
+import { RoundedIcon } from '../header/RoundedIcon'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 type Props = {
@@ -53,8 +54,8 @@ export function ProductHeadingTools({ sku, favorite, compared, onToggleFavorite,
         {children}
       </div>
       <div className="product-heading__actions">
-        <button type="button" title="В избранное" aria-label="В избранное" aria-pressed={favorite} onClick={onToggleFavorite}><span aria-hidden="true">♡</span></button>
-        <button type="button" title="Сравнить" aria-label="Сравнить" aria-pressed={compared} onClick={onToggleCompare}><span aria-hidden="true">≡</span></button>
+        <button type="button" title="В избранное" aria-label="В избранное" aria-pressed={favorite} onClick={onToggleFavorite}><RoundedIcon name="favorite" /></button>
+        <button type="button" title="Сравнить" aria-label="Сравнить" aria-pressed={compared} onClick={onToggleCompare}><RoundedIcon name="compare" /></button>
         <div className="product-share" ref={shareRoot}>
           <button type="button" title="Поделиться" aria-label="Поделиться" aria-expanded={shareOpen} aria-haspopup="menu" onClick={() => setShareOpen((open) => !open)}><span aria-hidden="true">↗</span></button>
           {shareOpen && <div className="product-share__menu" role="menu" aria-label="Способы поделиться">

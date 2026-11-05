@@ -11,6 +11,7 @@ import {useEffect} from 'react'
 import {useProfile} from '../state/ProfileState'
 import { CookiePreferenceProvider } from '../state/CookiePreferenceState'
 import { CookieBanner } from '../features/cookie/CookieBanner'
+import '../features/dialogs/ApprovedDialogs.css'
 
 function AppContent() {
   const isStyleCheck = isApprovedHomepage(useLocation().pathname)

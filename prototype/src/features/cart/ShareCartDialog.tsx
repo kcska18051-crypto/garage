@@ -25,7 +25,7 @@ export function ShareCartDialog({ url, onClose }: { url: string; onClose(): void
     catch { setFailed(true); setFeedback('Не удалось скопировать. Скопируйте выделенную ссылку вручную.'); inputRef.current?.focus(); inputRef.current?.select() }
     finally { setCopying(false) }
   }
-  return createPortal(<dialog ref={dialogRef} className="share-cart-dialog" aria-labelledby="share-cart-title" aria-modal="true" onCancel={event => { event.preventDefault(); onClose() }} onKeyDown={event => {
+  return createPortal(<dialog ref={dialogRef} className="share-cart-dialog approved-dialog" aria-labelledby="share-cart-title" aria-modal="true" onCancel={event => { event.preventDefault(); onClose() }} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); onClose(); return }
     if (event.key !== 'Tab') return
     const items = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), input, a[href]')]
@@ -33,7 +33,7 @@ export function ShareCartDialog({ url, onClose }: { url: string; onClose(): void
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus() }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus() }
   }}>
-    <header><h2 id="share-cart-title">Поделиться корзиной</h2><button ref={closeRef} className="share-cart-dialog__close" type="button" aria-label="Закрыть окно передачи корзины" onClick={onClose}>×</button></header>
+    <header><h2 id="share-cart-title">Поделиться корзиной</h2><button ref={closeRef} className="share-cart-dialog__close approved-dialog__close" type="button" aria-label="Закрыть окно передачи корзины" onClick={onClose}>×</button></header>
     <p>Поделитесь выбранными товарами. Личные данные не передаются.</p>
     <label htmlFor="shared-cart-link">Ссылка на корзину<input ref={inputRef} id="shared-cart-link" type="url" readOnly spellCheck={false} value={url} onFocus={event => event.currentTarget.select()}/></label>
     <div className="share-cart-dialog__actions"><button type="button" disabled={copying} onClick={copy}>{copying ? 'Копируем…' : 'Копировать ссылку'}</button><a href={url} target="_blank" rel="noreferrer">Открыть общую корзину ↗</a></div>

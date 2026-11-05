@@ -100,8 +100,8 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
   }
 
   return <div className="overlay service-request-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeRef.current() }}>
-    <section className="dialog service-request-dialog" role="dialog" aria-modal="true" aria-label={title} ref={dialogRef} tabIndex={-1}>
-      <button className="dialog__close" aria-label="Закрыть форму" onClick={() => closeRef.current()}>×</button>
+    <section className="dialog service-request-dialog approved-dialog" role="dialog" aria-modal="true" aria-label={title} ref={dialogRef} tabIndex={-1}>
+      <button className="dialog__close approved-dialog__close" aria-label="Закрыть форму" onClick={() => closeRef.current()}>×</button>
       {demoNumber ? <div className="service-request-success">
         <h2 ref={headingRef} tabIndex={-1}>Демонстрационная заявка</h2>
         <p role="status">{request.kind === 'rental' ? 'Заявка на аренду отправлена' : 'Демонстрационная заявка создана'}</p>

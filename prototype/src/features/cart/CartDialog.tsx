@@ -11,12 +11,12 @@ export function CartDialog({ title, children, onClose, className = '' }: { title
     dialog.querySelector<HTMLButtonElement>('button')?.focus()
     return () => { document.body.style.overflow = overflow; if (typeof dialog.close === 'function') dialog.close(); if (opener?.isConnected) opener.focus() }
   }, [])
-  return createPortal(<dialog ref={ref} className={`cart-dialog ${className}`.trim()} aria-label={title} onCancel={event => { event.preventDefault(); onClose() }} onKeyDown={event => {
+  return createPortal(<dialog ref={ref} className={`cart-dialog approved-dialog ${className}`.trim()} aria-label={title} onCancel={event => { event.preventDefault(); onClose() }} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); onClose() }
     if (event.key !== 'Tab') return
     const items = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]),input:not([disabled]),a[href]')]
     const first = items[0], last = items[items.length - 1]
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus() }
     if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus() }
-  }}><header><h2>{title}</h2><button type="button" aria-label="Закрыть диалог" onClick={onClose}>×</button></header>{children}</dialog>, document.body)
+  }}><header><h2>{title}</h2><button className="approved-dialog__close" type="button" aria-label="Закрыть диалог" onClick={onClose}>×</button></header>{children}</dialog>, document.body)
 }

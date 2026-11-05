@@ -21,7 +21,7 @@ export function PickupDetails({ point, onClose }: { point: ContactPoint; onClose
       if (opener?.isConnected) opener.focus()
     }
   }, [])
-  return createPortal(<dialog ref={dialogRef} className="pickup-details" aria-labelledby="pickup-details-title" aria-modal="true"
+  return createPortal(<dialog ref={dialogRef} className="pickup-details approved-dialog" aria-labelledby="pickup-details-title" aria-modal="true"
     onCancel={event => { event.preventDefault(); onClose() }}
     onKeyDown={event => {
       if (event.key === 'Escape') { event.preventDefault(); onClose(); return }
@@ -31,7 +31,7 @@ export function PickupDetails({ point, onClose }: { point: ContactPoint; onClose
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus() }
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus() }
     }}>
-    <header className="pickup-details__heading"><div><small>Фото и как добраться</small><h2 id="pickup-details-title">{point.name} — {point.city}</h2></div><button ref={closeRef} type="button" aria-label="Закрыть информацию о пункте" onClick={onClose}>×</button></header>
+    <header className="pickup-details__heading"><div><small>Фото и как добраться</small><h2 id="pickup-details-title">{point.name} — {point.city}</h2></div><button className="approved-dialog__close" ref={closeRef} type="button" aria-label="Закрыть информацию о пункте" onClick={onClose}>×</button></header>
     <div className="pickup-details__body">
       <p className="pickup-details__notice">Демонстрационные данные: адрес, координаты, контакты и фотографии требуют подтверждения клиентом.</p>
       <p>{point.kind}. Условия посещения и доступные услуги уточняются у точки.</p>

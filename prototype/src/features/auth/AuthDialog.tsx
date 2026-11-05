@@ -124,8 +124,8 @@ export function AuthDialog({ intent, requirePhoneConfirmation = false, onClose, 
   </form>
 
   return <div className="auth-backdrop" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-    <section ref={dialogRef} className="auth-dialog" role="dialog" aria-modal="true" aria-label="Вход и регистрация">
-      <header className="auth-dialog__header"><div><span>Личный кабинет</span><strong>ГАРАЖ</strong></div><button autoFocus type="button" aria-label="Закрыть" onClick={onClose}>×</button></header>
+    <section ref={dialogRef} className="auth-dialog approved-dialog" role="dialog" aria-modal="true" aria-label="Вход и регистрация">
+      <header className="auth-dialog__header"><div><span>Личный кабинет</span><strong>ГАРАЖ</strong></div><button className="approved-dialog__close" autoFocus type="button" aria-label="Закрыть" onClick={onClose}>×</button></header>
       {!requirePhoneConfirmation && <div className="auth-tabs" role="tablist" aria-label="Авторизация"><button role="tab" aria-selected={mode === 'login'} onClick={() => showMode('login')}>Вход</button><button role="tab" aria-selected={mode === 'register'} onClick={() => showMode('register')}>Регистрация</button></div>}
       <div className="auth-dialog__body">
         {screen === 'login' && <form className="auth-form" onSubmit={submitLogin}>

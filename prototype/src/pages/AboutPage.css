@@ -127,3 +127,7 @@ html:has(.about-page), body:has(.about-page), .app-shell:has(.about-page) { back
  .app-shell[data-style-check] main.about-page.review-home-v2 .about-intro { grid-template-columns:1fr; gap:20px; }
  .about-company-image { border-radius:16px; }
 }
+
+.app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefit-copy h3 { font-size:16px; line-height:22px; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; color:#282e29; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits > .section-heading h2 { font-size:22px; line-height:31px; margin:0; }
+@media(max-width:767px) { .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefit-copy h3 { font-size:14px; line-height:19px; } }

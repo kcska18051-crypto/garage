@@ -3,6 +3,7 @@ import { StrictMode } from 'react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
+import { aboutAdvantages } from '../data/aboutData'
 import { prototypeData } from '../data/prototypeData'
 import { materialsByKind } from '../data/materialsData'
 import { contactPoints } from '../data/contactsData'
@@ -19,7 +20,8 @@ it('renders company content without editorial notes and preserves the figures',(
   expect(main.querySelector('.about-photo')).toBeNull()
   expect(main.textContent).not.toMatch(/Данные клиента|не подтверждённые факты|Пример содержания|Примеры из справочника|Образец полей/)
   for(const mask of ['XX лет на рынке','X городов','XX XXX товаров']) expect(within(main).getByText(mask)).toBeInTheDocument()
-  expect(screen.getByRole('region',{name:'Преимущества'}).querySelectorAll('article')).toHaveLength(4)
+  expect(screen.getByRole('region',{name:'Наши преимущества'}).querySelectorAll('article')).toHaveLength(4)
+  for(const item of aboutAdvantages) { expect(screen.getByRole('heading',{name:item.title})).toBeInTheDocument(); expect(screen.getByText(item.text)).toBeInTheDocument() }
   expect(within(main).getByText('Название организации')).toBeInTheDocument()
   expect(main.querySelectorAll('a[href="#"],a:not([href])')).toHaveLength(0)
   expect(within(screen.getByRole('region',{name:'Наши соцсети'})).queryAllByRole('link')).toHaveLength(0)

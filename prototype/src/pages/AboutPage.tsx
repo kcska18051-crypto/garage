@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
-import { aboutCities,aboutFigures,aboutRequisites,aboutSocialPlaces } from '../data/aboutData'
+import { aboutAdvantages,aboutCities,aboutFigures,aboutRequisites,aboutSocialPlaces } from '../data/aboutData'
 import { prototypeData } from '../data/prototypeData'
 import { ReviewBenefits, ReviewBrands } from './StyleCheckHomePage'
 import { UsefulSection } from '../features/home/UsefulSection'
@@ -16,7 +16,7 @@ export function AboutPage() {
       <img className="about-company-image" src="/garage/style-check/review-assets/about-company-workshop.png" alt="Оборудование и инструмент в профессиональной мастерской" />
     </header>
     <section className="company-about-section" aria-labelledby="about-figures-title"><div className="company-about-section-heading"><h2 id="about-figures-title">Компания в цифрах</h2></div><ul className="about-figures">{aboutFigures.map(figure=><li key={figure}><strong>{figure}</strong></li>)}</ul></section>
-    <ReviewBenefits />
+    <ReviewBenefits title="Наши преимущества" items={aboutAdvantages.map((item,index) => ({ ...item, id: `company-${index}`, icon: ['tools','message','delivery','support'][index], decor: ['benefits-v30/clients.png','about-v29/directions.png','benefits-v30/pickup.png','benefits-v30/support.png'][index] }))} />
     <ReviewBrands />
     <section className="company-about-section" aria-labelledby="about-cities-title"><div className="company-about-section-heading"><h2 id="about-cities-title">География присутствия</h2></div><div className="about-cities">{aboutCities.map(city=><Link key={city} to={`/contacts?city=${encodeURIComponent(city)}`}><span className="about-city-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><strong>{city}</strong><span aria-hidden="true">↗</span></Link>)}</div><p className="about-caption">Выберите город, чтобы посмотреть контактные точки и карту.</p></section>
     <UsefulSection title="Новости" showAllLink={false} items={prototypeData.useful.filter(item => item.kind === 'news')} />

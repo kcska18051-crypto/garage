@@ -72,11 +72,12 @@ function ReviewMerchandising() {
     return <div className="review-merchandising-group" key={block.id}><ProductShowcase collection={collection} demoCopies={3} />{banners.length > 0 && <div className={`compact-banner-group compact-banner-group--${banners.length}`}>{banners.map(item => <ReviewBanner key={item.id} item={item} />)}</div>}</div>
   })}</div>
 }
-export function ReviewBenefits() {
-  const [variant, setVariant] = useState<'calm' | 'expressive'>('calm')
+type ReviewBenefit = { id: string; title: string; text: string; icon?: string; decor?: string }
+export function ReviewBenefits({ items = prototypeData.benefits, title }: { items?: ReviewBenefit[]; title?: string } = {}) {
   const links: Record<string, string> = { delivery: '/delivery', pickup: '/contacts', support: '/warranty', clients: '/contacts' }
-  return <section className="benefits-strip review-benefits" aria-label="Преимущества" data-benefit-style="expressive">
-    <div className="review-benefits-grid">{prototypeData.benefits.map(item => <article key={item.id}><span className="review-benefit-icon"><Icon name={item.id} /></span><div className="review-benefit-copy"><h2>{item.title}</h2><p>{item.text}</p></div><img className="review-benefit-decor" src={`${assets}benefits-v30/${item.id}.png`} alt="" loading="lazy" /><Link className="review-benefit-link" to={links[item.id]} aria-label={item.title}><Icon name="arrow" /></Link></article>)}</div>
+  return <section className="benefits-strip review-benefits" aria-label={title || 'Преимущества'} data-benefit-style="expressive">
+    {title && <div className="section-heading"><h2>{title}</h2></div>}
+    <div className="review-benefits-grid">{items.map(item => <article key={item.id}><span className="review-benefit-icon"><Icon name={item.icon || item.id} /></span><div className="review-benefit-copy">{title ? <h3>{item.title}</h3> : <h2>{item.title}</h2>}<p>{item.text}</p></div><img className="review-benefit-decor" src={`${assets}${item.decor || `benefits-v30/${item.id}.png`}`} alt="" loading="lazy" />{links[item.id] && <Link className="review-benefit-link" to={links[item.id]} aria-label={item.title}><Icon name="arrow" /></Link>}</article>)}</div>
   </section>
 }
 

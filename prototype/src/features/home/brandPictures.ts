@@ -1,0 +1,1 @@
+export const brandPictures: Record<string, string> = { nordberg: 'logo-nordberg.svg', trommelberg: 'logo-trommelberg.png', jtc: 'logo-jtc.png', rupes: 'logo-rupes.png', wiederkraft: 'logo-wiederkraft.jpg', jonnesway: 'logo-jonnesway.svg', sivik: 'logo-sivik.svg', 'car-tool': 'logo-car-tool.png' }

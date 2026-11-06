@@ -3,17 +3,20 @@ import { StrictMode } from 'react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
+import { prototypeData } from '../data/prototypeData'
 import { materialsByKind } from '../data/materialsData'
 import { contactPoints } from '../data/contactsData'
 
 const open=(path='/about')=>render(<MemoryRouter initialEntries={[path]}><App/></MemoryRouter>)
 
-it('renders the approved compact eight-block company page with explicit demo masks',()=>{
+it('renders company content without editorial notes and preserves the figures',()=>{
   open()
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:'О компании'})).toBeInTheDocument()
   expect(within(main).getAllByRole('heading',{level:2}).map(h=>h.textContent)).toEqual(['Компания в цифрах','Наши преимущества','Бренды и производители','География присутствия','Наши новости','Наши соцсети','Реквизиты'])
-  expect(within(main).getByText(/Всё наполнение страницы демонстрационное/)).toBeInTheDocument()
+  expect(within(main).queryByText(/Всё наполнение страницы демонстрационное/)).not.toBeInTheDocument()
+  expect(main.querySelector('.about-photo')).toBeNull()
+  expect(main.textContent).not.toMatch(/Данные клиента|не подтверждённые факты|Пример содержания|Примеры из справочника|Образец полей/)
   for(const mask of ['XX лет на рынке','X городов','XX XXX товаров']) expect(within(main).getByText(mask)).toBeInTheDocument()
   expect(within(screen.getByRole('region',{name:'Наши преимущества'})).getAllByRole('listitem')).toHaveLength(4)
   expect(within(main).getByText('Название организации')).toBeInTheDocument()
@@ -31,8 +34,11 @@ it('reuses three existing news records and only working brand destinations',()=>
     expect(within(news).getByText(item.dateLabel)).toHaveAttribute('datetime',item.date)
   }
   const brands=screen.getByRole('region',{name:'Бренды и производители'})
-  expect(within(brands).getByRole('link',{name:'Remeza'})).toHaveAttribute('href','/brand/remeza/')
-  expect(within(brands).getByRole('link',{name:'Berg'})).toHaveAttribute('href','/brands?q=Berg')
+  for(const brand of prototypeData.brands) {
+    expect(within(brands).getByRole('link',{name:brand.name})).toHaveAttribute('href',brand.href)
+    expect(within(brands).getByAltText(brand.name)).toHaveAttribute('src',expect.stringContaining('logo-'))
+  }
+  expect(news.querySelectorAll('img')).toHaveLength(3)
 })
 
 it.each([...new Set(contactPoints.map(point=>point.city))])('opens existing contacts for %s with matching city and point',async city=>{
@@ -40,12 +46,6 @@ it.each([...new Set(contactPoints.map(point=>point.city))])('opens existing cont
   await user.click(within(screen.getByRole('region',{name:'География присутствия'})).getByRole('link',{name:city}))
   expect(screen.getByRole('tab',{name:city})).toHaveAttribute('aria-selected','true')
   expect(screen.getByTestId('contact-point')).toHaveTextContent(contactPoints.find(point=>point.city===city)!.name)
-})
-
-it('opens a non-detail brand through the real directory with its search prefilled',async()=>{
-  const user=userEvent.setup();open()
-  await user.click(within(screen.getByRole('region',{name:'Бренды и производители'})).getByRole('link',{name:'Berg'}))
-  expect(screen.getByRole('searchbox',{name:'Поиск бренда'})).toHaveValue('Berg')
 })
 
 it.each(['Вологда','Череповец'])('restores a direct city query for %s',city=>{

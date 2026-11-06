@@ -1,3 +1,4 @@
+import { brandPictures } from '../features/home/brandPictures'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { prototypeData } from '../data/prototypeData'
@@ -79,7 +80,7 @@ function ReviewBenefits() {
   </section>
 }
 
-const brandPictures: Record<string, string> = { nordberg: 'logo-nordberg.svg', trommelberg: 'logo-trommelberg.png', jtc: 'logo-jtc.png', rupes: 'logo-rupes.png', wiederkraft: 'logo-wiederkraft.jpg', jonnesway: 'logo-jonnesway.svg', sivik: 'logo-sivik.svg', 'car-tool': 'logo-car-tool.png' }
+
 function ReviewBrands() {
   const rail = useRef<HTMLDivElement>(null)
   const move = (direction: number) => rail.current?.scrollBy({ left: direction * rail.current.clientWidth, behavior: 'smooth' })

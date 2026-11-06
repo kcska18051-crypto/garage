@@ -39,7 +39,10 @@ it('reuses three existing news records and only working brand destinations',()=>
     expect(within(brands).getByRole('link',{name:brand.name})).toHaveAttribute('href',brand.href)
     expect(within(brands).getByAltText(brand.name)).toHaveAttribute('src',expect.stringContaining('logo-'))
   }
-  expect(screen.getByRole('tab',{name:'Новости'})).toHaveAttribute('aria-selected','true')
+  expect(screen.getByRole('heading',{name:'Новости'})).toBeInTheDocument()
+  expect(screen.queryByRole('tablist',{name:'Материалы'})).not.toBeInTheDocument()
+  expect(screen.queryByRole('tab',{name:'Статьи'})).not.toBeInTheDocument()
+  expect(screen.queryByRole('tab',{name:'Обзоры'})).not.toBeInTheDocument()
   expect(within(news).getAllByRole('link')).toHaveLength(prototypeData.useful.filter(item=>item.kind==='news').length)
 })
 

@@ -14,7 +14,9 @@ import { CookieBanner } from '../features/cookie/CookieBanner'
 import '../features/dialogs/ApprovedDialogs.css'
 
 function AppContent() {
-  const isStyleCheck = isApprovedHomepage(useLocation().pathname)
+  const pathname = useLocation().pathname
+  const isStyleCheck = isApprovedHomepage(pathname)
+  const usesApprovedStyles = isStyleCheck || pathname.replace(/\/$/, '') === '/about'
   const commerce = useCommerce()
   const {identity}=useAuth()
   const {claimServiceRequests}=useProfile()
@@ -22,10 +24,10 @@ function AppContent() {
   return (
     <div
       className="app-shell"
-      data-style-check={isStyleCheck || undefined}
+      data-style-check={usesApprovedStyles || undefined}
       data-approved-chrome="true"
     >
-      {isStyleCheck && <ApprovedHomepageStyles />}
+      {usesApprovedStyles && <ApprovedHomepageStyles />}
       <link rel="stylesheet" href="/garage/style-check/approved-chrome.css?v=20261103" />
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />

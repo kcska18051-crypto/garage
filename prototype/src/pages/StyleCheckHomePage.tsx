@@ -72,7 +72,7 @@ function ReviewMerchandising() {
     return <div className="review-merchandising-group" key={block.id}><ProductShowcase collection={collection} demoCopies={3} />{banners.length > 0 && <div className={`compact-banner-group compact-banner-group--${banners.length}`}>{banners.map(item => <ReviewBanner key={item.id} item={item} />)}</div>}</div>
   })}</div>
 }
-function ReviewBenefits() {
+export function ReviewBenefits() {
   const [variant, setVariant] = useState<'calm' | 'expressive'>('calm')
   const links: Record<string, string> = { delivery: '/delivery', pickup: '/contacts', support: '/warranty', clients: '/contacts' }
   return <section className="benefits-strip review-benefits" aria-label="Преимущества" data-benefit-style="expressive">
@@ -81,7 +81,7 @@ function ReviewBenefits() {
 }
 
 
-function ReviewBrands() {
+export function ReviewBrands() {
   const rail = useRef<HTMLDivElement>(null)
   const move = (direction: number) => rail.current?.scrollBy({ left: direction * rail.current.clientWidth, behavior: 'smooth' })
   return <section className="home-section home-section--brands"><div className="section-heading"><div><h2>Популярные бренды</h2></div><div className="rail-actions"><Link to="/brands">Все бренды</Link></div></div><div className="review-brand-rail"><button className="review-brand-prev" type="button" aria-label="Предыдущие бренды" onClick={() => move(-1)}><Icon name="chevron" className="review-icon--back" /></button><div className="brand-grid" ref={rail}>{prototypeData.brands.map(brand => <Link key={brand.id} to={brand.href} aria-label={brand.name}><img className={`review-brand-logo review-brand-logo--${brand.id}`} src={assets + brandPictures[brand.id]} alt={brand.name} loading="lazy" /></Link>)}</div><button className="review-brand-next" type="button" aria-label="Следующие бренды" onClick={() => move(1)}><Icon name="chevron" /></button></div></section>

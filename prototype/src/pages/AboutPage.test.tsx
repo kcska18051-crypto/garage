@@ -13,32 +13,34 @@ it('renders company content without editorial notes and preserves the figures',(
   open()
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:'О компании'})).toBeInTheDocument()
-  expect(within(main).getAllByRole('heading',{level:2}).map(h=>h.textContent)).toEqual(['Компания в цифрах','Наши преимущества','Бренды и производители','География присутствия','Наши новости','Наши соцсети','Реквизиты'])
+  expect(within(main).getByRole('heading',{name:'Популярные бренды'})).toBeInTheDocument()
+  expect(within(main).getByRole('img',{name:'Оборудование и инструмент в профессиональной мастерской'})).toHaveAttribute('src',expect.stringContaining('about-company-workshop.png'))
   expect(within(main).queryByText(/Всё наполнение страницы демонстрационное/)).not.toBeInTheDocument()
   expect(main.querySelector('.about-photo')).toBeNull()
   expect(main.textContent).not.toMatch(/Данные клиента|не подтверждённые факты|Пример содержания|Примеры из справочника|Образец полей/)
   for(const mask of ['XX лет на рынке','X городов','XX XXX товаров']) expect(within(main).getByText(mask)).toBeInTheDocument()
-  expect(within(screen.getByRole('region',{name:'Наши преимущества'})).getAllByRole('listitem')).toHaveLength(4)
+  expect(screen.getByRole('region',{name:'Преимущества'}).querySelectorAll('article')).toHaveLength(4)
   expect(within(main).getByText('Название организации')).toBeInTheDocument()
-  expect(main.querySelectorAll('a[href="#"],a:not([href]),button')).toHaveLength(0)
+  expect(main.querySelectorAll('a[href="#"],a:not([href])')).toHaveLength(0)
   expect(within(screen.getByRole('region',{name:'Наши соцсети'})).queryAllByRole('link')).toHaveLength(0)
   expect(within(screen.getByRole('region',{name:'Наши соцсети'})).getAllByText('Ссылка будет добавлена')).toHaveLength(3)
 })
 
 it('reuses three existing news records and only working brand destinations',()=>{
   open()
-  const news=screen.getByRole('region',{name:'Наши новости'})
+  const news=screen.getByRole('tabpanel')
   for(const item of materialsByKind('news').slice(0,3)) {
-    expect(within(news).getByRole('link',{name:item.title})).toHaveAttribute('href',`/news/${item.slug}`)
+    expect(within(news).getByRole('link',{name:new RegExp(item.title)})).toHaveAttribute('href',`/news/${item.slug}`)
     expect(within(news).getByText(item.summary)).toBeInTheDocument()
-    expect(within(news).getByText(item.dateLabel)).toHaveAttribute('datetime',item.date)
+    expect(within(news).getByText(`Новость · ${item.dateLabel}`)).toBeInTheDocument()
   }
-  const brands=screen.getByRole('region',{name:'Бренды и производители'})
+  const brands=document.querySelector('.home-section--brands')! as HTMLElement
   for(const brand of prototypeData.brands) {
     expect(within(brands).getByRole('link',{name:brand.name})).toHaveAttribute('href',brand.href)
     expect(within(brands).getByAltText(brand.name)).toHaveAttribute('src',expect.stringContaining('logo-'))
   }
-  expect(news.querySelectorAll('img')).toHaveLength(3)
+  expect(screen.getByRole('tab',{name:'Новости'})).toHaveAttribute('aria-selected','true')
+  expect(within(news).getAllByRole('link')).toHaveLength(prototypeData.useful.filter(item=>item.kind==='news').length)
 })
 
 it.each([...new Set(contactPoints.map(point=>point.city))])('opens existing contacts for %s with matching city and point',async city=>{

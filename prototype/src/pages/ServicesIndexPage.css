@@ -15,15 +15,15 @@ html:has(.services-index-page),body:has(.services-index-page),.app-shell:has(.se
 .services-index-page .service-direction-photo{display:block;aspect-ratio:2.15;border-radius:16px;overflow:hidden;background:#f7f8f5}
 .services-index-page .service-direction-photo img{display:block;width:100%;height:100%;object-fit:cover}
 .services-index-page .service-direction-copy{display:flex;flex-direction:column;flex:1;padding:22px;min-width:0}
-.services-index-page .services-grid h2{font-size:20px!important;line-height:28px;font-weight:600;letter-spacing:-.3px;min-height:56px;margin:0 0 10px!important}
-.services-index-page .services-grid p{font-size:13px;line-height:23px;color:#737a70;margin:0 0 20px}
-.services-index-page .service-direction-action{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:auto;min-height:40px;padding:9px 18px;border:1px solid #e4d594;border-radius:9px;background:#fff;color:#675300;font-size:13px;font-weight:600;line-height:20px}
-.services-index-page .service-direction-card:hover .service-direction-action{background:#fff9e2;border-color:#d9bd54}
+.services-index-page .services-grid h2{font-size:20px!important;line-height:26px;font-weight:600;letter-spacing:-.3px;min-height:0;margin:0 0 8px!important}
+.services-index-page .services-grid p{font-size:13px;line-height:21px;color:#737a70;margin:0 0 18px}
+.services-index-page .service-direction-action{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:auto;min-height:40px;padding:9px 18px;border:0;border-radius:9px;background:#ffd36a;color:#493900;font-size:13px;font-weight:600;line-height:20px}
+.services-index-page .service-direction-card:hover .service-direction-action{background:#ffc548}
 .services-index-page .services-index-note{font-size:12px;line-height:20px;color:#8a9086;margin:20px 0 0}
 @media(max-width:1023px) and (min-width:768px){
  .services-index-page .services-direction-grid{gap:16px}
  .services-index-page .service-direction-copy{padding:18px}
- .services-index-page .services-grid h2{font-size:18px!important;line-height:26px;min-height:78px}
+ .services-index-page .services-grid h2{font-size:18px!important;line-height:25px;min-height:0}
 }
 @media(max-width:767px){
  .services-page.services-index-page{padding:20px 16px calc(40px + var(--mobile-nav-height))}
@@ -35,6 +35,6 @@ html:has(.services-index-page),body:has(.services-index-page),.app-shell:has(.se
  .services-index-page .service-direction-photo{aspect-ratio:2.4}
  .services-index-page .service-direction-copy{padding:18px}
  .services-index-page .services-grid h2{font-size:18px!important;line-height:26px;min-height:0;margin-bottom:8px!important}
- .services-index-page .services-grid p{margin-bottom:16px;font-size:13px;line-height:22px}
+ .services-index-page .services-grid p{margin-bottom:16px;font-size:13px;line-height:21px}
 }
 @media(prefers-reduced-motion:reduce){.services-index-page .services-direction-grid article{transition:none}}

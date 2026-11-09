@@ -2,7 +2,7 @@ import { brandDirectory } from './brandDirectoryData'
 import { contactPoints } from './contactsData'
 import { materialKinds, materialsByKind } from './materialsData'
 
-export const aboutFigures=[{value:'3',label:'магазина'},{value:'3',label:'города присутствия'}]
+export const aboutFigures=[{value:'XX',label:'лет на рынке'},{value:'3',label:'магазина'},{value:'3',label:'города присутствия'},{value:'Комплексное',label:'оснащение мастерской'}]
 export const aboutAdvantages=[
   {title:'Ассортимент для разных задач',text:'От ручного инструмента до оборудования рабочего поста.'},
   {title:'Помощь с подбором',text:'Помогаем сопоставить задачи мастерской и характеристики оборудования.'},

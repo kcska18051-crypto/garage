@@ -10,7 +10,7 @@ import { contactPoints } from '../data/contactsData'
 
 const open=(path='/about')=>render(<MemoryRouter initialEntries={[path]}><App/></MemoryRouter>)
 
-it('renders company content with confirmed figures and clearly pending company details',()=>{
+it('renders company content with approved figures and clearly pending company details',()=>{
   open()
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:'О компании'})).toBeInTheDocument()
@@ -19,9 +19,13 @@ it('renders company content with confirmed figures and clearly pending company d
   expect(within(main).queryByText(/Всё наполнение страницы демонстрационное/)).not.toBeInTheDocument()
   expect(main.querySelector('.about-photo')).toBeNull()
   expect(main.textContent).not.toMatch(/Данные клиента|не подтверждённые факты|Пример содержания|Примеры из справочника|Образец полей/)
-  expect(main.textContent).not.toMatch(/XX лет|X городов|XX XXX товаров|Название организации|Будет заполнено/)
+  expect(main.textContent).not.toMatch(/X городов|XX XXX товаров|Название организации|Будет заполнено/)
   const figures=screen.getByRole('region',{name:'Компания в цифрах'})
-  expect(within(figures).getAllByRole('listitem')).toHaveLength(2)
+  expect(within(figures).getAllByRole('listitem')).toHaveLength(4)
+  expect(within(figures).getByText('XX')).toBeInTheDocument()
+  expect(within(figures).getByText('лет на рынке')).toBeInTheDocument()
+  expect(within(figures).getByText('Комплексное')).toBeInTheDocument()
+  expect(within(figures).getByText('оснащение мастерской')).toBeInTheDocument()
   expect(within(figures).getByText('магазина')).toBeInTheDocument()
   expect(within(figures).getByText('города присутствия')).toBeInTheDocument()
   expect(screen.getByRole('region',{name:'Наши преимущества'}).querySelectorAll('article')).toHaveLength(4)

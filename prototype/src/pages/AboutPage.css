@@ -117,7 +117,7 @@ html:has(.about-page), body:has(.about-page), .app-shell:has(.about-page) { back
 
 /* Reuse the actual approved homepage sections, including their responsive rails. */
 .app-shell[data-style-check] main.about-page.review-home-v2 { max-width:1440px; margin-inline:auto; padding:24px 24px 56px; background:#fff; }
-.app-shell[data-style-check] main.about-page.review-home-v2 .about-intro { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); align-items:center; gap:48px; margin-bottom:20px; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .about-intro { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,480px); align-items:center; gap:40px; margin-bottom:20px; }
 .about-company-image { display:block; width:100%; aspect-ratio:3 / 2; object-fit:cover; border-radius:20px; }
 .app-shell[data-style-check] main.about-page.review-home-v2 > :is(.home-section,.review-benefits[data-benefit-style]) { padding-inline:0; }
 .app-shell[data-style-check] main.about-page.review-home-v2 > .review-benefits[data-benefit-style] { padding-block:24px; }
@@ -137,8 +137,10 @@ html:has(.about-page), body:has(.about-page), .app-shell:has(.about-page) { back
 .app-shell[data-style-check] main.about-page.review-home-v2 :is(.company-about-section,.home-section:not(.promotions),.review-benefits) :is(.company-about-section-heading,.section-heading) h2 { font-size:24px; line-height:32px; font-weight:600; letter-spacing:-.4px; margin:0; }
 .app-shell[data-style-check] main.about-page.review-home-v2 > .home-section { padding-block:26px; }
 .app-shell[data-style-check] main.about-page.review-home-v2 .section-heading { margin-bottom:20px; }
-.about-page .about-figures { grid-template-columns:repeat(2,minmax(0,1fr)); }
-.about-page .about-figures li { display:flex; align-items:center; gap:14px; padding:20px 24px; }
+.about-page .about-figures { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.about-page .about-figures li { display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:20px 24px; }
+.about-page .about-figures li:last-child strong { font-size:22px; line-height:40px; letter-spacing:-.4px; }
+@media(min-width:768px) and (max-width:1023px) { .app-shell[data-style-check] main.about-page.review-home-v2 .about-intro { grid-template-columns:minmax(0,1fr) minmax(0,.8fr); gap:28px; } .about-page .about-figures { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .about-page .about-figures strong { font-size:32px; line-height:40px; }
 .about-page .about-figures span { border:0; padding:0; font-size:15px; line-height:24px; color:#29312c; }
 .app-shell[data-style-check] main.about-page.review-home-v2 .about-intro { align-items:start; }
@@ -156,7 +158,8 @@ html:has(.about-page), body:has(.about-page), .app-shell:has(.about-page) { back
  .app-shell[data-style-check] main.about-page.review-home-v2 > .home-section { padding-block:22px; }
  .app-shell[data-style-check] main.about-page.review-home-v2 .section-heading { margin-bottom:16px; }
  .app-shell[data-style-check] main.about-page.review-home-v2 .about-intro > div { padding:0; }
- .about-page .about-figures { gap:10px; }
+ .about-page .about-figures { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+ .about-page .about-figures li:last-child strong { font-size:19px; line-height:36px; }
  .about-page .about-figures li { padding:16px; gap:6px; flex-direction:column; align-items:flex-start; }
  .about-page .about-figures strong { font-size:28px; line-height:36px; }
  .about-page .about-figures span { font-size:13px; line-height:20px; }

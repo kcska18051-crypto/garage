@@ -10,7 +10,7 @@ import { contactPoints } from '../data/contactsData'
 
 const open=(path='/about')=>render(<MemoryRouter initialEntries={[path]}><App/></MemoryRouter>)
 
-it('renders company content without editorial notes and preserves the figures',()=>{
+it('renders company content with confirmed figures and clearly pending company details',()=>{
   open()
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:'О компании'})).toBeInTheDocument()
@@ -19,13 +19,17 @@ it('renders company content without editorial notes and preserves the figures',(
   expect(within(main).queryByText(/Всё наполнение страницы демонстрационное/)).not.toBeInTheDocument()
   expect(main.querySelector('.about-photo')).toBeNull()
   expect(main.textContent).not.toMatch(/Данные клиента|не подтверждённые факты|Пример содержания|Примеры из справочника|Образец полей/)
-  for(const mask of ['XX лет на рынке','X городов','XX XXX товаров']) expect(within(main).getByText(mask)).toBeInTheDocument()
+  expect(main.textContent).not.toMatch(/XX лет|X городов|XX XXX товаров|Название организации|Будет заполнено/)
+  const figures=screen.getByRole('region',{name:'Компания в цифрах'})
+  expect(within(figures).getAllByRole('listitem')).toHaveLength(2)
+  expect(within(figures).getByText('магазина')).toBeInTheDocument()
+  expect(within(figures).getByText('города присутствия')).toBeInTheDocument()
   expect(screen.getByRole('region',{name:'Наши преимущества'}).querySelectorAll('article')).toHaveLength(4)
   for(const item of aboutAdvantages) { expect(screen.getByRole('heading',{name:item.title})).toBeInTheDocument(); expect(screen.getByText(item.text)).toBeInTheDocument() }
-  expect(within(main).getByText('Название организации')).toBeInTheDocument()
+  expect(within(main).getByText('Юридические и банковские данные будут опубликованы после подтверждения.')).toBeInTheDocument()
   expect(main.querySelectorAll('a[href="#"],a:not([href])')).toHaveLength(0)
   expect(within(screen.getByRole('region',{name:'Наши соцсети'})).queryAllByRole('link')).toHaveLength(0)
-  expect(within(screen.getByRole('region',{name:'Наши соцсети'})).getAllByText('Ссылка будет добавлена')).toHaveLength(3)
+  expect(within(screen.getByRole('region',{name:'Наши соцсети'})).getAllByText('Официальная ссылка уточняется')).toHaveLength(3)
 })
 
 it('reuses three existing news records and only working brand destinations',()=>{

@@ -131,3 +131,43 @@ html:has(.about-page), body:has(.about-page), .app-shell:has(.about-page) { back
 .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefit-copy h3 { font-size:16px; line-height:22px; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; color:#282e29; }
 .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits > .section-heading h2 { font-size:22px; line-height:31px; margin:0; }
 @media(max-width:767px) { .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefit-copy h3 { font-size:14px; line-height:19px; } }
+
+.about-company-image { height:auto; }
+/* Company-only polish: keep the approved homepage components unchanged. */
+.app-shell[data-style-check] main.about-page.review-home-v2 :is(.company-about-section,.home-section:not(.promotions),.review-benefits) :is(.company-about-section-heading,.section-heading) h2 { font-size:24px; line-height:32px; font-weight:600; letter-spacing:-.4px; margin:0; }
+.app-shell[data-style-check] main.about-page.review-home-v2 > .home-section { padding-block:26px; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .section-heading { margin-bottom:20px; }
+.about-page .about-figures { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.about-page .about-figures li { display:flex; align-items:center; gap:14px; padding:20px 24px; }
+.about-page .about-figures strong { font-size:32px; line-height:40px; }
+.about-page .about-figures span { border:0; padding:0; font-size:15px; line-height:24px; color:#29312c; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .about-intro { align-items:start; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .about-intro > div { padding-block:16px; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits[data-benefit-style] article { min-height:160px; align-items:flex-start; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits[data-benefit-style] .review-benefit-decor { display:none; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .review-brand-rail .brand-grid { gap:12px; padding:4px 0; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .review-brand-rail .brand-grid > a { display:flex; align-items:center; justify-content:center; flex:0 0 172px; height:88px; min-height:88px; padding:16px; border:1px solid #e4e8e0; border-radius:12px; background:#fff; }
+.app-shell[data-style-check] main.about-page.review-home-v2 .review-brand-rail img.review-brand-logo { display:block; width:100%; max-width:132px; height:44px; max-height:44px; object-fit:contain; }
+.about-page .about-social-icon { color:#59634f; background:#fff3bc; }
+.about-page .about-social a { display:inline-block; color:#675300; font-size:12px; line-height:20px; margin-top:4px; text-underline-offset:3px; }
+.about-page .about-requisites-note { margin:0 0 12px; }
+@media(max-width:767px) {
+ .app-shell[data-style-check] main.about-page.review-home-v2 :is(.company-about-section,.home-section:not(.promotions),.review-benefits) :is(.company-about-section-heading,.section-heading) h2 { font-size:22px; line-height:30px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 > .home-section { padding-block:22px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .section-heading { margin-bottom:16px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .about-intro > div { padding:0; }
+ .about-page .about-figures { gap:10px; }
+ .about-page .about-figures li { padding:16px; gap:6px; flex-direction:column; align-items:flex-start; }
+ .about-page .about-figures strong { font-size:28px; line-height:36px; }
+ .about-page .about-figures span { font-size:13px; line-height:20px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefits-grid { grid-template-columns:1fr; gap:10px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits[data-benefit-style] article { display:flex; flex-direction:row; align-items:flex-start; gap:12px; min-height:0; padding:16px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefit-icon { flex:0 0 40px; margin:0; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefit-copy { min-width:0; width:auto; flex:1; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefit-copy h3 { font-size:14px; line-height:21px; margin-bottom:5px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .review-benefits .review-benefit-copy p { font-size:13px; line-height:21px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .review-brand-rail .brand-grid > a { flex-basis:144px; min-width:144px; height:80px; min-height:80px; padding:14px; }
+ .app-shell[data-style-check] main.about-page.review-home-v2 .review-brand-rail img.review-brand-logo { max-width:112px; height:40px; max-height:40px; }
+ .about-page .about-requisites > div { grid-template-columns:1fr; gap:3px; padding-block:12px; font-size:13px; line-height:21px; }
+ .about-page .about-requisites dt { overflow-wrap:normal; }
+}

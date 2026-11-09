@@ -5,6 +5,7 @@ import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs,type BreadcrumbItem} from '../features/catalog/Breadcrumbs'
 import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
 import {NotFoundPage} from './NotFoundPage'
+import {AutomotivePaintPage} from './AutomotivePaintPage'
 import './ServicesPages.css'
 import './ServicesIndexPage.css'
 import './PaintMatchingPage.css'
@@ -84,6 +85,7 @@ export function PaintDetailPage() {
   const {paintSlug}=useParams()
   const item=paintServices.find(service=>service.id===paintSlug)
   if(!item) return <NotFoundPage/>
+  if(item.id==='automotive') return <AutomotivePaintPage request={{kind:'paint',title:item.title,itemId:item.itemId}}/>
   return <ServiceDetail key={item.id} request={{kind:'paint',title:item.title,itemId:item.itemId}} crumbs={[servicesCrumb,{label:'Подбор автоэмали',to:'/services/paint-matching'}]} description={item.text} steps={paintSteps}/>
 }
 function ServiceDetail({request,crumbs,description,steps}:{request:ServiceRequest;crumbs:BreadcrumbItem[];description:string;steps:string[]}) {

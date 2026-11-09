@@ -49,3 +49,15 @@ it('does not replace an unknown paint child with a default service', () => {
   open('/services/paint-matching/unknown')
   expect(screen.getByRole('heading', { name: 'Страница не найдена' })).toBeInTheDocument()
 })
+
+it('shows the automotive detail with a real image, pending terms and four steps',()=>{
+  open('/services/paint-matching/automotive')
+  const main=screen.getByRole('main')
+  expect(main).toHaveClass('automotive-paint-page')
+  expect(main.querySelector('.services-art')).toBeNull()
+  expect(within(main).getByRole('img',{name:'Материалы для подбора цвета и колеровки автомобильных эмалей'})).toHaveAttribute('src',expect.stringContaining('mixing-photo.webp'))
+  expect(within(main).getByText('Стоимость')).toBeInTheDocument()
+  expect(within(main).getByText('Сроки')).toBeInTheDocument()
+  expect(within(screen.getByRole('region',{name:'Порядок обращения'})).getAllByRole('listitem')).toHaveLength(4)
+  expect(main).not.toHaveTextContent(/Здесь можно|Место для фото|Демонстрационное описание/)
+})

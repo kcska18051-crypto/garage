@@ -17,9 +17,8 @@ html:has(.services-index-page),body:has(.services-index-page),.app-shell:has(.se
 .services-index-page .service-direction-copy{display:flex;flex-direction:column;flex:1;padding:22px;min-width:0}
 .services-index-page .services-grid h2{font-size:20px!important;line-height:28px;font-weight:600;letter-spacing:-.3px;min-height:56px;margin:0 0 10px!important}
 .services-index-page .services-grid p{font-size:13px;line-height:23px;color:#737a70;margin:0 0 20px}
-.services-index-page .service-direction-action{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;font-size:13px;font-weight:600;line-height:20px}
-.services-index-page .service-direction-arrow{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;background:#fff3bc;color:#675300;border-radius:10px}
-.services-index-page .service-direction-arrow svg{width:20px;height:20px}
+.services-index-page .service-direction-action{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:auto;min-height:40px;padding:9px 18px;border:1px solid #e4d594;border-radius:9px;background:#fff;color:#675300;font-size:13px;font-weight:600;line-height:20px}
+.services-index-page .service-direction-card:hover .service-direction-action{background:#fff9e2;border-color:#d9bd54}
 .services-index-page .services-index-note{font-size:12px;line-height:20px;color:#8a9086;margin:20px 0 0}
 @media(max-width:1023px) and (min-width:768px){
  .services-index-page .services-direction-grid{gap:16px}

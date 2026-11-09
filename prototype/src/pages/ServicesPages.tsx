@@ -39,7 +39,7 @@ export function ServicesIndexPage() {
       const content=directionContent[item.id]
       return <article key={item.id}><Link className="service-direction-card" to={item.href} aria-label={item.title}>
         <span className="service-direction-photo"><img src={`/garage/style-check/review-assets/campaigns/${content.photo}`} alt="" width="1000" height="667" decoding="async"/></span>
-        <div className="service-direction-copy"><h2>{item.title}</h2><p>{content.text}</p><span className="service-direction-action">Подробнее<span className="service-direction-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></div>
+        <div className="service-direction-copy"><h2>{item.title}</h2><p>{content.text}</p><span className="service-direction-action">Подробнее</span></div>
       </Link></article>
     })}</div>
     <p className="services-index-note">Условия, стоимость и сроки уточняются при обращении.</p>

@@ -154,9 +154,11 @@ it('requires both independent paint consents and links to their documents',async
   const personal=screen.getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'})
   const agreement=screen.getByRole('checkbox',{name:'Принимаю пользовательское соглашение'})
   expect(screen.getAllByRole('checkbox')).toHaveLength(2)
+  expect(screen.getByRole('dialog')).not.toHaveTextContent('Локальный демонстрационный прототип')
+  expect(screen.queryByText('Текст согласия')).not.toBeInTheDocument()
   for(const checkbox of [personal,agreement]){expect(checkbox).not.toBeChecked();expect(checkbox).toBeRequired()}
-  expect(screen.getByRole('link',{name:'Текст согласия'})).toHaveAttribute('href','/personal-data-consent')
-  expect(screen.getByRole('link',{name:'Пользовательское соглашение'})).toHaveAttribute('href','/user-agreement')
+  expect(screen.getByRole('link',{name:'согласие на обработку персональных данных'})).toHaveAttribute('href','/personal-data-consent')
+  expect(screen.getByRole('link',{name:'пользовательское соглашение'})).toHaveAttribute('href','/user-agreement')
   fireEvent.change(screen.getByLabelText('Имя',{exact:true}),{target:{value:'Демо'}})
   fireEvent.change(screen.getByLabelText('Телефон'),{target:{value:'+79991234567'}})
   const submit=screen.getByRole('button',{name:'Узнать стоимость'})

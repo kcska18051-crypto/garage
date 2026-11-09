@@ -24,17 +24,15 @@ export function FormLegalConsents({ personalDataAccepted, agreementAccepted, onP
       <div className="form-legal-consents__item">
         <div className="form-legal-consents__check">
           <input id={personalId} name="personalDataConsent" type="checkbox" required={required} checked={personalDataAccepted} onChange={(event) => onPersonalDataChange(event.target.checked)} aria-invalid={showErrors && !personalDataAccepted} aria-describedby={showErrors && !personalDataAccepted ? personalErrorId : undefined} />
-          <label htmlFor={personalId}>Даю согласие на обработку персональных данных</label>
+          <label htmlFor={personalId}>Даю <Link to="/personal-data-consent" target="_blank" rel="noreferrer">согласие на обработку персональных данных</Link></label>
         </div>
-        <div className="form-legal-consents__links"><Link to="/personal-data-consent" target="_blank" rel="noreferrer">Текст согласия</Link><Link to="/privacy" target="_blank" rel="noreferrer">Политика конфиденциальности</Link></div>
         {showErrors && !personalDataAccepted && <span id={personalErrorId} className="field-error" role="alert">Подтвердите согласие на обработку персональных данных</span>}
       </div>
       <div className="form-legal-consents__item">
         <div className="form-legal-consents__check">
           <input id={agreementId} name="userAgreement" type="checkbox" required={required} checked={agreementAccepted} onChange={(event) => onAgreementChange(event.target.checked)} aria-invalid={showErrors && !agreementAccepted} aria-describedby={showErrors && !agreementAccepted ? agreementErrorId : undefined} />
-          <label htmlFor={agreementId}>Принимаю пользовательское соглашение</label>
+          <label htmlFor={agreementId}>Принимаю <Link to="/user-agreement" target="_blank" rel="noreferrer">пользовательское соглашение</Link></label>
         </div>
-        <div className="form-legal-consents__links"><Link to="/user-agreement" target="_blank" rel="noreferrer">Пользовательское соглашение</Link></div>
         {showErrors && !agreementAccepted && <span id={agreementErrorId} className="field-error" role="alert">Примите пользовательское соглашение</span>}
       </div>
     </div>

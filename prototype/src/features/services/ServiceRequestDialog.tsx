@@ -129,7 +129,6 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
         <button className="button button--dark" onClick={() => closeRef.current()}>Закрыть</button>
       </div> : <form onSubmit={submit} noValidate>
         <h2 ref={headingRef} tabIndex={-1}>{title}</h2>
-        <p className="service-request-note">Локальный демонстрационный прототип: текстовые данные сохранятся только в этом браузере. Не вводите реальные персональные данные на общем устройстве. Реальная отправка менеджеру не выполняется.</p>
         <p className="service-request-selection">{request.title}</p>
         {field('name', request.kind==='paint'?'Имя':'Ваше имя', { autoComplete: 'name' })}
         {field('phone', 'Телефон', { type: 'tel', autoComplete: 'tel' })}

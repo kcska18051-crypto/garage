@@ -2,7 +2,7 @@
 .form-legal-consents__item { display: grid; gap: .3rem; }
 .form-legal-consents__check { align-items: flex-start; display: flex; gap: .55rem; }
 .form-legal-consents .form-legal-consents__check input { flex: 0 0 auto; height: 1.05rem; margin: .1rem 0 0; min-height: 0; padding: 0; width: 1.05rem; }
-.form-legal-consents__check label { line-height: 1.35; }
-.form-legal-consents__links { display: flex; flex-wrap: wrap; font-size: .68rem; gap: .3rem .75rem; margin-left: 1.6rem; }
-.form-legal-consents__links a { color: var(--color-text-muted); text-underline-offset: .16rem; }
+.form-legal-consents .form-legal-consents__check label { min-width: 0; font-size: 12px; line-height: 20px; font-weight: 400; cursor: pointer; }
+.form-legal-consents .form-legal-consents__check label a { color: inherit; text-decoration: underline; text-decoration-color: #c4b16b; text-underline-offset: 3px; }
+.form-legal-consents .form-legal-consents__check label a:hover { color: #675300; text-decoration-color: currentColor; }
 .form-legal-consents .field-error { margin-left: 1.6rem; }

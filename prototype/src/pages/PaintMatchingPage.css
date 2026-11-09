@@ -1,0 +1,48 @@
+/* Scoped to the paint-matching overview; other service routes remain unchanged. */
+html:has(.paint-service-page),body:has(.paint-service-page),.app-shell:has(.paint-service-page){background:#fff}
+.services-page.paint-service-page{--color-text:#29312c;--color-text-muted:#737a70;--color-border:#e4e8e0;--color-focus:#8a6800;max-width:1440px;padding:24px 24px 56px;color:#29312c}
+.paint-service-page .catalog-breadcrumbs{margin-bottom:28px}
+.paint-service-page .catalog-breadcrumbs ol{font-size:12px;line-height:18px;gap:7px;color:#8a9086}
+.paint-service-page .catalog-breadcrumbs a{color:inherit}
+.paint-service-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:48px;align-items:center;margin-bottom:40px}
+.paint-service-hero h1{font-size:32px;line-height:42px;letter-spacing:-.8px;font-weight:600;margin:0 0 16px}
+.paint-service-hero p{max-width:640px;font-size:14px;line-height:24px;color:#737a70;margin:0 0 18px}
+.paint-service-hero .paint-service-lead{font-size:18px;line-height:28px;color:#29312c;font-weight:500;margin-bottom:12px}
+.paint-service-page .paint-service-button,.paint-service-page .paint-direction-more{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 20px;background:#ffd36a;color:#493900;border:0;border-radius:9px;font-size:13px;line-height:20px;font-weight:600;text-decoration:none;cursor:pointer}
+.paint-service-page .paint-service-button:hover,.paint-service-page .paint-direction-more:hover{background:#ffc548}
+.paint-service-photo{display:block;width:100%;height:280px;object-fit:cover;object-position:50% 40%;border-radius:16px;background:#f7f8f5}
+.paint-service-directions>h2{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-.4px;margin:0 0 20px}
+.paint-service-page .paint-directions-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.paint-service-page .paint-directions-grid article{display:flex;flex-direction:row;gap:16px;padding:24px;border:1px solid #e4e8e0;border-radius:16px;background:#fff;box-shadow:0 4px 16px rgb(41 49 44 / .045)}
+.paint-service-page .paint-directions-grid article>div:last-child{padding:0;min-width:0}
+.paint-direction-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:12px;background:#fff3bc;color:#675300}
+.paint-direction-icon svg{width:25px;height:25px}
+.paint-service-page .paint-directions-grid h3{font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.2px;margin:0 0 8px}
+.paint-directions-grid h3 a{color:inherit;text-decoration:none}
+.paint-directions-grid h3 a:hover{text-decoration:underline;text-underline-offset:4px}
+.paint-service-page .paint-directions-grid p{font-size:13px;line-height:22px;color:#737a70;margin:0 0 18px}
+.paint-service-page .paint-direction-more{margin-top:auto;min-height:40px;padding:9px 18px}
+.paint-services-back{display:inline-flex;align-items:center;min-height:44px;margin-top:24px;font-size:13px;line-height:20px;color:#737a70;text-decoration:none}
+.paint-services-back:hover{color:#29312c;text-decoration:underline;text-underline-offset:4px}
+.paint-service-page :is(a,button):focus-visible{outline:2px solid #8a6800;outline-offset:4px}
+@media(min-width:768px) and (max-width:1023px){
+ .paint-service-hero{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px}
+ .paint-service-page .paint-directions-grid{gap:16px}
+ .paint-service-page .paint-directions-grid article{padding:20px;gap:12px}
+}
+@media(max-width:767px){
+ .services-page.paint-service-page{padding:20px 16px calc(40px + var(--mobile-nav-height))}
+ .paint-service-page .catalog-breadcrumbs{margin-bottom:20px}
+ .paint-service-hero{grid-template-columns:1fr;gap:22px;margin-bottom:30px}
+ .paint-service-hero h1{font-size:26px;line-height:35px;letter-spacing:-.5px;margin-bottom:12px}
+ .paint-service-hero .paint-service-lead{font-size:16px;line-height:25px}
+ .paint-service-hero p{font-size:14px;line-height:23px;margin-bottom:16px}
+ .paint-service-photo{height:210px;object-position:50% 40%}
+ .paint-service-directions>h2{font-size:22px;line-height:30px;margin-bottom:16px}
+ .paint-service-page .paint-directions-grid{grid-template-columns:1fr;gap:14px}
+ .paint-service-page .paint-directions-grid article{padding:18px;gap:12px}
+ .paint-direction-icon{width:36px;height:36px;flex-basis:36px;border-radius:10px}
+ .paint-direction-icon svg{width:22px;height:22px}
+ .paint-service-page .paint-directions-grid h3{font-size:16px;line-height:23px}
+ .paint-service-page .paint-directions-grid p{line-height:21px;margin-bottom:16px}
+}

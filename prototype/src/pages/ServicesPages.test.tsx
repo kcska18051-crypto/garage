@@ -14,7 +14,7 @@ it.each([
   open(path)
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:title})).toBeInTheDocument()
-  if(path!=='/services') expect(main).toHaveTextContent(/демонстрационн/i)
+  if(!['/services','/services/paint-matching'].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
   expect(main.querySelectorAll('.placeholder-page,a[href="#"]')).toHaveLength(0)
   expect(screen.getByRole('navigation',{name:'Хлебные крошки'})).toHaveTextContent('Услуги')
 })
@@ -51,6 +51,7 @@ it('keeps the service index as three named navigation cards with approved artwor
     ['Аренда оборудования и инструмента','/services/rental'],
   ]) expect(within(main).getByRole('link',{name:title})).toHaveAttribute('href',href)
   expect(main.querySelectorAll('.services-art')).toHaveLength(0)
+  expect(main).not.toHaveTextContent('Условия, стоимость и сроки уточняются при обращении.')
   expect(main.querySelectorAll('.service-direction-photo img')).toHaveLength(3)
   expect(main).not.toHaveTextContent('для обсуждения структуры')
 })

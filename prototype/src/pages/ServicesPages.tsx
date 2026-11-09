@@ -7,6 +7,7 @@ import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
 import {NotFoundPage} from './NotFoundPage'
 import './ServicesPages.css'
 import './ServicesIndexPage.css'
+import './PaintMatchingPage.css'
 
 const servicesCrumb={label:'Услуги',to:'/services'}
 const repairCrumbs=[servicesCrumb,{label:'Сервисный центр по ремонту',to:'/services/service-center'},{label:'Ремонт компрессоров',to:'/services/service-center/compressor-repair'}]
@@ -42,7 +43,6 @@ export function ServicesIndexPage() {
         <div className="service-direction-copy"><h2>{item.title}</h2><p>{content.text}</p><span className="service-direction-action">Подробнее</span></div>
       </Link></article>
     })}</div>
-    <p className="services-index-note">Условия, стоимость и сроки уточняются при обращении.</p>
   </main>
 }
 export function ServiceCenterPage() {
@@ -62,7 +62,23 @@ export function RepairDetailPage() {
 export function PaintMatchingPage() {
   const [open,setOpen]=useState(false)
   const close=useCallback(()=>setOpen(false),[])
-  return <ServiceLayout title="Подбор автоэмали" crumbs={[servicesCrumb]}><p className="services-lead">Оставьте имя и телефон, чтобы уточнить стоимость подбора эмалей. Марка авто, код краски и комментарий — по желанию. Материалы, способ подбора, стоимость и сроки обсуждаются отдельно.</p><button className="button button--dark" type="button" onClick={()=>setOpen(true)}>Узнать стоимость</button><section className="services-section"><h2>Направления подбора</h2><ServiceCards items={paintServices}/></section><Link className="services-back" to="/services">← Все услуги</Link>{open&&<ServiceRequestDialog request={{kind:'paint',title:'Подбор автоэмали',itemId:'paint-matching'}} onClose={close}/>}</ServiceLayout>
+  const descriptions:Record<string,string>={
+    automotive:'Подбор цвета и колеровка эмалей для ремонта автомобильного покрытия.',
+    polyurethane:'Подбор полиуретановых эмалей с учётом задачи и исходных данных покрытия.',
+  }
+  return <main className="services-page paint-service-page">
+    <Breadcrumbs items={[{label:'Главная',to:'/'},servicesCrumb,{label:'Подбор автоэмали'}]}/>
+    <header className="paint-service-hero">
+      <div><h1>Подбор автоэмали</h1><p className="paint-service-lead">Подбор цвета автомобильных и полиуретановых эмалей для задач кузовного ремонта.</p><p>Оставьте имя и телефон, чтобы узнать стоимость. Марку автомобиля, код краски и комментарий можно добавить по желанию.</p><button className="paint-service-button" type="button" onClick={()=>setOpen(true)}>Узнать стоимость</button></div>
+      <img className="paint-service-photo" src="/garage/style-check/review-assets/campaigns/paint-photo.webp" alt="Работа с автоэмалью при ремонте автомобильного покрытия" width="1000" height="1500" decoding="async"/>
+    </header>
+    <section className="paint-service-directions" aria-labelledby="paint-directions-title"><h2 id="paint-directions-title">Направления подбора</h2><div className="services-grid paint-directions-grid">{paintServices.map(item=><article key={item.id}>
+      <span className="paint-direction-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3S5 10 5 14a7 7 0 0 0 14 0c0-4-7-11-7-11Z"/><path d="M9 15a3 3 0 0 0 3 3"/></svg></span>
+      <div><h3><Link to={item.href}>{item.title}</Link></h3><p>{descriptions[item.id]}</p><Link className="paint-direction-more" to={item.href}>Подробнее<span className="sr-only">: {item.title}</span></Link></div>
+    </article>)}</div></section>
+    <Link className="paint-services-back" to="/services">← Все услуги</Link>
+    {open&&<ServiceRequestDialog request={{kind:'paint',title:'Подбор автоэмали',itemId:'paint-matching'}} onClose={close}/>}
+  </main>
 }
 export function PaintDetailPage() {
   const {paintSlug}=useParams()

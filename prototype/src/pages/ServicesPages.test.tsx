@@ -14,7 +14,7 @@ it.each([
   open(path)
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:title})).toBeInTheDocument()
-  expect(main).toHaveTextContent(/демонстрационн/i)
+  if(path!=='/services') expect(main).toHaveTextContent(/демонстрационн/i)
   expect(main.querySelectorAll('.placeholder-page,a[href="#"]')).toHaveLength(0)
   expect(screen.getByRole('navigation',{name:'Хлебные крошки'})).toHaveTextContent('Услуги')
 })
@@ -37,4 +37,20 @@ it('preserves the old workshop link as a redirect, not a fourth direction',()=>{
   open('/services/workshop')
   expect(screen.getByRole('heading',{level:1,name:'Услуги'})).toBeInTheDocument()
   expect(screen.getByRole('main').querySelectorAll('.services-grid article')).toHaveLength(3)
+})
+
+it('keeps the service index as three named navigation cards with approved artwork',()=>{
+  open('/services')
+  const main=screen.getByRole('main')
+  expect(main).toHaveClass('services-index-page')
+  const cards=main.querySelectorAll('.service-direction-card')
+  expect(cards).toHaveLength(3)
+  for(const [title,href] of [
+    ['Сервисный центр по ремонту','/services/service-center'],
+    ['Подбор автоэмали','/services/paint-matching'],
+    ['Аренда оборудования и инструмента','/services/rental'],
+  ]) expect(within(main).getByRole('link',{name:title})).toHaveAttribute('href',href)
+  expect(main.querySelectorAll('.services-art')).toHaveLength(0)
+  expect(main.querySelectorAll('.service-direction-photo img')).toHaveLength(3)
+  expect(main).not.toHaveTextContent('для обсуждения структуры')
 })

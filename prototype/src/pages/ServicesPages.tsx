@@ -6,6 +6,7 @@ import {Breadcrumbs,type BreadcrumbItem} from '../features/catalog/Breadcrumbs'
 import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
 import {NotFoundPage} from './NotFoundPage'
 import './ServicesPages.css'
+import './ServicesIndexPage.css'
 
 const servicesCrumb={label:'Услуги',to:'/services'}
 const repairCrumbs=[servicesCrumb,{label:'Сервисный центр по ремонту',to:'/services/service-center'},{label:'Ремонт компрессоров',to:'/services/service-center/compressor-repair'}]
@@ -25,8 +26,24 @@ function ServiceLayout({title,crumbs,children}:{title:string;crumbs:BreadcrumbIt
   return <main className="services-page"><Breadcrumbs items={[{label:'Главная',to:'/'},...crumbs,{label:title}]}/><header className="services-heading"><h1>{title}</h1><p>{demoNote}</p></header>{children}</main>
 }
 
+const directionContent:Record<string,{photo:string;text:string}> = {
+  'service-center': {photo:'repair-photo.webp',text:'Диагностика и ремонт оборудования и инструмента. Выберите нужное направление и оставьте заявку.'},
+  'paint-matching': {photo:'mixing-photo.webp',text:'Подбор цвета автомобильных и полиуретановых эмалей для задач кузовного ремонта.'},
+  rental: {photo:'rental-photo.webp',text:'Оборудование и инструмент для временных задач мастерской. Выберите подходящую позицию.'},
+}
 export function ServicesIndexPage() {
-  return <ServiceLayout title="Услуги" crumbs={[]}><p className="services-lead">Ремонт оборудования, подбор автоэмали и аренда для задач мастерской. Выберите направление, чтобы посмотреть структуру услуги и пример заявки.</p><ServiceCards items={serviceDirections}/></ServiceLayout>
+  return <main className="services-page services-index-page">
+    <Breadcrumbs items={[{label:'Главная',to:'/'},{label:'Услуги'}]}/>
+    <header className="services-index-heading"><h1>Услуги</h1><p>Ремонт оборудования, подбор автоэмали и аренда для задач мастерской. Выберите нужное направление.</p></header>
+    <div className="services-grid services-direction-grid">{serviceDirections.map(item=>{
+      const content=directionContent[item.id]
+      return <article key={item.id}><Link className="service-direction-card" to={item.href} aria-label={item.title}>
+        <span className="service-direction-photo"><img src={`/garage/style-check/review-assets/campaigns/${content.photo}`} alt="" width="1000" height="667" decoding="async"/></span>
+        <div className="service-direction-copy"><h2>{item.title}</h2><p>{content.text}</p><span className="service-direction-action">Подробнее<span className="service-direction-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span></div>
+      </Link></article>
+    })}</div>
+    <p className="services-index-note">Условия, стоимость и сроки уточняются при обращении.</p>
+  </main>
 }
 export function ServiceCenterPage() {
   const [request,setRequest]=useState<ServiceRequest|null>(null)

@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import { FormLegalConsents } from '../forms/FormLegalConsents'
 import type { ServiceRequest } from '../../data/serviceTypes'
 import { isServicePhoneValid, localDateString, validatePhoto, validateRental } from './serviceRequestValidation'
 import './ServiceRequestDialog.css'
@@ -12,6 +13,9 @@ type Field = keyof typeof emptyFields
 
 export function ServiceRequestDialog({ request, onClose }: { request: ServiceRequest; onClose(): void }) {
   const [fields, setFields] = useState(emptyFields)
+  const [personalDataAccepted,setPersonalDataAccepted]=useState(false)
+  const [agreementAccepted,setAgreementAccepted]=useState(false)
+  const [consentsAttempted,setConsentsAttempted]=useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [photo, setPhoto] = useState<string | null>(null)
   const [photoError, setPhotoError] = useState<string>()
@@ -39,7 +43,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
     const keydown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') { event.preventDefault(); closeRef.current(); return }
       if (event.key !== 'Tab' || !dialogRef.current) return
-      const focusable = [...dialogRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex="0"]')]
+      const focusable = [...dialogRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), textarea:not([disabled]), a[href], [tabindex="0"]')]
       const first = focusable[0], last = focusable.at(-1)
       if (!first || !last) { event.preventDefault(); dialogRef.current.focus(); return }
       const active = document.activeElement
@@ -87,9 +91,14 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
       if (!fields.description.trim()) next.description = 'Опишите неисправность'
     } else if (request.kind === 'rental') Object.assign(next, validateRental(fields.start, fields.end, fields.quantity, localDateString()))
     if (photoError) next.photo = photoError
+    if(request.kind==='paint'){
+      setConsentsAttempted(true)
+      if(!personalDataAccepted)next.personalDataConsent='Подтвердите согласие на обработку персональных данных'
+      if(!agreementAccepted)next.userAgreement='Примите пользовательское соглашение'
+    }
     setErrors(next)
     const first = Object.keys(next)[0]
-    if (first) { dialogRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus(); return }
+    if (first) { (dialogRef.current?.querySelector<HTMLElement>(`[name="${first}"]`) ?? dialogRef.current?.querySelector<HTMLElement>('.form-legal-consents input[aria-invalid="true"]'))?.focus(); return }
     submitted.current=true
     const result=createServiceRequest({submissionId,request,fields,photoAttached:Boolean(photo)},identity?.phoneConfirmed?identity.phone:null)
     if(!result.ok){submitted.current=false;setStorageError(result.error);return}
@@ -149,6 +158,7 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
           {field('quantity', 'Количество', { type: 'number', min: '1' })}
           {field('comment', 'Комментарий', { multiline: true, optional: true })}
         </>}
+        {request.kind==='paint'&&<FormLegalConsents required personalDataAccepted={personalDataAccepted} agreementAccepted={agreementAccepted} onPersonalDataChange={setPersonalDataAccepted} onAgreementChange={setAgreementAccepted} showErrors={consentsAttempted}/>}
         {storageError&&<p className="field-error" role="alert">{storageError}</p>}
         <button className="button button--dark" type="submit">{request.kind==='paint'?'Узнать стоимость':'Отправить заявку'}</button>
       </form>}

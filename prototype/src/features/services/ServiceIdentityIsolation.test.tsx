@@ -35,6 +35,8 @@ it('protects the actual CTA, direct URL and remount, then permits matching confi
   for (const [label,value] of [['Имя',draft.fields.name],['Телефон',draft.fields.phone],['Марка авто',draft.fields.car],['Комментарий',draft.fields.comment]]) {
     await user.click(screen.getByLabelText(label)); await user.paste(value)
   }
+  await user.click(screen.getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'}))
+  await user.click(screen.getByRole('checkbox',{name:'Принимаю пользовательское соглашение'}))
   await user.click(within(screen.getByRole('dialog')).getByRole('button', {name: 'Узнать стоимость'}))
   await user.click(screen.getByRole('button', {name: 'Посмотреть заявку в личном кабинете'}))
   expect(screen.queryByText(draft.fields.comment)).not.toBeInTheDocument()

@@ -15,6 +15,10 @@ const request = (kind: ServiceRequest['kind']): ServiceRequest => ({ kind, title
 async function common(user: ReturnType<typeof userEvent.setup>, kind: ServiceRequest['kind']) {
   await user.type(screen.getByLabelText(kind==='paint'?'Имя':'Ваше имя', {exact:true}), 'Иван')
   await user.type(screen.getByLabelText('Телефон'), '+7 (999) 123-45-67')
+  if(kind==='paint'){
+    await user.click(screen.getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'}))
+    await user.click(screen.getByRole('checkbox',{name:'Принимаю пользовательское соглашение'}))
+  }
 }
 beforeEach(() => {
   localStorage.removeItem('garage-service-requests-v1')
@@ -142,4 +146,30 @@ describe('service request dialog', () => {
     expect(newClose).toHaveBeenCalledTimes(3)
     expect(oldClose).not.toHaveBeenCalled()
   })
+})
+
+it('requires both independent paint consents and links to their documents',async()=>{
+  const user=userEvent.setup()
+  render(<ServiceRequestDialog request={request('paint')} onClose={()=>{}}/>)
+  const personal=screen.getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'})
+  const agreement=screen.getByRole('checkbox',{name:'Принимаю пользовательское соглашение'})
+  expect(screen.getAllByRole('checkbox')).toHaveLength(2)
+  for(const checkbox of [personal,agreement]){expect(checkbox).not.toBeChecked();expect(checkbox).toBeRequired()}
+  expect(screen.getByRole('link',{name:'Текст согласия'})).toHaveAttribute('href','/personal-data-consent')
+  expect(screen.getByRole('link',{name:'Пользовательское соглашение'})).toHaveAttribute('href','/user-agreement')
+  fireEvent.change(screen.getByLabelText('Имя',{exact:true}),{target:{value:'Демо'}})
+  fireEvent.change(screen.getByLabelText('Телефон'),{target:{value:'+79991234567'}})
+  const submit=screen.getByRole('button',{name:'Узнать стоимость'})
+  await user.click(submit)
+  expect(personal).toHaveFocus()
+  expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  expect(JSON.parse(localStorage.getItem('garage-service-requests-v1')||'[]').filter((r:{seed:boolean})=>!r.seed)).toHaveLength(0)
+  await user.click(personal);await user.click(submit)
+  expect(agreement).toHaveFocus()
+  expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  await user.click(agreement);await user.click(personal);await user.click(submit)
+  expect(personal).toHaveFocus()
+  expect(screen.queryByRole('status')).not.toBeInTheDocument()
+  await user.click(personal);await user.click(submit)
+  expect(screen.getByRole('status')).toHaveTextContent('Демонстрационная заявка создана')
 })

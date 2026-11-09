@@ -8,10 +8,11 @@ type FormLegalConsentsProps = {
   onPersonalDataChange(checked: boolean): void
   onAgreementChange(checked: boolean): void
   showErrors: boolean
+  required?: boolean
   className?: string
 }
 
-export function FormLegalConsents({ personalDataAccepted, agreementAccepted, onPersonalDataChange, onAgreementChange, showErrors, className = '' }: FormLegalConsentsProps) {
+export function FormLegalConsents({ personalDataAccepted, agreementAccepted, onPersonalDataChange, onAgreementChange, showErrors, required = false, className = '' }: FormLegalConsentsProps) {
   const id = useId()
   const personalId = `${id}-personal-data`
   const agreementId = `${id}-agreement`
@@ -22,7 +23,7 @@ export function FormLegalConsents({ personalDataAccepted, agreementAccepted, onP
     <div className={`form-legal-consents ${className}`.trim()} role="group" aria-label="Обязательные согласия">
       <div className="form-legal-consents__item">
         <div className="form-legal-consents__check">
-          <input id={personalId} type="checkbox" checked={personalDataAccepted} onChange={(event) => onPersonalDataChange(event.target.checked)} aria-invalid={showErrors && !personalDataAccepted} aria-describedby={showErrors && !personalDataAccepted ? personalErrorId : undefined} />
+          <input id={personalId} name="personalDataConsent" type="checkbox" required={required} checked={personalDataAccepted} onChange={(event) => onPersonalDataChange(event.target.checked)} aria-invalid={showErrors && !personalDataAccepted} aria-describedby={showErrors && !personalDataAccepted ? personalErrorId : undefined} />
           <label htmlFor={personalId}>Даю согласие на обработку персональных данных</label>
         </div>
         <div className="form-legal-consents__links"><Link to="/personal-data-consent" target="_blank" rel="noreferrer">Текст согласия</Link><Link to="/privacy" target="_blank" rel="noreferrer">Политика конфиденциальности</Link></div>
@@ -30,7 +31,7 @@ export function FormLegalConsents({ personalDataAccepted, agreementAccepted, onP
       </div>
       <div className="form-legal-consents__item">
         <div className="form-legal-consents__check">
-          <input id={agreementId} type="checkbox" checked={agreementAccepted} onChange={(event) => onAgreementChange(event.target.checked)} aria-invalid={showErrors && !agreementAccepted} aria-describedby={showErrors && !agreementAccepted ? agreementErrorId : undefined} />
+          <input id={agreementId} name="userAgreement" type="checkbox" required={required} checked={agreementAccepted} onChange={(event) => onAgreementChange(event.target.checked)} aria-invalid={showErrors && !agreementAccepted} aria-describedby={showErrors && !agreementAccepted ? agreementErrorId : undefined} />
           <label htmlFor={agreementId}>Принимаю пользовательское соглашение</label>
         </div>
         <div className="form-legal-consents__links"><Link to="/user-agreement" target="_blank" rel="noreferrer">Пользовательское соглашение</Link></div>

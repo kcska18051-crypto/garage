@@ -20,7 +20,7 @@ const fill = async (user: ReturnType<typeof userEvent.setup>, label: string, val
   await user.click(screen.getByLabelText(label, {exact: true})); await user.paste(value)
 }
 
-it.each(paint)('accepts only name and phone at %s, preserving the chosen direction', async (path, itemId, title) => {
+it.each(paint)('accepts name, phone and both consents at %s, preserving the chosen direction', async (path, itemId, title) => {
   const user = userEvent.setup(); open(path)
   await user.click(screen.getByRole('button', {name: 'Узнать стоимость'}))
   const dialog = within(screen.getByRole('dialog', {name: 'Узнать стоимость'}))
@@ -30,6 +30,8 @@ it.each(paint)('accepts only name and phone at %s, preserving the chosen directi
   await user.click(dialog.getByRole('button', {name: 'Узнать стоимость'}))
   expect(dialog.getByLabelText('Имя', {exact: true})).toHaveFocus()
   await fill(user, 'Имя', 'Демо клиент'); await fill(user, 'Телефон', '8 (999) 123-45-67')
+  await user.click(dialog.getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'}))
+  await user.click(dialog.getByRole('checkbox',{name:'Принимаю пользовательское соглашение'}))
   await user.click(dialog.getByRole('button', {name: 'Узнать стоимость'}))
   expect(dialog.getByRole('status')).toHaveTextContent('Демонстрационная заявка создана')
   const record = JSON.parse(localStorage.getItem('garage-service-requests-v1')!).find((r: {seed: boolean}) => !r.seed)
@@ -42,6 +44,8 @@ it('retains paint code and optional information in the exact account detail afte
   const user = userEvent.setup(); const view = open(paint[1][0])
   await user.click(screen.getByRole('button', {name: 'Узнать стоимость'}))
   for (const [label, value] of [['Имя', 'Тест'], ['Телефон', '+7 999 123-45-67'], ['Марка авто', 'Демо марка'], ['Код краски', 'DEMO-123'], ['Комментарий', 'Демонстрационный комментарий']]) await fill(user, label, value)
+  await user.click(screen.getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'}))
+  await user.click(screen.getByRole('checkbox',{name:'Принимаю пользовательское соглашение'}))
   await user.click(within(screen.getByRole('dialog')).getByRole('button', {name: 'Узнать стоимость'}))
   await user.click(screen.getByRole('button', {name: 'Посмотреть заявку в личном кабинете'}))
   expect(screen.getByText('DEMO-123')).toBeInTheDocument()

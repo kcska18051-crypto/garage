@@ -36,6 +36,8 @@ it.each(examples)('keeps the selected %s paint service in its persisted request'
   await user.click(within(dialog).getByLabelText('Телефон')); await user.paste('+7 999 111-22-33')
   await user.click(within(dialog).getByLabelText('Марка авто')); await user.paste('Демонстрационный автомобиль')
   await user.click(within(dialog).getByLabelText('Комментарий')); await user.paste('Пример задачи без реальных данных')
+  await user.click(within(dialog).getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'}))
+  await user.click(within(dialog).getByRole('checkbox',{name:'Принимаю пользовательское соглашение'}))
   await user.click(within(dialog).getByRole('button', { name: 'Узнать стоимость' }))
   expect(within(dialog).getByRole('status')).toHaveTextContent('Демонстрационная заявка создана')
   const records = JSON.parse(localStorage.getItem('garage-service-requests-v1')!)

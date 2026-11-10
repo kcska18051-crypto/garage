@@ -14,7 +14,7 @@ it.each([
   open(path)
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:title})).toBeInTheDocument()
-  if(!['/services','/services/paint-matching','/services/service-center',base,base+'/screw'].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
+  if(!['/services','/services/paint-matching','/services/service-center',base,base+'/screw',base+'/piston'].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
   expect(main.querySelectorAll('.placeholder-page,a[href="#"]')).toHaveLength(0)
   expect(screen.getByRole('navigation',{name:'Хлебные крошки'})).toHaveTextContent('Услуги')
 })
@@ -56,12 +56,12 @@ it('keeps the service index as three named navigation cards with approved artwor
   expect(main).not.toHaveTextContent('для обсуждения структуры')
 })
 
-it('opens the screw-compressor repair form with the selected equipment type',async()=>{
-  const user=userEvent.setup();open(base+'/screw')
+it.each([['screw','Ремонт винтовых компрессоров'],['piston','Ремонт поршневых компрессоров']])('opens the %s repair form with the selected equipment type',async(slug,title)=>{
+  const user=userEvent.setup();open(base+'/'+slug)
   const main=screen.getByRole('main')
   await user.click(within(main).getByRole('button',{name:'Оставить заявку'}))
   const dialog=within(screen.getByRole('dialog',{name:'Заявка на ремонт'}))
-  expect(dialog.getByText('Ремонт винтовых компрессоров',{exact:true})).toBeInTheDocument()
+  expect(dialog.getByText(title,{exact:true})).toBeInTheDocument()
   expect(dialog.getByLabelText('Модель оборудования',{exact:true})).toBeInTheDocument()
   expect(dialog.getByLabelText('Описание неисправности',{exact:true})).toBeInTheDocument()
 })

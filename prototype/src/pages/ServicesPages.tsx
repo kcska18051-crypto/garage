@@ -104,17 +104,17 @@ export function RepairDetailPage() {
   const {repairSlug}=useParams()
   const item=repairServices.find(service=>service.id===repairSlug)
   if(!item) return <NotFoundPage/>
-  if(item.id==='screw') return <ScrewRepairPage/>
+  if(item.id==='screw'||item.id==='piston') return <ApprovedCompressorRepairPage key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} description={item.id==='screw'?'Обращение по неисправностям винтового компрессора: компрессорного блока, системы управления и узлов подготовки воздуха.':'Обращение по неисправностям поршневого компрессора: поршневой группы, привода и системы регулирования давления.'}/>
   return <ServiceDetail key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} crumbs={repairCrumbs} description={item.text} steps={repairSteps}/>
 }
-function ScrewRepairPage() {
+function ApprovedCompressorRepairPage({request,description}:{request:ServiceRequest;description:string}) {
   const [open,setOpen]=useState(false)
   const close=useCallback(()=>setOpen(false),[])
   return <main className="services-page repair-center-page screw-repair-page">
-    <Breadcrumbs items={[{label:'Главная',to:'/'},...repairCrumbs,{label:'Ремонт винтовых компрессоров'}]}/>
-    <header className="screw-repair-heading"><h1>Ремонт винтовых компрессоров</h1></header>
+    <Breadcrumbs items={[{label:'Главная',to:'/'},...repairCrumbs,{label:request.title}]}/>
+    <header className="screw-repair-heading"><h1>{request.title}</h1></header>
     <section className="repair-center-hero screw-repair-hero" aria-labelledby="screw-repair-about">
-      <div><h2 id="screw-repair-about">Об услуге</h2><p className="screw-repair-lead">Обращение по неисправностям винтового компрессора: компрессорного блока, системы управления и узлов подготовки воздуха.</p>
+      <div><h2 id="screw-repair-about">Об услуге</h2><p className="screw-repair-lead">{description}</p>
         <dl className="screw-repair-terms"><div><dt>Стоимость</dt><dd>Уточняется</dd></div><div><dt>Сроки</dt><dd>Уточняются</dd></div></dl>
         <button className="screw-repair-request" type="button" onClick={()=>setOpen(true)}>Оставить заявку</button>
       </div>
@@ -127,7 +127,7 @@ function ScrewRepairPage() {
     </div></section>
     <section className="repair-center-process" aria-labelledby="screw-repair-process"><h2 id="screw-repair-process">Порядок обращения</h2><ol>{repairSteps.map((step,index)=><li key={step}><span aria-hidden="true">{String(index+1).padStart(2,'0')}</span><p>{step}</p></li>)}</ol></section>
     <Link className="repair-center-back" to="/services/service-center/compressor-repair">← Вернуться к направлению</Link>
-    {open&&<ServiceRequestDialog request={{kind:'repair',title:'Ремонт винтовых компрессоров',itemId:'screw'}} onClose={close}/>}
+    {open&&<ServiceRequestDialog request={request} onClose={close}/>}
   </main>
 }
 export function PaintMatchingPage() {

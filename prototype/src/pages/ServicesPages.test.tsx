@@ -14,7 +14,7 @@ it.each([
   open(path)
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:title})).toBeInTheDocument()
-  if(!['/services','/services/paint-matching','/services/service-center'].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
+  if(!['/services','/services/paint-matching','/services/service-center',base].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
   expect(main.querySelectorAll('.placeholder-page,a[href="#"]')).toHaveLength(0)
   expect(screen.getByRole('navigation',{name:'Хлебные крошки'})).toHaveTextContent('Услуги')
 })

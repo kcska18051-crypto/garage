@@ -1,0 +1,7 @@
+.compressor-repair-page .repair-center-actions .compressor-repair-more{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 18px;border:0;border-radius:9px;background:#ffd36a;color:#493900;font-size:13px;line-height:20px;font-weight:600;text-decoration:none}
+.compressor-repair-page .repair-center-actions .compressor-repair-more:hover{background:#ffc548}
+.compressor-repair-preparation{margin-top:32px}
+.compressor-repair-preparation ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;list-style:none;margin:0;padding:0}
+.compressor-repair-preparation li{position:relative;padding:0 0 0 18px;color:#737a70;font-size:13px;line-height:22px}
+.compressor-repair-preparation li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:#ffcc00}
+@media(max-width:767px){.compressor-repair-preparation{margin-top:28px}.compressor-repair-preparation ul{grid-template-columns:1fr;gap:10px}}

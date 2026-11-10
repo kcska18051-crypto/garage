@@ -50,12 +50,15 @@ it('does not replace an unknown paint child with a default service', () => {
   expect(screen.getByRole('heading', { name: 'Страница не найдена' })).toBeInTheDocument()
 })
 
-it('shows the automotive detail with a real image, pending terms and four steps',()=>{
-  open('/services/paint-matching/automotive')
+it.each([
+  ['automotive','Материалы для подбора цвета и колеровки автомобильных эмалей','mixing-photo.webp'],
+  ['polyurethane','Работа с эмалью при нанесении покрытия','paint-photo.webp'],
+])('shows the %s detail with a real image, pending terms and four steps',(slug,alt,photo)=>{
+  open(`/services/paint-matching/${slug}`)
   const main=screen.getByRole('main')
   expect(main).toHaveClass('automotive-paint-page')
   expect(main.querySelector('.services-art')).toBeNull()
-  expect(within(main).getByRole('img',{name:'Материалы для подбора цвета и колеровки автомобильных эмалей'})).toHaveAttribute('src',expect.stringContaining('mixing-photo.webp'))
+  expect(within(main).getByRole('img',{name:alt})).toHaveAttribute('src',expect.stringContaining(photo))
   expect(within(main).getByText('Стоимость')).toBeInTheDocument()
   expect(within(main).getByText('Сроки')).toBeInTheDocument()
   expect(within(screen.getByRole('region',{name:'Порядок обращения'})).getAllByRole('listitem')).toHaveLength(4)

@@ -9,6 +9,7 @@ import {AutomotivePaintPage} from './AutomotivePaintPage'
 import './ServicesPages.css'
 import './ServicesIndexPage.css'
 import './PaintMatchingPage.css'
+import './ServiceCenterPage.css'
 
 const servicesCrumb={label:'Услуги',to:'/services'}
 const repairCrumbs=[servicesCrumb,{label:'Сервисный центр по ремонту',to:'/services/service-center'},{label:'Ремонт компрессоров',to:'/services/service-center/compressor-repair'}]
@@ -46,10 +47,33 @@ export function ServicesIndexPage() {
     })}</div>
   </main>
 }
+const repairCopy:Record<string,string>={
+  'compressor-repair':'Винтовые, поршневые и дизельные компрессоры. Выберите тип установки или опишите неисправность.',
+  'impact-wrench-repair':'Укажите модель гайковёрта и признаки неисправности.',
+  'angle-grinder-repair':'Опишите проблему в работе угловой шлифовальной машины.',
+  'polisher-repair':'Оставьте обращение по ремонту полировального оборудования.',
+  'pressure-washer-repair':'Укажите модель аппарата и опишите проблему с его работой.',
+}
 export function ServiceCenterPage() {
   const [request,setRequest]=useState<ServiceRequest|null>(null)
   const close=useCallback(()=>setRequest(null),[])
-  return <ServiceLayout title="Сервисный центр по ремонту" crumbs={[servicesCrumb]}><div className="services-intro"><div><h2>От обращения к обсуждению работ</h2><p>Выберите направление ремонта и оставьте обращение по конкретному оборудованию. Для компрессоров также доступны винтовые, поршневые и дизельные установки.</p><p>Неисправность, состав работ, стоимость и сроки обсуждаются отдельно. На странице нет подтверждения реального сервиса или автоматического расчёта.</p></div><div className="services-art" role="img" aria-label="Место для фото сервисного центра"><i/><b/><span>Место для фото сервисного центра</span></div></div><section className="services-section"><h2>Направления ремонта</h2><ServiceCards items={repairDirections} onRequest={item=>setRequest({kind:'repair',title:item.title,itemId:item.id})}/></section><Steps items={repairSteps}/>{request&&<ServiceRequestDialog key={request.itemId} request={request} onClose={close}/>}</ServiceLayout>
+  return <main className="services-page repair-center-page">
+    <Breadcrumbs items={[{label:'Главная',to:'/'},servicesCrumb,{label:'Сервисный центр по ремонту'}]}/>
+    <header className="repair-center-hero">
+      <div><h1>Сервисный центр по ремонту</h1><p className="repair-center-lead">Диагностика и ремонт оборудования и инструмента для мастерской.</p><p>Выберите направление и опишите неисправность. Состав работ, стоимость и сроки уточняются после обсуждения оборудования.</p></div>
+      <img src="/garage/style-check/review-assets/campaigns/repair-photo.webp" alt="Работа с оборудованием в сервисном центре" width="1000" height="667" decoding="async"/>
+    </header>
+    <section aria-labelledby="repair-directions-title"><h2 id="repair-directions-title">Направления ремонта</h2>
+      <div className="repair-center-grid">{repairDirections.map(item=><article key={item.id}>
+        <span className="repair-center-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M14 6a5 5 0 0 0-6 6L3 17a2.8 2.8 0 0 0 4 4l5-5a5 5 0 0 0 6-6l-3 3-4-4 3-3Z"/></svg></span>
+        <h3>{item.href?<Link to={item.href}>{item.title}</Link>:item.title}</h3><p>{repairCopy[item.id]}</p>
+        <div className="repair-center-actions"><button type="button" aria-label={`Оставить заявку: ${item.title}`} onClick={()=>setRequest({kind:'repair',title:item.title,itemId:item.id})}>Оставить заявку</button>{item.href&&<Link to={item.href}>Подробнее<span className="sr-only">: {item.title}</span></Link>}</div>
+      </article>)}</div>
+    </section>
+    <section className="repair-center-process" aria-labelledby="repair-process-title"><h2 id="repair-process-title">Порядок обращения</h2><ol>{repairSteps.map((step,index)=><li key={step}><span aria-hidden="true">{String(index+1).padStart(2,'0')}</span><p>{step}</p></li>)}</ol></section>
+    <Link className="repair-center-back" to="/services">← Все услуги</Link>
+    {request&&<ServiceRequestDialog key={request.itemId} request={request} onClose={close}/>}
+  </main>
 }
 export function CompressorRepairPage() {
   return <ServiceLayout title="Ремонт компрессоров" crumbs={[servicesCrumb,repairCrumbs[1]]}><p className="services-lead">Выберите тип установки. В каждой карточке — пример работ, порядок обращения и демонстрационная заявка с моделью оборудования и описанием неисправности.</p><ServiceCards items={repairServices}/><section className="services-section services-info"><h2>Что подготовить перед обращением</h2><p>Название модели, описание наблюдаемой проблемы и при необходимости фото. Не прикладывайте документы с персональными или секретными данными.</p><p>Стоимость и сроки — уточняются после обсуждения исходных данных.</p></section><Link className="services-back" to="/services/service-center">← Все направления сервисного центра</Link></ServiceLayout>

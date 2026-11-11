@@ -14,7 +14,7 @@ it.each([
   open(path)
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:title})).toBeInTheDocument()
-  if(!['/services','/services/paint-matching','/services/service-center',base,base+'/screw',base+'/piston',base+'/diesel'].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
+  if(!['/services','/services/paint-matching','/services/service-center','/services/rental',base,base+'/screw',base+'/piston',base+'/diesel'].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
   expect(main.querySelectorAll('.placeholder-page,a[href="#"]')).toHaveLength(0)
   expect(screen.getByRole('navigation',{name:'Хлебные крошки'})).toHaveTextContent('Услуги')
 })
@@ -122,4 +122,14 @@ it('shows three compressor images and routes the general inquiry to compressor r
   await user.click(within(main).getByRole('button',{name:'Оставить заявку'}))
   expect(within(screen.getByRole('dialog')).getByText('Ремонт компрессоров',{exact:true})).toBeInTheDocument()
   expect(screen.getByLabelText('Телефон')).toHaveAttribute('placeholder','+7 (___) ___-__-__')
+})
+
+it('keeps rental navigation compact and clearly separate from confirmed booking',()=>{
+  open('/services/rental')
+  const main=screen.getByRole('main')
+  expect(within(main).getByRole('link',{name:'Аренда компрессоров'})).toHaveAttribute('href','/services/rental/compressors')
+  expect(within(main).getByRole('link',{name:'Аренда инструмента'})).toHaveAttribute('href','/services/rental/tools')
+  expect(main.querySelectorAll('.rental-overview__art img')).toHaveLength(4)
+  expect(main).toHaveTextContent('Заявка не подтверждает бронь')
+  expect(main.querySelector('.services-art')).toBeNull()
 })

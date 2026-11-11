@@ -35,12 +35,12 @@ export function MaterialsListPage({ kind }: { kind: MaterialKind }) {
   const [search, setSearch] = useSearchParams()
   const heading = useRef<HTMLElement>(null)
   const previousListing = useRef('')
-  const pageSize = kind === 'review' ? 4 : 9
+  const pageSize = 8
   const category = search.get('category') ?? 'all'
   const sort = search.get('sort') ?? 'newest'
   const rawPage = search.get('page')
   const parsedPage = Number(rawPage ?? '1')
-  const page = kind === 'review' ? Math.max(1, parsedPage) : rawPage && /^[1-9]\d*$/.test(rawPage) && Number.isSafeInteger(parsedPage) ? parsedPage : 1
+  const page = rawPage && /^[1-9]\d*$/.test(rawPage) && Number.isSafeInteger(parsedPage) ? parsedPage : 1
   const source = materialsByKind(kind)
   const categories = [...new Map(source.map((item) => [item.category, item.categoryLabel])).entries()]
   const filtered = source.filter((item) => category === 'all' || item.category === category).sort((a, b) => sort === 'oldest' ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date))
@@ -49,7 +49,7 @@ export function MaterialsListPage({ kind }: { kind: MaterialKind }) {
   const visible = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
   useEffect(() => {
-    if (kind === 'review' || rawPage === null) return
+    if (rawPage === null) return
     const canonical = currentPage === 1 ? null : String(currentPage)
     if (rawPage !== canonical) {
       const next = new URLSearchParams(search)
@@ -63,7 +63,7 @@ export function MaterialsListPage({ kind }: { kind: MaterialKind }) {
     const previousKind = previousListing.current.split(':')[0]
     const changed = previousListing.current && previousListing.current !== key
     previousListing.current = key
-    if (!changed || previousKind !== kind || kind === 'review') return
+    if (!changed || previousKind !== kind) return
     let correctionFrame = 0
     let fullHeaderOnly = false
     const align = () => {

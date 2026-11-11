@@ -32,12 +32,12 @@ describe('materials pages', () => {
     expect(screen.getByRole('status', { name: 'Текущий адрес' })).toHaveTextContent('category=events')
   })
 
-  it('sorts articles without inventing a second page for six results', async () => {
+  it('sorts articles and keeps the remaining items on a second page', async () => {
     const user = userEvent.setup()
     open('/articles')
     await user.selectOptions(screen.getByLabelText('Сортировка'), 'oldest')
     expect(screen.getAllByTestId('material-card')[0]).toHaveTextContent('15 апреля 2026')
-    expect(screen.queryByRole('link', { name: 'Страница 2' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Страница 2' })).toBeInTheDocument()
   })
 
   it('marks video announcements but leaves regular cards clean', () => {

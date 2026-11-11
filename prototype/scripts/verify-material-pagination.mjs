@@ -39,42 +39,42 @@ export async function verifyMaterialPagination(browser, { base, width, fixtures 
     }
     for (const [path, kind, category, title] of [['/news/', 'news', 'company', 'Новости'], ['/articles/', 'article', 'guides', 'Статьи']]) {
       await goto(path)
-      const total = fixtures ? 10 : 6
-      await count(Math.min(9, total))
+      const total = 10
+      await count(Math.min(8, total))
       assert.equal(await page.locator('main h1').innerText(), title)
       assert((await page.locator('.materials-controls').innerText()).includes(`${total} материалов`))
       await page.evaluate(() => document.fonts.ready)
       const tops = await page.getByTestId('material-card').evaluateAll(items => items.map(item => Math.round(item.getBoundingClientRect().top)))
-      assert.equal(tops.filter(top => top === tops[0]).length, width >= 1200 ? 3 : width > 600 ? 2 : 1)
+      assert.equal(tops.filter(top => top === tops[0]).length, width > 1100 ? 4 : width > 650 ? 2 : 1)
       await overflow(); await shot(`${kind}-first`)
-      if (fixtures) {
+      {
         const first = await page.locator('.materials-grid h2 a').evaluateAll(links => links.map(link => link.href))
         const secondPage = page.getByRole('link', { name: 'Страница 2', exact: true })
         await secondPage.scrollIntoViewIfNeeded(); await secondPage.focus(); await page.keyboard.press('Enter')
-        await count(1); await aligned()
+        await count(2); await aligned()
         assert.equal(await page.getByRole('link', { name: 'Страница 2', exact: true }).getAttribute('aria-current'), 'page')
-        const last = await page.locator('.materials-grid h2 a').getAttribute('href')
+        const last = await page.locator('.materials-grid h2 a').first().getAttribute('href')
         assert(!first.some(href => href.endsWith(last)), 'Duplicate across pages')
-        assert.equal(first.length + 1, 10)
+        assert.equal(first.length + 2, 10)
         await shot(`${kind}-last`)
-        await page.reload({ waitUntil: 'domcontentloaded' }); await count(1)
+        await page.reload({ waitUntil: 'domcontentloaded' }); await count(2)
         assert.equal(new URL(page.url()).searchParams.get('page'), '2')
-        await page.getByRole('link', { name: 'Страница 1', exact: true }).click(); await count(9)
-        await page.goBack(); await count(1)
-        await page.goForward(); await count(9)
-        await page.getByRole('link', { name: 'Страница 2', exact: true }).click(); await count(1)
-        await page.getByLabel('Сортировка').selectOption('oldest'); await count(9); await aligned()
+        await page.getByRole('link', { name: 'Страница 1', exact: true }).click(); await count(8)
+        await page.goBack(); await count(2)
+        await page.goForward(); await count(8)
+        await page.getByRole('link', { name: 'Страница 2', exact: true }).click(); await count(2)
+        await page.getByLabel('Сортировка').selectOption('oldest'); await count(8); await aligned()
         assert.equal(new URL(page.url()).searchParams.get('page'), null)
-        assert((await page.locator('.materials-grid h2').first().innerText()).endsWith(' 1'))
-        await page.getByRole('link', { name: 'Страница 2', exact: true }).click(); await count(1)
+        if (fixtures) assert((await page.locator('.materials-grid h2').first().innerText()).endsWith(' 1'))
+        await page.getByRole('link', { name: 'Страница 2', exact: true }).click(); await count(2)
         assert.equal(new URL(page.url()).searchParams.get('sort'), 'oldest')
-      } else assert.equal(await page.getByRole('navigation', { name: 'Пагинация материалов' }).count(), 0)
+      }
       await page.getByLabel('Рубрика').selectOption(category)
       assert.equal(new URL(page.url()).searchParams.get('page'), null)
-      const filteredCount = fixtures ? 10 : 3
-      await count(Math.min(9, filteredCount))
+      const filteredCount = fixtures ? 10 : kind === 'news' ? 6 : 4
+      await count(Math.min(8, filteredCount))
       if (fixtures) {
-        await page.getByRole('link', { name: 'Страница 2', exact: true }).click(); await count(1)
+        await page.getByRole('link', { name: 'Страница 2', exact: true }).click(); await count(2)
         assert.equal(new URL(page.url()).searchParams.get('category'), category)
         assert.equal(new URL(page.url()).searchParams.get('sort'), 'oldest')
       } else assert.equal(await page.getByRole('navigation', { name: 'Пагинация материалов' }).count(), 0)
@@ -86,16 +86,16 @@ export async function verifyMaterialPagination(browser, { base, width, fixtures 
       await page.goBack(); await page.getByRole('heading', { level: 1, name: title, exact: true }).waitFor()
       for (const value of ['0', '1.5', 'NaN', '999']) {
         await goto(`${path}?page=${value}&sort=oldest&tracking=kept`)
-        await page.waitForFunction(({ fixtures, value }) => new URL(location.href).searchParams.get('page') === (fixtures && value === '999' ? '2' : null), { fixtures, value })
+        await page.waitForFunction(({ fixtures, value }) => new URL(location.href).searchParams.get('page') === (value === '999' ? '2' : null), { fixtures, value })
         assert.equal(new URL(page.url()).searchParams.get('sort'), 'oldest')
         assert.equal(new URL(page.url()).searchParams.get('tracking'), 'kept')
       }
       await overflow()
     }
     await goto('/reviews/')
-    await count(4)
+    await count(8)
     await page.getByRole('link', { name: 'Страница 2', exact: true }).click(); await count(2)
     await overflow(); assert.deepEqual(errors, [])
-    return { width, fixtures, newsAndArticles: fixtures ? '9+1' : '6/no fake second page', reviews: '4+2 unchanged', errors }
+    return { width, fixtures, newsAndArticles: '8+2', reviews: '8+2', errors }
   } finally { await context.close() }
 }

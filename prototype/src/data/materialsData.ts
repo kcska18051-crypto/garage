@@ -66,5 +66,22 @@ section('selection','Как собрать комплект','Составьте
   { kind: 'review', slug: 'diagnostic-tools', category: 'comparison', categoryLabel: 'Сравнение', date: '2026-04-12', dateLabel: '12 апреля 2026', title: 'Диагностический инструмент мастерской', summary: 'Обзор базовых групп для первичной проверки автомобиля.', intro: 'Сравниваем назначение универсальных и специализированных инструментов.', coverTone: 5, sections: baseSections('Диагностический набор формируется от типовых обращений сервиса') },
 ]
 
+const paginationExamples: Array<{kind:MaterialKind;slug:string;title:string;summary:string;category:string;categoryLabel:string}> = [
+{kind:'news',slug:'tool-selection',title:'Подборка инструмента для мастерской',summary:'Ручной и пневматический инструмент для повседневных задач поста.',category:'company',categoryLabel:'Компания'},
+{kind:'news',slug:'workshop-storage',title:'Решения для хранения инструмента',summary:'Тележки, шкафы и организация расходных материалов рядом с рабочей зоной.',category:'company',categoryLabel:'Компания'},
+{kind:'news',slug:'paint-selection',title:'Материалы для подготовки поверхности',summary:'Подборка по этапам подготовки деталей к окраске.',category:'service',categoryLabel:'Сервис'},
+{kind:'news',slug:'air-equipment',title:'Оборудование для подачи воздуха',summary:'Компрессоры и оснащение пневмолинии для разных форматов мастерской.',category:'company',categoryLabel:'Компания'},
+{kind:'article',slug:'tool-storage',title:'Как организовать хранение инструмента',summary:'От списка рабочих операций к размещению инструмента и расходников.',category:'practice',categoryLabel:'Практика'},
+{kind:'article',slug:'air-line',title:'Что учесть при планировании пневмолинии',summary:'Исходные данные для обсуждения подачи воздуха в мастерской.',category:'guides',categoryLabel:'Руководства'},
+{kind:'article',slug:'consumables',title:'Как составить список расходных материалов',summary:'Учитываем этапы работы и регулярность использования материалов.',category:'practice',categoryLabel:'Практика'},
+{kind:'article',slug:'service-planning',title:'Как планировать обслуживание оборудования',summary:'Документация, журнал проверок и организация обращений в сервис.',category:'service',categoryLabel:'Обслуживание'},
+{kind:'review',slug:'tool-trolleys',title:'Инструментальные тележки для рабочего поста',summary:'Форматы хранения и размещения инструмента рядом с автомобилем.',category:'equipment',categoryLabel:'Оборудование'},
+{kind:'review',slug:'pneumatic-tools',title:'Пневмоинструмент для мастерской',summary:'Основные группы инструмента и задачи, для которых их выбирают.',category:'comparison',categoryLabel:'Сравнение'},
+{kind:'review',slug:'paint-tools',title:'Инструмент для подготовки к окраске',summary:'Рассматриваем оснащение на разных этапах подготовки поверхности.',category:'equipment',categoryLabel:'Оборудование'},
+{kind:'review',slug:'workshop-storage',title:'Системы хранения для мастерской',summary:'Сравниваем назначение шкафов, тележек и открытых рабочих поверхностей.',category:'comparison',categoryLabel:'Сравнение'},
+]
+// Additional editorial examples make the eight-item pagination visible in each section.
+paginationExamples.forEach((item,index)=>materials.push({...item,date:['2026-04-20','2026-04-24','2026-05-10','2026-05-18'][index%4],dateLabel:['20 апреля 2026','24 апреля 2026','10 мая 2026','18 мая 2026'][index%4],intro:item.summary,coverTone:index%6,sections:baseSections(item.title)}))
+
 export const materialsByKind = (kind: MaterialKind) => materials.filter((item) => item.kind === kind)
 export const getMaterial = (kind: MaterialKind, slug?: string) => materials.find((item) => item.kind === kind && item.slug === slug)

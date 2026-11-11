@@ -56,7 +56,7 @@ describe('materials pages', () => {
     expect(screen.getByRole('heading', { level: 1, name: title })).toBeInTheDocument()
     expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: backLabel })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Связанные материалы' })).toBeInTheDocument()
+    expect(within(screen.getByRole('region', { name: 'Связанные материалы' })).getAllByTestId('material-card')).toHaveLength(4)
     expect(screen.getByRole('heading', { level: 2, name: 'Читайте дальше' })).toBeInTheDocument()
   })
 
@@ -120,4 +120,3 @@ it('switches material sections without scrolling or focusing the heading', async
     expect(document.activeElement).not.toHaveClass('materials-heading')
   }
 })
-

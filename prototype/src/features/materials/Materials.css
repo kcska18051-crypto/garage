@@ -1,6 +1,6 @@
 /* Editorial pages follow the homepage cards and compact service-page scale. */
 html:has(.materials-page),body:has(.materials-page),.app-shell:has(.materials-page){background:#fff}
-.materials-page{--color-text:#29312c;--color-text-muted:#737a70;--color-border:#e4e8e0;margin:auto;max-width:1440px;padding:24px 24px 40px;color:#29312c}
+.materials-page{--container:1368px;--color-text:#29312c;--color-text-muted:#737a70;--color-border:#e4e8e0;margin:auto;max-width:1368px;padding:24px 24px 40px;color:#29312c}
 .materials-page>.catalog-breadcrumbs{margin-bottom:26px}
 .materials-page .catalog-breadcrumbs ol{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
 .materials-page .catalog-breadcrumbs li{font-size:12px;line-height:19px;color:#8a9086}
@@ -66,12 +66,12 @@ html:has(.materials-page),body:has(.materials-page),.app-shell:has(.materials-pa
 .material-related>header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:20px}
 .material-related>header h2{font-size:25px;line-height:34px;font-weight:600;letter-spacing:-.5px;margin:0}
 .material-related>header a{font-size:12px;line-height:20px;color:#737a70;text-underline-offset:4px}
-.material-related>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.material-related .material-cover{height:130px}
+.material-related>div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.material-related .material-cover{height:120px}
 .material-related .material-card__copy{padding:16px}
-.material-related .material-card h2{font-size:16px;line-height:24px}
+.material-related .material-card h2{font-size:17px;line-height:24px}
 .material-related .material-card p{display:none}
-@media(max-width:1100px){.materials-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.material-related>div{gap:12px}}
+@media(max-width:1100px){.materials-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.material-related>div{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
 @media(max-width:650px){
  .materials-page{padding:20px 16px calc(30px + var(--mobile-nav-height))}
  .materials-page>.catalog-breadcrumbs{margin-bottom:22px}.materials-page .catalog-breadcrumbs li{font-size:11px;line-height:18px}

@@ -84,3 +84,10 @@ html:has(.actions-page),body:has(.actions-page),.app-shell:has(.actions-page),ht
  .action-detail-page .catalog-pagination{flex-wrap:wrap;gap:12px}
  .action-detail-page .catalog-pagination nav{max-width:100%;flex-wrap:wrap}
 }
+/* Compact product tiles only inside promotion detail pages. */
+.action-detail-page .catalog-results--grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.action-detail-page .catalog-results--grid .catalog-rich-card{padding:10px;border-radius:14px}
+.action-detail-page .catalog-results--grid .catalog-rich-card__media{height:120px;padding:8px 10px 0}
+.action-detail-page .catalog-results--grid .catalog-rich-card__name{-webkit-line-clamp:2}
+@media(max-width:1100px){.action-detail-page .catalog-results--grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.action-detail-page .catalog-results--grid{grid-template-columns:1fr;gap:12px}}

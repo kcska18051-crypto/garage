@@ -20,7 +20,7 @@ it.each([
 })
 it('connects all repair levels through real links',()=>{
   open(base)
-  for(const [slug,name] of [['screw','винтовых'],['piston','поршневых'],['diesel','дизельных']]) expect(screen.getByRole('main').querySelector(`a[href="${base}/${slug}"]`)).toHaveTextContent(`Ремонт ${name} компрессоров`)
+  for(const [slug,name] of [['screw','винтовых'],['piston','поршневых'],['diesel','дизельных']]) expect(within(screen.getByRole('main')).getByRole('link',{name:`Ремонт ${name} компрессоров`})).toHaveAttribute('href',`${base}/${slug}`)
 })
 it('keeps rental request separate from cart and identifies the selected item',async()=>{
   const user=userEvent.setup();open('/services/rental/hydraulic-jack')
@@ -112,4 +112,14 @@ it('connects the service hub equipment types and keeps all five repair inquiries
     expect(within(screen.getByRole('dialog')).getByText(title,{exact:true})).toBeInTheDocument()
     await user.click(screen.getByRole('button',{name:'Закрыть форму'}))
   }
+})
+
+it('shows three compressor images and routes the general inquiry to compressor repair',async()=>{
+  const user=userEvent.setup();open(base)
+  const main=screen.getByRole('main')
+  expect(main.querySelectorAll('.compressor-overview__card img')).toHaveLength(3)
+  expect(main).not.toHaveTextContent('Что подготовить перед обращением')
+  await user.click(within(main).getByRole('button',{name:'Оставить заявку'}))
+  expect(within(screen.getByRole('dialog')).getByText('Ремонт компрессоров',{exact:true})).toBeInTheDocument()
+  expect(screen.getByLabelText('Телефон')).toHaveAttribute('placeholder','+7 (___) ___-__-__')
 })

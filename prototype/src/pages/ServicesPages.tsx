@@ -51,29 +51,7 @@ export function ServicesIndexPage() {
   </main>
 }
 export {ServiceCenterShowcase as ServiceCenterPage} from './ServiceCenterShowcase'
-const compressorRepairCopy:Record<string,{text:string;icon:string}>={
-  screw:{text:'Компрессорный блок, система управления и узлы подготовки воздуха.',icon:'M4 6h16v12H4z M8 9v6m4-6v6m4-6v6 M7 18v3m10-3v3'},
-  piston:{text:'Поршневая группа, привод и система регулирования давления.',icon:'M5 12h14a3 3 0 0 1 0 6H5a3 3 0 0 1 0-6Z M7 12V6h4v6m3 0V6h4v6 M7 18v2m10-2v2'},
-  diesel:{text:'Установка с дизельным приводом и её рабочие системы.',icon:'M3 6h14v11H3z M17 12h3l2 5h-5 M7 6V3h6v3 M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z'},
-}
-export function CompressorRepairPage() {
-  return <main className="services-page repair-center-page compressor-repair-page">
-    <Breadcrumbs items={[{label:'Главная',to:'/'},servicesCrumb,repairCrumbs[1],{label:'Ремонт компрессоров'}]}/>
-    <header className="repair-center-hero">
-      <div><h1>Ремонт компрессоров</h1><p className="repair-center-lead">Выберите тип компрессора, чтобы узнать о направлении ремонта и оставить заявку.</p><p>Подготовьте модель установки и описание неисправности. Стоимость и сроки уточняются после обсуждения исходных данных.</p></div>
-      <img src="/garage/style-check/review-assets/campaigns/repair-photo.webp" alt="Работа с оборудованием в сервисном центре" width="1000" height="667" decoding="async"/>
-    </header>
-    <section aria-labelledby="compressor-repair-types"><h2 id="compressor-repair-types">Тип компрессора</h2>
-      <div className="repair-center-grid">{repairServices.map(item=><article key={item.id}>
-        <span className="repair-center-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={compressorRepairCopy[item.id].icon}/></svg></span>
-        <h3><Link to={item.href}>{item.title}</Link></h3><p>{compressorRepairCopy[item.id].text}</p>
-        <div className="repair-center-actions"><Link className="compressor-repair-more" to={item.href}>Подробнее<span className="sr-only">: {item.title}</span></Link></div>
-      </article>)}</div>
-    </section>
-    <section className="compressor-repair-preparation" aria-labelledby="compressor-preparation-title"><h2 id="compressor-preparation-title">Что подготовить перед обращением</h2><ul><li>Название и модель компрессора</li><li>Описание неисправности и условий её появления</li><li>Фото оборудования и проблемного узла, если есть</li></ul></section>
-    <Link className="repair-center-back" to="/services/service-center">← Все направления сервисного центра</Link>
-  </main>
-}
+export {CompressorRepairOverview as CompressorRepairPage} from './CompressorRepairOverview'
 export function RepairDetailPage() {
   const {repairSlug}=useParams()
   const item=repairServices.find(service=>service.id===repairSlug)

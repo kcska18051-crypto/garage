@@ -69,3 +69,23 @@ html:has(.rental-equipment),body:has(.rental-equipment),.app-shell:has(.rental-e
  .rental-equipment__notice{padding:18px 16px;margin-top:24px}
  .rental-equipment__steps ol{grid-template-columns:1fr;gap:22px}
 }
+
+/* Category previews stay compact; full parameters remain on equipment details. */
+.rental-equipment__grid article{grid-template-columns:26% minmax(0,1fr);padding:18px;gap:18px}
+.rental-equipment__grid h2{font-size:18px;line-height:25px;margin-bottom:6px}
+.rental-equipment__grid .rental-equipment__card-image,.rental-equipment__grid .rental-equipment__card-image img{height:120px}
+.rental-equipment__grid .rental-equipment__specs{margin-top:8px}
+.rental-equipment__grid .rental-equipment__specs>div{padding:5px 0}
+.rental-equipment__grid .rental-equipment__pending{margin:10px 0 0}
+.rental-equipment__grid .rental-equipment__actions{margin-top:10px}
+@media(max-width:1100px){
+ .rental-equipment__grid article{grid-template-columns:72px minmax(0,1fr);align-content:start;gap:6px 14px;padding:16px}
+ .rental-equipment__grid .rental-equipment__card-copy{display:contents}
+ .rental-equipment__grid .rental-equipment__card-image{grid-column:1;grid-row:1 / 3;height:82px;align-self:start}
+ .rental-equipment__grid .rental-equipment__card-image img{height:82px}
+ .rental-equipment__grid h2{grid-column:2;grid-row:1;font-size:17px;line-height:24px;margin:0}
+ .rental-equipment__grid .rental-equipment__sku{grid-column:2;grid-row:2}
+ .rental-equipment__grid .rental-equipment__specs{grid-column:1 / -1;grid-row:3;margin-top:6px}
+ .rental-equipment__grid .rental-equipment__pending{grid-column:1 / -1;grid-row:4;margin:2px 0 0}
+ .rental-equipment__grid .rental-equipment__actions{grid-column:1 / -1;grid-row:5;margin-top:6px}
+}

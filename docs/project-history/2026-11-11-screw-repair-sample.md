@@ -9,3 +9,7 @@ Design: a cohesive two-column hero with a specific compressor image; a practical
 Asset: prototype/public/style-check/review-assets/screw-compressor-diagnostics.png. Built-in image_gen prompt: photorealistic editorial rotary screw compressor with open cabinet, visible air-end, motor, separator and cooling system; technician diagnosing controller in a bright industrial workshop; charcoal/blue equipment, restrained yellow accents; landscape 4:3, no logos, no car engines. Illustrative service imagery.
 
 Validation: production build and 21 ServicesPages tests; browser checks at 1440/768/390/320 px, image loads, no horizontal overflow or page errors, both request actions identify screw compressor repair correctly.
+
+## Content follow-up
+
+After review, the user identified duplication between the preparation list and process timeline. The page now separates: examples of the reported problem and equipment scope; a compact three-item form checklist; a repair journey from inquiry through diagnostic arrangements, work agreement and repair/collection. Conditions remain individually agreed; no fixed diagnosis terms, prices, warranty or logistics promises were introduced. The approved heading is «Что указать в заявке».

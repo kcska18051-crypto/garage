@@ -70,7 +70,7 @@ it('keeps the screw repair showcase specific and opens its closing request actio
   const user=userEvent.setup();open(base+'/screw')
   const main=screen.getByRole('main')
   expect(within(main).getByRole('img',{name:'Диагностика винтового компрессора с открытым сервисным отсеком'})).toHaveAttribute('src',expect.stringContaining('screw-compressor-diagnostics.png'))
-  expect(within(main).getByRole('heading',{name:'Как проходит обращение'})).toBeInTheDocument()
+  expect(within(main).getByRole('heading',{name:'Как проходит ремонт'})).toBeInTheDocument()
   expect(main).not.toHaveTextContent('Об услуге')
   await user.click(within(main).getByRole('button',{name:'Обсудить ремонт'}))
   const dialog=within(screen.getByRole('dialog',{name:'Заявка на ремонт'}))

@@ -13,3 +13,7 @@ Validation: production build and 21 ServicesPages tests; browser checks at 1440/
 ## Content follow-up
 
 After review, the user identified duplication between the preparation list and process timeline. The page now separates: examples of the reported problem and equipment scope; a compact three-item form checklist; a repair journey from inquiry through diagnostic arrangements, work agreement and repair/collection. Conditions remain individually agreed; no fixed diagnosis terms, prices, warranty or logistics promises were introduced. The approved heading is «Что указать в заявке».
+
+## Final simplification requested by user
+
+Section headings and their supporting descriptions must stay together on the same left-hand axis, never split across left/right columns. Removed «О ремонте» eyebrow, the equipment-scope note («Что может потребовать ремонта») and the entire request-preparation checklist («Что указать в заявке»). Keep the problem examples and repair journey. This supersedes the content follow-up above.

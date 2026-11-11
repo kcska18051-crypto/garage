@@ -126,3 +126,9 @@ html:has(.screw-service),body:has(.screw-service),.app-shell:has(.screw-service)
  .screw-service__preparation--compact .screw-service__section-intro h2{margin-bottom:6px}
  .screw-service__preparation--compact ul{grid-template-columns:1fr;gap:16px}
 }
+
+/* Section explanations follow their headings on the same left-hand axis. */
+.screw-service__scope-heading,.screw-service__process-heading{display:block}
+.screw-service__scope-heading h2{max-width:none;margin-bottom:14px}
+.screw-service__scope-heading>p,.screw-service__process-heading p{max-width:680px}
+.screw-service__process-heading h2{margin-bottom:14px}

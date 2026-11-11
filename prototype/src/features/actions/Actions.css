@@ -91,3 +91,8 @@ html:has(.actions-page),body:has(.actions-page),.app-shell:has(.actions-page),ht
 .action-detail-page .catalog-results--grid .catalog-rich-card__name{-webkit-line-clamp:2}
 @media(max-width:1100px){.action-detail-page .catalog-results--grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.action-detail-page .catalog-results--grid{grid-template-columns:1fr;gap:12px}}
+/* Keep page numbers centered independently of the show-more action. */
+.action-detail-page .catalog-pagination{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center}
+.action-detail-page .catalog-pagination__more{grid-column:1;grid-row:1;justify-self:start}
+.action-detail-page .catalog-pagination nav{grid-column:2;grid-row:1;justify-content:center;justify-self:center}
+@media(max-width:650px){.action-detail-page .catalog-pagination{grid-template-columns:1fr;justify-items:center}.action-detail-page .catalog-pagination__more{grid-column:1;grid-row:1;justify-self:center}.action-detail-page .catalog-pagination nav{grid-column:1;grid-row:2;justify-self:center}}

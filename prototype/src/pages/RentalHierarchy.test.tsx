@@ -12,7 +12,7 @@ it('shows two rental categories at the root, not a mixed item list', () => {
   const main = within(screen.getByRole('main'))
   expect(main.getByRole('link', {name: 'Аренда компрессоров'})).toHaveAttribute('href', '/services/rental/compressors')
   expect(main.getByRole('link', {name: 'Аренда инструмента'})).toHaveAttribute('href', '/services/rental/tools')
-  expect(document.querySelectorAll('.services-grid article')).toHaveLength(2)
+  expect(within(screen.getByRole('region',{name:'Направления аренды'})).getAllByRole('article')).toHaveLength(2)
   expect(main.queryByRole('button', {name: /Арендовать/})).not.toBeInTheDocument()
   expect(main.queryByText('Компрессор поршневой', {exact: true})).not.toBeInTheDocument()
 })

@@ -32,10 +32,10 @@ function ServiceLayout({title,crumbs,children}:{title:string;crumbs:BreadcrumbIt
   return <main className="services-page"><Breadcrumbs items={[{label:'Главная',to:'/'},...crumbs,{label:title}]}/><header className="services-heading"><h1>{title}</h1><p>{demoNote}</p></header>{children}</main>
 }
 
-const directionContent:Record<string,{photo:string;text:string}> = {
-  'service-center': {photo:'repair-photo.webp',text:'Диагностика и ремонт оборудования и инструмента. Выберите нужное направление и оставьте заявку.'},
-  'paint-matching': {photo:'mixing-photo.webp',text:'Подбор цвета автомобильных и полиуретановых эмалей для задач кузовного ремонта.'},
-  rental: {photo:'rental-photo.webp',text:'Оборудование и инструмент для временных задач мастерской. Выберите подходящую позицию.'},
+const directionContent:Record<string,{photo:string;text:string;action:string}> = {
+  'service-center': {photo:'piston-compressor-diagnostics.png',text:'Компрессоры, пневмоинструмент и оборудование мастерской. Выберите направление ремонта.',action:'Выбрать ремонт'},
+  'paint-matching': {photo:'paint-color-automotive.png',text:'Автомобильные и полиуретановые эмали. Подбор цвета и материалов под вашу задачу.',action:'Выбрать подбор'},
+  rental: {photo:'campaigns/rental-photo.webp',text:'Компрессоры и инструмент для временных задач. Посмотрите оборудование и отправьте заявку.',action:'Выбрать оборудование'},
 }
 export function ServicesIndexPage() {
   return <main className="services-page services-index-page">
@@ -44,8 +44,8 @@ export function ServicesIndexPage() {
     <div className="services-grid services-direction-grid">{serviceDirections.map(item=>{
       const content=directionContent[item.id]
       return <article key={item.id}><Link className="service-direction-card" to={item.href} aria-label={item.title}>
-        <span className="service-direction-photo"><img src={`/garage/style-check/review-assets/campaigns/${content.photo}`} alt="" width="1000" height="667" decoding="async"/></span>
-        <div className="service-direction-copy"><h2>{item.title}</h2><p>{content.text}</p><span className="service-direction-action">Подробнее</span></div>
+        <span className="service-direction-photo"><img src={`/garage/style-check/review-assets/${content.photo}`} alt="" width="1000" height="667" decoding="async"/></span>
+        <div className="service-direction-copy"><h2>{item.title}</h2><p>{content.text}</p><span className="service-direction-action">{content.action}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></div>
       </Link></article>
     })}</div>
   </main>

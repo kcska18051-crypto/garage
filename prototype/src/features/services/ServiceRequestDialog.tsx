@@ -1,3 +1,4 @@
+import {PhoneHint,PHONE_PLACEHOLDER} from '../forms/PhoneHint'
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { FormLegalConsents } from '../forms/FormLegalConsents'
 import type { ServiceRequest } from '../../data/serviceTypes'
@@ -67,11 +68,12 @@ export function ServiceRequestDialog({ request, onClose }: { request: ServiceReq
       id: inputId, name: key, value: fields[key], required: !options.optional,
       'aria-label': label,
       onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setFields((current) => ({ ...current, [key]: event.target.value })),
-      'aria-invalid': Boolean(errors[key]), 'aria-describedby': errors[key] ? `${inputId}-error` : undefined,
+      'aria-invalid': Boolean(errors[key]), 'aria-describedby': [key==='phone'?`${inputId}-hint`:null,errors[key]?`${inputId}-error`:null].filter(Boolean).join(' ') || undefined,
     }
     return <div className="form-field" key={key}>
       <label htmlFor={inputId}>{label}{request.kind==='paint'&&!options.optional&&<span aria-hidden="true"> *</span>}</label>
-      {options.multiline ? <textarea {...props} rows={3} maxLength={4000} /> : <input {...props} maxLength={key==='name'?100:key==='phone'?64:200} type={options.type ?? 'text'} min={options.min} step={options.type === 'number' ? '1' : undefined} autoComplete={options.autoComplete} />}
+      {options.multiline ? <textarea {...props} rows={3} maxLength={4000} /> : <input {...props} maxLength={key==='name'?100:key==='phone'?64:200} placeholder={key==='phone'?PHONE_PLACEHOLDER:undefined} inputMode={key==='phone'?'tel':undefined} type={options.type ?? 'text'} min={options.min} step={options.type === 'number' ? '1' : undefined} autoComplete={options.autoComplete} />}
+      {key==='phone'&&<PhoneHint id={`${inputId}-hint`}/>}
       {errors[key] && <span className="field-error" id={`${inputId}-error`}>{errors[key]}</span>}
     </div>
   }

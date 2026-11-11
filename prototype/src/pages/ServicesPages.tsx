@@ -105,32 +105,8 @@ export function RepairDetailPage() {
   const {repairSlug}=useParams()
   const item=repairServices.find(service=>service.id===repairSlug)
   if(!item) return <NotFoundPage/>
-  if(item.id==='screw') return <ScrewRepairShowcase/>
-  if(item.id==='piston') return <ApprovedCompressorRepairPage key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} description="Обращение по неисправностям поршневого компрессора: поршневой группы, привода и системы регулирования давления."/>
+  if(item.id==='screw'||item.id==='piston') return <ScrewRepairShowcase key={item.id} type={item.id}/>
   return <ServiceDetail key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} crumbs={repairCrumbs} description={item.text} steps={repairSteps}/>
-}
-function ApprovedCompressorRepairPage({request,description}:{request:ServiceRequest;description:string}) {
-  const [open,setOpen]=useState(false)
-  const close=useCallback(()=>setOpen(false),[])
-  return <main className="services-page repair-center-page screw-repair-page">
-    <Breadcrumbs items={[{label:'Главная',to:'/'},...repairCrumbs,{label:request.title}]}/>
-    <header className="screw-repair-heading"><h1>{request.title}</h1></header>
-    <section className="repair-center-hero screw-repair-hero" aria-labelledby="screw-repair-about">
-      <div><h2 id="screw-repair-about">Об услуге</h2><p className="screw-repair-lead">{description}</p>
-        <dl className="screw-repair-terms"><div><dt>Стоимость</dt><dd>Уточняется</dd></div><div><dt>Сроки</dt><dd>Уточняются</dd></div></dl>
-        <button className="screw-repair-request" type="button" onClick={()=>setOpen(true)}>Оставить заявку</button>
-      </div>
-      <img src="/garage/style-check/review-assets/campaigns/repair-photo.webp" alt="Работа с оборудованием в сервисном центре" width="1000" height="667" decoding="async"/>
-    </section>
-    <section className="screw-repair-details" aria-labelledby="screw-repair-discussion"><h2 id="screw-repair-discussion">Что обсудим при обращении</h2><div>
-      <article><h3>Неисправность</h3><p>Модель компрессора, признаки неполадки и условия, при которых она появляется.</p></article>
-      <article><h3>Диагностика</h3><p>Исходные данные для осмотра и проверки узлов установки.</p></article>
-      <article><h3>Дальнейшие работы</h3><p>Возможный состав ремонта, стоимость и сроки после уточнения неисправности.</p></article>
-    </div></section>
-    <section className="repair-center-process" aria-labelledby="screw-repair-process"><h2 id="screw-repair-process">Порядок обращения</h2><ol>{repairSteps.map((step,index)=><li key={step}><span aria-hidden="true">{String(index+1).padStart(2,'0')}</span><p>{step}</p></li>)}</ol></section>
-    <Link className="repair-center-back" to="/services/service-center/compressor-repair">← Вернуться к направлению</Link>
-    {open&&<ServiceRequestDialog request={request} onClose={close}/>}
-  </main>
 }
 export function PaintMatchingPage() {
   const [open,setOpen]=useState(false)

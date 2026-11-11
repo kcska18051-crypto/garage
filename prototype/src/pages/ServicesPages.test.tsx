@@ -77,3 +77,16 @@ it('keeps the screw repair showcase specific and opens its closing request actio
   expect(dialog.getByText('Ремонт винтовых компрессоров',{exact:true})).toBeInTheDocument()
   expect(dialog.getByLabelText('Модель оборудования',{exact:true})).toBeInTheDocument()
 })
+
+it('uses piston-specific content and sends both request actions to piston repair',async()=>{
+  const user=userEvent.setup();open(base+'/piston')
+  const main=screen.getByRole('main')
+  expect(within(main).getByRole('img',{name:'Осмотр поршневого компрессора с горизонтальным ресивером в сервисной мастерской'})).toHaveAttribute('src',expect.stringContaining('piston-compressor-diagnostics.png'))
+  expect(within(main).getByRole('heading',{name:'Набор давления'})).toBeInTheDocument()
+  expect(main).not.toHaveTextContent('Что указать в заявке')
+  for(const name of ['Оставить заявку','Обсудить ремонт']) {
+    await user.click(within(main).getByRole('button',{name}))
+    expect(within(screen.getByRole('dialog')).getByText('Ремонт поршневых компрессоров',{exact:true})).toBeInTheDocument()
+    await user.click(screen.getByRole('button',{name:'Закрыть форму'}))
+  }
+})

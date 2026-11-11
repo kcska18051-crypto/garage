@@ -26,7 +26,7 @@ export function StorePage() {
     </header>
     <section className="store-visit" aria-label="Знакомство с точкой">
       <div className="store-photo-grid" aria-label="Фотографии точки">{[0,1,2].map(index => <button type="button" key={index} aria-label={`Открыть фото ${index + 1}`} onClick={() => setPhoto(index)}><img src={`/garage/style-check/review-assets/${point.id === 'service' ? 'about-company-workshop.png' : 'contact-showroom.png'}`} alt={`Фото ${index + 1}: ${point.name}`} width="1024" height="1024"/><span aria-hidden="true">↗</span></button>)}</div>
-      <div className="store-visit__summary"><span>{point.kind}</span><h2>Планируете приехать?</h2><p>Уточните часы посещения и наличие нужного оборудования перед поездкой.</p><a className="store-contact-action" href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>Позвонить в точку <span aria-hidden="true">↗</span></a><a className="store-contact-email" href={`mailto:${point.email}`}>{point.email}</a></div>
+      <div className="store-visit__summary"><h2>Планируете приехать?</h2><p>Уточните часы посещения и наличие нужного оборудования перед поездкой.</p><a className="store-contact-action" href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>Позвонить в магазин</a><a className="store-contact-email" href={`mailto:${point.email}`}>{point.email}</a></div>
     </section>
     <div className="store-page__information">
       <section className="contacts-primary" aria-labelledby="store-visit-title">

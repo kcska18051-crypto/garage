@@ -1,14 +1,14 @@
 import { expect, test } from '@playwright/test'
 
-test('homepage materials open a review detail and start video on demand', async ({ page }) => {
+test('homepage materials open a review detail and open video preview on demand', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('tab', { name: 'Обзоры' }).click()
   await page.getByRole('link', { name: /Обзор решений для оснащения рабочего поста/ }).click()
   await expect(page).toHaveURL(/\/reviews\/workshop-solutions$/)
   await expect(page.getByRole('heading', { level: 1, name: 'Обзор решений для оснащения рабочего поста' })).toBeVisible()
-  await expect(page.getByText('Демонстрационное видео воспроизводится')).toBeHidden()
+  await expect(page.getByText('Видео будет доступно после публикации.')).toBeHidden()
   await page.getByRole('button', { name: 'Воспроизвести видео: Оснащение рабочего поста' }).click()
-  await expect(page.getByText('Демонстрационное видео воспроизводится')).toBeVisible()
+  await expect(page.getByText('Видео будет доступно после публикации.')).toBeVisible()
 })
 
 test('footer links open independent material lists', async ({ page }) => {
@@ -78,7 +78,7 @@ test('keeps compact banners and one content line', async ({ page }) => {
     const geometry = await page.evaluate(() => {
       const box = (selector: string) => document.querySelector(selector)!.getBoundingClientRect()
       const main = box('.materials-main')
-      const cover = box('.material-detail__cover .material-cover')
+      const cover = box('.material-detail__cover')
       const inline = box('.material-inline-image')
       return {
         ratios: [cover.width / cover.height, inline.width / inline.height],

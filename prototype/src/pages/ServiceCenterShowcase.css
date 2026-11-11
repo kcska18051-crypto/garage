@@ -5,24 +5,24 @@ html:has(.service-hub),body:has(.service-hub),.app-shell:has(.service-hub){backg
 .service-hub .catalog-breadcrumbs li{font-size:12px;line-height:19px;color:#8a9086}
 .service-hub .catalog-breadcrumbs li:not(:last-child)::after{content:'/';margin-left:6px;color:#b6bcb2}
 .service-hub .catalog-breadcrumbs a{text-decoration:none;color:inherit}
-.service-hub__hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center;margin-bottom:56px}
+.service-hub__hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;margin-bottom:40px}
 .service-hub h1{font-size:42px;line-height:50px;letter-spacing:-1.2px;font-weight:600;margin:0 0 22px}
 .service-hub__hero .service-hub__lead{font-size:21px;line-height:31px;font-weight:500;color:#29312c;margin-bottom:16px}
 .service-hub__hero p{font-size:14px;line-height:25px;color:#737a70;max-width:520px;margin:0}
-.service-hub__hero>img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:20px}
+.service-hub__hero>img{display:block;width:100%;max-width:480px;justify-self:end;height:280px;object-fit:cover;object-position:center 25%;border-radius:20px}
 .service-hub__terms{display:block;font-size:12px;line-height:21px;color:#737a70;max-width:400px;padding-left:14px;border-left:3px solid #ffcc00;margin-top:22px}
 .service-hub h2{font-size:28px;line-height:37px;font-weight:600;letter-spacing:-.6px;margin:0 0 12px}
 .service-hub__section-description{font-size:14px;line-height:25px;color:#737a70;max-width:680px;margin:0 0 28px}
 .service-hub__grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:18px;align-items:stretch}
 .service-hub__grid>article{min-width:0;border:1px solid #e4e8e0;border-radius:16px;background:#fff;box-shadow:0 4px 16px rgb(41 49 44 / .04)}
-.service-hub__compressors{grid-row:span 2;display:flex;flex-direction:column;padding:24px}
+.service-hub__compressors{grid-row:span 2;display:flex;flex-direction:column;padding:20px}
 .service-hub h3{font-size:19px;line-height:27px;font-weight:600;letter-spacing:-.3px;margin:0 0 9px}
 .service-hub h3 a{text-decoration:none;color:inherit}
 .service-hub h3 a:hover{text-decoration:underline;text-underline-offset:4px}
 .service-hub__grid p{font-size:13px;line-height:23px;color:#737a70;margin:0}
 .service-hub__compressors h3{font-size:24px;line-height:32px}
 .service-hub__compressor-photo{display:block;overflow:hidden;border-radius:12px;margin:20px 0;min-height:0}
-.service-hub__compressor-photo img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.service-hub__compressor-photo img{display:block;width:100%;height:160px;object-fit:cover;object-position:center 25%}
 .service-hub__types{display:grid;margin-bottom:24px}
 .service-hub__types a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #e4e8e0;text-decoration:none;font-size:13px;line-height:21px}
 .service-hub__types a svg{width:17px;height:17px;color:#8a6800}
@@ -32,8 +32,8 @@ html:has(.service-hub),body:has(.service-hub),.app-shell:has(.service-hub){backg
 .service-hub__button svg{width:18px;height:18px;flex-shrink:0}
 .service-hub__button:hover{background:#ffc548}
 .service-hub__text-action{border:0;background:transparent;color:#675300;font:inherit;font-size:12px;line-height:20px;min-height:44px;padding:8px 0;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
-.service-hub__direction{position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:24px}
-.service-hub__tool{display:block;width:76px;height:76px;margin-bottom:18px}
+.service-hub__direction{position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:20px}
+.service-hub__tool{display:block;width:52px;height:52px;margin-bottom:12px}
 .service-hub__direction p{margin-bottom:22px}
 .service-hub__direction .service-hub__button{margin-top:auto}
 .service-hub__process{margin-top:48px;padding-top:36px;border-top:1px solid #e4e8e0}
@@ -53,7 +53,7 @@ html:has(.service-hub),body:has(.service-hub),.app-shell:has(.service-hub){backg
  .service-hub__hero{grid-template-columns:1fr;gap:24px;margin-bottom:34px}
  .service-hub h1{font-size:30px;line-height:38px;letter-spacing:-.8px;margin-bottom:18px}
  .service-hub__hero .service-hub__lead{font-size:18px;line-height:28px}
- .service-hub__hero>img{border-radius:16px}
+ .service-hub__hero>img{max-width:none;height:180px;border-radius:16px}
  .service-hub h2{font-size:24px;line-height:32px}
  .service-hub__section-description{font-size:13px;line-height:23px;margin-bottom:22px}
  .service-hub__grid{grid-template-columns:1fr;gap:14px}

@@ -71,10 +71,10 @@ describe('materials pages', () => {
   it('starts an optional video only after a click', async () => {
     const user = userEvent.setup()
     open('/reviews/workshop-solutions')
-    expect(screen.queryByText('Демонстрационное видео воспроизводится')).not.toBeInTheDocument()
+    expect(screen.queryByText('Видео будет доступно после публикации.')).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Воспроизвести видео: Оснащение рабочего поста' }))
-    expect(screen.getByText('Демонстрационное видео воспроизводится')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Приостановить видео: Оснащение рабочего поста' })).toBeInTheDocument()
+    expect(screen.getByText('Видео будет доступно после публикации.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Закрыть превью: Оснащение рабочего поста' })).toBeInTheDocument()
     expect(document.querySelector('.material-video__copy')).toBeNull()
   })
 

@@ -1,10 +1,9 @@
 import { useState } from 'react'
-
-export function DemoVideo({ title }: { title: string }) {
-  const [playing, setPlaying] = useState(false)
-  return <section className={`material-video${playing ? ' is-playing' : ''}`} aria-label={`Видео: ${title}`}>
-    <div className="material-video__cover" aria-hidden="true"><i /><span>▶</span></div>
-    <button className="material-video__action" type="button" aria-label={playing ? `Приостановить видео: ${title}` : `Воспроизвести видео: ${title}`} onClick={() => setPlaying((value) => !value)}>{playing ? 'Пауза' : 'Смотреть видео'}</button>
-    {playing && <p className="material-video__status" role="status">Демонстрационное видео воспроизводится</p>}
-  </section>
+export function DemoVideo({title,poster}:{title:string;poster?:string}) {
+ const [preview,setPreview]=useState(false)
+ return <section className="material-video" aria-label={`Видео: ${title}`}>
+  <div className="material-video__cover" aria-hidden="true">{poster&&<img src={poster} alt=""/>}<span>▶</span></div>
+  <button className="material-video__action" type="button" aria-label={preview?`Закрыть превью: ${title}`:`Воспроизвести видео: ${title}`} onClick={()=>setPreview(value=>!value)}><span>{preview?'Закрыть превью':'Смотреть видео'}</span></button>
+  {preview&&<p className="material-video__status" role="status">Видео будет доступно после публикации.</p>}
+ </section>
 }

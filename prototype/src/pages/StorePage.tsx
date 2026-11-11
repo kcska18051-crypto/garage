@@ -41,7 +41,7 @@ export function StorePage() {
       <section className="store-page__directions" aria-labelledby="store-directions-title">
         <h2 id="store-directions-title">Как добраться</h2>
         <p>Вход и ориентиры уточняются. Карта показывает демонстрационную точку.</p>
-        <CoordinateMap center={point.coordinates} value={point.coordinates}/>
+        <CoordinateMap pinMarkers center={point.coordinates} value={point.coordinates}/>
         <a className="button" target="_blank" rel="noreferrer" href={`https://www.openstreetmap.org/directions?to=${point.coordinates.lat},${point.coordinates.lng}`}>Построить маршрут к демо-точке ↗</a>
         <p>Маршрут откроется в новой вкладке. Выберите точку отправления на карте маршрута.</p>
       </section>

@@ -86,3 +86,5 @@ html:has(.contacts-page),body:has(.contacts-page),.app-shell:has(.contacts-page)
 }
 .contacts-page .store-page__directions .button,.contacts-page .store-page__back{border:0;border-radius:0;box-shadow:none}
 .contacts-page .coordinate-map{background:#e5e7df}
+.contacts-page .map-location-pin{transform:scale(1.25);filter:drop-shadow(0 2px 2px rgb(41 49 44 / .22))}
+@media(max-width:650px){.contacts-page .map-location-pin{transform:scale(1.8)}}

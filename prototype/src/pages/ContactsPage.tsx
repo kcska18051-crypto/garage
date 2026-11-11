@@ -54,7 +54,7 @@ export function ContactsPage() {
 
     <section className="contacts-locations" aria-labelledby="contact-points-title">
       <header>
-        <h2 id="contact-points-title">Контактные точки</h2>
+        <h2 id="contact-points-title">Магазины и точки обслуживания</h2>
         <div className="contacts-city-tabs" role="tablist" aria-label="Город контактов" onKeyDown={event => {
           if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return
           const tabs = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role=tab]')]
@@ -62,11 +62,11 @@ export function ContactsPage() {
           const next = event.key === 'Home' ? 0 : event.key === 'End' ? cities.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + cities.length) % cities.length
           event.preventDefault(); selectCity(cities[next]); tabs[next]?.focus()
         }}>{cities.map((city,index) => <button key={city} id={`contact-city-${index}`} type="button" role="tab" aria-selected={region === city} aria-controls="contact-city-panel" tabIndex={region === city || (!cities.includes(region) && index === 0) ? 0 : -1} onClick={() => selectCity(city)}>{city}</button>)}</div>
-        <p>Выберите город и откройте страницу точки: фотографии, контакты и как добраться. Это не меняет пункт получения вашего заказа.</p>
+        <p>Выберите город — покажем адрес, часы работы и способы связи.</p>
       </header>
       <div className="contacts-locations__grid" id="contact-city-panel" role="tabpanel" aria-labelledby={cities.includes(region) ? `contact-city-${cities.indexOf(region)}` : undefined} aria-label={!cities.includes(region) ? `Контактные точки: ${region}` : undefined}>
         <div className="contact-point-list">
-          {points.map((point) => <article className="contact-point" data-testid="contact-point" key={point.id}>
+          {points.map((point) => <article className="contact-point" data-testid="contact-point" key={point.id} data-active={point.id === activePoint?.id}>
             <Link className="contact-point__page-link" to={`/contacts/${point.id}?city=${encodeURIComponent(region)}`} aria-label={`Открыть страницу: ${point.name}`}><small>{point.kind} · {point.city}</small><strong>{point.name}<span aria-hidden="true"> ↗</span></strong><span>{point.address}</span><span>{point.hours}</span></Link>
             <div className="contact-point__links"><a href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>{point.phone}</a><a href={`mailto:${point.email}`}>{point.email}</a></div>
             <Link className="contact-point__details" to={`/contacts/${point.id}?city=${encodeURIComponent(region)}`} aria-label={`Фото и как добраться: ${point.name}`}>Фото и как добраться</Link>
@@ -78,8 +78,8 @@ export function ContactsPage() {
     </section>
 
     <section className="contacts-bottom">
-      <article className="contacts-primary"><h2>Основные контакты</h2><dl><div><dt>Телефон</dt><dd><a href="tel:+70000000000">{primaryContacts.phone}</a></dd></div><div><dt>Email</dt><dd><a href={`mailto:${primaryContacts.email}`}>{primaryContacts.email}</a></dd></div><div><dt>Адрес</dt><dd>{primaryContacts.address}</dd></div><div><dt>Часы работы</dt><dd>{primaryContacts.hours}</dd></div></dl></article>
-      <article className="contacts-request"><h2>Связаться с нами</h2><p>Оставьте демонстрационное обращение. Данные никуда не отправляются и не сохраняются.</p><div><button className="button button--dark" type="button" onClick={(event) => openDialog('message', event)}>Написать сообщение</button><button className="button" type="button" onClick={(event) => openDialog('callback', event)}>Заказать звонок</button></div></article>
+      <article className="contacts-primary"><h2>Основные контакты</h2><dl><div><dt>Телефон</dt><dd><a href="tel:+70000000000">{primaryContacts.phone}</a></dd></div><div><dt>Email</dt><dd><a href={`mailto:${primaryContacts.email}`}>{primaryContacts.email}</a></dd></div></dl></article>
+      <article className="contacts-request"><h2>Связаться с нами</h2><p>Нужна помощь с товаром, заказом или услугой? Напишите нам или закажите обратный звонок.</p><div><button className="button button--dark" type="button" onClick={(event) => openDialog('message', event)}>Написать сообщение</button><button className="button" type="button" onClick={(event) => openDialog('callback', event)}>Заказать звонок</button></div><small className="contacts-form-note">Демонстрационная форма: данные никуда не отправляются.</small></article>
     </section>
     {dialog && <ContactDialog mode={dialog} onClose={closeDialog} />}
   </main>

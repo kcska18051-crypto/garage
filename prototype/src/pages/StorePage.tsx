@@ -23,7 +23,10 @@ export function StorePage() {
       <p>{point.kind}. Условия посещения и доступные услуги уточняются у точки. Здесь можно уточнить комплектацию и получение заказа.</p>
     </header>
     <p className="store-page__notice">Демонстрационные данные: адрес, координаты, контакты и фотографии требуют подтверждения клиентом.</p>
-    <section className="store-gallery" aria-label="Фотографии точки">{['Фасад', 'Торговый зал', 'Вход'].map(label => <figure key={label}><div aria-label={`Место для фотографии: ${label}`} role="img">{label}</div><figcaption>Демозаглушка · {label}</figcaption></figure>)}</section>
+    <section className="store-visit" aria-label="Знакомство с точкой">
+      <figure className="store-visit__photo"><img src={`/garage/style-check/review-assets/${point.id === 'service' ? 'about-company-workshop.png' : 'contact-showroom.png'}`} alt={point.id === 'service' ? 'Иллюстрация профессиональной мастерской' : 'Иллюстрация торгового зала оборудования и инструмента'} width="1448" height="1086"/><figcaption>Визуальный образ · реальные фотографии добавим после согласования</figcaption></figure>
+      <div className="store-visit__summary"><span>{point.kind}</span><h2>Планируете приехать?</h2><p>Уточните часы посещения и наличие нужного оборудования перед поездкой.</p><a className="store-contact-action" href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>Позвонить в точку <span aria-hidden="true">↗</span></a><a className="store-contact-email" href={`mailto:${point.email}`}>{point.email}</a></div>
+    </section>
     <div className="store-page__information">
       <section className="contacts-primary" aria-labelledby="store-visit-title">
         <h2 id="store-visit-title">Посещение и контакты</h2>

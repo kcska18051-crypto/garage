@@ -14,7 +14,7 @@ it.each([
   open(path)
   const main=screen.getByRole('main')
   expect(within(main).getByRole('heading',{level:1,name:title})).toBeInTheDocument()
-  if(!['/services','/services/paint-matching','/services/service-center',base,base+'/screw',base+'/piston'].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
+  if(!['/services','/services/paint-matching','/services/service-center',base,base+'/screw',base+'/piston',base+'/diesel'].includes(path)) expect(main).toHaveTextContent(/демонстрационн/i)
   expect(main.querySelectorAll('.placeholder-page,a[href="#"]')).toHaveLength(0)
   expect(screen.getByRole('navigation',{name:'Хлебные крошки'})).toHaveTextContent('Услуги')
 })
@@ -56,7 +56,7 @@ it('keeps the service index as three named navigation cards with approved artwor
   expect(main).not.toHaveTextContent('для обсуждения структуры')
 })
 
-it.each([['screw','Ремонт винтовых компрессоров'],['piston','Ремонт поршневых компрессоров']])('opens the %s repair form with the selected equipment type',async(slug,title)=>{
+it.each([['screw','Ремонт винтовых компрессоров'],['piston','Ремонт поршневых компрессоров'],['diesel','Ремонт дизельных компрессоров']])('opens the %s repair form with the selected equipment type',async(slug,title)=>{
   const user=userEvent.setup();open(base+'/'+slug)
   const main=screen.getByRole('main')
   await user.click(within(main).getByRole('button',{name:'Оставить заявку'}))
@@ -89,4 +89,15 @@ it('uses piston-specific content and sends both request actions to piston repair
     expect(within(screen.getByRole('dialog')).getByText('Ремонт поршневых компрессоров',{exact:true})).toBeInTheDocument()
     await user.click(screen.getByRole('button',{name:'Закрыть форму'}))
   }
+})
+
+it('shows diesel-specific repair content and selects diesel in the closing request',async()=>{
+  const user=userEvent.setup();open(base+'/diesel')
+  const main=screen.getByRole('main')
+  expect(within(main).getByRole('img',{name:'Осмотр передвижного дизельного компрессора с открытым сервисным отсеком'})).toHaveAttribute('src',expect.stringContaining('diesel-compressor-diagnostics.png'))
+  expect(within(main).getByRole('heading',{name:'Запуск и работа двигателя'})).toBeInTheDocument()
+  expect(main).not.toHaveTextContent('Демонстрационное наполнение')
+  expect(main).not.toHaveTextContent('Что указать в заявке')
+  await user.click(within(main).getByRole('button',{name:'Обсудить ремонт'}))
+  expect(within(screen.getByRole('dialog')).getByText('Ремонт дизельных компрессоров',{exact:true})).toBeInTheDocument()
 })

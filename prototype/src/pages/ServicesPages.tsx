@@ -105,7 +105,7 @@ export function RepairDetailPage() {
   const {repairSlug}=useParams()
   const item=repairServices.find(service=>service.id===repairSlug)
   if(!item) return <NotFoundPage/>
-  if(item.id==='screw'||item.id==='piston') return <ScrewRepairShowcase key={item.id} type={item.id}/>
+  if(item.id==='screw'||item.id==='piston'||item.id==='diesel') return <ScrewRepairShowcase key={item.id} type={item.id}/>
   return <ServiceDetail key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} crumbs={repairCrumbs} description={item.text} steps={repairSteps}/>
 }
 export function PaintMatchingPage() {

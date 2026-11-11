@@ -1,3 +1,4 @@
+import {ScrewRepairShowcase} from './ScrewRepairShowcase'
 import {useCallback,useState,type ReactNode} from 'react'
 import {Link,useParams} from 'react-router-dom'
 import {serviceDirections,repairDirections,repairServices,paintServices,rentalItems,rentalCategories,repairSteps,paintSteps,rentalSteps} from '../data/servicesData'
@@ -104,7 +105,8 @@ export function RepairDetailPage() {
   const {repairSlug}=useParams()
   const item=repairServices.find(service=>service.id===repairSlug)
   if(!item) return <NotFoundPage/>
-  if(item.id==='screw'||item.id==='piston') return <ApprovedCompressorRepairPage key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} description={item.id==='screw'?'Обращение по неисправностям винтового компрессора: компрессорного блока, системы управления и узлов подготовки воздуха.':'Обращение по неисправностям поршневого компрессора: поршневой группы, привода и системы регулирования давления.'}/>
+  if(item.id==='screw') return <ScrewRepairShowcase/>
+  if(item.id==='piston') return <ApprovedCompressorRepairPage key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} description="Обращение по неисправностям поршневого компрессора: поршневой группы, привода и системы регулирования давления."/>
   return <ServiceDetail key={item.id} request={{kind:'repair',title:item.title,itemId:item.id}} crumbs={repairCrumbs} description={item.text} steps={repairSteps}/>
 }
 function ApprovedCompressorRepairPage({request,description}:{request:ServiceRequest;description:string}) {

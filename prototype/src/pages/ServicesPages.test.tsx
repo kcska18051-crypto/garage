@@ -65,3 +65,15 @@ it.each([['screw','Ремонт винтовых компрессоров'],['pi
   expect(dialog.getByLabelText('Модель оборудования',{exact:true})).toBeInTheDocument()
   expect(dialog.getByLabelText('Описание неисправности',{exact:true})).toBeInTheDocument()
 })
+
+it('keeps the screw repair showcase specific and opens its closing request action',async()=>{
+  const user=userEvent.setup();open(base+'/screw')
+  const main=screen.getByRole('main')
+  expect(within(main).getByRole('img',{name:'Диагностика винтового компрессора с открытым сервисным отсеком'})).toHaveAttribute('src',expect.stringContaining('screw-compressor-diagnostics.png'))
+  expect(within(main).getByRole('heading',{name:'Как проходит обращение'})).toBeInTheDocument()
+  expect(main).not.toHaveTextContent('Об услуге')
+  await user.click(within(main).getByRole('button',{name:'Обсудить ремонт'}))
+  const dialog=within(screen.getByRole('dialog',{name:'Заявка на ремонт'}))
+  expect(dialog.getByText('Ремонт винтовых компрессоров',{exact:true})).toBeInTheDocument()
+  expect(dialog.getByLabelText('Модель оборудования',{exact:true})).toBeInTheDocument()
+})

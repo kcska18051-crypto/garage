@@ -43,8 +43,8 @@ describe('materials pages', () => {
   it('marks video announcements but leaves regular cards clean', () => {
     open('/reviews')
     const cards = screen.getAllByTestId('material-card')
-    expect(cards.some((card) => within(card).queryByText('Видео'))).toBe(true)
-    expect(cards.some((card) => !within(card).queryByText('Видео'))).toBe(true)
+    expect(cards.some((card) => card.querySelector('.material-cover > span'))).toBe(true)
+    expect(cards.some((card) => !card.querySelector('.material-cover > span'))).toBe(true)
   })
 
   it.each([
@@ -107,3 +107,17 @@ describe('materials pages', () => {
     expect(screen.getByRole('heading', { name: 'Страница не найдена' })).toBeInTheDocument()
   })
 })
+
+it('switches material sections without scrolling or focusing the heading', async () => {
+  const user = userEvent.setup()
+  vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => { callback(0); return 1 })
+  open('/news')
+  const nav = screen.getByRole('navigation', {name:'Разделы материалов'})
+  for (const name of ['Статьи','Обзоры','Новости']) {
+    await user.click(within(nav).getByRole('link', {name}))
+    expect(screen.getByRole('heading', {level:1,name})).toBeInTheDocument()
+    expect(window.scrollTo).not.toHaveBeenCalled()
+    expect(document.activeElement).not.toHaveClass('materials-heading')
+  }
+})
+

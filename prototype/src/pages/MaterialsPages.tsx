@@ -20,7 +20,7 @@ function Cover({ item, video = true }: { item: Material; video?: boolean }) {
 
 function MaterialCard({ item }: { item: Material }) {
   const kind = materialKinds[item.kind]
-  return <article className="material-card" data-testid="material-card"><Link to={`${kind.path}/${item.slug}`} aria-label={item.title}><Cover item={item} /></Link><div className="material-card__copy"><div className="material-meta"><span>{kind.singular}</span><time dateTime={item.date}>{item.dateLabel}</time>{item.videos?.length && <b>Видео</b>}</div><h2><Link to={`${kind.path}/${item.slug}`}>{item.title}</Link></h2><p>{item.summary}</p><small>{item.categoryLabel}</small></div></article>
+  return <article className="material-card" data-testid="material-card"><Link to={`${kind.path}/${item.slug}`} aria-label={item.title}><Cover item={item} /></Link><div className="material-card__copy"><small className="material-card__category">{item.categoryLabel}</small><h2><Link to={`${kind.path}/${item.slug}`}>{item.title}</Link></h2><p>{item.summary}</p><div className="material-meta"><time dateTime={item.date}>{item.dateLabel}</time></div></div></article>
 }
 
 function setParam(search: URLSearchParams, name: string, value: string) {
@@ -60,9 +60,10 @@ export function MaterialsListPage({ kind }: { kind: MaterialKind }) {
 
   useEffect(() => {
     const key = `${kind}:${category}:${sort}:${currentPage}`
+    const previousKind = previousListing.current.split(':')[0]
     const changed = previousListing.current && previousListing.current !== key
     previousListing.current = key
-    if (!changed || kind === 'review') return
+    if (!changed || previousKind !== kind || kind === 'review') return
     let correctionFrame = 0
     let fullHeaderOnly = false
     const align = () => {

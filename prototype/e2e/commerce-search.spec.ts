@@ -11,7 +11,7 @@ test('cart quantity and checkout choices persist through success', async ({ page
   await page.getByRole('link', { name: 'Перейти к оформлению' }).click()
   await signIntoDemoAccount(page)
   await page.getByRole('tab', { name: /Самовывоз/ }).click()
-  await page.getByRole('radio', { name: /Демо-магазин/ }).check()
+  await page.getByRole('radio', { name: /Магазин «Гараж»/ }).check()
   await page.getByLabel('Картой онлайн').click()
   await page.getByRole('button', { name: 'Оформить заказ' }).click()
   await expect(page.getByRole('heading', { name: 'Заказ принят' })).toBeVisible()

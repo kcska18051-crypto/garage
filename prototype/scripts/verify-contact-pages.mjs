@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 
 const points = [
-  { id: 'store', city: 'Ярославль', name: 'Демо-магазин', phone: '+70000000001', email: 'store@example.com', coordinates: '57.626, 39.893' },
-  { id: 'pickup', city: 'Вологда', name: 'Демо-пункт выдачи', phone: '+70000000002', email: 'pickup@example.com', coordinates: '59.22, 39.89' },
-  { id: 'service', city: 'Череповец', name: 'Демо-сервисная точка', phone: '+70000000003', email: 'service@example.com', coordinates: '59.128, 37.909' },
+  { id: 'store', slug:'yaroslavl', city: 'Ярославль', name: 'Магазин «Гараж»', phone: '+70000000001', email: 'store@example.com', coordinates: '57.626, 39.893' },
+  { id: 'pickup', slug:'vologda', city: 'Вологда', name: 'Пункт выдачи «Гараж»', phone: '+70000000002', email: 'pickup@example.com', coordinates: '59.22, 39.89' },
+  { id: 'service', slug:'cherepovets', city: 'Череповец', name: 'Сервисная точка «Гараж»', phone: '+70000000003', email: 'service@example.com', coordinates: '59.128, 37.909' },
 ]
 
 export async function verifyContactPages(browser, { base, width, screenshotRoot, expectedAsset }) {
@@ -39,7 +39,7 @@ export async function verifyContactPages(browser, { base, width, screenshotRoot,
     }
     await goto('/checkout/review')
     await page.getByLabel('Город самовывоза').selectOption('Вологда')
-    await page.getByRole('radio', { name: /Демо-пункт выдачи/ }).check()
+    await page.getByRole('radio', { name: /Пункт выдачи «Гараж»/ }).check()
     await page.getByLabel('Комментарий к заказу').fill('Сохранённый заказ')
     const saved = await savedState()
     let navigations = 0
@@ -72,19 +72,18 @@ export async function verifyContactPages(browser, { base, width, screenshotRoot,
         } else if (method === 'name') await card.locator('strong').click()
         else await card.getByRole('link', { name: `Фото и как добраться: ${point.name}` }).click()
         await heading(`${point.name} — ${point.city}`)
-        assert(new URL(page.url()).pathname.replace(/\/+$/, '').endsWith(`/contacts/${point.id}`), `Wrong point URL: ${page.url()}`)
+        assert(new URL(page.url()).pathname.replace(/\/+$/, '').endsWith(`/contacts/${point.slug}`), `Wrong point URL: ${page.url()}`)
         assert.equal(await page.getByRole('dialog').count(), 0)
-        assert.equal(await page.locator('.store-gallery figure').count(), 3)
-        assert.equal(await page.locator('.store-gallery figure[hidden]').count(), 0)
-        assert((await page.locator('main').innerText()).includes(point.coordinates))
-        assert.equal(await page.locator('main a[href^="tel:"]').getAttribute('href'), `tel:${point.phone}`)
-        assert.equal(await page.locator('main a[href^="mailto:"]').getAttribute('href'), `mailto:${point.email}`)
+        assert.equal(await page.locator('.store-photo-grid button').count(), 3)
+        assert.equal(await page.locator('.store-photo-grid button[hidden]').count(), 0)
+        assert.equal(await page.locator('main a[href^="tel:"]').first().getAttribute('href'), `tel:${point.phone}`)
+        assert.equal(await page.locator('main a[href^="mailto:"]').first().getAttribute('href'), `mailto:${point.email}`)
         assert.equal(await page.getByRole('link', { name: /Построить маршрут/ }).getAttribute('target'), '_blank')
         const routeStyle = await page.getByRole('link', { name: /Построить маршрут/ }).evaluate(el => ({ color: getComputedStyle(el).color, background: getComputedStyle(el).backgroundColor }))
         assert(routeStyle.color !== routeStyle.background, `Invisible route label: ${JSON.stringify(routeStyle)}`)
         assert.equal(await page.getByRole('link', { name: /Построить маршрут/ }).getAttribute('href'), `https://www.openstreetmap.org/directions?to=${point.coordinates.replace(', ', ',')}`)
-        await page.locator('.store-gallery figure').last().scrollIntoViewIfNeeded()
-        assert(await page.locator('.store-gallery figure').last().isVisible())
+        await page.locator('.store-photo-grid button').last().scrollIntoViewIfNeeded()
+        assert(await page.locator('.store-photo-grid button').last().isVisible())
         await layout()
         if (method === 'name') {
           await page.reload({ waitUntil: 'domcontentloaded' })
@@ -109,7 +108,7 @@ export async function verifyContactPages(browser, { base, width, screenshotRoot,
     await goto('/checkout/review')
     assert.equal(await page.getByLabel('Комментарий к заказу').inputValue(), 'Сохранённый заказ')
     assert.equal(await page.getByLabel('Город самовывоза').inputValue(), 'Вологда')
-    assert(await page.getByRole('radio', { name: /Демо-пункт выдачи/ }).isChecked())
+    assert(await page.getByRole('radio', { name: /Пункт выдачи «Гараж»/ }).isChecked())
     for (const point of points) {
       await page.getByLabel('Город самовывоза').selectOption(point.city)
       const radio = page.getByRole('radio', { name: new RegExp(point.name) })

@@ -1,5 +1,6 @@
 export type ContactPoint = {
   id: string
+  slug: string
   city: string
   coordinates: { lat: number; lng: number }
   name: string
@@ -12,14 +13,14 @@ export type ContactPoint = {
 }
 
 export const contactPoints: ContactPoint[] = [
-  { id: 'store', city: 'Ярославль', coordinates: { lat: 57.626, lng: 39.893 }, name: 'Демо-магазин', kind: 'Торговая точка', address: 'Демонстрационный адрес, дом 1', hours: 'Демо-график: будни и выходные', phone: '+7 (000) 000-00-01', email: 'store@example.com', mapPosition: { x: 28, y: 35 } },
-  { id: 'pickup', city: 'Вологда', coordinates: { lat: 59.22, lng: 39.89 }, name: 'Демо-пункт выдачи', kind: 'Получение заказов', address: 'Демонстрационный адрес, дом 2', hours: 'Демо-график: уточняется', phone: '+7 (000) 000-00-02', email: 'pickup@example.com', mapPosition: { x: 65, y: 28 } },
-  { id: 'service', city: 'Череповец', coordinates: { lat: 59.128, lng: 37.909 }, name: 'Демо-сервисная точка', kind: 'Консультации', address: 'Демонстрационный адрес, дом 3', hours: 'Демо-график: по предварительному обращению', phone: '+7 (000) 000-00-03', email: 'service@example.com', mapPosition: { x: 54, y: 68 } },
+  { id: 'store', slug:'yaroslavl', city: 'Ярославль', coordinates: { lat: 57.626, lng: 39.893 }, name: 'Магазин «Гараж»', kind: 'Торговая точка', address: 'Адрес уточняется', hours: 'График уточняется', phone: '+7 (000) 000-00-01', email: 'store@example.com', mapPosition: { x: 28, y: 35 } },
+  { id: 'pickup', slug:'vologda', city: 'Вологда', coordinates: { lat: 59.22, lng: 39.89 }, name: 'Пункт выдачи «Гараж»', kind: 'Получение заказов', address: 'Адрес уточняется', hours: 'График уточняется', phone: '+7 (000) 000-00-02', email: 'pickup@example.com', mapPosition: { x: 65, y: 28 } },
+  { id: 'service', slug:'cherepovets', city: 'Череповец', coordinates: { lat: 59.128, lng: 37.909 }, name: 'Сервисная точка «Гараж»', kind: 'Консультации', address: 'Адрес уточняется', hours: 'График уточняется', phone: '+7 (000) 000-00-03', email: 'service@example.com', mapPosition: { x: 54, y: 68 } },
 ]
 
 export const primaryContacts = {
   phone: '+7 (000) 000-00-00',
   email: 'contact@example.com',
-  address: 'Демонстрационный адрес компании',
-  hours: 'Демо-график работы уточняется',
+  address: 'Адрес уточняется',
+  hours: 'График уточняется',
 }

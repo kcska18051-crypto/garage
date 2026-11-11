@@ -17,7 +17,7 @@ describe('contacts page', () => {
     tabs[0].focus(); await user.keyboard('{ArrowRight}')
     expect(tabs[1]).toHaveFocus()
     expect(tabs[1]).toHaveAttribute('aria-selected','true')
-    expect(screen.getByRole('link', { name: /Открыть страницу: Демо-пункт выдачи/ })).toHaveAttribute('href', expect.stringContaining('/contacts/pickup'))
+    expect(screen.getByRole('link', { name: /Открыть страницу: Пункт выдачи «Гараж»/ })).toHaveAttribute('href', expect.stringContaining('/contacts/vologda'))
     await user.keyboard('{End}')
     expect(tabs[2]).toHaveAttribute('aria-selected','true')
     await user.keyboard('{Home}')
@@ -26,7 +26,7 @@ describe('contacts page', () => {
   it('shows demo contacts, points and a schematic map', () => {
     open()
     expect(screen.getByRole('heading', { level: 1, name: 'Контакты' })).toBeInTheDocument()
-    expect(screen.getByText(/Контактные данные на странице демонстрационные/i)).toBeInTheDocument()
+    expect(screen.getByText(/Адреса магазинов/i)).toBeInTheDocument()
     expect(screen.getAllByTestId('contact-point')).toHaveLength(1)
     expect(screen.getByRole('img', { name: 'Карта пунктов получения' })).toBeInTheDocument()
     expect(screen.getByText('contact@example.com')).toBeInTheDocument()
@@ -38,12 +38,12 @@ describe('contacts page', () => {
     open()
     expect(screen.getByRole('tab', { name: 'Ярославль' })).toHaveAttribute('aria-selected','true')
     await user.click(screen.getByRole('tab', { name: 'Вологда' }))
-    expect(screen.getByRole('link', { name: /Открыть страницу: Демо-пункт выдачи/ })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'На карте: Демо-пункт выдачи' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('link', { name: /Открыть страницу: Пункт выдачи «Гараж»/ })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'На карте: Пункт выдачи «Гараж»' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.queryByRole('link', { name: /Подробнее:|О магазине/ })).not.toBeInTheDocument()
     expect(screen.getByRole('tab', { name: 'Вологда' })).toHaveAttribute('aria-selected','true')
     expect(screen.getAllByRole('button', { name: 'Выбрать город' })[0]).toHaveTextContent('Вологда')
-    expect(screen.queryByRole('radio', { name: /Демо-магазин/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole('radio', { name: /Магазин «Гараж»/ })).not.toBeInTheDocument()
   })
 
   it('shows an empty state for a site city without contact points', async () => {
@@ -53,7 +53,7 @@ describe('contacts page', () => {
     expect(screen.getAllByRole('tab').every(tab => tab.getAttribute('aria-selected') === 'false')).toBe(true)
     expect(screen.queryByTestId('contact-point')).not.toBeInTheDocument()
     expect(screen.getByText(/контактные точки пока не указаны/)).toBeInTheDocument()
-    expect(screen.queryByRole('radio', { name: /Демо-магазин/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole('radio', { name: /Магазин «Гараж»/ })).not.toBeInTheDocument()
   })
 
   it.each(contactPoints)('opens $id as a page without changing checkout', async (point) => {

@@ -27,7 +27,7 @@ describe('applied promo is a persisted calculation, not a message', () => {
     expect(screen.getByTestId('order-total')).toHaveTextContent('Уточняется')
   })
   it('freezes the accepted amount when cart and promo later change', async () => {
-    localStorage.setItem('garage-checkout-v2', JSON.stringify({ promoCode: '123', delivery: 'pickup', pickupCity: 'Ярославль', storeId: 'store', store: 'Демо-магазин' }))
+    localStorage.setItem('garage-checkout-v2', JSON.stringify({ promoCode: '123', delivery: 'pickup', pickupCity: 'Ярославль', storeId: 'store', store: 'Магазин «Гараж»' }))
     const user = userEvent.setup()
     const view = open('/checkout/review')
     await user.click(screen.getByTestId('checkout-submit'))

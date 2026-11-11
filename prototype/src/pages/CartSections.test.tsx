@@ -41,7 +41,7 @@ describe('remaining cart sections', () => {
     await user.click(screen.getAllByRole('button', { name: /^Наличие в магазинах:/ })[0])
     const dialog = screen.getByRole('dialog')
     expect(dialog).toHaveTextContent('Ярославль')
-    expect(dialog).toHaveTextContent('Демонстрационный адрес, дом 1')
+    expect(dialog).toHaveTextContent('Адрес уточняется')
     expect(dialog).toHaveTextContent('Наличие в этой точке уточняется')
   })
 })

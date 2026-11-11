@@ -15,7 +15,7 @@ export const publicRoutes = [...new Set([
   ...['data','addresses','recently-viewed','favorites','documents','help','orders','organizations','services','reviews'].map(path=>`/profile/${path}`),
   '/profile/services/request',
   ...profileData.orders.map(order=>`/profile/orders/${order.id}`),
-  ...contactPoints.map(point=>`/contacts/${point.id}`),
+  ...contactPoints.flatMap(point=>[`/contacts/${point.id}`, `/contacts/${point.slug}`]),
   ...catalogCategories.map(category=>category.href),
   ...compressorSubcategories.flatMap(category=>[category.href,...(category.childSections??[]).map(child=>child.href)]),
   ...demoProducts.map(product=>product.href),

@@ -49,7 +49,7 @@ export function ContactsPage() {
     <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: 'Контакты' }]} />
     <header className="contacts-heading">
       <h1>Контакты</h1>
-      <p>Контактные данные на странице демонстрационные. Реальные адреса, график работы и способы связи предоставит клиент.</p>
+      <p>Адреса магазинов, часы работы и способы связи. Выберите удобную точку.</p>
     </header>
 
     <section className="contacts-locations" aria-labelledby="contact-points-title">
@@ -67,13 +67,13 @@ export function ContactsPage() {
       <div className="contacts-locations__grid" id="contact-city-panel" role="tabpanel" aria-labelledby={cities.includes(region) ? `contact-city-${cities.indexOf(region)}` : undefined} aria-label={!cities.includes(region) ? `Контактные точки: ${region}` : undefined}>
         <div className="contact-point-list">
           {points.map((point) => <article className="contact-point" data-testid="contact-point" key={point.id} data-active={point.id === activePoint?.id}>
-            <Link className="contact-point__page-link" to={`/contacts/${point.id}?city=${encodeURIComponent(region)}`} aria-label={`Открыть страницу: ${point.name}`}><small>{point.kind} · {point.city}</small><strong>{point.name}<span aria-hidden="true"> ↗</span></strong><span>{point.address}</span><span>{point.hours}</span></Link>
+            <Link className="contact-point__page-link" to={`/contacts/${point.slug}`} aria-label={`Открыть страницу: ${point.name}`}><small>{point.kind} · {point.city}</small><strong>{point.name}<span aria-hidden="true"> ↗</span></strong><span>{point.address}</span><span>{point.hours}</span></Link>
             <div className="contact-point__links"><a href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>{point.phone}</a><a href={`mailto:${point.email}`}>{point.email}</a></div>
-            <Link className="contact-point__details" to={`/contacts/${point.id}?city=${encodeURIComponent(region)}`} aria-label={`Фото и как добраться: ${point.name}`}>Фото и как добраться</Link>
+            <Link className="contact-point__details" to={`/contacts/${point.slug}`} aria-label={`Фото и как добраться: ${point.name}`}>Фото и как добраться</Link>
           </article>)}
           {!points.length && <p role="status">В городе «{region}» контактные точки пока не указаны. Выберите другой город.</p>}
         </div>
-        {activePoint && <section className="contacts-map-panel" aria-label="Карта контактных точек"><CoordinateMap pinMarkers center={activePoint.coordinates ?? cityCenters[region]} selectedMarkerId={activePoint.id} markers={points.map(point => ({ id: point.id, label: point.name, point: point.coordinates }))} onMarker={setActiveId}/><div className="contacts-map__caption" aria-live="polite"><span>Показана на карте · {region}</span><h3>{activePoint.name}</h3><p>{activePoint.address}</p><p>Демонстрационные координаты</p></div></section>}
+        {activePoint && <section className="contacts-map-panel" aria-label="Карта контактных точек"><CoordinateMap pinMarkers center={activePoint.coordinates ?? cityCenters[region]} selectedMarkerId={activePoint.id} markers={points.map(point => ({ id: point.id, label: point.name, point: point.coordinates }))} onMarker={setActiveId}/><div className="contacts-map__caption" aria-live="polite"><span>Показана на карте · {region}</span><h3>{activePoint.name}</h3><p>{activePoint.address}</p></div></section>}
       </div>
     </section>
 

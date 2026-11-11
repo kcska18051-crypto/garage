@@ -164,7 +164,7 @@ export async function verifyCartRevision(browser, { base, width, screenshotRoot,
     await auth.waitFor({ state: 'hidden' })
     await checkTotal(42120)
     await page.getByLabel('Город самовывоза').selectOption('Ярославль')
-    await page.getByRole('radio', { name: /Демо-магазин/ }).check()
+    await page.getByRole('radio', { name: /Магазин «Гараж»/ }).check()
     await screenshot('checkout')
     await page.getByTestId('checkout-submit').click()
     await page.getByRole('heading', { name: 'Заказ принят', exact: true }).waitFor()

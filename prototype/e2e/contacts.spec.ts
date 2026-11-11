@@ -13,8 +13,8 @@ test('header and footer open the complete contacts page', async ({ page }) => {
 test('point selection updates the schematic map and message closes with Escape', async ({ page }) => {
   await page.goto('/contacts')
   await page.getByRole('tab', { name: 'Череповец', exact: true }).click()
-  await page.getByRole('button', { name: 'На карте: Демо-сервисная точка' }).click()
-  await expect(page.getByRole('region', { name: 'Карта контактных точек' }).getByRole('heading', { name: 'Демо-сервисная точка' })).toBeVisible()
+  await page.getByRole('button', { name: 'На карте: Сервисная точка «Гараж»' }).click()
+  await expect(page.getByRole('region', { name: 'Карта контактных точек' }).getByRole('heading', { name: 'Сервисная точка «Гараж»' })).toBeVisible()
   const trigger = page.getByRole('button', { name: 'Написать сообщение' })
   await trigger.click()
   await expect(page.getByRole('dialog', { name: 'Написать сообщение' })).toBeVisible()

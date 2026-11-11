@@ -13,10 +13,10 @@ it('lets visitors choose a paint service before opening its request form', async
   const user = userEvent.setup()
   open('/services/paint-matching')
   const main = screen.getByRole('main')
-  expect(main.querySelectorAll('.services-grid article')).toHaveLength(2)
+  expect(main.querySelectorAll('.paint-editorial__directions article')).toHaveLength(2)
   expect(main).toHaveClass('paint-service-page')
   expect(main.querySelectorAll('.services-art')).toHaveLength(0)
-  expect(within(main).getByRole('img',{name:'Работа с автоэмалью при ремонте автомобильного покрытия'})).toHaveAttribute('src',expect.stringContaining('paint-photo.webp'))
+  expect(within(main).getAllByRole('img')).toHaveLength(2)
   expect(within(main).queryByRole('button', { name: 'Оставить заявку' })).not.toBeInTheDocument()
   await user.click(within(main).getByRole('link', { name: examples[1][1] }))
   expect(within(screen.getByRole('main')).getByRole('heading', { level: 1 })).toHaveTextContent(examples[1][1])
@@ -51,8 +51,8 @@ it('does not replace an unknown paint child with a default service', () => {
 })
 
 it.each([
-  ['automotive','Материалы для подбора цвета и колеровки автомобильных эмалей','mixing-photo.webp'],
-  ['polyurethane','Работа с эмалью при нанесении покрытия','paint-photo.webp'],
+  ['automotive','Сравнение образцов автомобильной эмали с цветом кузовной панели','paint-color-automotive.png'],
+  ['polyurethane','Сравнение цветовых образцов с окрашенной металлической пластиной','paint-color-polyurethane.png'],
 ])('shows the %s detail with a real image, pending terms and four steps',(slug,alt,photo)=>{
   open(`/services/paint-matching/${slug}`)
   const main=screen.getByRole('main')

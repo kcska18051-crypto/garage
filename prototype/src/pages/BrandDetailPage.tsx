@@ -1,3 +1,6 @@
+import { getMaterial } from '../data/materialsData'
+import { materialPicture } from '../features/materials/materialPictures'
+import { compressorCategoryImages } from '../features/catalog/compressorCategoryImages'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { remezaCategories, remezaFilterGroups, remezaProducts } from '../data/brandDetailData'
@@ -7,7 +10,7 @@ import { ProductListing } from '../features/catalog/ProductListing'
 import '../features/brands/BrandDetail.css'
 
 const canonicalUrl = 'https://kcska18051-crypto.github.io/garage/brand/remeza/'
-const metaDescription = 'Оборудование Remeza: категории, товары и материалы бренда в интерактивном прототипе магазина «Гараж».'
+const metaDescription = 'Оборудование Remeza: компрессоры, ресиверы и подготовка воздуха. Категории, товары и полезные материалы в магазине «Гараж».'
 
 function useBrandMetadata() {
   useEffect(() => {
@@ -29,28 +32,39 @@ function useBrandMetadata() {
   }, [])
 }
 
+const categoryPictures:Record<string,string>={piston:compressorCategoryImages['piston-compressors'],screw:compressorCategoryImages['screw-compressors'],receivers:compressorCategoryImages.receivers,dryers:compressorCategoryImages.dryers}
+const usefulMaterials=[getMaterial('article','compressor-checklist')!,getMaterial('review','compressor-types')!,getMaterial('article','air-line')!,getMaterial('article','work-area')!]
+const benefits=[
+ {title:'Помощь с подбором',text:'Сопоставим параметры оборудования с задачами мастерской.',icon:'M4 7h16M4 17h16M8 4v6M16 14v6'},
+ {title:'Получение заказа',text:'Способ и сроки уточняются для выбранного города.',icon:'M3 6h11v11H3zM14 10h4l3 4v3h-7M5 19h.01M18 19h.01'},
+ {title:'Сервис и обслуживание',text:'Обсудим диагностику и дальнейшее обслуживание оборудования.',icon:'m14 5-3 3 3 3 3-3a5 5 0 0 1-6 6l-6 6-3-3 6-6a5 5 0 0 1 6-6Z'},
+ {title:'Для бизнеса',text:'Уточним состав заказа и необходимые документы.',icon:'M3 7h18v14H3zM8 7V3h8v4M3 12h18M10 12v3h4v-3'},
+]
 export function BrandDetailPage() {
   useBrandMetadata()
   return <main className="brand-detail-page">
-    <Breadcrumbs items={[{ label: 'Главная', to: '/' }, { label: 'Бренды', to: '/brands' }, { label: 'Remeza' }]} />
-    <header className="brand-detail-hero"><div className="brand-detail-hero__copy"><div className="brand-detail-logo" aria-label="Логотип Remeza">REMEZA</div><h1>Оборудование Remeza</h1><p>Компрессорное оборудование и компоненты для подготовки воздуха. Страница показывает будущую структуру каталога бренда; ассортимент и характеристики требуют сверки с данными клиента.</p><dl><div><dt>Страна бренда</dt><dd>Беларусь · демонстрационное значение</dd></div><div><dt>Статус и гарантия</dt><dd>Условия официального дилера и гарантии уточняются</dd></div></dl><a className="button button--dark" href="#brand-products">Перейти к товарам</a></div><div className="brand-detail-hero__art" aria-hidden="true"><span /><i /><b>R</b></div></header>
+    <Breadcrumbs items={[{label:'Главная',to:'/'},{label:'Бренды',to:'/brands'},{label:'Remeza'}]}/>
+    <header className="brand-detail-hero"><div className="brand-detail-hero__copy">
+      <img className="brand-detail-logo" src="/garage/style-check/review-assets/logo-remeza.svg" alt="Remeza" width="201" height="54"/>
+      <h1>Оборудование Remeza</h1><p>Компрессоры, ресиверы и решения для подготовки сжатого воздуха. Выберите направление или перейдите к товарам бренда.</p>
+      <a className="button brand-detail-cta" href="#brand-products">Перейти к товарам</a>
+    </div><div className="brand-detail-hero__art"><img src={compressorCategoryImages['screw-compressors']} alt="Винтовой компрессор Remeza" width="600" height="600"/></div></header>
 
-    <section className="brand-detail-section" aria-label="Категории товаров Remeza"><div className="brand-detail-heading"><h2>Категории товаров Remeza</h2><p>Активными сделаны только направления, связанные с существующей выдачей прототипа.</p></div><div className="brand-category-grid">{remezaCategories.map((category, index) => {
-      const content = <><span>{String(index + 1).padStart(2, '0')}</span><div aria-hidden="true"><i /><b /></div><h3>{category.name}</h3><p>{category.description}</p>{category.href ? <strong aria-hidden="true">→</strong> : <small>Маршрут будет добавлен после согласования</small>}</>
-      return category.href ? <Link key={category.id} to={category.href}>{content}</Link> : <article key={category.id}>{content}</article>
-    })}</div></section>
+    <section className="brand-detail-section" aria-label="Категории товаров Remeza"><div className="brand-detail-heading"><h2>Категории товаров Remeza</h2></div>
+      <div className="brand-category-grid">{remezaCategories.filter(category=>category.href).map(category=><Link key={category.id} to={category.href!}><img src={categoryPictures[category.id]} alt="" width="160" height="110"/><div><h3>{category.name}</h3><p>{category.description}</p></div><span aria-hidden="true">↗</span></Link>)}</div>
+    </section>
 
-    <section className="brand-detail-section brand-popular-products" aria-label="Популярные товары Remeza"><div className="brand-detail-heading brand-detail-heading--row"><h2>Популярные товары Remeza</h2><a href="#brand-products">Смотреть все товары Remeza</a></div><p className="brand-detail-note">Ассортимент, цены и наличие приведены для демонстрации структуры прототипа.</p><div className="brand-popular-products__grid">{remezaProducts.slice(0, 6).map((product, index) => <CatalogProductCard key={product.id} product={product} index={index} />)}</div></section>
+    <section className="brand-detail-section brand-popular-products" aria-label="Популярные товары Remeza"><div className="brand-detail-heading brand-detail-heading--row"><h2>Популярные товары Remeza</h2><a href="#brand-products">Смотреть все товары Remeza</a></div><div className="brand-popular-products__grid">{remezaProducts.slice(0,4).map((product,index)=><CatalogProductCard key={product.id} product={product} index={index}/>)}</div></section>
 
-    <section id="brand-products" className="brand-products" aria-label="Все товары Remeza"><div className="brand-detail-heading"><h2>Все товары бренда</h2><p>Для примера показана контекстная выдача компрессорного оборудования Remeza. Параметры других товарных групп будут подключаться отдельно.</p></div><ProductListing products={remezaProducts} filterGroups={remezaFilterGroups} mode="full" title={null} /></section>
+    <section id="brand-products" className="brand-products" aria-label="Все товары Remeza"><div className="brand-detail-heading"><h2>Все товары бренда</h2><p>Сравните параметры и выберите оборудование под вашу задачу.</p></div><ProductListing products={remezaProducts} filterGroups={remezaFilterGroups} mode="full" title={null}/></section>
 
-    <section className="brand-about" aria-label="О бренде Remeza"><div><h2>О бренде Remeza</h2><p>Remeza представлен в прототипе как производитель компрессорного оборудования и решений для подготовки сжатого воздуха. Такой ассортимент применяется в мастерских, сервисных центрах и производственных системах.</p><p>Краткая история, страна производства отдельных серий, технологии и фактические преимущества будут уточнены по официальным материалам. До проверки этот текст не является утверждением о производителе.</p></div><dl><div><dt>Специализация</dt><dd>Компрессорное оборудование</dd></div><div><dt>Направления</dt><dd>Компрессоры, ресиверы, подготовка воздуха</dd></div><div><dt>Применение</dt><dd>Сервисные и производственные задачи</dd></div><div><dt>Страна и история</dt><dd>Данные требуют подтверждения</dd></div></dl></section>
+    <section className="brand-about" aria-label="О бренде Remeza"><div><h2>О бренде Remeza</h2><p>Remeza — компрессорное оборудование и системы подготовки сжатого воздуха. В каталоге представлены винтовые и поршневые компрессоры, ресиверы и осушители.</p><p>Для выбора оборудования учитывайте рабочие задачи, требования инструмента и условия размещения. Характеристики конкретной модели можно посмотреть в карточке товара.</p></div><dl><div><dt>Оборудование</dt><dd>Винтовые и поршневые компрессоры</dd></div><div><dt>Подготовка воздуха</dt><dd>Ресиверы и осушители</dd></div><div><dt>Подбор</dt><dd>По параметрам и задачам мастерской</dd></div></dl></section>
 
-    <section className="brand-detail-section brand-benefits" aria-label="Преимущества покупки Remeza в Гараже"><div className="brand-detail-heading"><h2>Преимущества покупки Remeza в Гараже</h2><p>Условный контент прототипа — каждое преимущество требует согласования клиентом.</p></div><div>{['Оригинальная продукция', 'Гарантия', 'Сервис', 'Помощь в подборе', 'Доставка', 'Работа с физическими и юридическими лицами'].map((item, index) => <article key={item}><span>{String(index + 1).padStart(2, '0')}</span><h3>{item}</h3><p>Формулировка и условия требуют согласования.</p></article>)}</div></section>
+    <section className="brand-detail-section brand-benefits" aria-label="Преимущества покупки Remeza в Гараже"><div className="brand-detail-heading"><h2>Покупка Remeza в «Гараже»</h2></div><div>{benefits.map(item=><article key={item.title}><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={item.icon}/></svg></span><div><h3>{item.title}</h3><p>{item.text}</p></div></article>)}</div></section>
 
-    <section className="brand-detail-section brand-materials" aria-label="Документы и материалы"><div className="brand-detail-heading"><h2>Документы и материалы</h2><p>Раздел можно полностью скрыть, если подтверждённых материалов нет.</p></div><div>{['Сертификаты', 'Каталог производителя', 'Инструкции', 'Гарантийные документы'].map((item) => <article key={item}><h3>{item}</h3><p>Материал будет доступен после проверки и загрузки.</p><span>Условная карточка</span></article>)}</div></section>
+    <section className="brand-detail-section brand-materials" aria-label="Документы и материалы"><div className="brand-detail-heading"><h2>Документы и материалы</h2><p>Каталог и документы на сайте производителя.</p></div><div><a href="https://www.remeza.org/catalog/" target="_blank" rel="noreferrer"><span>Каталог Remeza</span><small>Оборудование и характеристики</small><b aria-hidden="true">↗</b></a><a href="https://www.remeza.org/company/certificates/" target="_blank" rel="noreferrer"><span>Сертификаты</span><small>Документы производителя</small><b aria-hidden="true">↗</b></a></div></section>
 
-    <section className="brand-detail-section brand-useful" aria-label="Полезные материалы о Remeza"><div className="brand-detail-heading"><h2>Полезные материалы о Remeza</h2><p>Скрываемый раздел для статей, обзоров и рекомендаций.</p></div><div>{['Как подобрать компрессор под рабочую задачу', 'Что учитывать при проектировании пневмосети', 'Подготовка воздуха: базовые компоненты'].map((item, index) => <Link key={item} to={`/articles/remeza-guide-${index + 1}`}><span>Материал · прототип</span><h3>{item}</h3><strong>Читать →</strong></Link>)}</div></section>
-
+    <section className="brand-detail-section brand-useful" aria-label="Полезные материалы о Remeza"><div className="brand-detail-heading"><h2>Полезные материалы</h2></div><div>{usefulMaterials.map(item=><Link key={item.kind+item.slug} to={`${item.kind==='review'?'/reviews':'/articles'}/${item.slug}`}><img src={materialPicture(item)} alt="" width="600" height="400" loading="lazy"/><div><small>{item.categoryLabel}</small><h3>{item.title}</h3><span>{item.dateLabel}</span></div></Link>)}</div></section>
+    <Link className="brand-back" to="/brands">← Все бренды</Link>
   </main>
 }

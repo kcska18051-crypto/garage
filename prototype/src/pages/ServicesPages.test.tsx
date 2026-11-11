@@ -101,3 +101,15 @@ it('shows diesel-specific repair content and selects diesel in the closing reque
   await user.click(within(main).getByRole('button',{name:'Обсудить ремонт'}))
   expect(within(screen.getByRole('dialog')).getByText('Ремонт дизельных компрессоров',{exact:true})).toBeInTheDocument()
 })
+
+it('connects the service hub equipment types and keeps all five repair inquiries specific',async()=>{
+  const user=userEvent.setup();open('/services/service-center')
+  const main=screen.getByRole('main')
+  for(const [name,slug] of [['Винтовые','screw'],['Поршневые','piston'],['Дизельные','diesel']]) expect(within(main).getByRole('link',{name})).toHaveAttribute('href',base+'/'+slug)
+  expect(main.querySelectorAll('.service-hub__grid>article')).toHaveLength(5)
+  for(const title of ['Ремонт компрессоров','Ремонт гайковёрта','Ремонт болгарки','Ремонт полировальной машинки','Ремонт аппарата высокого давления']) {
+    await user.click(within(main).getByRole('button',{name:'Оставить заявку: '+title}))
+    expect(within(screen.getByRole('dialog')).getByText(title,{exact:true})).toBeInTheDocument()
+    await user.click(screen.getByRole('button',{name:'Закрыть форму'}))
+  }
+})

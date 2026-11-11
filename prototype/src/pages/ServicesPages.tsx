@@ -50,34 +50,7 @@ export function ServicesIndexPage() {
     })}</div>
   </main>
 }
-const repairCopy:Record<string,string>={
-  'compressor-repair':'Винтовые, поршневые и дизельные компрессоры. Выберите тип установки или опишите неисправность.',
-  'impact-wrench-repair':'Укажите модель гайковёрта и признаки неисправности.',
-  'angle-grinder-repair':'Опишите проблему в работе угловой шлифовальной машины.',
-  'polisher-repair':'Оставьте обращение по ремонту полировального оборудования.',
-  'pressure-washer-repair':'Укажите модель аппарата и опишите проблему с его работой.',
-}
-export function ServiceCenterPage() {
-  const [request,setRequest]=useState<ServiceRequest|null>(null)
-  const close=useCallback(()=>setRequest(null),[])
-  return <main className="services-page repair-center-page">
-    <Breadcrumbs items={[{label:'Главная',to:'/'},servicesCrumb,{label:'Сервисный центр по ремонту'}]}/>
-    <header className="repair-center-hero">
-      <div><h1>Сервисный центр по ремонту</h1><p className="repair-center-lead">Диагностика и ремонт оборудования и инструмента для мастерской.</p><p>Выберите направление и опишите неисправность. Состав работ, стоимость и сроки уточняются после обсуждения оборудования.</p></div>
-      <img src="/garage/style-check/review-assets/campaigns/repair-photo.webp" alt="Работа с оборудованием в сервисном центре" width="1000" height="667" decoding="async"/>
-    </header>
-    <section aria-labelledby="repair-directions-title"><h2 id="repair-directions-title">Направления ремонта</h2>
-      <div className="repair-center-grid">{repairDirections.map(item=><article key={item.id}>
-        <span className="repair-center-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M14 6a5 5 0 0 0-6 6L3 17a2.8 2.8 0 0 0 4 4l5-5a5 5 0 0 0 6-6l-3 3-4-4 3-3Z"/></svg></span>
-        <h3>{item.href?<Link to={item.href}>{item.title}</Link>:item.title}</h3><p>{repairCopy[item.id]}</p>
-        <div className="repair-center-actions"><button type="button" aria-label={`Оставить заявку: ${item.title}`} onClick={()=>setRequest({kind:'repair',title:item.title,itemId:item.id})}>Оставить заявку</button>{item.href&&<Link to={item.href}>Подробнее<span className="sr-only">: {item.title}</span></Link>}</div>
-      </article>)}</div>
-    </section>
-    <section className="repair-center-process" aria-labelledby="repair-process-title"><h2 id="repair-process-title">Порядок обращения</h2><ol>{repairSteps.map((step,index)=><li key={step}><span aria-hidden="true">{String(index+1).padStart(2,'0')}</span><p>{step}</p></li>)}</ol></section>
-    <Link className="repair-center-back" to="/services">← Все услуги</Link>
-    {request&&<ServiceRequestDialog key={request.itemId} request={request} onClose={close}/>}
-  </main>
-}
+export {ServiceCenterShowcase as ServiceCenterPage} from './ServiceCenterShowcase'
 const compressorRepairCopy:Record<string,{text:string;icon:string}>={
   screw:{text:'Компрессорный блок, система управления и узлы подготовки воздуха.',icon:'M4 6h16v12H4z M8 9v6m4-6v6m4-6v6 M7 18v3m10-3v3'},
   piston:{text:'Поршневая группа, привод и система регулирования давления.',icon:'M5 12h14a3 3 0 0 1 0 6H5a3 3 0 0 1 0-6Z M7 12V6h4v6m3 0V6h4v6 M7 18v2m10-2v2'},

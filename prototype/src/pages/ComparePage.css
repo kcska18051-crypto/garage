@@ -16,7 +16,7 @@ html:has(.compare-page),body:has(.compare-page),.app-shell:has(.compare-page){ba
 .compare-add,.compare-catalog{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:9px 16px;border:0;border-radius:9px;background:#ffd36a;color:#493900;font-size:13px;line-height:22px;font-weight:600;text-decoration:none;cursor:pointer}
 .compare-add:hover,.compare-catalog:hover{background:#ffc548}
 .compare-clear-category:disabled{opacity:.4;cursor:default}
-.compare-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;border:1px solid #e4e8e0;border-radius:16px;background:#fff}
+.compare-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;border:0;border-radius:0;background:#fff}
 .compare-table{width:100%;min-width:calc(var(--compare-label-width) + var(--compare-count) * var(--compare-product-width));border-collapse:separate;border-spacing:0;table-layout:fixed}
 .compare-table__labels{width:var(--compare-label-width)}
 .compare-table th,.compare-table td{text-align:left;vertical-align:top}

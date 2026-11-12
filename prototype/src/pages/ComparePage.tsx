@@ -25,7 +25,7 @@ function CompareCard({product,onRemove}:{product:CompareProduct;onRemove():void}
   <Link className="compare-card__media" to={product.href} aria-label={`Открыть товар: ${product.name}`}><ProductImage product={product}/></Link>
   <div className="compare-card__price"><strong>{product.purchaseMode==='quote'?'Цена по запросу':money(product.price)}</strong>{product.oldPrice&&<del>{money(product.oldPrice)}</del>}</div>
   <Link className="compare-card__name" to={product.href}>{product.name}</Link>
-  {product.id===productDetail.id&&<Link className="compare-card__rating" to={product.href+'#reviews'}><span>★ {productDetail.rating}</span> · {productDetail.reviewCount}</Link>}
+  {product.id===productDetail.id?<Link className="compare-card__rating" to={product.href+'#reviews'}><span>★ {productDetail.rating}</span> · {productDetail.reviewCount}</Link>:<span className="compare-card__rating" aria-hidden="true">&nbsp;</span>}
   <p className="compare-card__sku">Артикул: {product.sku}</p>
   <p className="compare-card__availability" data-in-stock={product.availability.startsWith('В наличии')}>{product.availability}</p>
   {product.purchaseMode==='quote'?<Link className="compare-card__cart" to={product.href}>Запросить цену</Link>:<button className="compare-card__cart" type="button" onClick={()=>commerce.addToCart(product.id)}>{commerce.cartIds.has(product.id)?'В корзине':'В корзину'}</button>}

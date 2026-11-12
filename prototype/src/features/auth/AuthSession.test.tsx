@@ -41,7 +41,7 @@ describe('account session consistency', () => {
     const user=userEvent.setup()
     localStorage.setItem('garage-cart-v2',JSON.stringify([{id:'product-1',quantity:2}]))
     let view=open('/profile/favorites')
-    await user.click(within(screen.getByTestId('profile-product-product-1')).getByRole('button',{name:'Удалить из избранного'}))
+    await user.click(screen.getByRole('button',{name:'Убрать из избранного: Домкрат подкатной профессиональный'}))
     await user.click(screen.getByRole('navigation',{name:'Разделы личного кабинета'}).querySelector('a[href="/profile/data"]')!)
     const guest=screen.getByRole('region',{name:'Вход в личный кабинет'})
     await user.click(within(guest).getByRole('button',{name:'Войти / зарегистрироваться'}))

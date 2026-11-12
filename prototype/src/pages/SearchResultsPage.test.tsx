@@ -35,7 +35,7 @@ it('paginates results while keeping query and returns focus to the result headin
  await user.click(screen.getByRole('button',{name:'Следующая страница'}))
  expect(screen.getByTestId('location')).toHaveTextContent('page=2')
  expect(screen.getByTestId('location')).toHaveTextContent('q=')
- expect(screen.getAllByRole('link',{name:/Открыть товар:/})).toHaveLength(12)
+ expect(screen.getAllByRole('link',{name:/Открыть товар:/})).toHaveLength(15)
  expect(screen.getAllByRole('link',{name:/Открыть товар:/})[0]).not.toHaveAttribute('href',first)
  expect(screen.getByRole('heading',{name:/Найдено/})).toHaveFocus()
 })

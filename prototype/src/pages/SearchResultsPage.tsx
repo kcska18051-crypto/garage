@@ -22,7 +22,7 @@ function SearchContent({query,params,onParams}:{query:string;params:URLSearchPar
   const products=useMemo(()=>query?searchCatalogProducts(query):[],[query])
   const state=parseListingState(new URLSearchParams({sort:params.get('sort')??'',page:params.get('page')??'1'}))
   const results=sortCatalogProducts(products,state.sort)
-  const pagination=paginateProducts(results,state.page,12)
+  const pagination=paginateProducts(results,state.page,15)
   const commit=(next:ListingState)=>{const url=serializeListingState(next);url.set('q',query);onParams(url)}
   const submit=(event:FormEvent)=>{event.preventDefault();onParams(input.trim()?new URLSearchParams({q:input.trim()}):new URLSearchParams())}
   const search=(q:string)=>onParams(new URLSearchParams({q}))

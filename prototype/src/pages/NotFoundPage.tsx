@@ -19,13 +19,16 @@ export function NotFoundPage() {
   }, [])
   return (
     <main className="not-found-page">
-      <strong aria-hidden="true">404</strong>
-      <h1>Страница не найдена</h1>
-      <p>Возможно, страница была удалена или в адресе есть опечатка.</p>
-      <div className="not-found-page__actions">
-        <Link className="button button--dark" to="/">На главную</Link>
-        <Link className="button" to="/catalog">В каталог</Link>
+      <div className="not-found-page__content">
+        <h1>Страница не найдена</h1>
+        <p>Возможно, страница была удалена или в адресе есть опечатка.</p>
+        <p className="not-found-page__hint">Продолжите выбор в каталоге или воспользуйтесь поиском товаров в шапке сайта.</p>
+        <div className="not-found-page__actions">
+          <Link className="button not-found-page__catalog" to="/catalog">В каталог</Link>
+          <Link className="button not-found-page__home" to="/">На главную</Link>
+        </div>
       </div>
+      <div className="not-found-page__art" aria-hidden="true"><strong>404</strong></div>
     </main>
   )
 }

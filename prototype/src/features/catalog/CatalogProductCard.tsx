@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react'
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { CatalogProduct } from '../../data/catalogTypes'
@@ -11,7 +12,7 @@ import { compressorCategoryImages } from './compressorCategoryImages'
 import './CatalogRichCard.css'
 
 const money = (value: number) => value.toLocaleString('ru-RU') + ' ₽'
-export function CatalogProductCard({ product }: { product: CatalogProduct; index: number }) {
+export function CatalogProductCard({ product, mediaFallback, quoteHref }: { product: CatalogProduct; index: number; mediaFallback?:ReactNode; quoteHref?:string }) {
   const commerce = useCommerce()
   const [frame, setFrame] = useState(0)
   const touchStart = useRef(0)
@@ -29,7 +30,7 @@ export function CatalogProductCard({ product }: { product: CatalogProduct; index
       onMouseLeave={() => setFrame(0)} onTouchStart={event => { touchStart.current = event.touches[0].clientX }}
       onTouchEnd={event => { const distance = touchStart.current - event.changedTouches[0].clientX; if (images.length > 1 && Math.abs(distance) > 30) { event.preventDefault(); setFrame((activeFrame + (distance > 0 ? 1 : images.length - 1)) % images.length) } }}
       onKeyDown={event => { if (images.length > 1 && ['ArrowLeft','ArrowRight'].includes(event.key)) { event.preventDefault(); setFrame((activeFrame + (event.key === 'ArrowRight' ? 1 : images.length - 1)) % images.length) } }}>
-      {images.length ? <img src={images[activeFrame]} alt={name + ', фото ' + (activeFrame + 1)} loading="lazy" /> : <span>Фото товара</span>}
+      {images.length ? <img src={images[activeFrame]} alt={name + ', фото ' + (activeFrame + 1)} loading="lazy" /> : mediaFallback ?? <span>Фото товара</span>}
     </Link>
     {promo.promotionHref && <Link className="catalog-rich-card__badge" to={promo.promotionHref}>Акция</Link>}
     <div className="catalog-rich-card__actions">
@@ -41,6 +42,6 @@ export function CatalogProductCard({ product }: { product: CatalogProduct; index
     <Link className="catalog-rich-card__name" to={'/product/' + product.slug}>{name}</Link>
     <div className="catalog-rich-card__meta">{knownProduct && <span className="catalog-rich-card__rating" aria-label={'Рейтинг ' + productDetail.rating + ', ' + productDetail.reviewCount}><span aria-hidden="true">★</span> {productDetail.rating} <small>({productDetail.reviewCount})</small></span>}<span className="catalog-rich-card__sku">Артикул: {product.sku}</span></div>
     <p className="catalog-rich-card__availability" data-in-stock={product.availabilityLabel === 'available' && product.storeCount > 0}>{availability}</p>
-    {product.purchaseMode === 'quote' ? <button className="catalog-rich-card__cart" type="button">Запросить цену</button> : <button className="catalog-rich-card__cart" type="button" aria-label={(quantity ? 'Товар в корзине: ' : 'Добавить в корзину: ') + product.name} aria-pressed={quantity > 0} onClick={() => commerce.addToCart(product.id)}>{quantity ? 'В корзине · ' + quantity : 'В корзину'}</button>}
+    {product.purchaseMode === 'quote' ? quoteHref ? <Link className="catalog-rich-card__cart" to={quoteHref}>Запросить цену</Link> : <button className="catalog-rich-card__cart" type="button">Запросить цену</button> : <button className="catalog-rich-card__cart" type="button" aria-label={(quantity ? 'Товар в корзине: ' : 'Добавить в корзину: ') + product.name} aria-pressed={quantity > 0} onClick={() => commerce.addToCart(product.id)}>{quantity ? 'В корзине · ' + quantity : 'В корзину'}</button>}
   </article>
 }

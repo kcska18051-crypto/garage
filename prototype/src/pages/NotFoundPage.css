@@ -8,7 +8,7 @@ html:has(.not-found-page),body:has(.not-found-page),.app-shell:has(.not-found-pa
 .not-found-page__actions .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:144px;padding:11px 20px;border-radius:9px;font-size:14px;line-height:22px;font-weight:500;text-decoration:none}
 .not-found-page__actions .not-found-page__catalog{background:#ffcc00;color:#29312c;border:1px solid transparent;font-weight:600}
 .not-found-page__actions .not-found-page__catalog:hover{background:#edbd00}
-.not-found-page__actions .not-found-page__home{background:#fff;color:#626b5d;border:1px solid #e4e8e0;transition:color .15s ease,border-color .15s ease}
+.not-found-page__actions .not-found-page__home{background:#fff;color:#29312c;border:1px solid #e4e8e0;transition:color .15s ease,border-color .15s ease}
 .not-found-page__actions .not-found-page__home:hover{background:#fff;color:#29312c;border-color:#737a70}
 .not-found-page__art{position:relative;display:flex;align-items:center;justify-content:center;min-height:280px;isolation:isolate}
 .not-found-page__art::before{content:'';position:absolute;z-index:-1;width:250px;height:250px;border-radius:50%;background:#fff3bc}

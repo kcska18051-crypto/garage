@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { App } from '../../app/App'
@@ -46,4 +46,19 @@ describe('auth dialog entry points', () => {
     expect(screen.getByRole('heading', { name: 'Активные заказы' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Последние просмотренные' })).toBeInTheDocument()
   })
+})
+
+it('keeps the overview selected with a trailing slash and closes account navigation after choosing a section',async()=>{
+ seedDemoSession()
+ const user=userEvent.setup()
+ open('/profile/')
+ const nav=screen.getByRole('navigation',{name:'Разделы личного кабинета'})
+ expect(within(nav).getByRole('link',{name:'Обзор'})).toHaveAttribute('aria-current','page')
+ const toggle=screen.getByText('Разделы кабинета').closest('button')!
+ expect(toggle).toHaveAttribute('aria-expanded','false')
+ fireEvent.click(toggle)
+ expect(toggle).toHaveAttribute('aria-expanded','true')
+ await user.click(within(nav).getByRole('link',{name:'Мои заказы'}))
+ expect(toggle).toHaveAttribute('aria-expanded','false')
+ expect(screen.getByRole('heading',{name:'Мои заказы'})).toBeInTheDocument()
 })

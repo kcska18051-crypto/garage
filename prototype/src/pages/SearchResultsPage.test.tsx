@@ -1,4 +1,4 @@
-import {render,screen,within} from '@testing-library/react'
+import {render,screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {MemoryRouter,useLocation} from 'react-router-dom'
 import {SearchResultsPage} from './SearchResultsPage'
@@ -19,17 +19,15 @@ it('preserves every matching product and its destination, including exact SKU an
   }
  }
 })
-it('retains the query when sorting, filtering and clearing filters',async()=>{
- const user=userEvent.setup();open()
+it('sorts without filters and ignores filter parameters from older search URLs',async()=>{
+ const user=userEvent.setup();open('?q=компрессор&brand=remeza&price-to=1&subcategory=receivers')
+ expect(screen.queryByRole('complementary',{name:'Фильтры поиска'})).not.toBeInTheDocument()
+ expect(screen.queryByRole('navigation',{name:'Уточнить раздел'})).not.toBeInTheDocument()
+ expect(screen.getByRole('heading',{name:/Найдено/})).toHaveTextContent('Найдено '+searchCatalogProducts('компрессор').length)
  await user.selectOptions(screen.getByRole('combobox',{name:'Сортировка'}),'price-asc')
  expect(screen.getByTestId('location')).toHaveTextContent('q=')
  expect(screen.getByTestId('location')).toHaveTextContent('sort=price-asc')
- await user.click(screen.getByRole('checkbox',{name:'Remeza'}))
- expect(screen.getByTestId('location')).toHaveTextContent('brand=remeza')
- expect(screen.getByTestId('location')).toHaveTextContent('q=')
- await user.click(screen.getByRole('button',{name:'Сбросить все фильтры'}))
  expect(screen.getByTestId('location')).not.toHaveTextContent('brand=')
- expect(screen.getByTestId('location')).toHaveTextContent('q=')
 })
 it('paginates results while keeping query and returns focus to the result heading',async()=>{
  const user=userEvent.setup();open()
@@ -40,13 +38,6 @@ it('paginates results while keeping query and returns focus to the result headin
  expect(screen.getAllByRole('link',{name:/Открыть товар:/})).toHaveLength(12)
  expect(screen.getAllByRole('link',{name:/Открыть товар:/})[0]).not.toHaveAttribute('href',first)
  expect(screen.getByRole('heading',{name:/Найдено/})).toHaveFocus()
-})
-it('recovers from a filtered empty result without discarding the search',async()=>{
- const user=userEvent.setup();open('?q=Remeza&price-to=1')
- expect(screen.getByRole('heading',{name:'Нет товаров с такими параметрами'})).toBeInTheDocument()
- await user.click(within(screen.getByRole('main')).getAllByRole('button',{name:'Сбросить фильтры'})[0])
- expect(screen.getAllByRole('link',{name:/Открыть товар:/}).length).toBeGreaterThan(0)
- expect(screen.getByTestId('location')).toHaveTextContent('q=Remeza')
 })
 it('offers a new query and catalog navigation for an unmatched or blank search',async()=>{
  const user=userEvent.setup();open('?q=неттакоготовара')

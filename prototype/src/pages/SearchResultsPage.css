@@ -11,28 +11,28 @@ html:has(.search-results),body:has(.search-results),.app-shell:has(.search-resul
 .search-results__form input{min-width:0;flex:1;border:0;background:transparent;padding:9px 12px;font:inherit;font-size:14px;line-height:22px;color:#29312c;outline:none}
 .search-results__form button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:8px 18px;border:0;border-radius:8px;background:#ffcc00;color:#29312c;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
 .search-results__form svg{width:20px;height:20px}
-.search-results__sections{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:24px}
-.search-results__sections button{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:8px 12px;border:1px solid #e4e8e0;border-radius:8px;background:#fff;font-size:12px;line-height:20px;color:#626b5d;cursor:pointer;text-align:left}
-.search-results__sections button[aria-pressed=true]{background:#fff3bc;border-color:#f1df95;color:#594700}
-.search-results__sections small{font-size:10px;color:#8a9086}
-.search-results__layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:24px;align-items:start}
-.search-results__filters{position:sticky;top:calc(var(--catalog-pinned-header-height,70px) + 14px);min-width:0}
-.search-results__filter-toggle{display:none}
-.search-results .catalog-filter{border-radius:14px;background:#fff}
-.search-results .catalog-filter details{padding:0 16px}
-.search-results .catalog-filter summary{font-size:13px;line-height:20px;font-weight:600;padding:17px 0}
-.search-results .catalog-filter__group label{font-size:12px;line-height:20px}
-.search-results .catalog-filter__price label{font-size:11px}
-.search-results .catalog-filter input{accent-color:#d5a900;font:inherit;font-size:12px}
-.search-results .catalog-filter__price input{font-size:12px}
-.search-results__reset{width:100%;min-height:40px;margin-top:12px;border:1px solid #f1df95;border-radius:9px;background:#fff3bc;color:#594700;font-size:12px;cursor:pointer}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .search-results__products{min-width:0}
 .search-results__toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:44px;margin-bottom:16px}
 .search-results__toolbar h2{font-size:14px;line-height:22px;font-weight:600;letter-spacing:0;margin:0;scroll-margin-top:110px}
 .search-results__toolbar label{display:flex;align-items:center;gap:10px;font-size:12px;color:#737a70}
 .search-results__toolbar select{max-width:200px;min-height:40px;padding:8px 12px;background:#fff;color:#29312c;border:1px solid #e4e8e0;border-radius:9px;font:inherit;font-size:12px}
-.search-results__active{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-.search-results__active button{border:0;border-radius:6px;padding:7px 10px;background:#fff9e2;color:#675300;font-size:11px;cursor:pointer}
+
+
 .search-results .search-results__grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .search-results .catalog-rich-card__media{height:120px;padding:8px 10px 0}
 .search-results .catalog-rich-card__name{-webkit-line-clamp:2}
@@ -59,20 +59,20 @@ html:has(.search-results),body:has(.search-results),.app-shell:has(.search-resul
 .search-results__warm:hover{background:#ffc548}
 .search-results :is(a,button,select,input):focus-visible{outline:2px solid #8a6800;outline-offset:3px}
 .search-results__form input:focus-visible{outline:none}
-@media(max-width:1199px) and (min-width:768px){.search-results__layout{grid-template-columns:230px minmax(0,1fr);gap:20px}.search-results .search-results__grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
+@media(max-width:1199px) and (min-width:768px){.search-results .search-results__grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
 @media(max-width:1023px) and (min-width:768px){.search-results .search-results__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:767px){
 .search-results{padding:20px 16px calc(32px + var(--mobile-nav-height))}.search-results .catalog-breadcrumbs{margin-bottom:22px}
 .search-results__heading h1{font-size:26px;line-height:35px;letter-spacing:-.5px}.search-results__heading p{font-size:13px;line-height:22px}
 .search-results__form{margin-bottom:18px}.search-results__form input{font-size:13px;padding:8px}.search-results__form button{padding:8px 12px}.search-results__form button span{display:none}
-.search-results__sections{flex-wrap:nowrap;overflow-x:auto;max-width:100%;padding:2px 2px 16px;scrollbar-width:none}.search-results__sections button{flex:none;white-space:nowrap}
-.search-results__layout{display:block}.search-results__filters{position:static;margin-bottom:16px}
-.search-results__filter-toggle{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:42px;background:#fff3bc;color:#594700;border:1px solid #f1df95;border-radius:9px;font-size:13px;cursor:pointer}.search-results__filter-toggle svg{width:18px;height:18px}
-.search-results__filters[data-open=false] .search-results__filter-body{display:none}.search-results__filter-body{margin-top:12px}
+
+
+
+
 .search-results__toolbar{flex-wrap:wrap;gap:10px;margin-bottom:14px}.search-results__toolbar label{gap:8px;font-size:11px}.search-results__toolbar select{font-size:11px;padding:7px 9px;max-width:180px}
 .search-results .search-results__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.search-results .catalog-rich-card{padding:8px}.search-results .catalog-rich-card__media{height:100px;padding:8px 4px 0}.search-results .catalog-rich-card__price strong{font-size:16px;line-height:22px}.search-results .catalog-rich-card__price del{font-size:9px}
 .search-results .catalog-rich-card__meta{font-size:10px}.search-results .catalog-rich-card__cart{width:100%;min-height:36px;padding:8px 4px;font-size:11px}.search-results .catalog-rich-card__availability{font-size:10px;line-height:17px}
 .search-results__empty{padding:22px 18px}.search-results__empty--query{flex-direction:column;gap:16px}.search-results__empty h2,.search-results__empty h3{font-size:20px;line-height:28px}.search-results__empty p{font-size:13px;line-height:23px}
 }
 
-.search-results__sections::-webkit-scrollbar{display:none}
+

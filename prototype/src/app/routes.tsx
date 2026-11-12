@@ -16,6 +16,7 @@ import { ProfileAddressesPage, ProfileDataPage, ProfileDocumentsPage, ProfileFav
 import { CartPage } from '../pages/CartPage'
 import { CheckoutDeliveryPage, CheckoutReviewPage, CheckoutSuccessPage } from '../pages/CheckoutPages'
 import { SearchResultsPage } from '../pages/SearchResultsPage'
+import { FavoritesPage } from '../pages/FavoritesPage'
 import { ComparePage } from '../pages/ComparePage'
 import { AuthRouteBridge } from '../state/AuthState'
 import { MaterialDetailPage, MaterialsListPage } from '../pages/MaterialsPages'
@@ -82,7 +83,7 @@ export function AppRoutes() {
       <Route path="/checkout/delivery" element={<CheckoutDeliveryPage />} />
       <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
       <Route path="/search" element={<SearchResultsPage />} />
-      <Route path="/favorites" element={<Navigate to="/profile/favorites" replace />} />
+      <Route path="/favorites" element={<FavoritesPage />} />
       <Route path="/profile/auth" element={<AuthRouteBridge intent="login" />} />
       <Route path="/profile/recovery" element={<AuthRouteBridge intent="recovery" />} />
       <Route path="/profile" element={<ProfileShell />}>

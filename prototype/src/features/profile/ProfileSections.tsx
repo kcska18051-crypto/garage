@@ -1,3 +1,4 @@
+import {FavoritesContent} from '../../pages/FavoritesPage'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { profileData, type ProfileOrganization } from '../../data/profileData'
@@ -28,10 +29,7 @@ export function ProfileOrganizations() {
   return <div className="profile-section"><Heading title="Мои организации" note="Реквизиты и корпоративные заказы" action={<button className="profile-button profile-button--primary" type="button" onClick={() => setOpen(true)}>Добавить организацию</button>} /><p className="profile-info">К аккаунту можно привязать несколько организаций. Управление сотрудниками и ролями в прототип не входит.</p><div className="profile-organization-grid">{organizations.map((org) => <article className="profile-panel profile-organization" key={org.id}><div><span className="profile-status"><i />{org.active ? 'Активна' : 'Требует подтверждения'}</span><h2>{org.name}</h2><small>ИНН {org.inn} · КПП {org.kpp}</small></div><dl><div><dt>Юридический адрес</dt><dd>{org.legalAddress}</dd></div><div><dt>Расчётный счёт</dt><dd>{org.account}</dd></div></dl><Link to="/profile/orders">Заказы организации →</Link></article>)}</div>{open && <ProfileDialog title="Добавить организацию" onClose={() => setOpen(false)}><div className="profile-form"><p>Демонстрационный поиск имитирует автозаполнение реквизитов по ИНН.</p><label>ИНН организации<input value={inn} inputMode="numeric" onChange={(e) => { setInn(e.target.value); setFound(null) }} /></label><button className="profile-button" type="button" onClick={lookup}>Найти по ИНН</button>{found && <div className="profile-lookup"><strong>{found.name}</strong><span>ИНН {found.inn} · КПП {found.kpp}</span><small>{found.legalAddress}</small></div>}{found && <button className="profile-button profile-button--primary" type="button" onClick={() => { addOrganization(found); setOpen(false) }}>Сохранить организацию</button>}</div></ProfileDialog>}</div>
 }
 
-export function ProfileFavorites() {
-  const commerce = useCommerce(); const products = demoProducts.filter(product=>commerce.favoriteIds.has(product.id)).map(asProductCard)
-  return <div className="profile-section"><Heading title="Избранное" note="Сохранённые товары" /><p className="profile-section-note">Изменения синхронизированы с избранным в каталоге и счётчиком в шапке.</p>{products.length ? <div className="profile-product-grid profile-product-grid--favorites">{products.map((product) => <ProductTile compact key={product.id} product={product} removable />)}</div> : <div className="profile-empty"><span>♡</span><h2>В избранном пока пусто</h2><p>Добавляйте товары из каталога, чтобы вернуться к ним позже.</p><Link className="profile-button profile-button--primary" to="/catalog">Перейти в каталог</Link></div>}</div>
-}
+export function ProfileFavorites() { return <FavoritesContent embedded/> }
 
 export function ProfileRecentlyViewed() {
   const { recentProductIds } = useProfile(); const products = recentProductIds.flatMap(id => { const product = getDemoProduct(id); return product ? [asProductCard(product)] : [] })

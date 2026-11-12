@@ -57,6 +57,7 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
   const [favoriteIds, setFavorites] = useState<Set<string>>(() => { const saved=readStored<unknown>('garage-favorites-v1', null); return new Set(Array.isArray(saved) && saved.every(id => typeof id === 'string') ? saved : profileData.favoriteProductIds) })
   useEffect(() => { try { localStorage.setItem('garage-favorites-v1', JSON.stringify([...favoriteIds])) } catch { /* In-memory fallback. */ } }, [favoriteIds])
   const [compareIds, setCompare] = useState<Set<string>>(() => new Set())
+  const compareSeeded=useRef(false)
   const [cartItems, setCartItems] = useState<CartLine[]>(() => readStored('garage-cart-v2', []))
   const seeded = useRef(readStored('garage-cart-v2', null) !== null)
   const [checkout, setCheckout] = useState<CheckoutState>(() => ({ customerType: 'personal', organization: 'ООО «Гараж»', guest: false, phoneVerified: false, guestName: '', guestEmail: '', guestPhone: '', otherRecipient: false, recipientName: '', recipientLastName: '', recipientPhone: '', organizationInn: '', delivery: 'pickup', payment: 'card', address: '', store: '', transportAddress: '', comment: '', marketingConsent: false, ...readStored<Partial<CheckoutState>>('garage-checkout-v2', {}) }))
@@ -73,7 +74,7 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
     addCompare: (id: string) => setCompare((current) => new Set(current).add(id)),
     removeCompare: (id: string) => setCompare((current) => { const next = new Set(current); next.delete(id); return next }),
     clearCompare: (ids?: string[]) => setCompare((current) => ids ? new Set([...current].filter((id) => !ids.includes(id))) : new Set()),
-    ensureDemoCompare: (ids: string[]) => setCompare((current) => current.size ? current : new Set(ids)),
+    ensureDemoCompare: (ids: string[]) => { if(!compareSeeded.current){compareSeeded.current=true;setCompare(current=>current.size?current:new Set(ids))} },
     addToCart,
     importCart: (lines: CartLine[]) => { seeded.current = true; setCartItems(current => mergeCartLines(current, lines)); setCheckout(current => Array.isArray(current.selectedCartIds) ? { ...current, selectedCartIds: [...new Set([...current.selectedCartIds, ...lines.map(line => line.id)])] } : current) },
     addManyToCart: (ids: string[]) => ids.forEach(id => addToCart(id)),

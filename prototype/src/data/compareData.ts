@@ -1,13 +1,15 @@
+import {catalogProducts} from './catalogData'
 import { checkoutProducts } from './checkoutData'
 import { promotionPrice } from './promotionPricing'
 import { formatAvailability } from '../utils/availability'
 export type CompareProduct = {
   id: string
-  categoryId: 'compressors' | 'tools'
+  categoryId: 'compressors' | 'tools' | 'other'
   categoryLabel: string
   name: string
   sku: string
   price: number
+  purchaseMode?:'cart'|'quote'
   oldPrice?: number
   href: string
   availability: string
@@ -47,13 +49,21 @@ const compareSource: CompareProduct[] = [
   },
 ]
 
-export const compareProducts: CompareProduct[] = compareSource.map(product => { const shared = checkoutProducts.find(p => p.id === product.id); return { ...product, specs:{...product.specs,...shared?.specs}, categoryId: product.categoryId as CompareProduct['categoryId'], name: shared?.name ?? product.name, sku: shared?.sku ?? product.sku, href: shared?.href ?? product.href, price: shared?.price ?? product.price, oldPrice: promotionPrice(product.id, shared?.price ?? product.price).oldPrice, availability: shared ? formatAvailability(shared.availabilityStatus,shared.storeCount) : product.availability } })
+const initialCompareProducts: CompareProduct[] = compareSource.map(product => { const shared = checkoutProducts.find(p => p.id === product.id); return { ...product, specs:{...product.specs,...shared?.specs}, categoryId: product.categoryId as CompareProduct['categoryId'], name: shared?.name ?? product.name, sku: shared?.sku ?? product.sku, href: shared?.href ?? product.href, price: shared?.price ?? product.price, purchaseMode:shared?.purchaseMode, oldPrice: promotionPrice(product.id, shared?.price ?? product.price,shared?.purchaseMode==='quote').oldPrice, availability: shared ? formatAvailability(shared.availabilityStatus,Math.min(3,shared.storeCount)) : product.availability } })
+
+export const compareProducts:CompareProduct[]=[...initialCompareProducts,...checkoutProducts.filter(product=>!initialCompareProducts.some(existing=>existing.id===product.id)).map(product=>{
+ const compressor=catalogProducts.some(item=>item.id===product.id)||product.specs['Тип компрессора']!==undefined||['product-4','product-9','product-10'].includes(product.id)
+ const tools=['product-2','product-6','product-7'].includes(product.id)
+ const categoryId:CompareProduct['categoryId']=compressor?'compressors':tools?'tools':'other'
+ return {id:product.id,categoryId,categoryLabel:compressor?'Компрессоры':tools?'Инструмент':'Другие товары',name:product.name,sku:product.sku,price:product.price,href:product.href,purchaseMode:product.purchaseMode,oldPrice:promotionPrice(product.id,product.price,product.purchaseMode==='quote').oldPrice,availability:formatAvailability(product.availabilityStatus,Math.min(3,product.storeCount)),specs:product.specs}
+})]
 
 export const demoCompareIds = ['remeza-vk-10-gr-0001', 'compressor-2', 'compressor-3', 'product-2']
 
 export const compareCategories = [
   { id: 'compressors' as const, label: 'Компрессоры' },
   { id: 'tools' as const, label: 'Инструмент' },
+  { id: 'other' as const, label: 'Другие товары' },
 ]
 
 export const money = (value: number) => `${new Intl.NumberFormat('ru-RU').format(value)} ₽`

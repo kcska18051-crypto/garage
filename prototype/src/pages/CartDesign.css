@@ -167,3 +167,12 @@ body:has(.cart-page){background:#fff}
 .cart-page .line-accessories>.cart-rail-controls{left:-6px;right:-6px}
 .cart-page .cart-viewed>.cart-viewed__rail{grid-auto-columns:200px}
 }
+
+/* Anchor arrows to the product rail, independently of the summary height. */
+.cart-page .line-accessories:has(.cart-rail-controls){padding-inline:0}
+.cart-page .line-accessories:has(.cart-rail-controls)>summary{margin-inline:0}
+.cart-page .line-accessories>.line-accessories__carousel{position:relative;display:block;min-width:0;max-width:100%;margin-top:10px;padding:0}
+.cart-page .line-accessories__carousel:has(.cart-rail-controls){padding-inline:36px}
+.cart-page .line-accessories .line-accessories__rail{display:grid;grid-template-columns:none;grid-auto-flow:column;overflow-x:auto;overscroll-behavior-x:contain;min-width:0;max-width:100%;margin:0;padding:0}
+.cart-page .line-accessories .cart-rail-controls{position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none;z-index:2;margin:0}
+@media(max-width:650px){.cart-page .line-accessories__carousel:has(.cart-rail-controls){padding-inline:30px}.cart-page .line-accessories .cart-rail-controls{left:-6px;right:-6px}}

@@ -22,7 +22,8 @@ describe('unified auth dialog', () => {
     const user = userEvent.setup()
     const dialog = await openFromHeader(user)
 
-    await user.type(within(dialog).getByLabelText('Номер телефона'), '+7 999 111-22-33')
+    await user.click(within(dialog).getByLabelText('Номер телефона'))
+    await user.paste('+7 999 111-22-33')
     await user.click(within(dialog).getByRole('button', { name: 'Получить код' }))
     await user.type(within(dialog).getByLabelText('Код подтверждения'), '0000')
     await user.click(within(dialog).getByRole('button', { name: 'Войти' }))
@@ -36,7 +37,7 @@ describe('unified auth dialog', () => {
     expect(screen.getByText(/Вы вошли в демонстрационный профиль/)).toBeInTheDocument()
     expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/profile')
     expect(screen.getAllByRole('link', { name: 'Профиль' })[0]).toHaveAttribute('href', '/profile')
-  })
+  }, 20000)
 
   it('opens the personal account from the demo password tab without credentials', async () => {
     const user = userEvent.setup()

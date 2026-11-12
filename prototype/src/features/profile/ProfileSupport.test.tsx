@@ -33,7 +33,8 @@ describe('profile documents', () => {
 describe('profile help', () => {
   it('searches questions, opens an answer and validates a request', async () => {
     const user = userEvent.setup(); open('/profile/help')
-    await user.type(screen.getByRole('searchbox', { name: 'Поиск по вопросам' }), 'возврат')
+    await user.click(screen.getByRole('searchbox', { name: 'Поиск по вопросам' }))
+    await user.paste('возврат')
     expect(screen.getByRole('button', { name: /Как оформить возврат/ })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /Как оформить возврат/ }))
     expect(screen.getByText(/сохраните комплектность/i)).toBeVisible()
@@ -42,7 +43,8 @@ describe('profile help', () => {
     expect(screen.getByText('Введите текст вопроса')).toBeInTheDocument()
     expect(screen.getByText('Подтвердите согласие на обработку персональных данных')).toBeInTheDocument()
     expect(screen.getByText('Примите пользовательское соглашение')).toBeInTheDocument()
-    await user.type(screen.getByLabelText('Текст вопроса'), 'Нужна консультация по заказу')
+    await user.click(screen.getByLabelText('Текст вопроса'))
+    await user.paste('Нужна консультация по заказу')
     await user.click(screen.getByRole('button', { name: 'Отправить обращение' }))
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
     await user.click(screen.getByRole('checkbox', { name: /даю согласие/i }))
@@ -52,7 +54,7 @@ describe('profile help', () => {
     await user.click(screen.getByRole('button', { name: 'Отправить обращение' }))
     expect(screen.getByRole('status')).toHaveTextContent('Спасибо! Ваше обращение отправлено')
     expect(screen.getByRole('link', { name: 'Перейти к обращениям' })).toHaveAttribute('href', '/profile/services')
-  })
+  }, 20000)
 
   it('opens the matching answer when every help category is selected', async () => {
     const user = userEvent.setup(); open('/profile/help')

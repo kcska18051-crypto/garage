@@ -92,3 +92,5 @@ export function useCommerce() {
   if (!value) throw new Error('useCommerce must be used inside CommerceProvider')
   return value
 }
+
+export function useOptionalCommerce() { return useContext(CommerceContext) }

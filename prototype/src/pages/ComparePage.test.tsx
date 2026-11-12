@@ -18,6 +18,21 @@ describe('compare page', () => {
     expect(screen.getByRole('rowheader', { name: 'Производительность' })).toBeInTheDocument()
   })
 
+  it('switches between groups and all products and previews selected products from the header', async () => {
+    const user=userEvent.setup(); open()
+    await user.click(screen.getByRole('tab',{name:'Все товары 4'}))
+    expect(screen.getAllByTestId('compare-product-card')).toHaveLength(4)
+    expect(screen.getByRole('link',{name:'★ 4,8 · 12 отзывов'})).toHaveAttribute('href','/product/remeza-vk-10-gr-0001#reviews')
+    await user.hover(screen.getByRole('link',{name:'Сравнение: 4'}))
+    const preview=screen.getByRole('region',{name:'Товары в сравнении'})
+    expect(within(preview).getAllByRole('listitem')).toHaveLength(4)
+    expect(within(preview).getByRole('link',{name:'Перейти к сравнению'})).toHaveAttribute('href','/compare')
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('region',{name:'Товары в сравнении'})).not.toBeInTheDocument()
+    await user.click(screen.getByRole('tab',{name:'Инструмент 1'}))
+    expect(screen.getAllByTestId('compare-product-card')).toHaveLength(1)
+  })
+
   it('shows only differing characteristics on demand', async () => {
     const user = userEvent.setup(); open()
 

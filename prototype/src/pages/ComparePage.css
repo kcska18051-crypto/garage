@@ -79,3 +79,5 @@ html:has(.compare-page),body:has(.compare-page),.app-shell:has(.compare-page){ba
 .compare-card__rating{font-size:12px;line-height:20px;color:#737a70;text-decoration:none;margin:4px 0}.compare-card__rating span{color:#c92f29;font-weight:600}.compare-card__rating:hover{text-decoration:underline}
 
 .compare-heading>button,.compare-clear-category{display:inline-flex;align-items:center;gap:6px}.compare-heading>button svg,.compare-clear-category svg{width:16px;height:16px;flex:none}
+
+.compare-heading>button,.compare-clear-category{text-decoration:none}

@@ -1,4 +1,5 @@
 const paths: Record<string, React.ReactNode> = {
+  trash: <><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7M14 10v7"/></>,
  sale: <><path d="m4 20 16-16"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/></>,
  delivery: <><path d="M3 5h11v12H3ZM14 10h4l3 4v3h-7"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></>,
  contacts: <><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></>,

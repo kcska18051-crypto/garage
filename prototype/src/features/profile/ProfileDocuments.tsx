@@ -1,3 +1,4 @@
+import {ProfileIcon} from './ProfileIcon'
 import { useMemo, useState } from 'react'
 import { profileDocuments, type ProfileDocument } from '../../data/profileSupportData'
 import { useProfile } from '../../state/ProfileState'
@@ -35,7 +36,7 @@ export function ProfileDocuments() {
       <div><small>Формат</small><strong>{document.format}</strong></div>
       <span className={`profile-document__status is-${document.status === 'Доступен' ? 'ready' : 'pending'}`}>{document.status}</span>
       {document.status === 'Доступен' && <div className="profile-document__actions"><button className="profile-link-button" type="button" aria-label="Посмотреть документ" onClick={() => setPreview(document)}>Посмотреть</button><button className="profile-link-button" type="button" aria-label="Скачать документ" onClick={() => setStatus('Подготавливаем демонстрационный файл. Реальная загрузка появится после интеграции.')}>Скачать</button></div>}
-    </article>)}</div> : <div className="profile-empty profile-empty--compact"><span>▧</span><h2>По вашему запросу документов нет</h2><p>Измените фильтры или сбросьте строку поиска.</p><button className="profile-button" type="button" onClick={() => { setScope('all'); setOrganization('all'); setType('all'); setPeriod('all'); setQuery('') }}>Сбросить фильтры</button></div>}
+    </article>)}</div> : <div className="profile-empty profile-empty--compact"><span><ProfileIcon name="document"/></span><h2>По вашему запросу документов нет</h2><p>Измените фильтры или сбросьте строку поиска.</p><button className="profile-button" type="button" onClick={() => { setScope('all'); setOrganization('all'); setType('all'); setPeriod('all'); setQuery('') }}>Сбросить фильтры</button></div>}
     {preview && <ProfileDialog title="Предпросмотр документа" onClose={() => setPreview(null)}><div className="profile-document-preview"><span>Демонстрационный предпросмотр</span><h3>{preview.title}</h3><p>№ {preview.number} · заказ {preview.order}</p><div aria-label="Заглушка документа">{preview.format}</div></div></ProfileDialog>}
   </div>
 }

@@ -7,6 +7,7 @@ import { useProfile } from '../../state/ProfileState'
 import { useAuth } from '../../state/AuthState'
 import './Profile.css'
 import './ProfileDashboard.css'
+import './ProfileInner.css'
 
 const links = [
   ['Обзор', '/profile', 'home'], ['Мои заказы', '/profile/orders', 'orders'], ['Мои организации', '/profile/organizations', 'organization'],

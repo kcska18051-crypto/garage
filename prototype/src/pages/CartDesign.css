@@ -117,3 +117,25 @@ body:has(.cart-page){background:#fff}
 }
 
 .cart-page .cart-viewed .promotion-badge{background:#fff0ed;color:#c92f29;font-size:10px;border-radius:6px;padding:3px 7px}
+
+/* Larger product imagery and single-item recommendation navigation. */
+.cart-page .cart-line{grid-template-columns:18px 144px minmax(0,1fr) 135px}
+.cart-page .cart-line__image{height:144px}
+.cart-page .line-accessories{position:relative}
+.cart-page .line-accessories .line-accessories__rail{grid-auto-columns:calc((100% - 24px)/3);gap:12px;scrollbar-width:none;padding-bottom:0;scroll-snap-type:x mandatory}
+.cart-page .line-accessories__rail::-webkit-scrollbar{display:none}
+.cart-page .line-accessories article{grid-template-columns:56px minmax(0,1fr) 34px;min-height:92px;padding:12px;gap:9px}
+.cart-page .line-accessories .accessory-mini,.cart-page .accessory-mini img{width:56px;height:56px}
+.cart-page .accessory-mini svg{width:28px;height:28px}
+.cart-page .line-accessories strong{font-size:12px;line-height:18px}
+.cart-page .line-accessories small{font-size:13px}
+.cart-page .line-accessories article>button{width:34px;height:34px;min-width:34px;min-height:34px}
+.cart-page .line-accessories>.cart-rail-controls{position:absolute;z-index:2;top:calc(50% + 9px);left:-12px;right:-12px;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none;margin:0}
+.cart-page .cart-rail-controls button{pointer-events:auto;display:flex;align-items:center;justify-content:center;width:32px;height:32px;min-width:32px;min-height:32px;padding:0;border:1px solid #e4e8e0;border-radius:50%;background:#fff;color:#626b5d;box-shadow:0 2px 7px #23302214}
+.cart-page .cart-rail-controls button:hover{background:#fff3bc}
+@media(max-width:1050px){.cart-page .cart-line{grid-template-columns:18px 112px minmax(0,1fr) 116px}.cart-page .cart-line__image{height:112px}.cart-page .line-accessories .line-accessories__rail{grid-auto-columns:calc((100% - 12px)/2)}}
+@media(max-width:650px){.cart-page .cart-line{grid-template-columns:16px 96px minmax(0,1fr)}.cart-page .cart-line__image{height:96px}.cart-page .line-accessories .line-accessories__rail{grid-auto-columns:100%}.cart-page .line-accessories>.cart-rail-controls{left:-10px;right:-10px}}
+
+.cart-page .line-accessories .line-accessories__rail{padding-inline:18px;scroll-padding-inline:18px}.cart-page .line-accessories>.cart-rail-controls{left:0;right:0}
+
+.cart-page .line-accessories article{padding-right:22px}

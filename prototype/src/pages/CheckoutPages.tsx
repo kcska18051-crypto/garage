@@ -5,6 +5,8 @@ import { CartPricingView } from '../features/cart/CartPricingView'
 import { useCommerce } from '../state/CommerceState'
 import './CartCheckout.css'
 import './CheckoutDesign.css'
+import './CheckoutSuccess.css'
+import {CartProductImage} from '../features/cart/CartProductImage'
 import { useEffect, useRef, useState } from 'react'
 import { DeliveryChoices, deliverySummary } from '../features/checkout/DeliveryChoices'
 import { useAuth } from '../state/AuthState'
@@ -134,5 +136,31 @@ export function CheckoutSuccessPage() {
   const included = checkout.confirmedOrder?.lines ?? selectedCartLines(cartItems, checkout.selectedCartIds)
   const pricing = checkout.confirmedOrder?.pricing ?? getCartPricing(included, checkout.promoCode)
   const count = included.reduce((sum, line) => sum + line.quantity, 0)
-  return <main className="checkout-page checkout-success-page"><h1>Заказ принят</h1><p className="order-number">Номер заказа: GR-2026-091</p><div className="checkout-layout"><section className="checkout-form checkout-card"><h2>Состав заказа</h2><ul>{included.map((line) => <li key={line.id}>{checkoutProducts.find((item) => item.id === line.id)?.name ?? line.id} — {line.quantity} шт.</li>)}</ul><h2>Получение и оплата</h2><p>{deliveryLabels[confirmedCheckout.delivery]}: {deliverySummary(confirmedCheckout)}</p><p>{paymentLabels[confirmedCheckout.payment]}</p><div className="success-actions"><Link className="button" to="/profile/orders">Активные заказы</Link><Link to="/catalog">Вернуться в каталог</Link></div></section><aside className="order-summary" aria-label="Итоги заказа"><h2>Итог заказа</h2><CartPricingView pricing={pricing} count={count}/></aside></div></main>
+  return <main className="checkout-page checkout-success-page">
+    <header className="checkout-success-heading">
+      <span className="success-status-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m6 12 4 4 8-8"/></svg></span>
+      <div><h1>Заказ принят</h1><p className="order-number">Номер заказа: GR-2026-091</p></div>
+    </header>
+    <div className="checkout-layout">
+      <div className="success-order-content">
+        <section className="checkout-card success-products" aria-labelledby="success-products-title">
+          <h2 id="success-products-title">Состав заказа</h2>
+          <ul>{included.map(line=>{
+            const product=checkoutProducts.find(item=>item.id===line.id)
+            return <li key={line.id}>
+              <Link className="success-product-photo" to={product?.href??'/catalog'} aria-label={'Открыть товар: '+(product?.name??line.id)}><CartProductImage product={{id:line.id,name:product?.name??line.id}}/></Link>
+              <div className="success-product-info"><Link to={product?.href??'/catalog'}>{product?.name??line.id}</Link>{product&&<span>Артикул: {product.sku}</span>}</div>
+              <span className="success-product-quantity">{line.quantity} шт.</span>
+            </li>
+          })}</ul>
+        </section>
+        <section className="checkout-card success-delivery" aria-labelledby="success-delivery-title">
+          <h2 id="success-delivery-title">Получение и оплата</h2>
+          <dl><div><dt>Получение</dt><dd>{deliveryLabels[confirmedCheckout.delivery]}: {deliverySummary(confirmedCheckout)}</dd></div><div><dt>Оплата</dt><dd>{paymentLabels[confirmedCheckout.payment]}</dd></div></dl>
+        </section>
+        <nav className="success-actions" aria-label="Дальнейшие действия"><Link className="button" to="/profile/orders">Активные заказы</Link><Link className="success-catalog" to="/catalog">Вернуться в каталог</Link></nav>
+      </div>
+      <aside className="order-summary" aria-label="Итоги заказа"><h2>Итог заказа</h2><CartPricingView pricing={pricing} count={count}/></aside>
+    </div>
+  </main>
 }

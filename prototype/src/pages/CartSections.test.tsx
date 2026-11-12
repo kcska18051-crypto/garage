@@ -32,7 +32,7 @@ describe('remaining cart sections', () => {
     await user.click(document.querySelector('.cart-line__image')!)
     await user.click(screen.getAllByRole('link', { name: /^Корзина/ })[0])
     const viewed = screen.getByRole('region', { name: 'Просмотренные товары' })
-    expect(viewed.querySelectorAll('.product-teaser')).toHaveLength(1)
+    expect(viewed.querySelectorAll('.catalog-rich-card')).toHaveLength(1)
     expect(within(viewed).queryByRole('button', { name: /Очистить/ })).not.toBeInTheDocument()
   })
   it('opens contextual stores without claiming stock for an unknown location', async () => {

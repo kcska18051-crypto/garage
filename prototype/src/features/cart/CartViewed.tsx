@@ -1,12 +1,12 @@
-import {formatAvailability} from '../../utils/availability'
-import { useProfile } from '../../state/ProfileState'
-import { getDemoProduct, asProductCard } from '../../data/productRegistry'
-import { ProductTeaserCard } from '../products/ProductTeaserCard'
-import {cartProductPhoto} from './CartProductImage'
+import {useProfile} from '../../state/ProfileState'
+import {searchCatalogProducts} from '../../data/searchResults'
+import {CatalogProductCard} from '../catalog/CatalogProductCard'
+import {CartProductImage} from './CartProductImage'
 
+const availableProducts=searchCatalogProducts('')
 export function CartViewed() {
-  const { recentProductIds } = useProfile()
-  const products = recentProductIds.map(getDemoProduct).filter(product => product !== undefined)
-  if (!products.length) return null
-  return <section className="cart-viewed" aria-label="Просмотренные товары"><h2>Просмотренные товары</h2><div>{products.map((product, index) => <ProductTeaserCard approved key={product.id} product={{...asProductCard(product),image:cartProductPhoto(product),availability:formatAvailability(product.availabilityStatus,product.storeCount)}} index={index}/>)}</div></section>
+ const {recentProductIds}=useProfile()
+ const products=recentProductIds.map(id=>availableProducts.find(product=>product.id===id)).filter(product=>product!==undefined)
+ if(!products.length)return null
+ return <section className="cart-viewed" aria-label="Просмотренные товары"><h2>Просмотренные товары</h2><div className="catalog-results cart-viewed__rail">{products.map((product,index)=><CatalogProductCard key={product.id} product={product} index={index} quoteHref={product.purchaseMode==='quote'?'/product/'+product.slug:undefined} mediaFallback={<CartProductImage product={product}/>}/>)}</div></section>
 }

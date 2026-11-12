@@ -33,7 +33,7 @@ html:has(.search-results),body:has(.search-results),.app-shell:has(.search-resul
 .search-results__toolbar select{max-width:200px;min-height:40px;padding:8px 12px;background:#fff;color:#29312c;border:1px solid #e4e8e0;border-radius:9px;font:inherit;font-size:12px}
 
 
-.search-results .search-results__grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.search-results .search-results__grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 .search-results .catalog-rich-card__media{height:120px;padding:8px 10px 0}
 .search-results .catalog-rich-card__name{-webkit-line-clamp:2}
 .search-results .catalog-rich-card__cart{text-decoration:none}
@@ -76,3 +76,7 @@ html:has(.search-results),body:has(.search-results),.app-shell:has(.search-resul
 }
 
 
+
+/* Keep the sort chevron centered with a predictable inset across browsers. */
+.search-results__toolbar select{appearance:none;-webkit-appearance:none;padding-right:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23626b5d' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;background-size:18px 18px}
+@media(max-width:767px){.search-results__toolbar select{padding-right:32px;background-position:right 9px center}}

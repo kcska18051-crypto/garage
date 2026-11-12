@@ -136,6 +136,10 @@ export function CheckoutSuccessPage() {
   const included = checkout.confirmedOrder?.lines ?? selectedCartLines(cartItems, checkout.selectedCartIds)
   const pricing = checkout.confirmedOrder?.pricing ?? getCartPricing(included, checkout.promoCode)
   const count = included.reduce((sum, line) => sum + line.quantity, 0)
+  const deliveryTitle = [deliveryLabels[confirmedCheckout.delivery], confirmedCheckout.delivery === 'pickup' ? confirmedCheckout.pickupCity : undefined].filter(Boolean).join(' · ')
+  const deliveryDetails = deliverySummary(confirmedCheckout)
+  const cityPrefix = confirmedCheckout.delivery === 'pickup' && confirmedCheckout.pickupCity ? confirmedCheckout.pickupCity + ' — ' : ''
+  const deliveryAddress = cityPrefix && deliveryDetails.startsWith(cityPrefix) ? deliveryDetails.slice(cityPrefix.length) : deliveryDetails
   return <main className="checkout-page checkout-success-page">
     <header className="checkout-success-heading">
       <span className="success-status-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m6 12 4 4 8-8"/></svg></span>
@@ -156,7 +160,7 @@ export function CheckoutSuccessPage() {
         </section>
         <section className="checkout-card success-delivery" aria-labelledby="success-delivery-title">
           <h2 id="success-delivery-title">Получение и оплата</h2>
-          <dl><div><dt>Получение</dt><dd>{deliveryLabels[confirmedCheckout.delivery]}: {deliverySummary(confirmedCheckout)}</dd></div><div><dt>Оплата</dt><dd>{paymentLabels[confirmedCheckout.payment]}</dd></div></dl>
+          <dl><div><dt>Получение</dt><dd className="success-delivery-address"><strong>{deliveryTitle}</strong><span>{deliveryAddress}</span></dd></div><div><dt>Оплата</dt><dd>{paymentLabels[confirmedCheckout.payment]}</dd></div></dl>
         </section>
         <nav className="success-actions" aria-label="Дальнейшие действия"><Link className="button" to="/profile/orders">Активные заказы</Link><Link className="success-catalog" to="/catalog">Вернуться в каталог</Link></nav>
       </div>

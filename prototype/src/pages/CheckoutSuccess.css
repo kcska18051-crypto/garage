@@ -63,3 +63,5 @@ body:has(.checkout-success-page){background:#fff}
 }
 
 @media(max-width:900px){.success-order-content{display:contents}.checkout-success-page .success-products{order:1}.checkout-success-page .success-delivery{order:2}.checkout-success-page .order-summary{order:3}.checkout-success-page .success-actions{order:4}}
+
+.success-delivery-address{display:grid;gap:5px}.success-delivery-address strong{font-size:14px;line-height:23px;font-weight:600;color:#29312c}.success-delivery-address>span{font-size:14px;line-height:23px;color:#626b5d}@media(max-width:650px){.success-delivery-address strong,.success-delivery-address>span{font-size:13px;line-height:22px}}

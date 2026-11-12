@@ -29,7 +29,7 @@ html:has(.compare-page),body:has(.compare-page),.app-shell:has(.compare-page){ba
 .compare-table tbody th{position:sticky;left:0;z-index:2;background:#f8f9f6;color:#626b5d;font-size:12px;line-height:21px;font-weight:500}
 .compare-table tbody :is(th,td){border-bottom:1px solid #e4e8e0;padding:14px 18px;overflow-wrap:anywhere}
 .compare-table tbody td{font-size:13px;line-height:21px;color:#29312c;border-left:1px solid #eef0eb}
-.compare-table tbody tr[data-different=true] td{background:#fffdf4}
+.compare-table tbody tr[data-different=false] td{background:#f8f9f6}
 .compare-table tbody tr:last-child :is(th,td){border-bottom:0}
 .compare-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:310px;padding:8px 12px 0;background:#fff}
 .compare-card__remove{position:absolute;right:8px;top:2px;display:grid;place-items:center;width:30px;height:30px;border:1px solid #e4e8e0;border-radius:50%;background:#fff;color:#737a70;padding:6px;cursor:pointer;z-index:1}
@@ -72,3 +72,6 @@ html:has(.compare-page),body:has(.compare-page),.app-shell:has(.compare-page){ba
 .compare-page :is(a,button,input):focus-visible,.compare-scroll:focus-visible{outline:2px solid #8a6800;outline-offset:3px}
 @media(max-width:1023px){.compare-picker__items{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:767px){.compare-page{--compare-label-width:112px;--compare-product-width:190px;padding:20px 16px calc(32px + var(--mobile-nav-height))}.compare-page .catalog-breadcrumbs{margin-bottom:22px}.compare-heading{align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:20px}.compare-heading h1{font-size:26px;line-height:35px;letter-spacing:-.5px}.compare-heading p{font-size:13px;line-height:22px}.compare-tabs{gap:6px}.compare-tabs button{font-size:12px;padding:8px 12px}.compare-toolbar{align-items:flex-start;flex-direction:column;gap:12px;padding-top:14px}.compare-toolbar label{font-size:12px}.compare-toolbar>div{gap:16px;flex-wrap:wrap}.compare-add{font-size:12px;padding:8px 14px}.compare-clear-category{font-size:11px}.compare-table thead th{padding:10px 6px 14px}.compare-table thead th:first-child{padding:18px 10px}.compare-table__intro>span{font-size:12px;line-height:21px}.compare-table__intro small{font-size:10px}.compare-table tbody :is(th,td){font-size:11px;line-height:19px;padding:12px 10px}.compare-card{padding:6px 6px 0;min-height:300px}.compare-card__media{height:100px;padding:2px 18px 6px}.compare-card__price strong{font-size:17px;line-height:23px}.compare-card__name{font-size:12px;line-height:18px;min-height:36px}.compare-card__cart{width:100%;font-size:12px;padding:8px}.compare-picker{padding:18px 14px}.compare-picker h2{font-size:20px;line-height:28px}.compare-picker__items{grid-template-columns:1fr}.compare-empty{padding:22px 18px}.compare-empty h2{font-size:20px;line-height:28px}.compare-empty p{font-size:13px;line-height:23px}}
+
+.compare-page .compare-card__remove{display:flex;align-items:center;justify-content:center;padding:0;line-height:0}
+.compare-page .compare-card__remove svg{display:block;flex:none;width:18px;height:18px;margin:0}

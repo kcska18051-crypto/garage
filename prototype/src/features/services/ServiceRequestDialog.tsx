@@ -12,8 +12,8 @@ import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} fro
 const emptyFields = { name: '', phone: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1' }
 type Field = keyof typeof emptyFields
 
-export function ServiceRequestDialog({ request, onClose }: { request: ServiceRequest; onClose(): void }) {
-  const [fields, setFields] = useState(emptyFields)
+export function ServiceRequestDialog({ request, onClose, contact }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string } }) {
+  const [fields, setFields] = useState(() => ({ ...emptyFields, ...contact }))
   const [personalDataAccepted,setPersonalDataAccepted]=useState(false)
   const [agreementAccepted,setAgreementAccepted]=useState(false)
   const [consentsAttempted,setConsentsAttempted]=useState(false)

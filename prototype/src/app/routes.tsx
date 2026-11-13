@@ -1,3 +1,4 @@
+import {ProfileNewServiceRequest} from '../features/profile/ProfileNewServiceRequest'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { HomePage } from '../pages/HomePage'
 import { StyleCheckHomePage } from '../pages/StyleCheckHomePage'
@@ -98,6 +99,7 @@ export function AppRoutes() {
         <Route path="favorites" element={<ProfileFavoritesPage />} />
         <Route path="recently-viewed" element={<ProfileRecentlyViewedPage />} />
         <Route path="services" element={<ProfileServicesPage />} />
+        <Route path="services/new" element={<ProfileNewServiceRequest/>}/>
         <Route path="services/request" element={<ProfileServiceRequestDetail/>}/>
         <Route path="reviews" element={<ProfileReviewsPage />} />
         <Route path="documents" element={<ProfileDocumentsPage />} />

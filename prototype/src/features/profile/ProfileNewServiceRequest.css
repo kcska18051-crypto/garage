@@ -1,0 +1,10 @@
+.profile-new-service__lead { margin:0; max-width:720px; font-size:14px; line-height:24px; color:var(--palette-muted); }
+.profile-new-service__steps { display:flex; flex-wrap:wrap; gap:12px 28px; margin:0; padding-left:20px; font-size:13px; line-height:22px; color:var(--palette-muted); }
+.profile-new-service__steps li { padding-left:4px; margin-right:10px; }
+.profile-page .profile-new-service__choice { display:grid; gap:20px; padding:24px; }
+.profile-new-service__choice h2 { margin:0; }
+.profile-new-service__choice .profile-tabs { width:fit-content; max-width:100%; flex-wrap:wrap; }
+.profile-new-service__field { display:grid; gap:8px; max-width:640px; font-size:13px; line-height:21px; }
+.profile-new-service__field select { width:100%; min-width:0; min-height:44px; border:1px solid var(--palette-border); border-radius:9px; background:var(--palette-white); color:var(--palette-ink); padding:10px 12px; font:inherit; }
+.profile-new-service__help { color:var(--palette-muted); font-size:13px; line-height:22px; max-width:640px; margin:0; }
+@media(max-width:767px) { .profile-page .profile-new-service__choice { padding:16px; gap:16px; } .profile-page .profile-new-service__choice .profile-tabs { display:grid; width:100%; } .profile-new-service__steps { flex-direction:column; gap:6px; } }

@@ -44,6 +44,7 @@ export function AppRoutes() {
       {legacyPublicRoutes.map(route => <Route key={route.from} path={route.from} element={<Navigate to={route.to} replace />} />)}
       <Route path="/" element={<HomePage />} />
       <Route path="/style-check" element={<StyleCheckHomePage />} />
+      <Route path="/services/request" element={<main className="profile-page service-application-page"><ProfileNewServiceRequest /></main>}/>
       <Route path="/services" element={<ServicesIndexPage/>}/>
       <Route path="/services/service-center" element={<ServiceCenterPage/>}/>
       <Route path="/services/service-center/compressor-repair" element={<CompressorRepairPage/>}/>

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {repairDirections} from '../data/servicesData'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
-import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
+import {ServiceRequestEntry} from '../features/services/ServiceRequestEntry'
 import './ServiceCenterShowcase.css'
 
 const tools:Record<string,{description:string;path:string;accent:string}>={
@@ -30,6 +30,6 @@ export function ServiceCenterShowcase(){
   </section>
   <section className="service-hub__process" aria-labelledby="service-hub-process"><h2 id="service-hub-process">Как проходит ремонт</h2><p className="service-hub__section-description">От первого обращения до получения оборудования. <br/>Условия каждого этапа согласовываются с сервисом.</p><ol>{steps.map((step,i)=><li key={step.title}><span>{String(i+1).padStart(2,'0')}</span><h3>{step.title}</h3><p>{step.text}</p></li>)}</ol></section>
   <Link className="service-hub__back" to="/services">← Все услуги</Link>
-  {request&&<ServiceRequestDialog key={request.itemId} request={request} onClose={close}/>}
+  {request&&<ServiceRequestEntry key={request.itemId} request={request} onClose={close}/>}
  </main>
 }

@@ -10,7 +10,7 @@ import {serviceRoutes} from './servicesData'
 export const publicRoutes = [...new Set([
   '/','/catalog','/new','/brands','/brand/remeza','/compare','/search','/favorites','/cart',
   ...serviceRoutes,
-  '/about','/contacts','/delivery','/payment','/warranty','/actions','/actions/completed',
+  '/services/request','/about','/contacts','/delivery','/payment','/warranty','/actions','/actions/completed',
   '/checkout/review','/checkout/delivery','/checkout/success','/profile','/profile/auth','/profile/recovery',
   ...['data','addresses','recently-viewed','favorites','documents','help','orders','organizations','services','reviews'].map(path=>`/profile/${path}`),
   '/profile/services/request','/profile/services/new',

@@ -12,7 +12,7 @@ import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} fro
 const emptyFields = { name: '', phone: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1' }
 type Field = keyof typeof emptyFields
 
-export function ServiceRequestDialog({ request, onClose, contact }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string } }) {
+export function ServiceRequestDialog({ request, onClose, contact, inline = false, onCreated }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string }; inline?: boolean; onCreated?(): void }) {
   const [fields, setFields] = useState(() => ({ ...emptyFields, ...contact }))
   const [personalDataAccepted,setPersonalDataAccepted]=useState(false)
   const [agreementAccepted,setAgreementAccepted]=useState(false)
@@ -38,6 +38,7 @@ export function ServiceRequestDialog({ request, onClose, contact }: { request: S
 
   useEffect(() => { closeRef.current = onClose }, [onClose])
   useEffect(() => {
+    if (inline) return
     const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null
     document.body.classList.add('service-dialog-open')
     headingRef.current?.focus()
@@ -58,7 +59,7 @@ export function ServiceRequestDialog({ request, onClose, contact }: { request: S
       document.body.classList.remove('service-dialog-open')
       if (trigger?.isConnected) trigger.focus()
     }
-  }, [])
+  }, [inline])
   useEffect(() => () => { if (photo) URL.revokeObjectURL(photo) }, [photo])
   useEffect(() => { if (demoNumber) headingRef.current?.focus() }, [demoNumber])
 
@@ -106,18 +107,19 @@ export function ServiceRequestDialog({ request, onClose, contact }: { request: S
     if(!result.ok){submitted.current=false;setStorageError(result.error);return}
     setCreated(result.record)
     setDemoNumber(result.record.number)
+    onCreated?.()
     setFields(emptyFields)
     removePhoto()
   }
 
-  return <div className="overlay service-request-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeRef.current() }}>
-    <section className="dialog service-request-dialog approved-dialog" role="dialog" aria-modal="true" aria-label={title} ref={dialogRef} tabIndex={-1}>
-      <button className="dialog__close approved-dialog__close" aria-label="Закрыть форму" onClick={() => closeRef.current()}>×</button>
+  const content = <>
+      {!inline && <button className="dialog__close approved-dialog__close" aria-label="Закрыть форму" onClick={() => closeRef.current()}>×</button>}
       {demoNumber ? <div className="service-request-success">
-        <h2 ref={headingRef} tabIndex={-1}>Демонстрационная заявка</h2>
+        <h2 ref={headingRef} tabIndex={-1}>{inline ? 'Заявка оформлена' : 'Демонстрационная заявка'}</h2>
         <p role="status">{request.kind === 'rental' ? 'Заявка на аренду отправлена' : 'Демонстрационная заявка создана'}</p>
         <p className="service-request-number">Номер: {demoNumber}</p>
         <p>Статус: {created?.status}</p>
+        {inline && <p className="service-request-next">{request.kind === 'repair' ? 'Следующий шаг — уточнение неисправности и согласование диагностики. Стоимость и сроки ремонта определяются после оценки оборудования.' : request.kind === 'paint' ? 'Следующий шаг — уточнение цвета, способа подбора и состава материалов. Затем согласуются стоимость и сроки.' : 'Следующий шаг — подтверждение доступности на выбранные даты, тарифа и условий передачи. До согласования оборудование не забронировано.'}</p>}
         <p>Реальная отправка менеджеру не выполняется. Текстовые данные сохранены локально в этом браузере и доступны в истории после входа в соответствующий демопрофиль.</p>
         {created?.photoAttached&&<p>Фото было приложено к форме, но сам файл не сохранён. После закрытия или перезагрузки предпросмотр недоступен.</p>}
         {request.kind === 'rental' && <p>Это демонстрация, не бронь. Доступность оборудования не изменяется.</p>}
@@ -128,7 +130,7 @@ export function ServiceRequestDialog({ request, onClose, contact }: { request: S
           closeRef.current();navigate(href)
           if(!canViewServiceRequest(created,identity))openAuth('login',{returnTo:href,requirePhoneConfirmation:true})
         }}>Посмотреть заявку в личном кабинете</button>
-        <button className="button button--dark" onClick={() => closeRef.current()}>Закрыть</button>
+        <button className="button" onClick={() => inline ? navigate('/profile/services') : closeRef.current()}>{inline ? 'Все заявки' : 'Закрыть'}</button>
       </div> : <form onSubmit={submit} noValidate>
         <h2 ref={headingRef} tabIndex={-1}>{title}</h2>
         <p className="service-request-selection">{request.title}</p>
@@ -161,8 +163,8 @@ export function ServiceRequestDialog({ request, onClose, contact }: { request: S
         </>}
         {request.kind==='paint'&&<FormLegalConsents required personalDataAccepted={personalDataAccepted} agreementAccepted={agreementAccepted} onPersonalDataChange={setPersonalDataAccepted} onAgreementChange={setAgreementAccepted} showErrors={consentsAttempted}/>}
         {storageError&&<p className="field-error" role="alert">{storageError}</p>}
-        <button className="button button--dark" type="submit">{request.kind==='paint'?'Узнать стоимость':'Отправить заявку'}</button>
+        <button className="button button--dark" type="submit">{request.kind==='paint'&&!inline?'Узнать стоимость':'Отправить заявку'}</button>
       </form>}
-    </section>
-  </div>
+  </>
+  return inline ? <section className="service-request-inline service-request-dialog" role="region" aria-label={title} ref={dialogRef}>{content}</section> : <div className="overlay service-request-overlay" role="presentation" onMouseDown={event => { if(event.target === event.currentTarget) closeRef.current() }}><section className="dialog service-request-dialog approved-dialog" role="dialog" aria-modal="true" aria-label={title} ref={dialogRef} tabIndex={-1}>{content}</section></div>
 }

@@ -2,7 +2,7 @@ import {useCallback,useState} from 'react'
 import {Link} from 'react-router-dom'
 import {repairServices} from '../data/servicesData'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
-import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
+import {ServiceRequestEntry} from '../features/services/ServiceRequestEntry'
 import './CompressorRepairOverview.css'
 const content:Record<string,{photo:string;alt:string;description:string}>={
  screw:{photo:'screw-compressor-diagnostics.png',alt:'Винтовой компрессор с открытым сервисным отсеком',description:'Компрессорный блок, привод, система управления и узлы подготовки воздуха.'},
@@ -20,6 +20,6 @@ export function CompressorRepairOverview(){
   <section className="compressor-overview__help" aria-labelledby="compressor-help-title"><div><h2 id="compressor-help-title">Не знаете тип компрессора?</h2><p>Укажите модель и опишите проблему. Фото оборудования можно добавить по желанию.</p></div><button className="compressor-overview__button" type="button" onClick={()=>setOpen(true)}>Оставить заявку<Arrow/></button></section>
   <p className="compressor-overview__terms">Состав работ, стоимость и сроки уточняются индивидуально.</p>
   <Link className="compressor-overview__back" to="/services/service-center">← Все направления сервисного центра</Link>
-  {open&&<ServiceRequestDialog request={{kind:'repair',title:'Ремонт компрессоров',itemId:'compressor-repair'}} onClose={close}/>}
+  {open&&<ServiceRequestEntry request={{kind:'repair',title:'Ремонт компрессоров',itemId:'compressor-repair'}} onClose={close}/>}
  </main>
 }

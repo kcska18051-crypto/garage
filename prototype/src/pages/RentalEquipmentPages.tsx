@@ -3,7 +3,7 @@ import {Link,useParams} from 'react-router-dom'
 import {rentalCategories,rentalItems} from '../data/rentalData'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
-import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
+import {ServiceRequestEntry} from '../features/services/ServiceRequestEntry'
 import {NotFoundPage} from './NotFoundPage'
 import './RentalEquipmentPages.css'
 type RentalItem=typeof rentalItems[number]
@@ -25,7 +25,7 @@ export function RentalEquipmentCategory({categoryId}:{categoryId:string}){
   <section className="rental-equipment__grid" aria-label={category.heading}>{rentalItems.filter(item=>item.categoryId===categoryId).map(item=><article key={item.id} data-rental-id={item.id}><Link className="rental-equipment__card-image" to={item.href} aria-label={`Подробнее: ${item.title}`}><img src={`/garage/style-check/review-assets/${images[item.id]}`} alt={item.title} decoding="async"/></Link><div className="rental-equipment__card-copy"><h2><Link to={item.href}>{item.title}</Link></h2><span className="rental-equipment__sku">Артикул {item.sku}</span><Specs item={item} limit={2}/><p className="rental-equipment__pending">Тариф и залог уточняются</p><div className="rental-equipment__actions">{categoryId==='compressors'?<><button className="rental-equipment__button" type="button" aria-label={`Арендовать: ${item.title}`} onClick={()=>setRequest({kind:'rental',title:item.title,itemId:item.id})}>Арендовать<Arrow/></button><Link className="rental-equipment__text-link" to={item.href}>Подробнее</Link></>:<Link className="rental-equipment__button" to={item.href}>Подробнее<Arrow/></Link>}</div></div></article>)}</section>
   <Notice/><p className="rental-equipment__demo">Демонстрационные параметры. Характеристики и фактическая комплектация требуют подтверждения.</p>
   <Link className="rental-equipment__back" to="/services/rental">← Все направления аренды</Link>
-  {request&&<ServiceRequestDialog key={request.itemId} request={request} onClose={close}/>}
+  {request&&<ServiceRequestEntry key={request.itemId} request={request} onClose={close}/>}
  </main>
 }
 export function RentalEquipmentDetail(){
@@ -42,6 +42,6 @@ export function RentalEquipmentDetail(){
   <Notice/>
   <section className="rental-equipment__steps" aria-labelledby="rental-equipment-next"><h2 id="rental-equipment-next">После заявки</h2><ol>{[{title:'Наличие и период',text:'Уточните доступность на нужные даты и количество.'},{title:'Стоимость и условия',text:'Согласуйте тариф, залог и порядок оформления аренды.'},{title:'Получение и возврат',text:'Обсудите передачу оборудования и условия его возврата.'}].map((step,i)=><li key={step.title}><span>{String(i+1).padStart(2,'0')}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></li>)}</ol></section>
   <Link className="rental-equipment__back" to={category.href}>← Все позиции аренды</Link>
-  {open&&<ServiceRequestDialog request={{kind:'rental',title:item.title,itemId:item.id}} onClose={close}/>}
+  {open&&<ServiceRequestEntry request={{kind:'rental',title:item.title,itemId:item.id}} onClose={close}/>}
  </main>
 }

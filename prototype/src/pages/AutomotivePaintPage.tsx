@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {paintSteps} from '../data/servicesData'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
-import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
+import {ServiceRequestEntry} from '../features/services/ServiceRequestEntry'
 import './AutomotivePaintPage.css'
 
 export function AutomotivePaintPage({request}:{request:ServiceRequest}) {
@@ -25,6 +25,6 @@ export function AutomotivePaintPage({request}:{request:ServiceRequest}) {
     </section>
     <section className="automotive-paint-process" aria-labelledby="automotive-process-title"><h2 id="automotive-process-title">Порядок обращения</h2><ol>{paintSteps.map((step,index)=><li key={step}><span aria-hidden="true">{String(index+1).padStart(2,'0')}</span><p>{step}</p></li>)}</ol></section>
     <Link className="paint-services-back" to="/services/paint-matching">← Вернуться к направлению</Link>
-    {open&&<ServiceRequestDialog request={request} onClose={close}/>}
+    {open&&<ServiceRequestEntry request={request} onClose={close}/>}
   </main>
 }

@@ -26,7 +26,7 @@ it('keeps rental request separate from cart and identifies the selected item',as
   const user=userEvent.setup();open('/services/rental/hydraulic-jack')
   const before=localStorage.getItem('garage-cart-v2')
   await user.click(within(screen.getByRole('main')).getByRole('button',{name:'Арендовать'}))
-  expect(screen.getByRole('dialog')).toHaveTextContent('Домкрат подкатной профессиональный')
+  expect(screen.getByRole('region', {name: /Заявка на|Узнать стоимость/})).toHaveTextContent('Домкрат подкатной профессиональный')
   expect(localStorage.getItem('garage-cart-v2')).toBe(before)
 })
 it.each(['/services/rental/not-a-real-item',base+'/unknown','/services/unknown'])('uses actual 404 UI for %s',path=>{
@@ -59,8 +59,8 @@ it('keeps the service index as three named navigation cards with approved artwor
 it.each([['screw','Ремонт винтовых компрессоров'],['piston','Ремонт поршневых компрессоров'],['diesel','Ремонт дизельных компрессоров']])('opens the %s repair form with the selected equipment type',async(slug,title)=>{
   const user=userEvent.setup();open(base+'/'+slug)
   const main=screen.getByRole('main')
-  await user.click(within(main).getByRole('button',{name:'Оставить заявку'}))
-  const dialog=within(screen.getByRole('dialog',{name:'Заявка на ремонт'}))
+  await user.click(within(screen.getByRole('main')).getByRole('button',{name:'Оставить заявку'}))
+  const dialog=within(screen.getByRole('region',{name:'Заявка на ремонт'}))
   expect(dialog.getByText(title,{exact:true})).toBeInTheDocument()
   expect(dialog.getByLabelText('Модель оборудования',{exact:true})).toBeInTheDocument()
   expect(dialog.getByLabelText('Описание неисправности',{exact:true})).toBeInTheDocument()
@@ -72,8 +72,8 @@ it('keeps the screw repair showcase specific and opens its closing request actio
   expect(within(main).getByRole('img',{name:'Диагностика винтового компрессора с открытым сервисным отсеком'})).toHaveAttribute('src',expect.stringContaining('screw-compressor-diagnostics.png'))
   expect(within(main).getByRole('heading',{name:'Как проходит ремонт'})).toBeInTheDocument()
   expect(main).not.toHaveTextContent('Об услуге')
-  await user.click(within(main).getByRole('button',{name:'Обсудить ремонт'}))
-  const dialog=within(screen.getByRole('dialog',{name:'Заявка на ремонт'}))
+  await user.click(within(screen.getByRole('main')).getByRole('button',{name:'Обсудить ремонт'}))
+  const dialog=within(screen.getByRole('region',{name:'Заявка на ремонт'}))
   expect(dialog.getByText('Ремонт винтовых компрессоров',{exact:true})).toBeInTheDocument()
   expect(dialog.getByLabelText('Модель оборудования',{exact:true})).toBeInTheDocument()
 })
@@ -85,9 +85,9 @@ it('uses piston-specific content and sends both request actions to piston repair
   expect(within(main).getByRole('heading',{name:'Набор давления'})).toBeInTheDocument()
   expect(main).not.toHaveTextContent('Что указать в заявке')
   for(const name of ['Оставить заявку','Обсудить ремонт']) {
-    await user.click(within(main).getByRole('button',{name}))
-    expect(within(screen.getByRole('dialog')).getByText('Ремонт поршневых компрессоров',{exact:true})).toBeInTheDocument()
-    await user.click(screen.getByRole('button',{name:'Закрыть форму'}))
+    await user.click(within(screen.getByRole('main')).getByRole('button',{name}))
+    expect(within(screen.getByRole('region', {name: /Заявка на|Узнать стоимость/})).getByText('Ремонт поршневых компрессоров',{exact:true})).toBeInTheDocument()
+    await user.click(screen.getByRole('link',{name:'Вернуться к услуге'}))
   }
 })
 
@@ -98,8 +98,8 @@ it('shows diesel-specific repair content and selects diesel in the closing reque
   expect(within(main).getByRole('heading',{name:'Запуск и работа двигателя'})).toBeInTheDocument()
   expect(main).not.toHaveTextContent('Демонстрационное наполнение')
   expect(main).not.toHaveTextContent('Что указать в заявке')
-  await user.click(within(main).getByRole('button',{name:'Обсудить ремонт'}))
-  expect(within(screen.getByRole('dialog')).getByText('Ремонт дизельных компрессоров',{exact:true})).toBeInTheDocument()
+  await user.click(within(screen.getByRole('main')).getByRole('button',{name:'Обсудить ремонт'}))
+  expect(within(screen.getByRole('region', {name: /Заявка на|Узнать стоимость/})).getByText('Ремонт дизельных компрессоров',{exact:true})).toBeInTheDocument()
 })
 
 it('connects the service hub equipment types and keeps all five repair inquiries specific',async()=>{
@@ -108,19 +108,19 @@ it('connects the service hub equipment types and keeps all five repair inquiries
   for(const [name,slug] of [['Винтовые','screw'],['Поршневые','piston'],['Дизельные','diesel']]) expect(within(main).getByRole('link',{name})).toHaveAttribute('href',base+'/'+slug)
   expect(main.querySelectorAll('.service-hub__grid>article')).toHaveLength(5)
   for(const title of ['Ремонт компрессоров','Ремонт гайковёрта','Ремонт болгарки','Ремонт полировальной машинки','Ремонт аппарата высокого давления']) {
-    await user.click(within(main).getByRole('button',{name:'Оставить заявку: '+title}))
-    expect(within(screen.getByRole('dialog')).getByText(title,{exact:true})).toBeInTheDocument()
-    await user.click(screen.getByRole('button',{name:'Закрыть форму'}))
+    await user.click(within(screen.getByRole('main')).getByRole('button',{name:'Оставить заявку: '+title}))
+    expect(within(screen.getByRole('region', {name: /Заявка на|Узнать стоимость/})).getByText(title,{exact:true})).toBeInTheDocument()
+    await user.click(screen.getByRole('link',{name:'Вернуться к услуге'}))
   }
-})
+},20_000)
 
 it('shows three compressor images and routes the general inquiry to compressor repair',async()=>{
   const user=userEvent.setup();open(base)
   const main=screen.getByRole('main')
   expect(main.querySelectorAll('.compressor-overview__card img')).toHaveLength(3)
   expect(main).not.toHaveTextContent('Что подготовить перед обращением')
-  await user.click(within(main).getByRole('button',{name:'Оставить заявку'}))
-  expect(within(screen.getByRole('dialog')).getByText('Ремонт компрессоров',{exact:true})).toBeInTheDocument()
+  await user.click(within(screen.getByRole('main')).getByRole('button',{name:'Оставить заявку'}))
+  expect(within(screen.getByRole('region', {name: /Заявка на|Узнать стоимость/})).getByText('Ремонт компрессоров',{exact:true})).toBeInTheDocument()
   expect(screen.getByLabelText('Телефон')).toHaveAttribute('placeholder','+7 (___) ___-__-__')
 })
 

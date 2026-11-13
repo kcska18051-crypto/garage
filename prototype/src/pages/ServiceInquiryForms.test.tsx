@@ -17,22 +17,22 @@ const repair = [
 ] as const
 beforeEach(() => {localStorage.clear(); sessionStorage.clear()})
 const fill = async (user: ReturnType<typeof userEvent.setup>, label: string, value: string) => {
-  await user.click(screen.getByLabelText(label, {exact: true})); await user.paste(value)
+  await user.clear(screen.getByLabelText(label, {exact: true})); await user.click(screen.getByLabelText(label, {exact: true})); await user.paste(value)
 }
 
 it.each(paint)('accepts name, phone and both consents at %s, preserving the chosen direction', async (path, itemId, title) => {
   const user = userEvent.setup(); open(path)
   await user.click(screen.getByRole('button', {name: 'Узнать стоимость'}))
-  const dialog = within(screen.getByRole('dialog', {name: 'Узнать стоимость'}))
+  const dialog = within(screen.getByRole('region', {name: 'Узнать стоимость'}))
   expect(dialog.getAllByRole('textbox')).toHaveLength(5)
   for (const label of ['Имя', 'Телефон']) expect(dialog.getByLabelText(label, {exact: true})).toBeRequired()
   for (const label of ['Марка авто', 'Код краски', 'Комментарий']) expect(dialog.getByLabelText(label, {exact: true})).not.toBeRequired()
-  await user.click(dialog.getByRole('button', {name: 'Узнать стоимость'}))
+  await user.click(dialog.getByRole('button', {name: 'Отправить заявку'}))
   expect(dialog.getByLabelText('Имя', {exact: true})).toHaveFocus()
   await fill(user, 'Имя', 'Демо клиент'); await fill(user, 'Телефон', '8 (999) 123-45-67')
   await user.click(dialog.getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'}))
   await user.click(dialog.getByRole('checkbox',{name:'Принимаю пользовательское соглашение'}))
-  await user.click(dialog.getByRole('button', {name: 'Узнать стоимость'}))
+  await user.click(dialog.getByRole('button', {name: 'Отправить заявку'}))
   expect(dialog.getByRole('status')).toHaveTextContent('Демонстрационная заявка создана')
   const record = JSON.parse(localStorage.getItem('garage-service-requests-v1')!).find((r: {seed: boolean}) => !r.seed)
   expect(record).toMatchObject({kind: 'paint', itemId, title, ownerPhone: null, fields: {name: 'Демо клиент', phone: '+79991234567', car: '', paintCode: '', comment: ''}})
@@ -46,7 +46,7 @@ it('retains paint code and optional information in the exact account detail afte
   for (const [label, value] of [['Имя', 'Тест'], ['Телефон', '+7 999 123-45-67'], ['Марка авто', 'Демо марка'], ['Код краски', 'DEMO-123'], ['Комментарий', 'Демонстрационный комментарий']]) await fill(user, label, value)
   await user.click(screen.getByRole('checkbox',{name:'Даю согласие на обработку персональных данных'}))
   await user.click(screen.getByRole('checkbox',{name:'Принимаю пользовательское соглашение'}))
-  await user.click(within(screen.getByRole('dialog')).getByRole('button', {name: 'Узнать стоимость'}))
+  await user.click(within(screen.getByRole('region', {name: /Заявка на|Узнать стоимость/})).getByRole('button', {name: 'Отправить заявку'}))
   await user.click(screen.getByRole('button', {name: 'Посмотреть заявку в личном кабинете'}))
   expect(screen.getByText('DEMO-123')).toBeInTheDocument()
   expect(screen.getByText('Демо марка')).toBeInTheDocument()
@@ -59,7 +59,7 @@ it('retains paint code and optional information in the exact account detail afte
 it.each(repair)('opens and persists the selected repair direction %s without creating a new route', async (itemId, title) => {
   const user = userEvent.setup(); open('/services/service-center')
   await user.click(screen.getByRole('button', {name: `Оставить заявку: ${title}`}))
-  const dialog = within(screen.getByRole('dialog', {name: 'Заявка на ремонт'}))
+  const dialog = within(screen.getByRole('region', {name: 'Заявка на ремонт'}))
   expect(dialog.getByText(title, {exact: true})).toBeInTheDocument()
   expect(dialog.queryByLabelText('Марка авто')).not.toBeInTheDocument()
   expect(dialog.queryByLabelText('Код краски')).not.toBeInTheDocument()

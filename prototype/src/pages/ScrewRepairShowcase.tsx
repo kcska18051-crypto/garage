@@ -1,7 +1,7 @@
 import {useCallback,useState} from 'react'
 import {Link} from 'react-router-dom'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
-import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
+import {ServiceRequestEntry} from '../features/services/ServiceRequestEntry'
 import './ScrewRepairShowcase.css'
 
 const concerns=[
@@ -80,6 +80,6 @@ export function ScrewRepairShowcase({type='screw'}:{type?:keyof typeof repairCon
     <section className="screw-service__process" aria-labelledby="screw-process-title"><div className="screw-service__process-heading"><h2 id="screw-process-title">Как проходит ремонт</h2><p>От первого обращения до получения оборудования. <br/>Условия каждого этапа согласовываются индивидуально.</p></div><ol>{steps.map((step,index)=><li key={step.title}><span className="screw-service__step">{String(index+1).padStart(2,'0')}</span><h3>{step.title}</h3><p>{step.text}</p></li>)}</ol></section>
     <section className="screw-service__closing" aria-labelledby="screw-closing-title"><span className="screw-service__closing-icon"><ServiceIcon path="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-2 2V11.5a9.5 9.5 0 1 1 19 0ZM7 9h9M7 13h6"/></span><div><h2 id="screw-closing-title">Начнём с вашей задачи</h2><p>Укажите модель компрессора и опишите неполадку. <br/>Фото оборудования можно добавить по желанию.</p></div><button className="screw-service__button" type="button" onClick={()=>setOpen(true)}>Обсудить ремонт<ServiceIcon path="M4 12h16m-6-6 6 6-6 6"/></button></section>
     <Link className="screw-service__back" to="/services/service-center/compressor-repair">← Все типы компрессоров</Link>
-    {open&&<ServiceRequestDialog request={request} onClose={close}/>}
+    {open&&<ServiceRequestEntry request={request} onClose={close}/>}
   </main>
 }

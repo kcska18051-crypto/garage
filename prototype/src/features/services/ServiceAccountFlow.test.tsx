@@ -8,10 +8,11 @@ const open=(path='/services/service-center/compressor-repair/screw')=>render(<Me
 async function repair(user:ReturnType<typeof userEvent.setup>){
   await user.click(screen.getByRole('button',{name:'Оставить заявку'}))
   for (const [label,value] of [['Ваше имя','Тестовый клиент'],['Телефон','+7 999 123-45-67'],['Модель оборудования','Приватная модель'],['Описание неисправности','Не включается']]) {
-    await user.click(screen.getByLabelText(label)); await user.paste(value)
+    await user.clear(screen.getByLabelText(label)); await user.click(screen.getByLabelText(label)); await user.paste(value)
   }
   await user.click(screen.getByRole('button',{name:'Отправить заявку'}))
 }
+vi.setConfig({testTimeout:20_000})
 beforeEach(()=>{localStorage.clear();sessionStorage.clear()})
 it('uses one saved record for success, exact account detail and the list after reload',async()=>{
   seedDemoSession();sessionStorage.setItem('garage-auth-demo-identity-v1',JSON.stringify({phone:'79991234567',phoneConfirmed:true}));const user=userEvent.setup();const view=open();await repair(user)

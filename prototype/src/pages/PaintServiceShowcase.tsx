@@ -2,7 +2,7 @@ import {useCallback,useState} from 'react'
 import {Link} from 'react-router-dom'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
-import {ServiceRequestDialog} from '../features/services/ServiceRequestDialog'
+import {ServiceRequestEntry} from '../features/services/ServiceRequestEntry'
 import './PaintServiceShowcase.css'
 const base='/services/paint-matching'
 const content={
@@ -11,7 +11,7 @@ const content={
 }
 const steps=[{title:'Обращение',text:'Оставьте имя и телефон для связи.'},{title:'Исходные данные',text:'При желании добавьте код краски и комментарий к задаче.'},{title:'Подбор материалов',text:'Обсудите исходные данные, способ подбора и необходимые материалы.'},{title:'Согласование',text:'Уточните стоимость, сроки и условия получения.'}]
 function Arrow(){return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>}
-function PaintInquiry({request}:{request:ServiceRequest}){const [open,setOpen]=useState(false);const close=useCallback(()=>setOpen(false),[]);return <><button className="paint-editorial__button" type="button" onClick={()=>setOpen(true)}>Узнать стоимость<Arrow/></button>{open&&<ServiceRequestDialog request={request} onClose={close}/>}</>}
+function PaintInquiry({request}:{request:ServiceRequest}){const [open,setOpen]=useState(false);const close=useCallback(()=>setOpen(false),[]);return <><button className="paint-editorial__button" type="button" onClick={()=>setOpen(true)}>Узнать стоимость<Arrow/></button>{open&&<ServiceRequestEntry request={request} onClose={close}/>}</>}
 export function PaintMatchingShowcase(){return <main className="paint-editorial paint-service-page">
  <Breadcrumbs items={[{label:'Главная',to:'/'},{label:'Услуги',to:'/services'},{label:'Подбор автоэмали'}]}/>
  <header className="paint-editorial__overview-heading"><h1>Подбор автоэмали</h1><p className="paint-editorial__lead">Цвет и материалы для вашей задачи.</p><p className="paint-editorial__description">Выберите автомобильные или полиуретановые эмали. Способ подбора и условия уточняются при обращении.</p><PaintInquiry request={{kind:'paint',title:'Подбор автоэмали',itemId:'paint-matching'}}/></header>

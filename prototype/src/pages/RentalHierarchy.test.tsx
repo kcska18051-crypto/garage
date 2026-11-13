@@ -47,9 +47,9 @@ it('uses the approved sale → message → compressor category → direct form p
   expect(card.getByText('380 В')).toBeInTheDocument()
   expect(card.getByText('7,5 кВт')).toBeInTheDocument()
   await user.click(card.getByRole('button', {name: /Арендовать/}))
-  const form = within(screen.getByRole('dialog', {name: 'Заявка на аренду'}))
+  const form = within(screen.getByRole('region', {name: 'Заявка на аренду'}))
   expect(form.getByText('Винтовой компрессор Remeza ВК 10-8 с ременным приводом', {exact: true})).toBeInTheDocument()
-  for (const [label, value] of [['Ваше имя', 'Демо аренда'], ['Телефон', '+79991234567']]) {await user.click(form.getByLabelText(label)); await user.paste(value)}
+  for (const [label, value] of [['Ваше имя', 'Демо аренда'], ['Телефон', '+79991234567']]) {await user.clear(form.getByLabelText(label)); await user.click(form.getByLabelText(label)); await user.paste(value)}
   for (const label of ['Дата начала', 'Дата окончания']) fireEvent.change(form.getByLabelText(label), {target: {value: '2099-01-01'}})
   await user.click(form.getByRole('button', {name: 'Отправить заявку'}))
   const record = JSON.parse(localStorage.getItem('garage-service-requests-v1')!).find((r: {seed: boolean}) => !r.seed)

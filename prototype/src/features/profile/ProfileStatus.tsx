@@ -24,8 +24,8 @@ export function profileStatusTone(status: string): ProfileStatusTone {
   return tones[status] ?? 'neutral'
 }
 
-export function ProfileStatus({ children }: { children: string }) {
-  return <span className="profile-status" data-status-tone={profileStatusTone(children)}>
+export function ProfileStatus({ children, as: Tag = 'span' }: { children: string; as?: 'span' | 'p' }) {
+  return <Tag className="profile-status" data-status-tone={profileStatusTone(children)}>
     <i aria-hidden="true" />{children}
-  </span>
+  </Tag>
 }

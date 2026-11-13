@@ -29,7 +29,7 @@ function AppContent() {
     >
       {usesApprovedStyles && <ApprovedHomepageStyles />}
       <link rel="stylesheet" href="/garage/style-check/approved-chrome.css?v=20261113-palette" />
-      <link rel="stylesheet" href="/garage/style-check/interface-palette.css?v=20261113-client-demo" />
+      <link rel="stylesheet" href="/garage/style-check/interface-palette.css?v=20261113-select-chevron" />
       <link rel="stylesheet" href="/garage/style-check/interaction-feedback.css?v=20261113-text-actions" />
       <Header customerName={user.firstName} counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />

@@ -1,62 +1,62 @@
 /* Iteration 1: header only. All sizes, spacing, font metrics and breakpoints remain in Header.css. */
 .app-shell[data-style-check] .site-header {
-  --header-ink: #171717;
-  --header-muted: #595954;
-  --header-neutral: #f3f3f1;
-  --header-line: #deded8;
+  --header-ink: var(--palette-ink);
+  --header-muted: var(--palette-muted);
+  --header-neutral: var(--palette-border);
+  --header-line: var(--palette-border);
   --header-radius: .5rem;
-  background: #fff;
+  background: var(--palette-white);
   border-bottom-color: transparent;
   box-shadow: none;
 }
 .app-shell[data-style-check] .site-header .service-row { color: var(--header-muted); }
 .app-shell[data-style-check] .site-header .service-row > button { color: var(--header-ink); }
-.app-shell[data-style-check] .site-header .service-row a:hover { color: #171717; text-decoration: underline; text-underline-offset: .2em; }
+.app-shell[data-style-check] .site-header .service-row a:hover { color: var(--palette-ink); text-decoration: underline; text-underline-offset: .2em; }
 .app-shell[data-style-check] .site-header .service-row > a small { color: var(--header-muted); }
 .app-shell[data-style-check] .site-header .catalog-button {
-  background: #ffcc00;
-  color: #171717;
+  background: var(--palette-yellow);
+  color: var(--palette-ink);
   border-radius: var(--header-radius);
 }
-.app-shell[data-style-check] .site-header .catalog-button:hover { background: #f0bf00; }
+.app-shell[data-style-check] .site-header .catalog-button:hover { background: var(--palette-yellow-hover); }
 .app-shell[data-style-check] .site-header .catalog-button:active,
-.app-shell[data-style-check] .site-header .catalog-button[aria-expanded=true] { background: #e4b600; }
+.app-shell[data-style-check] .site-header .catalog-button[aria-expanded=true] { background: var(--palette-yellow-hover); }
 .app-shell[data-style-check] .site-header .search-box input {
-  background: #fafaf9;
-  border-color: #bdbdb6;
+  background: var(--palette-surface);
+  border-color: var(--palette-border);
   border-radius: var(--header-radius);
-  color: #171717;
+  color: var(--palette-ink);
 }
-.app-shell[data-style-check] .site-header .search-box input::placeholder { color: #6b6b65; opacity: 1; }
-.app-shell[data-style-check] .site-header .search-box input:hover { border-color: #8b8b83; }
-.app-shell[data-style-check] .site-header .search-box input:focus { background: #fff; border-color: #9a6500; outline: 2px solid #ffcc00; outline-offset: 1px; }
-.app-shell[data-style-check] .site-header .search-box__submit { background-color: #ffcc00; color: transparent; border-radius: .35rem; }
-.app-shell[data-style-check] .site-header .search-box__submit:hover { background-color: #f0bf00; }
-.app-shell[data-style-check] .site-header .search-box__submit:active { background-color: #e4b600; }
-.app-shell[data-style-check] .site-header .service-link { background: #f3f3f1; border-color: transparent; border-radius: var(--header-radius); color: #171717; }
-.app-shell[data-style-check] .site-header .service-link:hover { background: #e9e9e5; }
-.app-shell[data-style-check] .site-header .service-link:active { background: #deded8; }
-.app-shell[data-style-check] .site-header .header-action { color: #171717; border-radius: var(--header-radius); }
-.app-shell[data-style-check] .site-header .header-action:hover { background: #f3f3f1; }
-.app-shell[data-style-check] .site-header .header-action:active { background: #e9e9e5; }
-.app-shell[data-style-check] .site-header .header-action b { background: #c92f29; color: #fff; }
+.app-shell[data-style-check] .site-header .search-box input::placeholder { color: var(--palette-muted); opacity: 1; }
+.app-shell[data-style-check] .site-header .search-box input:hover { border-color: var(--palette-border-hover); }
+.app-shell[data-style-check] .site-header .search-box input:focus { background: var(--palette-white); border-color: var(--palette-ink); outline: 2px solid var(--palette-ink); outline-offset: 1px; }
+.app-shell[data-style-check] .site-header .search-box__submit { background-color: var(--palette-yellow); color: transparent; border-radius: .35rem; }
+.app-shell[data-style-check] .site-header .search-box__submit:hover { background-color: var(--palette-yellow-hover); }
+.app-shell[data-style-check] .site-header .search-box__submit:active { background-color: var(--palette-yellow-hover); }
+.app-shell[data-style-check] .site-header .service-link { background: var(--palette-surface); border-color: transparent; border-radius: var(--header-radius); color: var(--palette-ink); }
+.app-shell[data-style-check] .site-header .service-link:hover { background: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .service-link:active { background: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .header-action { color: var(--palette-ink); border-radius: var(--header-radius); }
+.app-shell[data-style-check] .site-header .header-action:hover { background: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .header-action:active { background: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .header-action b { background: var(--palette-red); color: var(--palette-white); }
 .app-shell[data-style-check] .site-header .third-level-nav { border-top-color: transparent; border-bottom-color: transparent; }
-.app-shell[data-style-check] .site-header .third-level-nav__link { color: #171717; }
+.app-shell[data-style-check] .site-header .third-level-nav__link { color: var(--palette-ink); }
 .app-shell[data-style-check] .site-header .third-level-nav__link:hover,
-.app-shell[data-style-check] .site-header .third-level-nav__more > button:hover { background: #f3f3f1; }
-.app-shell[data-style-check] .site-header .third-level-nav__link--accent { background: #fff5cc; border-color: transparent; }
-.app-shell[data-style-check] .site-header .third-level-nav__link--accent:hover { background: #ffeb99; }
-.app-shell[data-style-check] .site-header .third-level-nav__link.active { background: #fff5cc; box-shadow: none; }
-.app-shell[data-style-check] .site-header .paint-service-link { background: #fff5cc; color: #171717; border-color: transparent; border-radius: var(--header-radius); }
-.app-shell[data-style-check] .site-header .paint-service-link:hover { background: #ffeb99; }
-.app-shell[data-style-check] .site-header .paint-service-link:active { background: #ffdf66; }
+.app-shell[data-style-check] .site-header .third-level-nav__more > button:hover { background: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent { background: var(--palette-surface); border-color: transparent; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent:hover { background: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .third-level-nav__link.active { background: var(--palette-surface); box-shadow: none; }
+.app-shell[data-style-check] .site-header .paint-service-link { background: var(--palette-surface); color: var(--palette-ink); border-color: transparent; border-radius: var(--header-radius); }
+.app-shell[data-style-check] .site-header .paint-service-link:hover { background: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .paint-service-link:active { background: var(--palette-yellow-hover); }
 .app-shell[data-style-check] .site-header .paint-service-link svg { stroke-width: 1.75; }
 .app-shell[data-style-check] .site-header :is(button,a):focus-visible,
-.app-shell[data-style-check] .mobile-bottom-nav :is(button,a):focus-visible { outline: 2px solid #9a6500; outline-offset: 3px; }
+.app-shell[data-style-check] .mobile-bottom-nav :is(button,a):focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 3px; }
 .app-shell[data-style-check] .site-header .desktop-header--compact { box-shadow: none; }
-.app-shell[data-style-check] .site-header .mobile-header__top > button:hover { background-color: #f3f3f1; border-radius: .5rem; }
-.app-shell[data-style-check] .site-header .mobile-menu :is(a,button):hover { background: #f3f3f1; }
-.app-shell[data-style-check] .site-header .mobile-menu :is(a,button):active { background: #e9e9e5; }
+.app-shell[data-style-check] .site-header .mobile-header__top > button:hover { background-color: var(--palette-surface); border-radius: .5rem; }
+.app-shell[data-style-check] .site-header .mobile-menu :is(a,button):hover { background: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .mobile-menu :is(a,button):active { background: var(--palette-surface); }
 /* Text is retained solely to preserve the exact approved glyph metrics. */
 .app-shell[data-style-check] .site-header .style-check-header-symbol {
   color: transparent;
@@ -70,7 +70,7 @@
   place-self: center;
   inline-size: 1.1em;
   block-size: 1.1em;
-  background-color: #171717;
+  background-color: var(--palette-ink);
   mask: var(--header-symbol) center / contain no-repeat;
   pointer-events: none;
 }
@@ -85,22 +85,22 @@
   place-self: center;
   inline-size: 22px;
   block-size: 22px;
-  background: #171717;
+  background: var(--palette-ink);
   mask: var(--header-symbol) center / contain no-repeat;
   pointer-events: none;
 }
 /* The mobile navigation is owned by Header; its existing touch targets stay intact. */
-.app-shell[data-style-check] .mobile-bottom-nav { background: #fff; border-top-color: #deded8; }
-.app-shell[data-style-check] .mobile-bottom-nav :is(a,button):hover { background-color: #f3f3f1; border-radius: .5rem; }
-.app-shell[data-style-check] .mobile-bottom-nav :is(a,button).active { color: #171717; }
-.app-shell[data-style-check] .mobile-bottom-nav b { background: #c92f29; color: #fff; }
+.app-shell[data-style-check] .mobile-bottom-nav { background: var(--palette-white); border-top-color: var(--palette-border); }
+.app-shell[data-style-check] .mobile-bottom-nav :is(a,button):hover { background-color: var(--palette-surface); border-radius: .5rem; }
+.app-shell[data-style-check] .mobile-bottom-nav :is(a,button).active { color: var(--palette-ink); }
+.app-shell[data-style-check] .mobile-bottom-nav b { background: var(--palette-red); color: var(--palette-white); }
 .app-shell[data-style-check] .mobile-bottom-nav__icon { display: inline-grid; color: transparent; }
 .app-shell[data-style-check] .mobile-bottom-nav__icon::after {
   inset: auto;
   place-self: center;
   inline-size: 22px;
   block-size: 22px;
-  background: #171717;
+  background: var(--palette-ink);
   mask: var(--header-symbol) center / contain no-repeat;
   pointer-events: none;
 }
@@ -120,7 +120,7 @@
 
 /* Keep notification badges above the icon artwork, with the existing white clearance. */
 .app-shell[data-style-check] .mobile-bottom-nav b { z-index: 1; }
-.app-shell[data-style-check] .site-header .header-action small { color: #3d3d39; }
+.app-shell[data-style-check] .site-header .header-action small { color: var(--palette-ink); }
 .app-shell[data-style-check] .site-header .third-level-nav__more > button > span { color: transparent; background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E"); background-position: center; background-size: 12px 12px; background-repeat: no-repeat; }
 .app-shell[data-style-check] .site-header .mobile-menu :is(a,button) > span { color: transparent; background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m9%206%206%206-6%206%22%2F%3E%3C%2Fsvg%3E"); background-position: center; background-size: 16px 16px; background-repeat: no-repeat; }
 .app-shell[data-style-check] .site-header .search-panel__close { color: transparent; background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%206%2012%2012M18%206%206%2018%22%2F%3E%3C%2Fsvg%3E"); background-position: center; background-size: 20px 20px; background-repeat: no-repeat; }
@@ -146,9 +146,9 @@
   background: url('logo-cropped.png') center / contain no-repeat;
   pointer-events: none;
 }
-.app-shell[data-style-check] .site-header .service-link { background: #edede9; border-color: #c9c9c1; }
-.app-shell[data-style-check] .site-header .service-link:hover { background: #e3e3dc; border-color: #a5a59a; }
-.app-shell[data-style-check] .site-header .service-link:active { background: #d9d9d0; }
+.app-shell[data-style-check] .site-header .service-link { background: var(--palette-surface); border-color: var(--palette-border); }
+.app-shell[data-style-check] .site-header .service-link:hover { background: var(--palette-surface); border-color: var(--palette-border-hover); }
+.app-shell[data-style-check] .site-header .service-link:active { background: var(--palette-border); }
 /* All desktop badges use the icon centre, independent of label width.
    12px = half of the 22px icon plus 1px of clearance. */
 .app-shell[data-style-check] .site-header .header-actions .header-action > b {
@@ -165,12 +165,12 @@
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent,
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent.active {
   background: transparent;
-  color: #c92f29;
+  color: var(--palette-red);
   border-color: transparent;
   box-shadow: none;
 }
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent:hover,
-.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:hover { background: #f3f3f1; color: #a32320; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:hover { background: var(--palette-surface); color: var(--palette-red-hover); }
 .app-shell[data-style-check] .site-header .header-actions > :nth-child(2) { --header-symbol: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m8%203-4%204%204%204M4%207h16M16%2013l4%204-4%204M20%2017H4%22%2F%3E%3C%2Fsvg%3E"); }
 .app-shell[data-style-check] .site-header .paint-service-link svg { stroke: transparent; background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203a9%209%200%201%200%200%2018h1.4a2.6%202.6%200%200%200%202-4.3%201.5%201.5%200%200%201%201.2-2.5H18a3%203%200%200%200%203-3A8.7%208.7%200%200%200%2012%203Z%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%227%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%2215.5%22%20cy%3D%228%22%20r%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2215%22%20r%3D%22.8%22%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; }
 
@@ -178,8 +178,8 @@
    preserve the existing total padding, intrinsic widths and row heights. */
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent,
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent.active {
-  background-color: #fff0ee;
-  color: #c92f29;
+  background-color: var(--palette-surface);
+  color: var(--palette-red);
   border-color: transparent;
   border-radius: .5rem;
   padding-inline: calc(.65rem + 8px) calc(.65rem - 8px);
@@ -188,21 +188,21 @@
   background-repeat: no-repeat;
 }
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent:hover,
-.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:hover { background-color: #ffe1dc; color: #a32320; }
-.app-shell[data-style-check] .site-header .third-level-nav__link--accent:focus-visible { outline: 2px solid #c92f29; outline-offset: 2px; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:hover { background-color: var(--palette-surface); color: var(--palette-red-hover); }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 2px; }
 .app-shell[data-style-check] .site-header .service-link {
-  background-color: #fff5cc;
-  border-color: #f0dea0;
-  color: #171717;
+  background-color: var(--palette-surface);
+  border-color: var(--palette-border);
+  color: var(--palette-ink);
   border-radius: .5rem;
   padding-inline: calc(.9rem + 8px) calc(.9rem - 8px);
   background-position: 6px center;
   background-size: 14px 14px;
   background-repeat: no-repeat;
 }
-.app-shell[data-style-check] .site-header .service-link:hover { background-color: #ffeb99; border-color: #ddc474; }
-.app-shell[data-style-check] .site-header .service-link:active { background-color: #ffdf66; }
-.app-shell[data-style-check] .site-header .service-link:focus-visible { outline: 2px solid #9a6500; outline-offset: 3px; }
+.app-shell[data-style-check] .site-header .service-link:hover { background-color: var(--palette-surface); border-color: var(--palette-border-hover); }
+.app-shell[data-style-check] .site-header .service-link:active { background-color: var(--palette-yellow-hover); }
+.app-shell[data-style-check] .site-header .service-link:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 3px; }
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent, .app-shell[data-style-check] .site-header .third-level-nav__link--accent.active { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23c92f29%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m5%2019%2014-14%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%226.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2217.5%22%20cy%3D%2217.5%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E"); }
 .app-shell[data-style-check] .site-header .service-link { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14.5%206.5a5%205%200%200%200-6%206L3%2018a2.1%202.1%200%200%200%203%203l5.5-5.5a5%205%200%200%200%206-6L14%2013l-3-3%203.5-3.5Z%22%2F%3E%3C%2Fsvg%3E"); }
 .app-shell[data-style-check] .site-header .third-level-nav__mobile .third-level-nav__link--accent { padding-inline: calc(.7rem + 8px) calc(.7rem - 8px); }
@@ -214,11 +214,11 @@
   background-size: 14px 14px;
   background-repeat: no-repeat;
 }
-.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"] { background-color: #fff0ee; color: #c92f29; }
-.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"]:hover { background-color: #ffe1dc; }
-.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"]:focus-visible { outline-color: #c92f29; }
-.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/services"] { background-color: #fff5cc; color: #171717; }
-.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/services"]:hover { background-color: #ffeb99; }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"] { background-color: var(--palette-surface); color: var(--palette-red); }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"]:hover { background-color: var(--palette-surface); }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"]:focus-visible { outline-color: var(--palette-ink); }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/services"] { background-color: var(--palette-surface); color: var(--palette-ink); }
+.app-shell[data-style-check] .site-header .mobile-menu > a[href$="/services"]:hover { background-color: var(--palette-surface); }
 .app-shell[data-style-check] .site-header .mobile-menu > a[href$="/actions"] { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23c92f29%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m5%2019%2014-14%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%226.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2217.5%22%20cy%3D%2217.5%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E"); }
 .app-shell[data-style-check] .site-header .mobile-menu > a[href$="/services"] { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23171717%22%20stroke-width%3D%221.75%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14.5%206.5a5%205%200%200%200-6%206L3%2018a2.1%202.1%200%200%200%203%203l5.5-5.5a5%205%200%200%200%206-6L14%2013l-3-3%203.5-3.5Z%22%2F%3E%3C%2Fsvg%3E"); }
 

@@ -1,16 +1,16 @@
 /* Automotive paint detail only; shared paint navigation styles remain unchanged. */
-.automotive-paint-heading h1{font-size:32px;line-height:42px;letter-spacing:-.8px;font-weight:600;color:#29312c;margin:0 0 24px}
+.automotive-paint-heading h1{font-size:32px;line-height:42px;letter-spacing:-.8px;font-weight:600;color:var(--palette-ink);margin:0 0 24px}
 .automotive-paint-page .automotive-paint-hero{grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:48px;align-items:center;margin-bottom:36px}
-.automotive-paint-page .automotive-paint-hero h2,.automotive-paint-process>h2{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-.4px;margin:0 0 14px;color:#29312c}
+.automotive-paint-page .automotive-paint-hero h2,.automotive-paint-process>h2{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-.4px;margin:0 0 14px;color:var(--palette-ink)}
 .automotive-paint-page .automotive-paint-hero .paint-service-lead{font-size:16px;line-height:26px;font-weight:400;max-width:660px;margin:0 0 20px}
 .automotive-paint-terms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:420px;margin:0 0 24px}
-.automotive-paint-terms dt{font-size:12px;line-height:20px;color:#737a70}
+.automotive-paint-terms dt{font-size:12px;line-height:20px;color:var(--palette-muted)}
 .automotive-paint-terms dd{font-size:14px;line-height:23px;font-weight:500;margin:2px 0 0}
 .automotive-paint-process>h2{margin-bottom:18px}
 .automotive-paint-process ol{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;list-style:none;padding:0;margin:0}
-.automotive-paint-process li{padding:20px;border:1px solid #e4e8e0;border-radius:16px;background:#fff;box-shadow:0 4px 16px rgb(41 49 44 / .045);min-width:0}
-.automotive-paint-process li>span{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#fff3bc;color:#675300;font-size:13px;line-height:20px;font-weight:600;margin-bottom:14px}
-.automotive-paint-process li>p{font-size:13px;line-height:22px;color:#29312c;margin:0}
+.automotive-paint-process li{padding:20px;border:1px solid var(--palette-border);border-radius:16px;background:var(--palette-white);box-shadow:0 4px 16px rgb(41 49 44 / .045);min-width:0}
+.automotive-paint-process li>span{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--palette-surface);color:var(--palette-ink);font-size:13px;line-height:20px;font-weight:600;margin-bottom:14px}
+.automotive-paint-process li>p{font-size:13px;line-height:22px;color:var(--palette-ink);margin:0}
 @media(min-width:768px) and (max-width:1023px){
  .automotive-paint-page .automotive-paint-hero{grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:28px}
  .automotive-paint-process ol{grid-template-columns:repeat(2,minmax(0,1fr))}

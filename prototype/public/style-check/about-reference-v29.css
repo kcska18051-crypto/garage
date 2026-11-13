@@ -11,11 +11,11 @@
   font-size:28px; line-height:1.22; font-weight:600; letter-spacing:-.035em; margin:0 0 16px;
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .about-section__copy > p {
-  max-width:570px; margin:0 0 22px; color:#707570; font-size:15px; line-height:1.65;
+  max-width:570px; margin:0 0 22px; color:var(--palette-muted); font-size:15px; line-height:1.65;
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .about-section__copy .button {
   min-height:44px; padding:11px 18px; gap:20px; border:0; border-radius:9px;
-  font-size:14px; font-weight:500; color:#24291f; background:#ffcc00; box-shadow:none;
+  font-size:14px; font-weight:500; color:var(--palette-ink); background:var(--palette-yellow); box-shadow:none;
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .about-facts {
   display:grid; grid-column:1 / -1; grid-template-columns:repeat(4,minmax(0,1fr));
@@ -25,28 +25,28 @@
   position:relative; isolation:isolate; overflow:hidden; min-width:0; min-height:116px;
   display:grid; grid-template-columns:44px minmax(0,1fr); grid-template-rows:auto auto;
   align-content:center; gap:5px 13px; padding:20px 58px 20px 18px;
-  border:1px solid #eeeee8; border-radius:15px;
-  background:radial-gradient(ellipse at 100% 5%,#fff1af66,#fff0 65%),linear-gradient(135deg,#fff,#f9f9f5);
-  box-shadow:0 7px 19px -12px #35402730;
+  border:1px solid var(--palette-border); border-radius:15px;
+  background:radial-gradient(ellipse at 100% 5%,rgb(255 204 0 / 0.400),#fff0 65%),linear-gradient(135deg,var(--palette-white),var(--palette-surface));
+  box-shadow:0 7px 19px -12px rgb(36 36 36 / 0.188);
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .review-about-fact::before {
   content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
-  background:linear-gradient(125deg,#fff0 64%,#ffdc5d30 64.3%,#fff0 84%);
+  background:linear-gradient(125deg,#fff0 64%,rgb(255 204 0 / 0.188) 64.3%,#fff0 84%);
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .about-facts .review-about-fact__icon {
   grid-column:1; grid-row:1 / 3; align-self:center; width:44px; height:48px;
   display:grid; place-items:center; border-radius:13px;
-  background:linear-gradient(135deg,#fff4bd,#ffed9e); color:#252d27;
+  background:linear-gradient(135deg,var(--palette-surface),var(--palette-surface)); color:var(--palette-ink);
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .about-facts .review-about-fact__icon svg {
-  grid-area:auto; width:27px; height:27px; color:#252d27;
+  grid-area:auto; width:27px; height:27px; color:var(--palette-ink);
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .about-facts strong {
   position:relative; z-index:1; grid-column:2; grid-row:1; align-self:end;
-  font-size:16px; line-height:21px; font-weight:600; color:#292e29;
+  font-size:16px; line-height:21px; font-weight:600; color:var(--palette-ink);
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .about-facts .review-fact-detail {
-  position:relative; z-index:1; grid-column:2; grid-row:2; font-size:12px; line-height:18px; color:#777c75;
+  position:relative; z-index:1; grid-column:2; grid-row:2; font-size:12px; line-height:18px; color:var(--palette-muted);
 }
 .app-shell[data-style-check] main.review-home-v2 .review-about .review-about-fact__decor {
   position:absolute; z-index:-1; right:-30px; bottom:-13px; width:120px; height:120px;

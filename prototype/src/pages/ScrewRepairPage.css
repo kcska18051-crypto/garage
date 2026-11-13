@@ -1,14 +1,14 @@
 .screw-repair-heading h1{font-size:32px;line-height:42px;font-weight:600;letter-spacing:-.8px;margin:0 0 24px}
 .screw-repair-page .screw-repair-hero{margin-bottom:32px}
 .screw-repair-hero h2{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-.4px;margin:0 0 14px}
-.screw-repair-hero .screw-repair-lead{font-size:16px;line-height:26px;font-weight:400;color:#29312c;margin-bottom:20px}
+.screw-repair-hero .screw-repair-lead{font-size:16px;line-height:26px;font-weight:400;color:var(--palette-ink);margin-bottom:20px}
 .screw-repair-terms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:420px;margin:0 0 24px}
-.screw-repair-terms dt{font-size:12px;line-height:20px;color:#737a70}
+.screw-repair-terms dt{font-size:12px;line-height:20px;color:var(--palette-muted)}
 .screw-repair-terms dd{font-size:14px;line-height:23px;font-weight:500;margin:2px 0 0}
-.screw-repair-request{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 20px;border:0;border-radius:9px;background:#ffd36a;color:#493900;font-size:13px;line-height:20px;font-weight:600;cursor:pointer}
-.screw-repair-request:hover{background:#ffc548}
+.screw-repair-request{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 20px;border:0;border-radius:9px;background:var(--palette-yellow);color:var(--palette-ink);font-size:13px;line-height:20px;font-weight:600;cursor:pointer}
+.screw-repair-request:hover{background:var(--palette-yellow-hover)}
 .screw-repair-details>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.screw-repair-details article{padding:20px;border:1px solid #e4e8e0;border-radius:16px;background:#fff;box-shadow:0 4px 16px rgb(41 49 44 / .045)}
+.screw-repair-details article{padding:20px;border:1px solid var(--palette-border);border-radius:16px;background:var(--palette-white);box-shadow:0 4px 16px rgb(41 49 44 / .045)}
 .screw-repair-details h3{font-size:16px;line-height:24px;font-weight:600;margin:0 0 8px}
-.screw-repair-details p{font-size:13px;line-height:21px;color:#737a70;margin:0}
+.screw-repair-details p{font-size:13px;line-height:21px;color:var(--palette-muted);margin:0}
 @media(max-width:767px){.screw-repair-heading h1{font-size:26px;line-height:35px;letter-spacing:-.5px;margin-bottom:22px}.screw-repair-hero h2{font-size:22px;line-height:30px}.screw-repair-hero .screw-repair-lead{font-size:15px;line-height:24px}.screw-repair-terms{gap:16px;margin-bottom:20px}.screw-repair-details>div{grid-template-columns:1fr;gap:12px}.screw-repair-details article{padding:18px}.screw-repair-page .repair-center-process li{display:flex;align-items:flex-start;gap:14px}.screw-repair-page .repair-center-process p{margin:0;flex:1}}

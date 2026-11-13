@@ -77,7 +77,7 @@
 .third-level-nav__desktop { align-items: center; display: flex; gap: 1.25rem; margin: 0 auto; max-width: var(--container); padding-inline: var(--gutter); position: relative; }
 .third-level-nav__desktop > nav { flex: 1; min-width: 0; }
 .paint-service-link { align-items: center; background: var(--color-text); border: 1px solid var(--color-text); border-radius: .6rem; color: white; display: inline-flex; flex: 0 0 auto; font-size: .78rem; font-weight: 750; gap: .45rem; justify-content: center; min-height: 2.4rem; padding: .4rem .8rem; text-decoration: none; white-space: nowrap; }
-.paint-service-link:hover { background: #454542; }
+.paint-service-link:hover { background: var(--palette-ink); }
 .paint-service-link:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
 .paint-service-link--fallback { font-size: .72rem; padding-inline: .6rem; }
 .third-level-nav__desktop > nav { align-items: center; display: flex; gap: 1.1rem; min-height: 2.75rem; }

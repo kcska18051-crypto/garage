@@ -1,12 +1,12 @@
 .hero { margin: 1rem auto 0; max-width: calc(var(--container) - 2 * var(--gutter)); position: relative; }
-.hero__stage { background: linear-gradient(105deg, #efefec 0%, #deded9 100%); border-radius: var(--radius-lg); overflow: hidden; }
+.hero__stage { background: linear-gradient(105deg, var(--palette-surface) 0%, var(--palette-surface) 100%); border-radius: var(--radius-lg); overflow: hidden; }
 .hero__slide { display: grid; height: 13rem; }
 .hero__slide[hidden] { display: none; }
 .hero__art { min-height: 100%; overflow: hidden; position: relative; }
-.hero__art span { background: #85857f; border-radius: 50%; height: 12rem; position: absolute; right: 5%; top: 1rem; width: 12rem; }
-.hero__art i { background: #f7f7f4; bottom: -1.5rem; height: 9rem; left: 58%; position: absolute; transform: rotate(-13deg); width: 6rem; }
+.hero__art span { background: var(--palette-muted); border-radius: 50%; height: 12rem; position: absolute; right: 5%; top: 1rem; width: 12rem; }
+.hero__art i { background: var(--palette-surface); bottom: -1.5rem; height: 9rem; left: 58%; position: absolute; transform: rotate(-13deg); width: 6rem; }
 .hero__art b { bottom: .25rem; color: rgb(255 255 255 / .7); font-size: 3.7rem; line-height: 1; position: absolute; right: .6rem; }
-.hero__art--2 span { border-radius: 1rem; transform: rotate(23deg); } .hero__art--2 i { background: #ababa5; } .hero__art--3 span { background: #656560; } .hero__art--3 i { width: 8rem; }
+.hero__art--2 span { border-radius: 1rem; transform: rotate(23deg); } .hero__art--2 i { background: var(--palette-muted); } .hero__art--3 span { background: var(--palette-muted); } .hero__art--3 i { width: 8rem; }
 .hero__pagination { align-items: center; display: flex; gap: .45rem; justify-content: center; margin-top: .5rem; min-height: .9rem; }
 .hero__pagination button { background: transparent; border: 1px solid var(--color-placeholder-4); border-radius: 50%; cursor: pointer; height: .65rem; padding: 0; transition: background .2s ease; width: .65rem; }
 .hero__pagination button[aria-current] { background: var(--color-text); border-color: var(--color-text); }

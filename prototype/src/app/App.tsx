@@ -28,7 +28,8 @@ function AppContent() {
       data-approved-chrome="true"
     >
       {usesApprovedStyles && <ApprovedHomepageStyles />}
-      <link rel="stylesheet" href="/garage/style-check/approved-chrome.css?v=20261103" />
+      <link rel="stylesheet" href="/garage/style-check/approved-chrome.css?v=20261113-palette" />
+      <link rel="stylesheet" href="/garage/style-check/interface-palette.css?v=20261113" />
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />
       <Footer />

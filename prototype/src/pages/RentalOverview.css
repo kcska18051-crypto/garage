@@ -1,40 +1,40 @@
-html:has(.rental-overview),body:has(.rental-overview),.app-shell:has(.rental-overview){background:#fff}
-.rental-overview{--color-text:#29312c;--color-text-muted:#737a70;--color-border:#e4e8e0;width:100%;max-width:1440px;margin:0 auto;padding:24px 24px 40px;color:#29312c}
+html:has(.rental-overview),body:has(.rental-overview),.app-shell:has(.rental-overview){background:var(--palette-white)}
+.rental-overview{--color-text:var(--palette-ink);--color-text-muted:var(--palette-muted);--color-border:var(--palette-border);width:100%;max-width:1440px;margin:0 auto;padding:24px 24px 40px;color:var(--palette-ink)}
 .rental-overview .catalog-breadcrumbs{margin-bottom:30px}
 .rental-overview .catalog-breadcrumbs ol{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
-.rental-overview .catalog-breadcrumbs li{font-size:12px;line-height:19px;color:#8a9086}
-.rental-overview .catalog-breadcrumbs li:not(:last-child)::after{content:'/';margin-left:6px;color:#b6bcb2}
+.rental-overview .catalog-breadcrumbs li{font-size:12px;line-height:19px;color:var(--palette-muted)}
+.rental-overview .catalog-breadcrumbs li:not(:last-child)::after{content:'/';margin-left:6px;color:var(--palette-border-hover)}
 .rental-overview .catalog-breadcrumbs a{color:inherit;text-decoration:none}
 .rental-overview__heading{margin-bottom:30px}
 .rental-overview h1{font-size:32px;line-height:42px;letter-spacing:-.8px;font-weight:600;margin:0 0 16px}
 .rental-overview__heading p{font-size:19px;line-height:29px;font-weight:500;margin:0 0 8px}
-.rental-overview__heading>span{display:block;color:#737a70;font-size:14px;line-height:25px;max-width:680px}
+.rental-overview__heading>span{display:block;color:var(--palette-muted);font-size:14px;line-height:25px;max-width:680px}
 .rental-overview__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
 .rental-overview__grid article{display:flex;min-width:0}
-.rental-overview__card{display:grid;grid-template-columns:40% minmax(0,1fr);width:100%;align-items:center;gap:20px;min-height:210px;padding:22px;border:1px solid #e4e8e0;border-radius:16px;background:#fff;text-decoration:none;box-shadow:0 4px 16px rgb(41 49 44 / .04);transition:border-color .15s}
-.rental-overview__card:hover{border-color:#d6bb61}
+.rental-overview__card{display:grid;grid-template-columns:40% minmax(0,1fr);width:100%;align-items:center;gap:20px;min-height:210px;padding:22px;border:1px solid var(--palette-border);border-radius:16px;background:var(--palette-white);text-decoration:none;box-shadow:0 4px 16px rgb(41 49 44 / .04);transition:border-color .15s}
+.rental-overview__card:hover{border-color:var(--palette-border-hover)}
 .rental-overview__art{display:flex;align-items:center;justify-content:center;min-width:0;height:140px;gap:4px}
 .rental-overview__art img{display:block;width:50%;height:130px;min-width:0;object-fit:contain;mix-blend-mode:multiply}
 .rental-overview__art--tools img:first-child{width:53%}
 .rental-overview__art--tools img:last-child{width:47%}
 .rental-overview h2{font-size:22px;line-height:30px;letter-spacing:-.4px;font-weight:600;margin:0 0 10px}
-.rental-overview__copy p{font-size:13px;line-height:23px;color:#737a70;margin:0 0 20px}
-.rental-overview__action{display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:42px;padding:10px 14px;border-radius:9px;background:#ffd36a;color:#493900;font-size:12px;line-height:20px;font-weight:600}
+.rental-overview__copy p{font-size:13px;line-height:23px;color:var(--palette-muted);margin:0 0 20px}
+.rental-overview__action{display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:42px;padding:10px 14px;border-radius:9px;background:var(--palette-yellow);color:var(--palette-ink);font-size:12px;line-height:20px;font-weight:600}
 .rental-overview__action svg{width:18px;height:18px;flex-shrink:0}
-.rental-overview__card:hover .rental-overview__action{background:#ffc548}
-.rental-overview__process{margin-top:36px;padding-top:28px;border-top:1px solid #e4e8e0}
+.rental-overview__card:hover .rental-overview__action{background:var(--palette-yellow-hover)}
+.rental-overview__process{margin-top:36px;padding-top:28px;border-top:1px solid var(--palette-border)}
 .rental-overview__process ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;list-style:none;margin:22px 0 0;padding:0}
 .rental-overview__process li{display:flex;align-items:flex-start;gap:14px;min-width:0}
-.rental-overview__process li>span{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;border-radius:50%;background:#fff3bc;color:#675300;font-size:12px;font-weight:600}
+.rental-overview__process li>span{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;border-radius:50%;background:var(--palette-surface);color:var(--palette-ink);font-size:12px;font-weight:600}
 .rental-overview h3{font-size:15px;line-height:23px;font-weight:600;margin:0 0 6px}
-.rental-overview__process p{font-size:13px;line-height:23px;color:#737a70;margin:0}
-.rental-overview__notice{display:flex;align-items:flex-start;gap:14px;padding:20px 22px;margin-top:30px;background:#fff9e5;border:1px solid #f1e7bd;border-radius:14px}
-.rental-overview__notice>svg{width:23px;height:23px;flex:0 0 23px;color:#8a6800}
+.rental-overview__process p{font-size:13px;line-height:23px;color:var(--palette-muted);margin:0}
+.rental-overview__notice{display:flex;align-items:flex-start;gap:14px;padding:20px 22px;margin-top:30px;background:var(--palette-surface);border:1px solid var(--palette-border);border-radius:14px}
+.rental-overview__notice>svg{width:23px;height:23px;flex:0 0 23px;color:var(--palette-ink)}
 .rental-overview__notice strong{font-size:14px;line-height:22px;font-weight:600}
-.rental-overview__notice p{font-size:12px;line-height:21px;color:#737a70;margin:5px 0 0;max-width:940px}
-.rental-overview__back{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;color:#737a70;font-size:13px;text-decoration:none}
+.rental-overview__notice p{font-size:12px;line-height:21px;color:var(--palette-muted);margin:5px 0 0;max-width:940px}
+.rental-overview__back{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;color:var(--palette-muted);font-size:13px;text-decoration:none}
 .rental-overview__back:hover{text-decoration:underline;text-underline-offset:4px}
-.rental-overview a:focus-visible{outline:2px solid #8a6800;outline-offset:4px}
+.rental-overview a:focus-visible{outline:2px solid var(--palette-ink);outline-offset:4px}
 @media(min-width:768px) and (max-width:1100px){.rental-overview__card{grid-template-columns:1fr;gap:14px;padding:20px}.rental-overview__art{height:100px}.rental-overview__art img{height:100px;max-width:120px}.rental-overview__grid{gap:16px}}
 @media(max-width:767px){
  .rental-overview{padding:20px 16px calc(30px + var(--mobile-nav-height))}

@@ -13,13 +13,13 @@
  .app-shell[data-style-check] main.review-home-v2.review-home-v2 > .review-benefits[data-benefit-style] { padding-top:12px; padding-bottom:12px; }
 }
 /* Approved option 1: a continuous white header and services closing the navigation. */
-.app-shell[data-style-check] .site-header { background:#fff; }
+.app-shell[data-style-check] .site-header { background:var(--palette-white); }
 .app-shell[data-style-check] .site-header .desktop-header .main-header-row { box-shadow:none; }
 .app-shell[data-style-check] .site-header .third-level-nav__desktop {
- border-top:1px solid #f0f0eb; border-bottom:1px solid #f0f0eb; border-radius:0; gap:0;
+ border-top:1px solid var(--palette-border); border-bottom:1px solid var(--palette-border); border-radius:0; gap:0;
 }
 .app-shell[data-style-check] .site-header .third-level-nav__desktop > nav { flex:1 1 0; min-width:0; width:auto; justify-content:flex-start; }
-.app-shell[data-style-check] .site-header .reference-third-services { margin-left:20px; padding-left:20px; border-left:1px solid #e4e6e2; }
+.app-shell[data-style-check] .site-header .reference-third-services { margin-left:20px; padding-left:20px; border-left:1px solid var(--palette-border); }
 /* Keep every desktop row on the same 1440px grid, including the pinned header. */
 .app-shell[data-style-check] .site-header .desktop-header:not(.desktop-header--compact) { max-width:var(--container); margin-inline:auto; }
 .app-shell[data-style-check] .site-header .desktop-header.desktop-header--compact .main-header-row { max-width:var(--container); margin-inline:auto; }
@@ -28,21 +28,21 @@
  border-radius:10px; cursor:pointer; transition:background-color .15s,border-color .15s,box-shadow .15s;
 }
 .app-shell[data-style-check] main.review-home-v2 .review-consultation .button.button--light {
- background:#ffcc00; border:1px solid transparent; color:#202620;
+ background:var(--palette-yellow); border:1px solid transparent; color:var(--palette-ink);
 }
-.app-shell[data-style-check] main.review-home-v2 .review-consultation .button.button--light:hover { background:#f2c200; border-color:transparent; }
-.app-shell[data-style-check] main.review-home-v2 .review-consultation .button.button--light:active { background:#e6b800; }
-.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:not(.button--light) { background:#fff; border:1px solid #cbd0c9; color:#303933; }
-.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:not(.button--light):hover { background:#fff3bf; border-color:#d5b346; }
-.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:not(.button--light):active { background:#ffe78a; border-color:#caa32b; }
-.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:focus-visible { outline:2px solid #8a6800; outline-offset:3px; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation .button.button--light:hover { background:var(--palette-yellow-hover); border-color:transparent; }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation .button.button--light:active { background:var(--palette-yellow-hover); }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:not(.button--light) { background:var(--palette-white); border:1px solid var(--palette-border); color:var(--palette-ink); }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:not(.button--light):hover { background:var(--palette-surface); border-color:var(--palette-border-hover); }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:not(.button--light):active { background:var(--palette-yellow-hover); border-color:var(--palette-border); }
+.app-shell[data-style-check] main.review-home-v2 .review-consultation .button:focus-visible { outline:2px solid var(--palette-ink); outline-offset:3px; }
 /* Hero controls: hover/focus arrows on desktop, small pagination on touch screens. */
 .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__stage { position:relative; }
 .app-shell[data-style-check] main.review-home-v2 .review-hero-arrows { position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; padding:0 10px; pointer-events:none; opacity:0; visibility:hidden; transition:opacity .18s,visibility .18s; }
-.app-shell[data-style-check] main.review-home-v2 .review-hero-arrows button { width:40px; height:40px; padding:0; display:grid; place-items:center; border:1px solid #ffffffb3; border-radius:50%; background:#ffffffd9; color:#404740; box-shadow:0 2px 10px #18232c18; backdrop-filter:blur(10px); cursor:pointer; pointer-events:auto; }
+.app-shell[data-style-check] main.review-home-v2 .review-hero-arrows button { width:40px; height:40px; padding:0; display:grid; place-items:center; border:1px solid #ffffffb3; border-radius:50%; background:#ffffffd9; color:var(--palette-ink); box-shadow:0 2px 10px rgb(36 36 36 / 0.094); backdrop-filter:blur(10px); cursor:pointer; pointer-events:auto; }
 .app-shell[data-style-check] main.review-home-v2 .review-hero-arrows svg { width:20px; height:20px; }
-.app-shell[data-style-check] main.review-home-v2 .review-hero-arrows button:hover { background:#fff; }
-.app-shell[data-style-check] main.review-home-v2 .review-hero-arrows button:focus-visible { outline:2px solid #8a6800; outline-offset:2px; }
+.app-shell[data-style-check] main.review-home-v2 .review-hero-arrows button:hover { background:var(--palette-white); }
+.app-shell[data-style-check] main.review-home-v2 .review-hero-arrows button:focus-visible { outline:2px solid var(--palette-ink); outline-offset:2px; }
 @media(min-width:768px) {
  .app-shell[data-style-check] main.review-home-v2 .review-hero:hover .review-hero-arrows,
  .app-shell[data-style-check] main.review-home-v2 .review-hero:focus-within .review-hero-arrows { opacity:1; visibility:visible; }
@@ -52,12 +52,12 @@
  .app-shell[data-style-check] main.review-home-v2 .review-hero-arrows { display:none; }
  .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination { position:static; display:flex; justify-content:center; align-items:center; gap:2px; margin:4px 0 0; min-height:20px; padding:0; }
  .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination button { position:relative; display:grid; place-items:center; width:22px; height:22px; padding:0; border:0; background:transparent; border-radius:50%; cursor:pointer; }
- .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination button::before { content:''; width:6px; height:6px; border-radius:50%; background:#d8dad7; }
- .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination button[aria-current=true]::before { background:#303630; }
+ .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination button::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--palette-border); }
+ .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination button[aria-current=true]::before { background:var(--palette-ink); }
 }
 
 /* Restore the approved header backdrop while retaining the shared container. */
-.app-shell[data-style-check] .site-header { background:#eef1f2; }
+.app-shell[data-style-check] .site-header { background:var(--palette-surface); }
 
 @media(max-width:767px) {
  .app-shell[data-style-check] main.review-home-v2 .review-hero .hero__pagination { gap:0; }
@@ -74,32 +74,32 @@
 }
 
 /* Local review: a white header with a subtle lower shadow instead of a grey surround. */
-.app-shell[data-style-check] .site-header { background:#fff; box-shadow:0 3px 14px -8px rgb(24 35 44 / .18); }
+.app-shell[data-style-check] .site-header { background:var(--palette-white); box-shadow:0 3px 14px -8px rgb(24 35 44 / .18); }
 .app-shell[data-style-check] .site-header .third-level-nav__desktop { border-top:0; border-bottom:0; }
 .app-shell[data-style-check] .site-header .desktop-header.desktop-header--compact .main-header-row { box-shadow:0 3px 14px -8px rgb(24 35 44 / .18); }
 
 /* Local review: fine contours around the white header rows. */
 .app-shell[data-style-check] .site-header .desktop-header:not(.desktop-header--compact) .main-header-row,
-.app-shell[data-style-check] .site-header .third-level-nav__desktop { outline:1px solid #e9ecec; outline-offset:-1px; border-radius:14px; box-shadow:0 2px 8px -5px rgb(24 35 44 / .12); }
+.app-shell[data-style-check] .site-header .third-level-nav__desktop { outline:1px solid var(--palette-ink); outline-offset:-1px; border-radius:14px; box-shadow:0 2px 8px -5px rgb(24 35 44 / .12); }
 
 /* Keep the soft shadow without a visible outline. */
 .app-shell[data-style-check] .site-header .desktop-header:not(.desktop-header--compact) .main-header-row,
 .app-shell[data-style-check] .site-header .third-level-nav__desktop { outline:none; }
 /* Desktop contact shortcuts are present only in the pinned header. */
 .app-shell[data-style-check] .reference-compact-contact { display:flex; flex:0 0 auto; flex-direction:column; align-items:flex-end; gap:3px; }
-.app-shell[data-style-check] .reference-compact-phone { color:#26312e; font-size:13px; line-height:18px; font-weight:700; white-space:nowrap; text-decoration:none; }
-.app-shell[data-style-check] .reference-compact-contacts { padding:2px 10px; border-radius:6px; background:#f3f5f2; color:#39413b; font-size:11px; line-height:18px; text-decoration:none; }
-.app-shell[data-style-check] .reference-compact-contacts:hover { background:#fff3bf; }
-.app-shell[data-style-check] .reference-compact-phone:hover { color:#a16a12; }
+.app-shell[data-style-check] .reference-compact-phone { color:var(--palette-ink); font-size:13px; line-height:18px; font-weight:700; white-space:nowrap; text-decoration:none; }
+.app-shell[data-style-check] .reference-compact-contacts { padding:2px 10px; border-radius:6px; background:var(--palette-surface); color:var(--palette-ink); font-size:11px; line-height:18px; text-decoration:none; }
+.app-shell[data-style-check] .reference-compact-contacts:hover { background:var(--palette-surface); }
+.app-shell[data-style-check] .reference-compact-phone:hover { color:var(--palette-muted); }
 @media(min-width:768px) and (max-width:1100px) { .app-shell[data-style-check] .site-header .desktop-header--compact .main-header-row { gap:8px; } .app-shell[data-style-check] .reference-compact-phone { font-size:12px; } }
 
 @media(max-width:1023px) { .app-shell[data-style-check] .reference-compact-contact { display:none; } }
-.app-shell[data-style-check] .reference-contact-tile { flex-direction:row; align-items:center; gap:8px; padding:7px 10px; border-radius:10px; background:#fff3bf; color:#303933; text-decoration:none; white-space:nowrap; }
+.app-shell[data-style-check] .reference-contact-tile { flex-direction:row; align-items:center; gap:8px; padding:7px 10px; border-radius:10px; background:var(--palette-surface); color:var(--palette-ink); text-decoration:none; white-space:nowrap; }
 .app-shell[data-style-check] .reference-contact-tile > .review-rounded-icon { width:20px; height:20px; flex-shrink:0; }
 .app-shell[data-style-check] .reference-contact-tile > span { display:flex; flex-direction:column; font-size:12px; line-height:17px; }
 .app-shell[data-style-check] .reference-contact-tile strong { font-weight:650; }
-.app-shell[data-style-check] .reference-contact-tile:hover { background:#ffe78a; }
-.app-shell[data-style-check] .reference-contact-tile:focus-visible { outline:2px solid #8a6800; outline-offset:2px; }
+.app-shell[data-style-check] .reference-contact-tile:hover { background:var(--palette-yellow-hover); }
+.app-shell[data-style-check] .reference-contact-tile:focus-visible { outline:2px solid var(--palette-ink); outline-offset:2px; }
 
 /* Compact counters stay attached to their icon buttons. */
 .app-shell[data-style-check] .site-header .desktop-header--compact .header-action b { left:auto; right:0; top:-2px; width:18px; height:18px; min-width:18px; padding:0; font-size:9px; line-height:14px; }

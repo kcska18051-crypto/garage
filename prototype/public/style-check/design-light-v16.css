@@ -14,7 +14,7 @@
 .app-shell[data-style-check] main.review-home-v2 .review-cart-label { font-weight: 500; }
 .app-shell[data-style-check] main.review-home-v2 .brand-grid > a,
 .app-shell[data-style-check] main.review-home-v2 .brand-grid > a:hover { border: 0; outline: 0; box-shadow: none; background: transparent; border-radius: 0; min-height: 72px; padding: 12px; }
-.app-shell[data-style-check] main.review-home-v2 .brand-grid > a:focus-visible { outline: 2px solid #9a6500; outline-offset: -2px; }
+.app-shell[data-style-check] main.review-home-v2 .brand-grid > a:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: -2px; }
 .app-shell[data-style-check] main.review-home-v2 .review-benefits { gap: 12px; }
 .app-shell[data-style-check] main.review-home-v2 .review-benefits article { padding: 18px; border-radius: 12px; gap: 12px; }
 .app-shell[data-style-check] main.review-home-v2 .review-benefits h2 { font-size: 16px; line-height: 22px; font-weight: 500; margin-bottom: 6px; }
@@ -59,7 +59,7 @@
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent,
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent.active,
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent:is(:hover,:active,:focus-visible),
-.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:is(:hover,:active,:focus-visible) { background: transparent; border-color: transparent; box-shadow: none; color: #c92f29; }
+.app-shell[data-style-check] .site-header .third-level-nav__link--accent.active:is(:hover,:active,:focus-visible) { background: transparent; border-color: transparent; box-shadow: none; color: var(--palette-red-hover); }
 .app-shell[data-style-check] .site-header .third-level-nav__link--accent::before { content: none; }
 /* Navigation hierarchy: regular categories, bold promotions only. */
 .app-shell[data-style-check] .site-header :is(.third-level-nav,.third-level-nav__mobile) .third-level-nav__link { font-weight: 400; }
@@ -69,18 +69,18 @@
 .app-shell[data-style-check] main.review-home-v2 .product-showcase::before { content: none; }
 /* Give the collection frame breathing room rather than removing its grouping. */
 .app-shell[data-style-check] main.review-home-v2 .product-showcase { padding: 36px 40px; }
-.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { content: ''; inset: 0 8px; background: #f7f7f6; border: 0; border-radius: 18px; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { content: ''; inset: 0 8px; background: var(--palette-surface); border: 0; border-radius: 18px; }
 @media (max-width: 767px) {
  .app-shell[data-style-check] main.review-home-v2 .product-showcase { padding: 24px 20px; }
  .app-shell[data-style-check] main.review-home-v2 .product-showcase::before { inset: 0 6px; border-radius: 14px; }
 }
 /* Hoff-inspired demo: an open carousel over a quiet graphic surface. */
 .app-shell[data-style-check] main.review-home-v2 .product-showcase { overflow: hidden; }
-.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { background: radial-gradient(ellipse at 0 100%, #eaeae8 0 58%, transparent 58.2%), #f5f5f4; }
-.app-shell[data-style-check] main.review-home-v2 .product-grid { margin-inline: -16px; padding: 0 16px 18px; scrollbar-width: thin; scrollbar-color: #a8a8a4 #e7e7e4; scroll-padding-inline: 16px; scroll-snap-type: x mandatory; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { background: radial-gradient(ellipse at 0 100%, var(--palette-surface) 0 58%, transparent 58.2%), var(--palette-surface); }
+.app-shell[data-style-check] main.review-home-v2 .product-grid { margin-inline: -16px; padding: 0 16px 18px; scrollbar-width: thin; scrollbar-color: var(--palette-muted) var(--palette-border); scroll-padding-inline: 16px; scroll-snap-type: x mandatory; }
 .app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar { display: block; height: 3px; }
-.app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar-track { background: #e7e7e4; }
-.app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar-thumb { background: #a8a8a4; border-radius: 3px; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar-track { background: var(--palette-surface); }
+.app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar-thumb { background: var(--palette-muted); border-radius: 3px; }
 .app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { border: 0; border-radius: 8px; }
 @media (min-width: 1024px) {
  .app-shell[data-style-check] main.review-home-v2 .product-grid { grid-auto-columns: calc((100% - 60px) / 5.25); }
@@ -90,7 +90,7 @@
 }
 /* Uniform collection surface and equal inset on all four edges. */
 .app-shell[data-style-check] main.review-home-v2 .product-showcase { margin-inline: 8px; padding: 24px; }
-.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { inset: 0; background: #f5f5f4; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase::before { inset: 0; background: var(--palette-surface); }
 .app-shell[data-style-check] main.review-home-v2 .product-grid { margin: 0; padding: 0; scroll-padding-inline: 0; }
 .app-shell[data-style-check] main.review-home-v2 .product-grid::-webkit-scrollbar { height: 3px; }
 @media (max-width: 767px) {
@@ -107,7 +107,7 @@
 .app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:first-of-type { left: 4px; }
 .app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:last-of-type { right: 4px; }
 .app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:hover { background: rgb(255 255 255 / .85); }
-.app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:focus-visible { outline: 2px solid #9a6500; outline-offset: 2px; }
+.app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 2px; }
 @media (max-width: 767px) {
  .app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button { width: 36px; height: 36px; }
 }
@@ -120,9 +120,9 @@
 .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom strong { font-size: 21px; line-height: 27px; font-weight: 600; }
 .app-shell[data-style-check] main.review-home-v2 .product-teaser__name { order: 2; min-height: 40px; font-size: 14px; line-height: 20px; -webkit-line-clamp: 2; }
 .app-shell[data-style-check] main.review-home-v2 :is(.product-teaser__sku,.product-teaser__availability) { display: none; }
-.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating { order: 3; display: flex; align-items: center; gap: 5px; color: #858580; font-size: 12px; line-height: 18px; margin: 10px 0 12px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating { order: 3; display: flex; align-items: center; gap: 5px; color: var(--palette-muted); font-size: 12px; line-height: 18px; margin: 10px 0 12px; }
 .app-shell[data-style-check] main.review-home-v2 .product-teaser__rating svg { flex-shrink: 0; }
-.app-shell[data-style-check] main.review-home-v2 .promotion-badge { top: 10px; left: 10px; padding: 5px 9px; border: 1px solid rgb(255 255 255 / .8); border-radius: 8px; background: rgb(201 47 41 / .77); color: #fff; backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); box-shadow: 0 2px 8px rgb(135 24 24 / .09); }
+.app-shell[data-style-check] main.review-home-v2 .promotion-badge { top: 10px; left: 10px; padding: 5px 9px; border: 1px solid rgb(255 255 255 / .8); border-radius: 8px; background: rgb(201 47 41 / .77); color: var(--palette-white); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); box-shadow: 0 2px 8px rgb(135 24 24 / .09); }
 .app-shell[data-style-check] main.review-home-v2 .product-teaser__actions { flex-direction: column; gap: 4px; top: 8px; right: 8px; }
 .app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button { width: 32px; height: 32px; border-color: transparent; background: rgb(255 255 255 / .8); }
 .app-shell[data-style-check] main.review-home-v2 .product-teaser__cart { order: 4; width: 100%; flex: 0 0 40px; min-height: 40px; margin-top: auto; border-radius: 8px; opacity: 1; pointer-events: auto; }
@@ -176,7 +176,7 @@
 /* Orange selected actions without circular borders or tinted discs. */
 .app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button,
 .app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button[aria-pressed=true] { border: 0; background: transparent; box-shadow: none; }
-.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button[aria-pressed=true] { color: #e87817; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__actions button[aria-pressed=true] { color: var(--palette-muted); }
 .app-shell[data-style-check] main.review-home-v2 .product-showcase .rail-actions > button { border: 0; box-shadow: 0 3px 12px rgb(25 25 25 / .07); }
 /* News controls stay fully inside the image edges, symmetrically centred. */
 .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control { top: 72px; width: 40px; height: 40px; transform: translateY(-50%); border: 0; background: rgb(255 255 255 / .7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 3px 12px rgb(25 25 25 / .08); }
@@ -204,9 +204,9 @@
  .app-shell[data-style-check] main.review-home-v2 .product-teaser__bottom { height: 44px; min-height: 44px; flex-basis: 44px; }
 }
 /* Fine card outlines and sample reviews on the first three cards per shelf. */
-.app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { border: 1px solid #e7e7e5; border-radius: 16px; }
-.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating svg { color: #c92f29; }
-.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating-score { color: #343432; font-weight: 500; }
+.app-shell[data-style-check] main.review-home-v2 .product-grid > .product-teaser { border: 1px solid var(--palette-border); border-radius: 16px; }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating svg { color: var(--palette-red); }
+.app-shell[data-style-check] main.review-home-v2 .product-teaser__rating-score { color: var(--palette-ink); font-weight: 500; }
 /* Hide rail scrollbars while keeping native scrolling and arrow controls. */
 .app-shell[data-style-check] main.review-home-v2 :is(.product-grid,.brand-grid,.useful-grid,.compact-banner-group) { scrollbar-width: none; }
 .app-shell[data-style-check] main.review-home-v2 :is(.product-grid,.brand-grid,.useful-grid,.compact-banner-group)::-webkit-scrollbar { display: none; width: 0; height: 0; }
@@ -214,7 +214,7 @@
 .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control { background: rgb(255 255 255 / .86); }
 .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--previous { left: -20px; right: auto; }
 .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--next { right: -20px; left: auto; }
-.app-shell[data-style-check] main.review-home-v2 .useful-grid__art b { background: #e87817; }
+.app-shell[data-style-check] main.review-home-v2 .useful-grid__art b { background: var(--palette-yellow); }
 @media (max-width: 767px) {
  .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--previous { left: -10px; }
  .app-shell[data-style-check] main.review-home-v2 .useful-rail > .useful-rail__control--next { right: -10px; }
@@ -237,7 +237,7 @@
 .app-shell[data-style-check], .app-shell[data-style-check] :is(button,input,textarea,select) { font-family: 'Manrope', sans-serif; }
 .app-shell[data-style-check] main.review-home-v2 .services .service-banner { display: block; overflow: hidden; border-radius: 16px; line-height: 0; }
 .app-shell[data-style-check] main.review-home-v2 .services .service-banner img { display: block; width: 100%; height: auto; }
-.app-shell[data-style-check] main.review-home-v2 .services .service-banner:focus-visible { outline: 2px solid #9a6500; outline-offset: 3px; }
+.app-shell[data-style-check] main.review-home-v2 .services .service-banner:focus-visible { outline: 2px solid var(--palette-ink); outline-offset: 3px; }
 @media (max-width:767px) { .app-shell[data-style-check] main.review-home-v2 .services .review-feature-grid { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; } .app-shell[data-style-check] main.review-home-v2 .services .service-banner { flex: 0 0 92%; scroll-snap-align: start; } }
 .app-shell[data-style-check] main.review-home-v2 .services .review-feature-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
 .app-shell[data-style-check] main.review-home-v2 .services .service-banner { min-width: 0; }

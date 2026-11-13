@@ -11,8 +11,8 @@
 .catalog-mega__layout { display: grid; grid-template-columns: minmax(13rem, .29fr) minmax(0, 1fr); min-height: 0; }
 .catalog-mega__roots { background: var(--color-background); border-right: 1px solid var(--color-border); overflow-y: auto; overscroll-behavior: contain; padding: .75rem; }
 .catalog-mega__roots button { align-items: center; border-radius: .5rem; display: flex; font-size: .9rem; font-weight: 650; gap: 1rem; justify-content: space-between; min-height: 3.4rem; overflow-wrap: anywhere; padding: .85rem .75rem; width: 100%; }
-.catalog-mega__roots button[aria-pressed=true] { background: #ffcc00; color: #29312c; }
-.catalog-mega__roots button:hover:not([aria-pressed=true]) { background: #fff9e4; }
+.catalog-mega__roots button[aria-pressed=true] { background: var(--palette-yellow); color: var(--palette-ink); }
+.catalog-mega__roots button:hover:not([aria-pressed=true]) { background: var(--palette-surface); }
 .catalog-mega__details { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1.4rem 1.7rem 1.8rem; }
 .catalog-mega h2 { font-size: 1.5rem; line-height: 1.2; margin: 0 0 .7rem; overflow-wrap: anywhere; }
 .catalog-mega__all { display: inline-block; font-size: .88rem; margin-bottom: 1.5rem; text-decoration: underline !important; text-underline-offset: .2rem; }
@@ -22,7 +22,7 @@
 .catalog-mega__group ul { display: grid; gap: .6rem; list-style: none; margin: .75rem 0 0; padding: 0; }
 .catalog-mega__group li a { color: var(--color-text-muted); display: block; font-size: .82rem; line-height: 1.45; overflow-wrap: anywhere; }
 .catalog-mega :is(button,a):focus-visible, .catalog-button:focus-visible { outline: 2px solid var(--color-text); outline-offset: 3px; }
-.catalog-mega__roots button[aria-pressed=true]:focus-visible { outline-offset: -4px; outline-color: #8a6800; }
+.catalog-mega__roots button[aria-pressed=true]:focus-visible { outline-offset: -4px; outline-color: var(--palette-ink); }
 @media (min-width:768px) and (max-width:1199px) { .catalog-mega__groups { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width:767px) {
   .catalog-menu-backdrop { inset: 0; }
@@ -36,22 +36,22 @@
 .catalog-overlay-open { overflow: hidden; }
 
 /* The catalog is portalled outside the app shell, so its approved styles live here. */
-.catalog-menu-layer { font-family: 'Manrope', sans-serif; color: #29312c; }
-.catalog-mega { background: #fff; border-color: #eef0ec; box-shadow: 0 12px 32px rgb(41 49 44 / .12); }
-.catalog-mega__toolbar { border-color: #eef0ec; }
-.catalog-mega__toolbar a { color: #29312c; font-weight: 600; }
-.catalog-mega__roots { background: #fff; border-color: #eef0ec; }
+.catalog-menu-layer { font-family: 'Manrope', sans-serif; color: var(--palette-ink); }
+.catalog-mega { background: var(--palette-white); border-color: var(--palette-border); box-shadow: 0 12px 32px rgb(41 49 44 / .12); }
+.catalog-mega__toolbar { border-color: var(--palette-border); }
+.catalog-mega__toolbar a { color: var(--palette-ink); font-weight: 600; }
+.catalog-mega__roots { background: var(--palette-white); border-color: var(--palette-border); }
 .catalog-mega__roots button { justify-content: flex-start; gap: 12px; border-radius: 10px; font-size: 14px; line-height: 20px; font-weight: 500; }
 .catalog-mega__root-label { flex: 1; min-width: 0; }
 .catalog-category-icon { display: block; width: 22px; height: 22px; flex: 0 0 22px; }
-.catalog-mega__root-arrow { display: block; width: 18px; height: 18px; flex: 0 0 18px; color: #81887f; }
+.catalog-mega__root-arrow { display: block; width: 18px; height: 18px; flex: 0 0 18px; color: var(--palette-muted); }
 .catalog-mega__roots button[aria-pressed=true] .catalog-mega__root-arrow { color: inherit; }
-.catalog-mega h2 { color: #29312c; font-weight: 600; letter-spacing: -.5px; }
-.catalog-mega__group-title { color: #29312c; font-weight: 600; }
-.catalog-mega__all { color: #6d612b; }
-.catalog-mega__group li a { color: #737a70; }
-.catalog-mega__details a:hover { color: #8a6800; }
-.catalog-mega :is(button,a):focus-visible { outline-color: #8a6800; }
+.catalog-mega h2 { color: var(--palette-ink); font-weight: 600; letter-spacing: -.5px; }
+.catalog-mega__group-title { color: var(--palette-ink); font-weight: 600; }
+.catalog-mega__all { color: var(--palette-ink); }
+.catalog-mega__group li a { color: var(--palette-muted); }
+.catalog-mega__details a:hover { color: var(--palette-ink); }
+.catalog-mega :is(button,a):focus-visible { outline-color: var(--palette-ink); }
 @media (max-width: 767px) {
   .catalog-mega__step { justify-content: flex-start; }
   .catalog-mega__step > span { margin-left: auto; }

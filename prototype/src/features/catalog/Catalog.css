@@ -90,15 +90,15 @@
 .catalog-related-brands a, .catalog-siblings a { border: 1px solid var(--color-border); border-radius: 999px; padding: .65rem .9rem; text-decoration: none; }
 .catalog-related-brands small { color: var(--color-text-muted); margin-left: .4rem; }
 .catalog-siblings { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
-.catalog-tags { background: #292927; border-radius: var(--radius-lg); color: white; display: grid; gap: 2rem; grid-template-columns: .7fr 2fr; margin: 2rem 0; padding: clamp(1.5rem, 4vw, 3.5rem); }
+.catalog-tags { background: var(--palette-ink); border-radius: var(--radius-lg); color: white; display: grid; gap: 2rem; grid-template-columns: .7fr 2fr; margin: 2rem 0; padding: clamp(1.5rem, 4vw, 3.5rem); }
 .catalog-tags__heading h2 { font-size: clamp(1.8rem, 3vw, 3rem); letter-spacing: -.04em; line-height: 1; margin: .5rem 0; }
 .catalog-tags__groups { display: grid; gap: 1.5rem; grid-template-columns: 1fr 1fr; }
 .catalog-tag-group h3 { font-size: .8rem; margin: 0 0 .7rem; }
 .catalog-tag-group > div { display: flex; flex-wrap: wrap; gap: .4rem; }
-.catalog-tag-group button { background: transparent; border: 1px solid #686863; border-radius: 999px; color: white; cursor: pointer; padding: .55rem .75rem; }
+.catalog-tag-group button { background: transparent; border: 1px solid var(--palette-ink); border-radius: 999px; color: white; cursor: pointer; padding: .55rem .75rem; }
 .catalog-tag-group button[aria-pressed="true"] { background: white; color: var(--color-text); }
 .catalog-tag-group button small { margin-left: .45rem; opacity: .65; }
-.catalog-tag-group .catalog-tags__more { border: 0; color: #cfcfca; font-size: .72rem; margin-top: .5rem; padding-inline: 0; text-decoration: underline; }
+.catalog-tag-group .catalog-tags__more { border: 0; color: var(--palette-border-hover); font-size: .72rem; margin-top: .5rem; padding-inline: 0; text-decoration: underline; }
 .catalog-listing-placeholder { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); margin-top: 2rem; min-height: 18rem; padding: clamp(1.5rem, 4vw, 4rem); }
 .catalog-listing-placeholder h2 { font-size: clamp(2rem, 4vw, 4rem); margin: .4rem 0; }
 .catalog-listing-placeholder p:last-child { color: var(--color-text-muted); max-width: 42rem; }
@@ -172,7 +172,7 @@
 .catalog-product-card dt { color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .catalog-product-card dd { margin: 0; text-align: right; }
 .catalog-product-card__availability { color: var(--color-text-muted); display: grid; font-size: .7rem; grid-template-columns: auto 1fr; margin: .3rem 0 1rem; }
-.catalog-product-card__availability > span { background: #6f6f69; border-radius: 50%; height: .45rem; margin: .3rem .4rem 0 0; width: .45rem; }
+.catalog-product-card__availability > span { background: var(--palette-muted); border-radius: 50%; height: .45rem; margin: .3rem .4rem 0 0; width: .45rem; }
 .catalog-product-card__availability small { grid-column: 2; }
 .catalog-product-card__bottom { align-items: end; display: flex; gap: .5rem; justify-content: space-between; margin-top: auto; }
 .catalog-product-card__bottom > div { display: grid; }
@@ -233,11 +233,11 @@
 @media (hover: hover) and (pointer: fine) {
   .catalog-root-card { transition: border-color .2s ease, box-shadow .2s ease; }
   .catalog-root-card__art { transition: transform .2s ease; }
-  .catalog-root-card:hover { border-color: #9c9c96; box-shadow: 0 .8rem 2rem rgb(32 32 30 / .06); }
+  .catalog-root-card:hover { border-color: var(--palette-border-hover); box-shadow: 0 .8rem 2rem rgb(32 32 30 / .06); }
   .catalog-root-card:hover .catalog-root-card__art { transform: translateY(-.25rem) scale(1.04); }
   .catalog-subcategory-card { transition: border-color .2s ease, box-shadow .2s ease; }
   .catalog-subcategory-card__art { transition: transform .2s ease; }
-  .catalog-subcategory-card:hover { border-color: #9c9c96; box-shadow: 0 .6rem 1.5rem rgb(32 32 30 / .06); }
+  .catalog-subcategory-card:hover { border-color: var(--palette-border-hover); box-shadow: 0 .6rem 1.5rem rgb(32 32 30 / .06); }
   .catalog-subcategory-card:hover .catalog-subcategory-card__art { transform: scale(1.04); }
   .catalog-root-row:hover, .catalog-section-row:hover { background: var(--color-placeholder-1); }
 }

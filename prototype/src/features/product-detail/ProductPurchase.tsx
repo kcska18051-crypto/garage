@@ -22,7 +22,7 @@ export function GalleryPurchasePanel({ offer, state, quantity }: { offer: Produc
   return <aside className="gallery-purchase" aria-label="Покупка в увеличенном просмотре">
     <small>Артикул {offer.sku}</small><h3>{productDetail.name}</h3><strong>{money(offer.price)}</strong>
     <p className={`product-status product-status--${current.tone}`}><i aria-hidden="true" />{current.label}</p>
-    <button className="button button--dark" type="button" disabled={state !== 'available'} onClick={() => commerce.addToCart(offer.id,quantity)}>{state === 'available' ? 'В корзину' : current.action}</button>
+    <button className="button button--dark" data-action-tone={state === 'available' ? 'purchase' : 'request'} type="button" disabled={state !== 'available'} onClick={() => commerce.addToCart(offer.id,quantity)}>{state === 'available' ? 'В корзину' : current.action}</button>
   </aside>
 }
 
@@ -42,8 +42,8 @@ export function ProductPurchase({ offer, state, onStateChange, quantity, onQuant
   return <aside className="product-purchase-shell" aria-label="Покупка товара">
     <div className="product-purchase product-purchase__box">
     <div className="product-purchase__price"><del>{money(offer.oldPrice)}</del><strong>{money(offer.price)}</strong><span>Выгода {money(saving)}</span></div>
-    {state === 'available' && <div className="product-purchase__buy-row"><div className="product-quantity" aria-label="Количество товара"><button type="button" aria-label="Уменьшить количество" onClick={() => onQuantityChange(Math.max(1, quantity - 1))}>−</button><output>{quantity}</output><button type="button" aria-label="Увеличить количество" onClick={() => onQuantityChange(Math.min(999, quantity + 1))}>+</button></div><button className="button button--dark" type="button" onClick={primaryAction}>{inCart ? 'В корзине' : current.action}</button></div>}
-    {state !== 'available' && <button className="button button--dark" type="button" onClick={primaryAction}>{current.action}</button>}
+    {state === 'available' && <div className="product-purchase__buy-row"><div className="product-quantity" aria-label="Количество товара"><button type="button" aria-label="Уменьшить количество" onClick={() => onQuantityChange(Math.max(1, quantity - 1))}>−</button><output>{quantity}</output><button type="button" aria-label="Увеличить количество" onClick={() => onQuantityChange(Math.min(999, quantity + 1))}>+</button></div><button className="button button--dark" data-action-tone={state === 'available' ? 'purchase' : 'request'} type="button" onClick={primaryAction}>{inCart ? 'В корзине' : current.action}</button></div>}
+    {state !== 'available' && <button className="button button--dark" data-action-tone="request" type="button" onClick={primaryAction}>{current.action}</button>}
     {(state === 'available' || state === 'order') && <button className="button" type="button" onClick={() => setFeedback('Быстрый заказ подготовлен. Менеджер свяжется для подтверждения.')}>Купить в один клик</button>}
 
     <div className="product-finance" aria-label="Способы финансирования">{['Купить в кредит', 'В рассрочку', 'В лизинг'].map((label) => <button type="button" key={label} aria-label={label} onClick={() => setFeedback(`${label}: условия будут рассчитаны после подтверждения данных.`)}><span aria-hidden="true">○</span>{label}<small>Условия уточняются</small></button>)}</div>
@@ -68,5 +68,5 @@ export function ProductPurchase({ offer, state, onStateChange, quantity, onQuant
 export function ProductMobilePurchase({ offer, state, quantity }: { offer: ProductOffer; state: CommercialState; quantity:number }) {
   const commerce = useCommerce()
   const current = stateMap[state]
-  return <div className="product-mobile-purchase"><div><small>{current.label}</small><strong>{money(offer.price)}</strong></div><button className="button button--dark" type="button" onClick={() => state === 'available' ? commerce.addToCart(offer.id,quantity) : document.querySelector('.product-purchase')?.scrollIntoView()}>{state === 'available' && commerce.cartIds.has(offer.id) ? 'В корзине' : current.action}</button></div>
+  return <div className="product-mobile-purchase"><div><small>{current.label}</small><strong>{money(offer.price)}</strong></div><button className="button button--dark" data-action-tone={state === 'available' ? 'purchase' : 'request'} type="button" onClick={() => state === 'available' ? commerce.addToCart(offer.id,quantity) : document.querySelector('.product-purchase')?.scrollIntoView()}>{state === 'available' && commerce.cartIds.has(offer.id) ? 'В корзине' : current.action}</button></div>
 }

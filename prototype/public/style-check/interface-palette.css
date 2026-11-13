@@ -1,0 +1,171 @@
+/* Shared action roles, loaded after the historical approved-homepage cascade.
+   Important declarations below own color only: page geometry remains local. */
+
+/* Secondary actions stay neutral, including on hover. */
+body :where(.app-shell,.approved-dialog,.product-modal--proposal) :where(
+  .button:not(.button--dark):not(.button--light),
+  .profile-button:not(.profile-button--primary):not(.profile-button--danger),
+  .checkout-secondary-button,.pickup-card__details,
+  .checkout-delivery-panel>button,.cart-promo button,
+  .share-cart-dialog__actions>a
+) {
+  background: var(--palette-white) !important;
+  color: var(--palette-ink) !important;
+  border-color: var(--palette-border) !important;
+}
+body :where(.app-shell,.approved-dialog,.product-modal--proposal) :where(
+  .button:not(.button--dark):not(.button--light),
+  .profile-button:not(.profile-button--primary):not(.profile-button--danger),
+  .checkout-secondary-button,.pickup-card__details,
+  .checkout-delivery-panel>button,.cart-promo button,
+  .share-cart-dialog__actions>a
+):hover:not(:disabled) {
+  background: var(--palette-white) !important;
+  border-color: var(--palette-border-hover) !important;
+}
+
+/* Navigation, service requests, account actions and quotations. */
+body :where(
+  .catalog-button,.search-box button[type=submit],.search-results__form button,.not-found-page__catalog,
+  .button--dark,.button--light,.profile-button--primary,
+  .screw-service__button,.service-hub__button,.paint-editorial__button,
+  .paint-service-button,.paint-direction-more,.rental-equipment__button,
+  .compressor-overview__button,.compressor-overview__action,
+  .service-direction-more,.rental-overview__button,
+  .brand-detail-cta,.brands-list__empty button,.compare-preview__cta,
+  .repair-center-actions button,.store-contact-action,
+  .contacts-request .button--dark,.action-detail-actions .button,
+  .cart-recipient>.button,.checkout-auth-notice>.button,
+  .checkout-success-page .success-actions .button:first-child,
+  .region-confirmation__yes,.cookie-banner__actions .button,
+  .catalog-mobile-filter-button,.catalog-filter-drawer footer .button,
+  .product-teaser__quote,.catalog-rich-card__quote,
+  .rental-availability>button,
+  .approved-dialog button[type=submit],
+  .approved-dialog .share-cart-dialog__actions>button
+) {
+  background: var(--palette-yellow) !important;
+  color: var(--palette-ink) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+body :where(
+  .catalog-button,.search-box button[type=submit],.search-results__form button,.not-found-page__catalog,
+  .button--dark,.button--light,.profile-button--primary,
+  .screw-service__button,.service-hub__button,.paint-editorial__button,
+  .paint-service-button,.paint-direction-more,.rental-equipment__button,
+  .compressor-overview__button,.compressor-overview__action,
+  .service-direction-more,.rental-overview__button,
+  .brand-detail-cta,.brands-list__empty button,.compare-preview__cta,
+  .repair-center-actions button,.store-contact-action,
+  .contacts-request .button--dark,.action-detail-actions .button,
+  .cart-recipient>.button,.checkout-auth-notice>.button,
+  .checkout-success-page .success-actions .button:first-child,
+  .region-confirmation__yes,.cookie-banner__actions .button,
+  .catalog-mobile-filter-button,.catalog-filter-drawer footer .button,
+  .product-teaser__quote,.catalog-rich-card__quote,
+  .rental-availability>button,
+  .approved-dialog button[type=submit],
+  .approved-dialog .share-cart-dialog__actions>button
+):hover:not(:disabled) {
+  background: var(--palette-yellow-hover) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Purchase is the only persistent red filled action. */
+body :where(
+  .product-teaser__cart,.catalog-rich-card__cart,.compare-card__cart,
+  .extra-card__cart,.line-accessories article>button,
+  .checkout-sticky,.checkout-submit,.mobile-checkout-hint button,
+  [data-action-tone=purchase]
+) {
+  background: var(--palette-red) !important;
+  color: var(--palette-white) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+body :where(
+  .product-teaser__cart,.catalog-rich-card__cart,.compare-card__cart,
+  .extra-card__cart,.line-accessories article>button,
+  .checkout-sticky,.checkout-submit,.mobile-checkout-hint button,
+  [data-action-tone=purchase]
+):hover:not(:disabled) {
+  background: var(--palette-red-hover) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Selected options are white with a yellow edge, not beige filled buttons. */
+body :where(
+  .product-variant-group button[aria-pressed=true],
+  .checkout-delivery-tabs button[aria-selected=true],
+  .checkout-saved-addresses button.is-selected,
+  .checkout-payment.is-selected,
+  .contact-dialog__reply label:has(input:checked)
+) {
+  background: var(--palette-white) !important;
+  border-color: var(--palette-yellow) !important;
+  color: var(--palette-ink) !important;
+}
+body :where(
+  .profile-tabs button[aria-selected=true],.profile-tabs button[aria-pressed=true],
+  .compare-tabs button[aria-selected=true],.contacts-city-tabs button[aria-selected=true],
+  .action-product-tabs button[aria-pressed=true],
+  .checkout-customer-tabs button[aria-selected=true],
+  .brands-controls button[aria-pressed=true],
+  .auth-methods button[aria-pressed=true],
+  .profile-help-categories button[aria-pressed=true]
+) {
+  background: var(--palette-white) !important;
+  color: var(--palette-ink) !important;
+  border-color: transparent !important;
+  box-shadow: inset 0 -2px var(--palette-yellow) !important;
+}
+body .profile-nav a.active {
+  background: var(--palette-surface);
+  color: var(--palette-ink);
+  box-shadow: inset 3px 0 var(--palette-yellow);
+}
+
+/* Quiet surfaces; a small yellow icon carries the accent. */
+body :where(.screw-service__closing,.service-hub__closing,.compressor-overview__help,
+  .brand-benefits article,.review-benefits[data-benefit-style] article,
+  .review-about-fact) {
+  background: var(--palette-surface) !important;
+  border-color: var(--palette-border) !important;
+}
+body :where(.review-benefit-icon,.review-about-fact__icon,.screw-service__list-icon,
+  .screw-service__step,.screw-service__closing-icon,.brand-benefits article>span) {
+  background: var(--palette-yellow) !important;
+  color: var(--palette-ink) !important;
+}
+body :where(.reference-desktop-services,.reference-third-services)>a {
+  background: var(--palette-surface) !important;
+  color: var(--palette-ink) !important;
+  border-color: transparent !important;
+}
+body :where(.reference-desktop-services,.reference-third-services)>a:hover {
+  background: var(--palette-yellow-hover) !important;
+}
+body :where(.approved-dialog,.app-shell main) :where(input,textarea,select):focus {
+  outline-color: var(--palette-ink);
+}
+body :where(.approved-dialog,.site-header,.app-shell main,.mobile-bottom-nav,.cookie-banner)
+  :where(a,button,input,select,textarea):focus-visible {
+  outline: 2px solid var(--palette-ink) !important;
+  outline-offset: 3px;
+}
+body :where(.approved-dialog,.site-header,.app-shell main,.cookie-banner)
+  input:where([type=checkbox],[type=radio]) { accent-color: var(--palette-yellow); }
+
+/* Footer redesign is deferred. Preserve its inherited legacy palette. */
+.site-footer {
+  --color-background: #f4f4f2;
+  --color-surface: #fff;
+  --color-surface-subtle: #ececea;
+  --color-border: #d7d7d3;
+  --color-text: #20201e;
+  --color-text-muted: #676763;
+  --color-focus: #9a6500;
+}

@@ -2,7 +2,7 @@
 .app-shell[data-style-check] main.review-home-v2 .popular-categories .category-art-grid { grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px; }
 .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-art-card {
   padding:0; min-height:0; gap:0; border:0; display:block; aspect-ratio:1.16;
-  border-radius:12px; background:#f3f5f5; overflow:hidden; box-shadow:0 4px 12px #24362909;
+  border-radius:12px; background:var(--palette-surface); overflow:hidden; box-shadow:0 4px 12px rgb(36 36 36 / 0.035);
 }
 .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-art-card::before,
 .app-shell[data-style-check] main.review-home-v2 .popular-categories[data-category-style] .category-art-card::after { content:none; }

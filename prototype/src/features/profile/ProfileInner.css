@@ -20,7 +20,7 @@
 .profile-page .profile-button--danger:active:not(:disabled){background:var(--palette-red-hover);border-color:transparent;color:var(--palette-white)}
 .profile-page button:disabled{opacity:.45;cursor:not-allowed}
 .profile-page .profile-link-button{font-size:12px;line-height:20px;font-weight:500;color:var(--palette-ink);padding:5px 0;min-height:30px;text-decoration:none}
-.profile-page .profile-link-button:hover{text-decoration:underline}
+.profile-page .profile-link-button:hover{text-decoration:none;color:var(--palette-red)}
 .profile-page .profile-actions{gap:10px}
 .profile-page .profile-info,.profile-page .profile-warning{background:var(--palette-surface);border-radius:10px;padding:12px 14px;font-size:13px;line-height:22px;color:var(--palette-muted);margin:0}
 .profile-page .profile-status{display:inline-flex!important;align-items:center;gap:6px;background:var(--palette-surface);color:var(--palette-ink);border-radius:7px;padding:4px 8px;font-size:12px;line-height:19px;max-width:100%;width:max-content;white-space:normal}

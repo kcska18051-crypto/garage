@@ -9,10 +9,18 @@ body :where(button:disabled,[aria-disabled=true]) { cursor: not-allowed; }
   body main a[href]:not([class]):not(:has(img,svg)):hover,
   body .approved-dialog a[href]:not([class]):not(:has(img,svg)):hover,
   body :is(.rental-equipment__text-link,.brand-back,.material-back,.action-back,
-    .profile-back,.actions-secondary-link,.product-identity__brand,.product-all-specs,
+    .profile-back,.profile-link-button,.actions-secondary-link,.product-identity__brand,.product-all-specs,
     .store-contact-email,.map-attribution,.pickup-details__route,.footer-phone,.footer-email,
     .site-footer__legal a,.site-footer__legal button,.service-hub__text-action):hover {
     color: var(--palette-red) !important;
+  }
+  /* Inline actions respond as text, never as square gray buttons. */
+  body :is(.profile-link-button,.rental-equipment__text-link,.brand-back,
+    .material-back,.action-back,.profile-back,.actions-secondary-link,
+    .product-identity__brand,.product-all-specs,.service-hub__text-action,.about-more):hover:not(:disabled):not([aria-disabled=true]) {
+    color: var(--palette-red) !important;
+    background-color: transparent !important;
+    text-decoration: none !important;
   }
   body main a.active:hover { background-color: var(--palette-border) !important; }
   body .site-header .third-level-nav__link--accent:hover {
@@ -26,7 +34,7 @@ body :where(button:disabled,[aria-disabled=true]) { cursor: not-allowed; }
     .catalog-pagination__more,.product-gallery__arrow,.product-purchase__proposal,
     .material-video__action,.compare-clear-category,.compare-card__remove,
     .favorites-clear,.approved-dialog__close,.region-close,
-    .profile-link-button,.search-results__clear):hover:not(:disabled):not([aria-disabled=true]) {
+    .search-results__clear):hover:not(:disabled):not([aria-disabled=true]) {
     background-color: var(--palette-border) !important;
     border-color: var(--palette-border-hover);
   }

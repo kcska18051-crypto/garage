@@ -137,7 +137,7 @@
 .profile-page .profile-document small,.profile-page .profile-document span{font-size:12px;line-height:20px;overflow-wrap:anywhere}
 .profile-page .profile-document strong{font-size:13px;line-height:21px;font-weight:500;overflow-wrap:anywhere}
 .profile-page .profile-document__status{font-size:11px!important;font-weight:500;padding:4px 8px;border-radius:7px}
-.profile-page .profile-document__actions{grid-column:1/-1;justify-self:end;gap:18px!important}
+.profile-page .profile-document__actions{grid-column:1/-1;justify-self:end;flex-wrap:wrap;gap:8px!important}
 .profile-page .profile-document-preview{gap:12px}
 .profile-page .profile-document-preview h3{font-size:18px;line-height:26px;margin:0}
 .profile-page .profile-document-preview>p,.profile-page .profile-document-preview>span{font-size:13px;line-height:22px}

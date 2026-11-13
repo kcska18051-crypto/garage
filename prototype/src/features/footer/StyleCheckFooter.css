@@ -1,33 +1,55 @@
-.app-shell[data-approved-chrome] .style-check-footer .site-footer__top { grid-template-columns:1fr 1.65fr 1.2fr; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-contact-block { justify-self:end; text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-phone { font-size:20px; font-weight:750; color:#303933; text-decoration:none; white-space:nowrap; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-email { font-size:13px; color:#747b72; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-socials { display:flex; flex-wrap:wrap; gap:6px; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-socials :is(a,button) { border:1px solid #e2e5dc; border-radius:8px; background:white; color:#4b5447; padding:7px 10px; font:inherit; font-size:11px; text-decoration:none; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-socials button:disabled { color:#8a9086; cursor:default; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-groups { grid-template-columns:repeat(5,minmax(0,1fr)); gap:24px; padding-bottom:22px; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-groups a { font-size:13px; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-groups .footer-group__title { font-size:16px; line-height:24px; font-weight:800; margin:0 0 16px; color:inherit; cursor:default; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-reputation { display:flex; justify-content:flex-end; padding-bottom:24px; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-yandex { display:flex; align-items:center; gap:10px; padding:12px 16px; border:1px solid #e8eae3; border-radius:12px; background:#fff; font-size:12px; color:#303933; text-decoration:none; }
-.footer-yandex-mark { display:grid; place-items:center; width:30px; height:30px; background:#ffefec; border-radius:50%; color:#d6302c; font-size:22px; font-weight:650; }
-.footer-yandex :is(small,strong) { display:block; font-size:10px; margin-top:3px; color:#8a9086; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-agency-credit { flex:0 0 auto; align-self:center; }
-.footer-agency-credit img { display:block; width:179px; height:18px; max-width:none; }
-@media(max-width:767px) {
- .app-shell[data-approved-chrome] .style-check-footer .site-footer__top { grid-template-columns:1fr; gap:20px; }
- .app-shell[data-approved-chrome] .style-check-footer .footer-contact-block { justify-self:start; text-align:left; align-items:flex-start; }
- .app-shell[data-approved-chrome] .style-check-footer .footer-groups { grid-template-columns:1fr; gap:0; }
- .app-shell[data-approved-chrome] .style-check-footer .footer-reputation { justify-content:flex-start; }
- .app-shell[data-approved-chrome] .style-check-footer .footer-agency-credit { align-self:flex-start; margin-top:10px; }
+/* Approved compact footer: brand/contact column beside the existing navigation. */
+.app-shell[data-approved-chrome] .site-footer.style-check-footer {
+  background:var(--palette-surface); color:var(--palette-ink);
+  padding:32px max(24px,calc((100% - 1440px)/2 + 24px)) 24px;
+  border-top:1px solid var(--palette-border);
 }
-
-.app-shell[data-approved-chrome] .style-check-footer .footer-socials :is(a,button) { width:38px; height:38px; padding:8px; display:grid; place-items:center; }
-.app-shell[data-approved-chrome] .style-check-footer .footer-socials button:disabled { color:#555f52; }
-.footer-socials svg { display:block; width:22px; height:22px; }
-
-/* Readability pass only: the deferred footer composition is retained. */
-.app-shell[data-approved-chrome] .site-footer.style-check-footer { background:var(--palette-surface); color:var(--palette-ink); }
-.app-shell[data-approved-chrome] .site-footer.style-check-footer :is(.site-footer__top p,.footer-email,.footer-pending,.footer-yandex small,.site-footer__bottom,.site-footer__bottom a,.footer-groups a) { color:var(--palette-muted); }
-.app-shell[data-approved-chrome] .site-footer.style-check-footer .footer-phone { color:var(--palette-ink); }
-.app-shell[data-approved-chrome] .site-footer.style-check-footer .footer-groups a:hover { color:var(--palette-red); }
+.app-shell[data-approved-chrome] .style-check-footer .footer-main { display:grid; grid-template-columns:210px minmax(0,1fr); gap:32px; padding-bottom:28px; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-brand-contact { display:flex; flex-direction:column; align-items:flex-start; gap:18px; min-width:0; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-brand-logo { display:block; width:148px; height:68px; flex-shrink:0; }
+.footer-brand-logo img { display:block; width:100%; height:100%; object-fit:contain; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-contact-block { display:flex; flex-direction:column; align-items:flex-start; gap:10px; text-align:left; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-phone { font-size:18px; line-height:26px; font-weight:750; color:var(--palette-ink); text-decoration:none; white-space:nowrap; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-email { font-size:13px; line-height:20px; color:var(--palette-muted); }
+.app-shell[data-approved-chrome] .style-check-footer .footer-socials { display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-socials :is(a,button) { width:34px; height:34px; padding:7px; display:grid; place-items:center; border:1px solid var(--palette-border); border-radius:8px; background:var(--palette-white); color:var(--palette-muted); }
+.app-shell[data-approved-chrome] .style-check-footer .footer-socials button:disabled { cursor:default; }
+.footer-socials svg { display:block; width:20px; height:20px; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-groups { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:24px; padding:0; min-width:0; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-group { min-width:0; padding:0; border:0; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-group__title { font-size:16px; line-height:24px; font-weight:750; margin:0 0 16px; color:var(--palette-ink); cursor:default; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-groups nav { display:grid; gap:10px; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-groups nav a { font-size:13px; line-height:20px; color:var(--palette-muted); text-decoration:none; width:fit-content; max-width:100%; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-yandex { display:inline-flex; align-items:center; gap:8px; max-width:100%; padding:9px 10px; margin-top:18px; border:0; border-radius:8px; background:#fff7d6; color:var(--palette-ink); font-size:12px; line-height:18px; text-decoration:none; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-yandex-mark { color:var(--palette-red); font-size:21px; line-height:24px; font-weight:700; flex:0 0 auto; }
+.app-shell[data-approved-chrome] .style-check-footer .site-footer__bottom { display:grid; grid-template-columns:210px minmax(0,1fr) auto; gap:24px 32px; align-items:center; border-top:1px solid var(--palette-border); padding-top:20px; color:var(--palette-muted); font-size:11px; line-height:18px; }
+.app-shell[data-approved-chrome] .style-check-footer .site-footer__legal { display:flex; flex-wrap:wrap; justify-content:flex-start; align-items:center; gap:6px 18px; min-width:0; }
+.app-shell[data-approved-chrome] .style-check-footer .site-footer__legal :is(a,button) { font-size:11px; line-height:18px; color:var(--palette-muted); text-decoration:underline; text-underline-offset:2px; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-agency-credit { display:block; justify-self:end; }
+.footer-agency-credit img { display:block; width:179px; height:18px; max-width:100%; }
+@media(hover:hover) and (pointer:fine) {
+ .app-shell[data-approved-chrome] .style-check-footer :is(.footer-groups nav a,.footer-email,.footer-phone,.site-footer__legal a,.site-footer__legal button):hover { color:var(--palette-red); }
+ .app-shell[data-approved-chrome] .style-check-footer a.footer-yandex:hover { background:#fff0ad; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-socials a:hover { color:var(--palette-ink); background:var(--palette-yellow); border-color:transparent; }
+ .app-shell[data-approved-chrome] .style-check-footer :is(.footer-brand-logo,.footer-agency-credit):hover { opacity:.76; }
+}
+@media(max-width:1199px) {
+ .app-shell[data-approved-chrome] .style-check-footer .footer-main { grid-template-columns:1fr; gap:28px; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-brand-contact { flex-direction:row; align-items:center; gap:32px; }
+ .app-shell[data-approved-chrome] .style-check-footer .site-footer__bottom { grid-template-columns:1fr auto; gap:14px 24px; }
+ .app-shell[data-approved-chrome] .style-check-footer .site-footer__legal { grid-column:1; grid-row:2; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-agency-credit { grid-column:2; grid-row:1 / 3; }
+}
+@media(max-width:767px) {
+ .app-shell[data-approved-chrome] .site-footer.style-check-footer { padding:24px 12px calc(24px + var(--mobile-nav-height)); }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-brand-contact { display:grid; grid-template-columns:100px minmax(0,1fr); align-items:start; gap:16px; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-brand-logo { width:100px; height:52px; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-phone { font-size:15px; line-height:22px; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-main { gap:28px; padding-bottom:24px; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-groups { grid-template-columns:repeat(2,minmax(0,1fr)); gap:26px 18px; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-group__title { font-size:15px; line-height:22px; margin-bottom:12px; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-groups nav { gap:8px; }
+ .app-shell[data-approved-chrome] .style-check-footer .site-footer__bottom { grid-template-columns:1fr; gap:16px; padding-top:18px; }
+ .app-shell[data-approved-chrome] .style-check-footer .site-footer__legal { grid-column:auto; grid-row:auto; gap:8px 16px; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-agency-credit { grid-column:auto; grid-row:auto; justify-self:start; margin-top:0; }
+}

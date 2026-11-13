@@ -1,3 +1,4 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
@@ -5,7 +6,8 @@ import { RoundedIcon } from './RoundedIcon'
 import { MobileMenuRegion } from './MobileMenuRegion'
 import './UnifiedMobileMenu.css'
 import { ActionsDropdown } from './ActionsDropdown'
-export function MobileSiteMenu({ region, onRegion, onClose, onCatalog }: { region: string; onRegion(): void; onClose(): void; onCatalog(): void }) {
+export function MobileSiteMenu({ region, onRegion, onClose: onCloseImmediately, onCatalog }: { region: string; onRegion(): void; onClose(): void; onCatalog(): void }) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => panel.current)
  const panel=useRef<HTMLElement>(null)
  useEffect(()=>{
   const previous=document.activeElement as HTMLElement|null

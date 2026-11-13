@@ -1,0 +1,30 @@
+/* Quiet motion: response to actions, never a page-wide entrance sequence. */
+@keyframes garage-fade-in { from { opacity:0; } to { opacity:1; } }
+@keyframes garage-fade-out { from { opacity:1; } to { opacity:0; } }
+@keyframes garage-dialog-in { from { opacity:0; translate:0 8px; } to { opacity:1; translate:0 0; } }
+@keyframes garage-menu-in { from { opacity:0; translate:0 4px; } to { opacity:1; translate:0 0; } }
+@keyframes garage-drawer-in { from { opacity:0; translate:12px 0; } to { opacity:1; translate:0 0; } }
+@keyframes garage-sheet-in { from { opacity:0; translate:0 12px; } to { opacity:1; translate:0 0; } }
+@keyframes garage-count { 0%,100% { scale:1; } 45% { scale:1.1; } }
+@media (prefers-reduced-motion:no-preference) {
+ body [data-motion-closing] { pointer-events:none; }
+ body :is(.overlay,.auth-backdrop,.profile-dialog-backdrop,.region-overlay,.catalog-filter-drawer,.product-modal,.product-gallery-modal) { animation:garage-fade-in 180ms ease-out; }
+ body :is(.approved-dialog,.region-dialog,dialog[open],.proposal-modal,.product-gallery-modal__content):not(.service-request-inline) { animation:garage-dialog-in 180ms cubic-bezier(.2,.7,.2,1); }
+ body :is(.catalog-mega,.search-panel,.actions-dropdown__list,.compare-preview__panel,.third-level-nav__more>nav) { animation:garage-menu-in 160ms ease-out; }
+ body .unified-site-menu { animation:garage-drawer-in 180ms cubic-bezier(.2,.7,.2,1); }
+ body .catalog-filter-drawer > section { animation:garage-sheet-in 180ms cubic-bezier(.2,.7,.2,1); }
+ body :is(.auth-toast,.profile-message,.cart-feedback,.product-feedback,.product-heading__feedback,.profile-success,.auth-message,.share-cart-dialog__feedback,.cart-promo [role=status],.contact-success,.service-request-success,.service-request-inline form,.profile-address-editor,.cookie-banner) { animation:garage-menu-in 160ms ease-out; }
+ body :is(.header-action,.mobile-bottom-nav__icon) > b { animation:garage-count 220ms ease-out; }
+ body dialog::backdrop { animation:garage-fade-in 180ms ease-out; }
+ body dialog[data-motion-closing]::backdrop { animation:garage-fade-out 140ms ease-in forwards; }
+ body .profile-nav-toggle svg:last-child { transition:transform 160ms ease-out; }
+ @supports (interpolate-size:allow-keywords) {
+  body main details { interpolate-size:allow-keywords; }
+  body main details::details-content { block-size:0; overflow:clip; transition:block-size 180ms ease-out,content-visibility 180ms allow-discrete; }
+  body main details[open]::details-content { block-size:auto; }
+ }
+}
+@media (prefers-reduced-motion:reduce) {
+ body :is(.overlay,.auth-backdrop,.profile-dialog-backdrop,.region-overlay,.catalog-filter-drawer,.product-modal,.product-gallery-modal,.approved-dialog,.region-dialog,dialog,.proposal-modal,.product-gallery-modal__content,.catalog-mega,.search-panel,.actions-dropdown__list,.compare-preview__panel,.unified-site-menu,.auth-toast,.profile-message,.cart-feedback,.product-feedback,.product-heading__feedback,.profile-success,.auth-message,.share-cart-dialog__feedback,.cart-promo [role=status],.contact-success,.service-request-success,.service-request-inline form,.profile-address-editor,.cookie-banner,.header-action>b,.mobile-bottom-nav__icon>b) { animation:none !important; transition:none !important; }
+ body dialog::backdrop,body main details::details-content { animation:none !important; transition:none !important; }
+}

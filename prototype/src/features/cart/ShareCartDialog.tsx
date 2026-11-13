@@ -1,8 +1,10 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import './ShareCartDialog.css'
 
-export function ShareCartDialog({ url, onClose }: { url: string; onClose(): void }) {
+export function ShareCartDialog({ url, onClose: onCloseImmediately }: { url: string; onClose(): void }) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
   const dialogRef = useRef<HTMLDialogElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)

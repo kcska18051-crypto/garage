@@ -12,6 +12,7 @@ import {useProfile} from '../state/ProfileState'
 import { CookiePreferenceProvider } from '../state/CookiePreferenceState'
 import { CookieBanner } from '../features/cookie/CookieBanner'
 import '../features/dialogs/ApprovedDialogs.css'
+import '../styles/motion.css'
 
 function AppContent() {
   const pathname = useLocation().pathname

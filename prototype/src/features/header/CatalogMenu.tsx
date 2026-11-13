@@ -1,3 +1,4 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { isApprovedChrome } from '../../app/approvedHomepage'
 import { useLocation } from 'react-router-dom'
 import { MobileMenuRegion } from './MobileMenuRegion'
@@ -22,7 +23,8 @@ type Props = {
   onClose(restoreFocus?: boolean): void
 }
 
-export function CatalogMenu({ header, opener, compact, onClose, hoverOpened = false, onMouseEnter, onMouseLeave, region='Ярославль', onRegion }: Props) {
+export function CatalogMenu({ header, opener, compact, onClose: onCloseImmediately, hoverOpened = false, onMouseEnter, onMouseLeave, region='Ярославль', onRegion }: Props) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => panel.current)
   const isStyleCheck=isApprovedChrome(useLocation().pathname)
   const [query,setQuery]=useState('')
   const [active, setActive] = useState(headerCatalogTree[0].id)

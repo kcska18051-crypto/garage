@@ -13,7 +13,7 @@ import { RoundedIcon } from './RoundedIcon'
 export type HeaderCounts = { favorites: number; compare: number; cart: number }
 
 function ActionLink({ to, label, symbol, count }: { to: string; label: string; symbol: string; count?: number }) {
-  return <Link className="header-action" to={to} aria-label={`${label}${count ? `: ${count}` : ''}`}><span aria-hidden="true">{symbol}</span><small>{label}</small>{count ? <b>{count}</b> : null}</Link>
+  return <Link className="header-action" to={to} aria-label={`${label}${count ? `: ${count}` : ''}`}><span aria-hidden="true">{symbol}</span><small>{label}</small>{count ? <b key={count}>{count}</b> : null}</Link>
 }
 
 export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, onCatalog, onCatalogHover, onCatalogLeave, searchSuspended = false, customerName }: { customerName?: string; region: string; onRegion(): void; counts: HeaderCounts; compact: boolean; catalogOpen: boolean; onCatalog(): void; onCatalogHover?(opener: HTMLButtonElement): void; onCatalogLeave?(): void; searchSuspended?: boolean }) {

@@ -1,3 +1,4 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useRegion } from '../../state/RegionState'
@@ -5,7 +6,8 @@ import './RegionDialog.css'
 
 const cities = ['Ярославль', 'Вологда', 'Череповец', 'Москва', 'Санкт-Петербург', 'Нижний Новгород', 'Екатеринбург', 'Челябинск', 'Краснодар', 'Пермь', 'Воронеж', 'Самара', 'Казань', 'Волгоград', 'Новосибирск', 'Ростов-на-Дону', 'Кострома', 'Иваново', 'Рыбинск', 'Тутаев', 'Углич', 'Ростов Великий', 'Переславль-Залесский']
 
-export function RegionDialog({ onSelect, onClose }: { onSelect(city: string): void; onClose(): void }) {
+export function RegionDialog({ onSelect, onClose: onCloseImmediately }: { onSelect(city: string): void; onClose(): void }) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => panel.current)
   const { region } = useRegion()
   const [query, setQuery] = useState('')
   const input = useRef<HTMLInputElement>(null)

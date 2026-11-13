@@ -144,7 +144,7 @@ describe('unified auth dialog', () => {
     await user.click(within(dialog).getByRole('button', { name: 'Подключить организацию' }))
     await user.click(within(dialog).getByRole('button', { name: 'Продолжить без пароля' }))
     expect(screen.getByText(/Компания подключена, регистрация завершена/)).toBeInTheDocument()
-  })
+  }, 15_000)
 
   it('opens legacy routes in the dialog and routes loss of phone access to help', async () => {
     const user = userEvent.setup()

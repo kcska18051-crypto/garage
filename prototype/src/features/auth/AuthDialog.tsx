@@ -1,3 +1,4 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { AuthIdentity, AuthIntent } from '../../state/AuthState'
@@ -12,7 +13,8 @@ type Method = 'sms' | 'password'
 const digits = (value: string) => value.replace(/\D/g, '')
 const isExistingPhone = (value: string) => normalizePhoneIdentity(value) === '79000000000'
 
-export function AuthDialog({ intent, requirePhoneConfirmation = false, onClose, onComplete }: { intent: AuthIntent; requirePhoneConfirmation?: boolean; onClose(): void; onComplete(message: string, identity?: AuthIdentity): void }) {
+export function AuthDialog({ intent, requirePhoneConfirmation = false, onClose: onCloseImmediately, onComplete }: { intent: AuthIntent; requirePhoneConfirmation?: boolean; onClose(): void; onComplete(message: string, identity?: AuthIdentity): void }) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
   const navigate = useNavigate()
   const dialogRef = useRef<HTMLElement>(null)
   const [mode, setMode] = useState<Mode>(!requirePhoneConfirmation && intent === 'register' ? 'register' : 'login')

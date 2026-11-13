@@ -1,8 +1,10 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 
-export function CartDialog({ title, children, onClose, className = '' }: { title: string; children: ReactNode; onClose(): void; className?: string }) {
+export function CartDialog({ title, children, onClose: onCloseImmediately, className = '' }: { title: string; children: ReactNode; onClose(): void; className?: string }) {
   const ref = useRef<HTMLDialogElement>(null)
+  const onClose = useAnimatedClose(onCloseImmediately, () => ref.current)
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null
     const dialog = ref.current!, overflow = document.body.style.overflow

@@ -1,3 +1,4 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import {PhoneHint,PHONE_PLACEHOLDER} from '../forms/PhoneHint'
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { FormLegalConsents } from '../forms/FormLegalConsents'
@@ -12,7 +13,8 @@ import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} fro
 const emptyFields = { name: '', phone: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1' }
 type Field = keyof typeof emptyFields
 
-export function ServiceRequestDialog({ request, onClose, contact, inline = false, onCreated }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string }; inline?: boolean; onCreated?(): void }) {
+export function ServiceRequestDialog({ request, onClose: onCloseImmediately, contact, inline = false, onCreated }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string }; inline?: boolean; onCreated?(): void }) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
   const [fields, setFields] = useState(() => ({ ...emptyFields, ...contact }))
   const [personalDataAccepted,setPersonalDataAccepted]=useState(false)
   const [agreementAccepted,setAgreementAccepted]=useState(false)

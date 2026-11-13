@@ -1,3 +1,4 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import {PhoneHint,PHONE_PLACEHOLDER} from './PhoneHint'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { FormLegalConsents } from './FormLegalConsents'
@@ -5,7 +6,8 @@ import './ContactDialog.css'
 
 export type ContactDialogMode = 'consultation' | 'callback' | 'message'
 
-export function ContactDialog({ mode, onClose }: { mode: ContactDialogMode; onClose(): void }) {
+export function ContactDialog({ mode, onClose: onCloseImmediately }: { mode: ContactDialogMode; onClose(): void }) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
   const [name, setName] = useState('')
   const [contact, setContact] = useState('')
   const [message, setMessage] = useState('')

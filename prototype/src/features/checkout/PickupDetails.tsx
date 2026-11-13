@@ -1,10 +1,12 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import type { ContactPoint } from '../../data/contactsData'
 import { CoordinateMap } from '../maps/CoordinateMap'
 import './PickupChoices.css'
 
-export function PickupDetails({ point, onClose }: { point: ContactPoint; onClose(): void }) {
+export function PickupDetails({ point, onClose: onCloseImmediately }: { point: ContactPoint; onClose(): void }) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
   const dialogRef = useRef<HTMLDialogElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
   useEffect(() => {

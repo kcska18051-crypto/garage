@@ -1,3 +1,4 @@
+import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { money, productDetail, type ProductOffer } from '../../data/productDetailData'
@@ -8,7 +9,8 @@ import { getCartPricing } from '../cart/cartPricing'
 
 type Props = { offer?: ProductOffer; quantity?: number; lines?: CartLine[]; pricing?: ReturnType<typeof getCartPricing>; onClose(): void }
 
-export function CommercialProposal({ offer = productDetail.offers[0], quantity = 1, lines, pricing = lines ? getCartPricing(lines) : undefined, onClose }: Props) {
+export function CommercialProposal({ offer = productDetail.offers[0], quantity = 1, lines, pricing = lines ? getCartPricing(lines) : undefined, onClose: onCloseImmediately }: Props) {
+  const onClose = useAnimatedClose(onCloseImmediately, () => ref.current)
   const ref = useRef<HTMLDivElement>(null)
   const [feedback, setFeedback] = useState('')
   useEffect(() => {

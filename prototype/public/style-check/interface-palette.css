@@ -130,10 +130,17 @@ body .profile-nav a.active {
 
 /* Quiet surfaces; a small yellow icon carries the accent. */
 body :where(.screw-service__closing,.service-hub__closing,.compressor-overview__help,
-  .brand-benefits article,.review-benefits[data-benefit-style] article,
-  .review-about-fact) {
+  .brand-benefits article) {
   background: var(--palette-surface) !important;
   border-color: var(--palette-border) !important;
+}
+/* Home/company feature cards use white, without the old beige diagonal. */
+body :where(.review-benefits[data-benefit-style] article,.review-about-fact) {
+  background: var(--palette-white) !important;
+  border-color: var(--palette-border) !important;
+}
+body :where(.review-benefits[data-benefit-style] article,.review-about-fact)::before {
+  background: none !important;
 }
 body :where(.review-benefit-icon,.review-about-fact__icon,.screw-service__list-icon,
   .screw-service__step,.screw-service__closing-icon,.brand-benefits article>span) {
@@ -147,6 +154,35 @@ body :where(.reference-desktop-services,.reference-third-services)>a {
 }
 body :where(.reference-desktop-services,.reference-third-services)>a:hover {
   background: var(--palette-yellow-hover) !important;
+}
+body :where(.reference-desktop-services,.reference-third-services)>a {
+  transition: background-color .16s ease;
+}
+body :where(.reference-desktop-services,.reference-third-services)>a .review-rounded-icon {
+  transition: transform .16s ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  body :where(.reference-desktop-services,.reference-third-services)>a:hover .review-rounded-icon {
+    transform: translateY(-2px);
+  }
+  body .review-home-v2 .service-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgb(36 36 36 / .12), 0 0 0 1px var(--palette-border-hover);
+  }
+}
+body .review-home-v2 .service-banner {
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+body .review-home-v2 .service-banner:focus-visible {
+  box-shadow: 0 6px 18px rgb(36 36 36 / .12);
+}
+body :where(.reference-desktop-services,.reference-third-services)>a:active {
+  background: var(--palette-yellow) !important;
+}
+@media (prefers-reduced-motion:reduce) {
+  body :where(.reference-desktop-services,.reference-third-services)>a,
+  body :where(.reference-desktop-services,.reference-third-services)>a .review-rounded-icon,
+  body .review-home-v2 .service-banner { transition: none; transform: none !important; }
 }
 body :where(.approved-dialog,.app-shell main) :where(input,textarea,select):focus {
   outline-color: var(--palette-ink);

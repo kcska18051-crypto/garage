@@ -39,9 +39,10 @@ html:has(.about-page), body:has(.about-page), .app-shell:has(.about-page) { back
 .about-brands a:hover,.about-cities a:hover { border-color: var(--palette-border-hover); background: var(--palette-surface); }
 .about-cities { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
 .about-cities a { display: flex; align-items: center; gap: 12px; min-height: 68px; padding: 14px 18px; border: 1px solid var(--palette-border); border-radius: 12px; color: inherit; text-decoration: none; background: var(--palette-white); }
-.about-cities a>span:first-child { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--palette-surface); color: var(--palette-ink); }
+.about-cities a>span:first-child { display: grid; place-items: center; flex:0 0 32px; width: 32px; height: 32px; color: #e66b00; }
 .about-cities strong { font-size: 14px; font-weight: 600; }
-.about-cities a>span:last-child { margin-left: auto; color: var(--palette-ink); }
+.about-cities a { transition:background-color .16s ease,border-color .16s ease; }
+.about-cities a:is(:hover,:focus-visible) strong { text-decoration:underline; text-underline-offset:4px; text-decoration-thickness:1px; }
 .about-caption { margin-top: 12px; }
 .about-news { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
 .about-news article { border: 1px solid var(--palette-border); border-radius: 16px; overflow: hidden; background: var(--palette-white); min-width: 0; box-shadow: 0 4px 16px rgb(41 49 44 / .045); }

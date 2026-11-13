@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { profileData, type ProfileOrder, type ProfileOrganization } from '../data/profileData'
-import { useCommerce } from './CommerceState'
+import { useCommerce, type ConfirmedCheckoutOrder } from './CommerceState'
+import { buildLocalOrder, readOrderHistory, saveOrderHistory, type LocalProfileOrder, type OrderPresentation } from './orderHistory'
 import type {ServiceRequestDraft} from '../data/serviceTypes'
 import {buildServiceRequest,readServiceRequests,saveServiceRequests,type ProfileServiceRequest,type ServiceCreationResult,type ServiceIdentity} from './serviceRequests'
 import {normalizePhoneIdentity} from '../utils/phoneIdentity'
@@ -54,6 +55,7 @@ type ProfileContextValue = {
   claimServiceRequests(identity:ServiceIdentity):void
   user: UserData
   orders: ProfileOrder[]
+  createCheckoutOrder(snapshot: ConfirmedCheckoutOrder, presentation: OrderPresentation): ProfileOrder | null
   organizations: ProfileOrganization[]
   addresses: ProfileAddress[]
   recentProductIds: string[]
@@ -77,10 +79,38 @@ type ProfileContextValue = {
 
 const ProfileContext = createContext<ProfileContextValue | null>(null)
 
-export function ProfileProvider({ children }: { children: ReactNode }) {
+export function ProfileProvider({ children, ownerPhone = null }: { children: ReactNode; ownerPhone?: string | null }) {
   const commerce = useCommerce()
   const [user, setUser] = useState(profileData.user)
-  const [orders, setOrders] = useState<ProfileOrder[]>(profileData.orders)
+  const [seedOrders, setSeedOrders] = useState<ProfileOrder[]>(profileData.orders)
+  const [localOrders, setLocalOrders] = useState<LocalProfileOrder[]>(readOrderHistory)
+  const localOrdersRef = useRef(localOrders)
+  const activeOwnerPhone = normalizePhoneIdentity(ownerPhone ?? '')
+  const orders = useMemo(() => [
+    ...localOrders.filter(record => record.ownerPhone === activeOwnerPhone).map(record => record.order),
+    ...seedOrders,
+  ], [activeOwnerPhone, localOrders, seedOrders])
+  const commitLocalOrders = useCallback((records: LocalProfileOrder[]) => {
+    localOrdersRef.current = records
+    setLocalOrders(records)
+    saveOrderHistory(records)
+  }, [])
+  const createCheckoutOrder = useCallback((snapshot: ConfirmedCheckoutOrder, presentation: OrderPresentation) => {
+    const phone = normalizePhoneIdentity(snapshot.ownerPhone ?? '')
+    if (!activeOwnerPhone || phone !== activeOwnerPhone) return null
+    const existing = localOrdersRef.current.find(record => record.checkoutId === snapshot.id)
+    if (existing) return existing.ownerPhone === phone ? existing.order : null
+    const record = buildLocalOrder(snapshot, presentation)
+    if (!record) return null
+    commitLocalOrders([record, ...localOrdersRef.current].slice(0,100))
+    return record.order
+  }, [activeOwnerPhone, commitLocalOrders])
+  const updateOrder = useCallback((id: string, update: (order: ProfileOrder) => ProfileOrder) => {
+    setSeedOrders(current => current.map(order => order.id === id ? update(order) : order))
+    const current = localOrdersRef.current
+    const next = current.map(record => record.order.id === id && record.ownerPhone === activeOwnerPhone ? { ...record, order:update(record.order) } : record)
+    if (next.some((record,index) => record !== current[index])) commitLocalOrders(next)
+  }, [activeOwnerPhone, commitLocalOrders])
   const [organizations, setOrganizations] = useState<ProfileOrganization[]>(profileData.organizations)
   const [addresses, setAddresses] = useState<ProfileAddress[]>(readAddresses)
   const [recentProductIds, setRecentProductIds] = useState<string[]>(readRecentProducts)
@@ -127,15 +157,16 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     serviceRequests,serviceStorageError,createServiceRequest,claimServiceRequests,
     user,
     orders,
+    createCheckoutOrder,
     organizations,
     addresses,
     recentProductIds,
     recordRecentlyViewed,
     notification,
     profileDeleted,
-    requestCancellation: (id) => setOrders((current) => current.map((order) => order.id === id ? { ...order, status: 'Заявка на отмену отправлена', canCancel: false } : order)),
-    updateRecipient: (id, recipient) => setOrders((current) => current.map((order) => order.id === id ? { ...order, recipient } : order)),
-    updateAddress: (id, address) => setOrders((current) => current.map((order) => order.id === id ? { ...order, address } : order)),
+    requestCancellation: (id) => updateOrder(id, order => ({ ...order, status:'Заявка на отмену отправлена', canCancel:false })),
+    updateRecipient: (id, recipient) => updateOrder(id, order => ({ ...order, recipient })),
+    updateAddress: (id, address) => updateOrder(id, order => ({ ...order, address })),
     addOrganization: (organization) => setOrganizations((current) => [...current, organization]),
     addAddress: (address) => setAddresses((current) => [...current, { ...address, id: `address-${Date.now()}`, isPrimary: current.length === 0 }]),
     updateSavedAddress: (id, address) => { const target = addresses.find(item => item.id === id); if (target && (commerce.checkout.savedAddressId === id || commerce.checkout.address === formatProfileAddress(target))) commerce.updateCheckout({ address: formatProfileAddress({ ...target, ...address }), savedAddressId: id }); setAddresses(current => current.map(item => item.id === id ? { ...item, ...address } : item)) },
@@ -146,7 +177,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     notify: setNotification,
     deleteProfile: () => setProfileDeleted(true),
     restoreProfile: () => setProfileDeleted(false),
-  }), [addresses, commerce, notification, orders, organizations, profileDeleted, recentProductIds, user,serviceRequests,serviceStorageError,createServiceRequest,claimServiceRequests])
+  }), [addresses, commerce, notification, orders, organizations, profileDeleted, recentProductIds, user,serviceRequests,serviceStorageError,createServiceRequest,claimServiceRequests,createCheckoutOrder,updateOrder])
 
   return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
 }

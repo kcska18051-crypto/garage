@@ -1,7 +1,7 @@
 body:has(.checkout-success-page){background:var(--palette-white)}
 .checkout-success-page{--color-text:var(--palette-ink);--color-text-muted:var(--palette-muted);--color-border:var(--palette-border);--color-surface:var(--palette-white);max-width:1368px;padding:32px 24px 48px;background:var(--palette-white);color:var(--palette-ink)}
 .checkout-success-heading{display:flex;align-items:center;gap:16px;margin-bottom:28px}
-.success-status-icon{display:flex;align-items:center;justify-content:center;flex:none;width:52px;height:52px;border-radius:50%;background:var(--palette-surface);color:#598460}
+.success-status-icon{display:flex;align-items:center;justify-content:center;flex:none;width:52px;height:52px;border-radius:50%;background:var(--palette-surface);color:var(--palette-success)}
 .success-status-icon svg{width:28px;height:28px}
 .checkout-success-page .checkout-success-heading h1{font-size:32px;line-height:42px;letter-spacing:-.8px;font-weight:600;margin:0}
 .checkout-success-page .order-number{font-size:14px;line-height:22px;font-weight:400;color:var(--palette-muted);margin:4px 0 0}

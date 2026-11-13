@@ -19,6 +19,9 @@ describe('customer information pages', () => {
     expect(within(navigation).getByRole('link', { name: title })).toHaveAttribute('aria-current', 'page')
     expect(screen.getAllByTestId('info-section')).toHaveLength(3)
     expect(document.querySelector('.info-page__banner')).toBeNull()
+    expect(screen.getByRole('main')).not.toHaveTextContent(/Здесь появ|Здесь будет|В этом блоке появ/)
+    const actions = screen.getByRole('navigation', { name: 'Дальнейшие действия' })
+    expect(within(actions).getByRole('link', { name: 'Связаться с магазином' })).toHaveAttribute('href', '/contacts')
   })
 
   it('moves between sections without leaving the shared template', async () => {

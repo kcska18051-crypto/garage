@@ -30,9 +30,14 @@ export function mergeCartLines(current: CartLine[], incoming: CartLine[]): CartL
   }
   return merged
 }
+export type ConfirmedCheckoutOrder = {
+  lines: CartLine[]; pricing: ReturnType<typeof priceCart>; details: Omit<CheckoutState, 'confirmedOrder'>
+  /** Optional for compatibility with previously saved demo receipts. */
+  id?: string; number?: string; createdAt?: string; ownerPhone?: string
+}
 export type CheckoutState = {
   promoCode?: string; selectedCartIds?: string[]
-  confirmedOrder?: { lines: CartLine[]; pricing: ReturnType<typeof priceCart>; details: Omit<CheckoutState, 'confirmedOrder'> }
+  confirmedOrder?: ConfirmedCheckoutOrder
   customerType: 'personal' | 'organization'; organization: string; guest: boolean; phoneVerified: boolean
   guestName: string; guestEmail: string; guestPhone: string
   otherRecipient: boolean; recipientName: string; recipientLastName: string; recipientPhone: string

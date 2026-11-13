@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { infoPageEntries, infoPages, type InfoPageKey } from '../data/infoPagesData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import '../features/info/InfoPages.css'
@@ -23,6 +23,7 @@ export function InfoPage({ page }: { page: InfoPageKey }) {
             <p>{section.text}</p>
           </section>)}
         </div>
+        <nav className="info-actions" aria-label="Дальнейшие действия"><Link className="button" to="/contacts">Связаться с магазином</Link><Link className="button" to="/catalog">Перейти в каталог</Link></nav>
       </article>
     </div>
   </main>

@@ -3,6 +3,8 @@ import { HomePage } from '../pages/HomePage'
 import { StyleCheckHomePage } from '../pages/StyleCheckHomePage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
+import { NewProductsPage } from '../pages/NewProductsPage'
+import { legacyPublicRoutes } from '../data/legacyPublicRoutes'
 import { CatalogPage } from '../pages/CatalogPage'
 import { CatalogSubcategoryPage } from '../pages/CatalogSubcategoryPage'
 import { DemoProductPage } from '../pages/DemoProductPage'
@@ -38,6 +40,7 @@ export const prototypeRoutes: RouteDefinition[] = [
 export function AppRoutes() {
   return (
     <Routes>
+      {legacyPublicRoutes.map(route => <Route key={route.from} path={route.from} element={<Navigate to={route.to} replace />} />)}
       <Route path="/" element={<HomePage />} />
       <Route path="/style-check" element={<StyleCheckHomePage />} />
       <Route path="/services" element={<ServicesIndexPage/>}/>
@@ -84,6 +87,7 @@ export function AppRoutes() {
       <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
       <Route path="/search" element={<SearchResultsPage />} />
       <Route path="/favorites" element={<FavoritesPage />} />
+      <Route path="/new" element={<NewProductsPage />} />
       <Route path="/profile/auth" element={<AuthRouteBridge intent="login" />} />
       <Route path="/profile/recovery" element={<AuthRouteBridge intent="recovery" />} />
       <Route path="/profile" element={<ProfileShell />}>
@@ -101,7 +105,7 @@ export function AppRoutes() {
         <Route path="addresses" element={<ProfileAddressesPage />} />
         <Route path="data" element={<ProfileDataPage />} />
       </Route>
-      {prototypeRoutes.map((route) => <Route key={route.path} path={route.path} element={<PlaceholderPage title={route.label} />} />)}
+      {prototypeRoutes.filter(route => route.path !== '/new').map((route) => <Route key={route.path} path={route.path} element={<PlaceholderPage title={route.label} />} />)}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )

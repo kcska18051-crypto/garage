@@ -10,6 +10,8 @@
   --palette-yellow-hover: #ffd633;
   --palette-red: #c92f29;
   --palette-red-hover: #b72823;
+  --palette-success: #247a42;
+  --palette-field-border: #949494;
   color-scheme: light;
   --color-background: var(--palette-white);
   --color-surface: var(--palette-white);

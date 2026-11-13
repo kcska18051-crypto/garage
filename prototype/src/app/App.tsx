@@ -7,7 +7,7 @@ import { AppRoutes } from './routes'
 import { RegionProvider } from '../state/RegionState'
 import { ProfileProvider } from '../state/ProfileState'
 import { AuthProvider,useAuth } from '../state/AuthState'
-import {useEffect} from 'react'
+import {useEffect, type ReactNode} from 'react'
 import {useProfile} from '../state/ProfileState'
 import { CookiePreferenceProvider } from '../state/CookiePreferenceState'
 import { CookieBanner } from '../features/cookie/CookieBanner'
@@ -29,8 +29,8 @@ function AppContent() {
     >
       {usesApprovedStyles && <ApprovedHomepageStyles />}
       <link rel="stylesheet" href="/garage/style-check/approved-chrome.css?v=20261113-palette" />
-      <link rel="stylesheet" href="/garage/style-check/interface-palette.css?v=20261113-status-colors" />
-      <link rel="stylesheet" href="/garage/style-check/interaction-feedback.css?v=20261113" />
+      <link rel="stylesheet" href="/garage/style-check/interface-palette.css?v=20261113-client-demo" />
+      <link rel="stylesheet" href="/garage/style-check/interaction-feedback.css?v=20261113-client-demo" />
       <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />
       <Footer />
@@ -44,6 +44,11 @@ export function routerBasename(baseUrl: string) {
 }
 
 export function App() {
-  const content = <CookiePreferenceProvider><RegionProvider><CommerceProvider><ProfileProvider><AuthProvider><AppContent /></AuthProvider></ProfileProvider></CommerceProvider></RegionProvider></CookiePreferenceProvider>
+  const content = <CookiePreferenceProvider><RegionProvider><CommerceProvider><AuthProvider><ProfileWithIdentity><AppContent /></ProfileWithIdentity></AuthProvider></CommerceProvider></RegionProvider></CookiePreferenceProvider>
   return useInRouterContext() ? content : <BrowserRouter basename={routerBasename(import.meta.env.BASE_URL)}>{content}</BrowserRouter>
+}
+
+function ProfileWithIdentity({ children }: { children: ReactNode }) {
+  const { identity } = useAuth()
+  return <ProfileProvider ownerPhone={identity?.phone}>{children}</ProfileProvider>
 }

@@ -155,7 +155,7 @@
 .profile-page .profile-help-actions{top:90px;gap:12px}
 .profile-page .profile-help-actions p{font-size:12px!important;line-height:20px}
 .profile-page .profile-help-form{gap:20px;scroll-margin-top:90px}
-.profile-page .profile-success>span{background:var(--palette-surface);color:#598460}
+.profile-page .profile-success>span{background:var(--palette-surface);color:var(--palette-success)}
 .profile-page .profile-suggestion{padding:12px;border-color:var(--palette-border);border-radius:9px;font-size:13px;line-height:22px}
 .profile-page .profile-map{border-radius:12px;background:var(--palette-surface)}
 .profile-page .profile-map>span{background:var(--palette-yellow);color:var(--palette-ink)}

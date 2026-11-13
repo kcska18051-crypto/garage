@@ -1,5 +1,5 @@
 /* Status colors encode state; purchase/error red continues to use the brand token. */
-.profile-page [data-status-tone=success] { --status-text:#247a42; --status-fill:#edf7f0; --status-dot:#247a42; }
+.profile-page [data-status-tone=success] { --status-text:var(--palette-success); --status-fill:#edf7f0; --status-dot:var(--palette-success); }
 .profile-page [data-status-tone=attention] { --status-text:#9c4b00; --status-fill:#fff1e3; --status-dot:#e87500; }
 .profile-page [data-status-tone=warning] { --status-text:var(--palette-ink); --status-fill:#fff7d1; --status-dot:var(--palette-yellow); }
 .profile-page [data-status-tone=info] { --status-text:#275da8; --status-fill:#edf3fc; --status-dot:#275da8; }
@@ -7,7 +7,7 @@
 .profile-page [data-status-tone=neutral] { --status-text:var(--palette-muted); --status-fill:var(--palette-surface); --status-dot:var(--palette-border-hover); }
 .profile-page .profile-status[data-status-tone] { background:var(--status-fill); color:var(--status-text); }
 .profile-page .profile-status[data-status-tone] i { display:block; flex:0 0 6px; width:6px; height:6px; border-radius:50%; background:var(--status-dot); }
-.profile-page .profile-message.profile-message--success { color:#247a42; background:#edf7f0; }
+.profile-page .profile-message.profile-message--success { color:var(--palette-success); background:#edf7f0; }
 .profile-page .profile-message.profile-message--error { color:var(--palette-red); background:#fceceb; }
 .profile-page .profile-overview .profile-order-row[data-status-tone] { border-inline-start:3px solid var(--status-dot); border-inline-start-color:var(--status-dot) !important; padding-inline-start:12px; }
 .profile-page .profile-overview .profile-order-row .profile-status { max-width:180px; }

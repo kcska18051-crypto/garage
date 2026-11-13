@@ -26,7 +26,7 @@ body:has(.cart-page){background:var(--palette-white)}
 .cart-page .cart-line__details>a{color:var(--palette-ink);text-decoration:none}
 .cart-page .cart-line h2{font-size:14px;line-height:22px;font-weight:600;margin:0 0 6px}
 .cart-page .cart-line__details>p{font-size:11px;line-height:18px;margin:3px 0}
-.cart-page .cart-line__availability{font-weight:500;color:#598460!important;margin-top:8px}
+.cart-page .cart-line__availability{font-weight:500;color:var(--palette-success)!important;margin-top:8px}
 .cart-page .cart-stock-trigger{font-size:11px;color:var(--palette-muted);text-decoration:none;min-height:28px}
 .cart-page .cart-stock-trigger:hover{text-decoration:underline}
 .cart-page .cart-line__secondary{gap:16px;margin-top:10px;flex-wrap:wrap}

@@ -1,5 +1,6 @@
 /* Approved styling for the review page only; checkout state and handlers stay intact. */
 body:has(.checkout-review-page){background:var(--palette-white)}
+.checkout-review-page .checkout-submit-help { margin:12px 0; color:var(--palette-muted); font-size:12px; line-height:20px; }
 .checkout-review-page{--color-text:var(--palette-ink);--color-text-muted:var(--palette-muted);--color-border:var(--palette-border);--color-surface:var(--palette-white);--color-background:var(--palette-surface);max-width:1368px;padding:24px 24px 48px;background:var(--palette-white);color:var(--palette-ink)}
 .checkout-review-page .checkout-breadcrumbs{font-size:12px;line-height:20px;color:var(--palette-muted);gap:8px;margin-bottom:22px}
 .checkout-review-page .checkout-breadcrumbs a{color:inherit;text-decoration:none}

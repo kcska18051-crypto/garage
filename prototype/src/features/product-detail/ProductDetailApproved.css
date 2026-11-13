@@ -39,7 +39,7 @@ html:has(.product-page-approved),body:has(.product-page-approved),.app-shell:has
 .product-page-approved .product-purchase__price del { grid-column: 2; font-size: 12px; white-space: nowrap; }
 .product-page-approved .product-purchase__price > span { grid-column: 1 / -1; color: var(--palette-red); font-size: 11px; }
 .product-page-approved .product-status { font-size: 12px; }
-.product-page-approved .product-status--positive { color: #38884b; }
+.product-page-approved .product-status--positive { color: var(--palette-success); }
 .product-page-approved .product-stock { padding-block: 4px; }
 .product-page-approved .product-stock > div { padding: 7px 0; }
 .product-page-approved .product-stock__city { font-size: 12px; font-weight: 500; }

@@ -1,3 +1,5 @@
+import { canonicalPublicHref } from './legacyPublicRoutes'
+import { actions, getActionDeadline } from './actionsData'
 import type { Product, PrototypeData } from './types'
 import { materialKinds, materials } from './materialsData'
 import { catalogProducts } from './catalogData'
@@ -28,7 +30,7 @@ export const prototypeData: PrototypeData = {
   categories: [
     ['lifting', 'Подъёмное оборудование'], ['body', 'Кузовной ремонт'], ['paint', 'Покраска и подготовка'], ['compressor-equipment', 'Компрессорное оборудование'], ['tools', 'Инструмент'], ['welding', 'Сварочное оборудование'],
   ].map(([id, name], index) => ({ id, name, href: `/catalog/${id}`, code: String(index + 1).padStart(2, '0') })),
-  brands: ['Nordberg', 'Trommelberg', 'JTC', 'Rupes', 'WiederKraft', 'Jonnesway', 'Sivik', 'Car-Tool'].map((name) => ({ id: name.toLowerCase().replaceAll(' ', '-'), name, href: `/brands/${encodeURIComponent(name.toLowerCase())}` })),
+  brands: ['Nordberg', 'Trommelberg', 'JTC', 'Rupes', 'WiederKraft', 'Jonnesway', 'Sivik', 'Car-Tool'].map((name) => ({ id: name.toLowerCase().replaceAll(' ', '-'), name, href: canonicalPublicHref(`/brands/${encodeURIComponent(name.toLowerCase())}`) })),
   products,
   productCollections: [
     { id: 'service', label: 'Оборудование для автосервиса', href: '/catalog?collection=service', source: 'category', products: [products[0], products[1], products[4], products[6], products[7]] },
@@ -37,9 +39,9 @@ export const prototypeData: PrototypeData = {
     { id: 'bestsellers', label: 'Хиты продаж', href: '/catalog?collection=bestsellers', source: 'automatic-bestseller', products: [products[1], products[3], products[4], products[6], products[8]] },
   ],
   promoBanners: [
-    { id: 'season', title: 'Подготовьте мастерскую к сезону', text: 'Оборудование для обновления рабочего поста.', cta: 'Смотреть подборку', href: '/actions/season-workshop', tone: 'light' },
+    { id: 'season', title: 'Подготовьте мастерскую к сезону', text: 'Оборудование для обновления рабочего поста.', cta: 'Смотреть подборку', href: '/actions/professional-workshop', tone: 'light' },
     { id: 'compressors', title: 'Компрессорное оборудование', text: 'Решения для разных рабочих задач.', cta: 'Перейти в категорию', href: '/catalog/compressor-equipment', tone: 'mid' },
-    { id: 'paint', title: 'Материалы для кузовных работ', text: 'Подборка для подготовки и окраски.', cta: 'Перейти в категорию', href: '/catalog/paint', tone: 'mid' },
+    { id: 'paint', title: 'Материалы для кузовных работ', text: 'Подборка для подготовки и окраски.', cta: 'Перейти в категорию', href: '/catalog/painting', tone: 'mid' },
     { id: 'workshop', title: 'Решения для рабочего поста', text: 'Компактная подборка оборудования и инструмента.', cta: 'Смотреть подборку', href: '/catalog?collection=service', tone: 'light', styleBackground: 'gray' },
   ],
   homeMerchandising: [
@@ -50,11 +52,14 @@ export const prototypeData: PrototypeData = {
     { id: 'hidden-service-row', collectionId: 'service', bannerIds: [], visible: false },
   ],
   promotions: [
-    { id: 'service-tools', title: 'Оборудование для сервисного поста', text: 'Демонстрационная подборка для главной страницы.', deadline: 'До 30 сентября · демонстрация', href: '/actions/service-tools', showOnHome: true },
-    { id: 'paint-week', title: 'Неделя материалов для покраски', text: 'Условия и ассортимент уточняются клиентом.', deadline: 'Осталось 12 дней · демонстрация', href: '/actions/paint-week', showOnHome: true },
-    { id: 'compressor-season', title: 'Компрессорное оборудование', text: 'Выбранное предложение для профессиональных задач.', deadline: 'Срок завершения · данные клиента', href: '/actions/compressor-season', showOnHome: true },
+    { id: 'service-tools', title: 'Оборудование для сервисного поста', text: 'Демонстрационная подборка для главной страницы.', deadline: 'До 30 сентября · демонстрация', href: '/actions/professional-workshop', showOnHome: true },
+    { id: 'paint-week', title: 'Неделя материалов для покраски', text: 'Условия и ассортимент уточняются клиентом.', deadline: 'Осталось 12 дней · демонстрация', href: '/actions/last-day', showOnHome: true },
+    { id: 'compressor-season', title: 'Компрессорное оборудование', text: 'Выбранное предложение для профессиональных задач.', deadline: 'Срок завершения · данные клиента', href: '/actions/one-day', showOnHome: true },
     { id: 'hidden-promotion', title: 'Скрытая акция', text: 'Не выводится на главной.', deadline: 'Данные клиента', href: '/actions/hidden', showOnHome: false },
-  ],
+  ].map(item => {
+    const action = actions.find(action => `/actions/${action.slug}` === item.href)
+    return action ? { ...item, title:action.title, text:action.shortDescription, deadline:getActionDeadline(action.endDate) } : item
+  }),
   services: [
     { id: 'service-center', name: 'Сервисный центр', text: 'Диагностика и обслуживание оборудования.', cta: 'Подробнее', href: '/services/service-center' },
     { id: 'rental', name: 'Аренда оборудования', text: 'Техника для временных и проектных задач.', cta: 'Условия аренды', href: '/services/rental' },

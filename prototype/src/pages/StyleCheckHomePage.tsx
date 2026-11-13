@@ -46,10 +46,10 @@ function ReviewHero() {
   </section>
 }
 const categoryArtCards = [
-  { id: 'body', name: 'Материалы для кузовного ремонта', href: '/catalog/body' },
+  { id: 'body', name: 'Материалы для кузовного ремонта', href: '/catalog/body-repair' },
   { id: 'tools', name: 'Инструмент', href: '/catalog/tools' },
   { id: 'detailing', name: 'Материалы для мойки и детейлинга', href: '/catalog?q=мойка' },
-  { id: 'lifts', name: 'Подъёмники', href: '/catalog/lifting' },
+  { id: 'lifts', name: 'Подъёмники', href: '/catalog/lifting-equipment' },
   { id: 'compressors', name: 'Компрессоры', href: '/catalog/compressor-equipment' },
   { id: 'tools-extra', name: 'Инструмент', href: '/catalog/tools' },
 ]

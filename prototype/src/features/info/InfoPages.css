@@ -43,3 +43,6 @@ html:has(.info-page),body:has(.info-page),.app-shell:has(.info-page) { backgroun
  .info-section h2 { font-size: 18px; line-height: 25px; }
  .info-section p { font-size: 14px; line-height: 24px; }
 }
+
+.info-actions { display:flex; flex-wrap:wrap; gap:12px; padding-top:22px; border-top:1px solid var(--palette-border); }
+.info-actions .button { min-height:44px; border-radius:9px; font-size:13px; line-height:21px; padding:10px 16px; }

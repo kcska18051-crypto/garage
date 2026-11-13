@@ -11,6 +11,8 @@ import { useEffect, useRef, useState } from 'react'
 import { DeliveryChoices, deliverySummary } from '../features/checkout/DeliveryChoices'
 import { useAuth } from '../state/AuthState'
 import { useProfile } from '../state/ProfileState'
+import { normalizePhoneIdentity } from '../utils/phoneIdentity'
+import { formatProductCount } from '../data/catalogData'
 
 const useDemoCart = () => { const { ensureDemoCart } = useCommerce(); useEffect(() => ensureDemoCart(), []) }
 
@@ -25,13 +27,14 @@ export function CheckoutReviewPage() {
   useDemoCart()
   const navigate = useNavigate()
   const location = useLocation()
-  const { cartItems, checkout, updateCheckout } = useCommerce()
+  const { cartItems, checkout, updateCheckout, removeFromCart } = useCommerce()
   const { isAuthenticated, identity, openAuth } = useAuth()
-  const { user } = useProfile()
+  const { user, createCheckoutOrder } = useProfile()
   const openCheckoutAuth = () => openAuth('login', { returnTo: location.pathname + location.search + location.hash })
   const [validationMessage, setValidationMessage] = useState('')
   const [ctaVisible, setCtaVisible] = useState(false)
   const submitRef = useRef<HTMLButtonElement>(null)
+  const submissionLocked = useRef(false)
   const included = selectedCartLines(cartItems, checkout.selectedCartIds)
   const pricing = getCartPricing(included, checkout.promoCode)
   const count = included.reduce((sum, item) => sum + item.quantity, 0)
@@ -40,6 +43,11 @@ export function CheckoutReviewPage() {
   const deliveryValid = checkout.delivery === 'pickup' ? Boolean(checkout.store) : checkout.delivery === 'courier' ? (checkout.deliveryMode === 'point' ? Boolean(checkout.deliveryPoint) : Boolean(checkout.address.trim())) : Boolean(checkout.transportAddress.trim() && checkout.carrier && (checkout.carrier !== 'Своя ТК' || checkout.customCarrier?.trim()))
   const paymentValid = checkout.customerType === 'organization' ? checkout.payment === 'invoice' : checkout.payment !== 'invoice' && checkout.payment !== 'installment' && !(checkout.payment === 'cash' && checkout.delivery === 'transport')
   const orderValid = included.length > 0 && isAuthenticated && recipientValid && deliveryValid && paymentValid
+  const submitHelp = !included.length ? 'Добавьте товары или выберите позиции для оформления.'
+    : !isAuthenticated ? 'После нажатия можно войти или зарегистрироваться.'
+    : !recipientValid ? 'Заполните имя, фамилию и телефон получателя.'
+    : !deliveryValid ? 'Для завершения выберите пункт выдачи или укажите адрес получения.'
+    : !paymentValid ? 'Укажите доступный способ оплаты в разделе „Оплата“.' : ''
 
   useEffect(() => {
     if (!submitRef.current || typeof IntersectionObserver === 'undefined') return
@@ -51,6 +59,7 @@ export function CheckoutReviewPage() {
   const setCustomerType = (customerType: 'personal' | 'organization') => updateCheckout({ customerType, payment: customerType === 'organization' ? 'invoice' : 'card' })
   const setDelivery = (delivery: 'pickup' | 'courier' | 'transport') => updateCheckout({ delivery, payment: checkout.customerType === 'organization' ? 'invoice' : checkout.payment === 'cash' && delivery === 'transport' ? 'card' : checkout.payment })
   const submit = () => {
+    if (submissionLocked.current) return
     if (!included.length) { setValidationMessage('Выберите товары в корзине'); return }
     if (!isAuthenticated) { openCheckoutAuth(); return }
     if (!recipientValid) { setValidationMessage('Заполните данные другого получателя'); scrollToSection('checkout-recipient'); return }
@@ -59,7 +68,24 @@ export function CheckoutReviewPage() {
     setValidationMessage('')
     const details = { ...checkout }
     delete details.confirmedOrder
-    updateCheckout({ confirmedOrder: { lines: included.map(line => ({ ...line, optionParents: line.optionParents ? { ...line.optionParents } : undefined })), pricing, details } })
+    const now = new Date()
+    const unique = typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `${now.getTime()}-${Math.random().toString(36).slice(2)}`
+    const confirmedOrder = {
+      id:`checkout-${unique}`, number:`GR-${now.getFullYear()}-${unique.slice(-8).toUpperCase()}`,
+      createdAt:now.toISOString(), ownerPhone:normalizePhoneIdentity(identity?.phone ?? '') ?? '',
+      lines:included.map(line => ({ ...line, optionParents:line.optionParents ? { ...line.optionParents } : undefined })),
+      pricing, details,
+    }
+    const order = createCheckoutOrder(confirmedOrder, {
+      delivery:deliveryLabels[details.delivery], payment:paymentLabels[details.payment], address:deliverySummary(details),
+      recipient:details.otherRecipient
+        ? { firstName:details.recipientName.trim(), lastName:details.recipientLastName.trim(), phone:details.recipientPhone.trim(), relation:'other' }
+        : { firstName:user.firstName, lastName:user.lastName, phone:identity?.phone ?? user.phone, relation:'owner' },
+    })
+    if (!order) { setValidationMessage('Не удалось оформить заказ. Проверьте данные и попробуйте ещё раз.'); return }
+    submissionLocked.current = true
+    for (const line of included) removeFromCart(line.id)
+    updateCheckout({ confirmedOrder, selectedCartIds:[] })
     navigate('/checkout/success')
   }
 
@@ -84,7 +110,7 @@ export function CheckoutReviewPage() {
             <label>Имя получателя<input aria-label="Имя получателя" required value={checkout.recipientName} onChange={(event) => updateCheckout({ recipientName: event.target.value })}/></label>
             <label>Фамилия получателя<input aria-label="Фамилия получателя" required value={checkout.recipientLastName} onChange={(event) => updateCheckout({ recipientLastName: event.target.value })}/></label>
             <label>Телефон получателя<input aria-label="Телефон получателя" type="tel" required value={checkout.recipientPhone} onChange={(event) => updateCheckout({ recipientPhone: event.target.value })}/></label>
-            <p>Код подтверждения для другого получателя предусмотрен; окончательная механика уточняется.</p>
+            <p>Укажите имя и телефон человека, который получит заказ.</p>
           </div>}
         </section>
 
@@ -118,10 +144,11 @@ export function CheckoutReviewPage() {
         <h2>Ваш заказ</h2><CartPricingView pricing={pricing} count={count}/><div className="order-summary__row"><span>Доставка</span><b>{checkout.delivery === 'pickup' ? 'Бесплатно' : checkout.delivery === 'courier' ? 'Рассчитает менеджер' : 'По тарифу ТК'}</b></div>
         <div className="checkout-summary__details"><p><span>Получатель</span><b>{checkout.otherRecipient ? `${checkout.recipientName || 'Другой'} ${checkout.recipientLastName}`.trim() : isAuthenticated ? `${user.firstName} ${user.lastName}` : 'Данные профиля после входа'}</b><button onClick={() => scrollToSection('checkout-recipient')}>Изменить</button></p><p><span>Получение</span><b>{deliveryLabels[checkout.delivery]} · {deliverySummary(checkout)}</b><button onClick={() => scrollToSection('checkout-delivery')}>Изменить</button></p><p><span>Оплата</span><b>{paymentLabels[checkout.payment]}</b><button onClick={() => scrollToSection('checkout-payment')}>Изменить</button></p></div>
         {validationMessage && <p className="checkout-validation" role="alert">{validationMessage}</p>}
-        <button ref={submitRef} data-testid="checkout-submit" className={`button checkout-submit${orderValid ? '' : ' is-inactive'}`} aria-disabled={!orderValid} type="button" onClick={submit}>Оформить заказ</button>
+        {!orderValid && <p className="checkout-submit-help" id="checkout-submit-help">{submitHelp}</p>}
+        <button ref={submitRef} data-testid="checkout-submit" className="button checkout-submit" aria-describedby={!orderValid ? 'checkout-submit-help' : undefined} type="button" onClick={submit}>Оформить заказ</button>
       </aside>
     </div>
-    <div className={`mobile-checkout-hint${ctaVisible ? ' is-hidden' : ''}`} data-testid="mobile-checkout-hint"><span><b>{pricing.rows.length > 0 && pricing.rows.every(row => row.quote) ? 'Уточняется' : money(total)}</b><small>{count} товара</small></span><button type="button" aria-label="Перейти к оформлению заказа" onClick={() => submitRef.current?.scrollIntoView?.({ behavior: 'auto', block: 'center' })}>Оформить заказ</button></div>
+    <div className={`mobile-checkout-hint${ctaVisible ? ' is-hidden' : ''}`} data-testid="mobile-checkout-hint"><span><b>{pricing.rows.length > 0 && pricing.rows.every(row => row.quote) ? 'Уточняется' : money(total)}</b><small>{formatProductCount(count)}</small></span><button type="button" aria-label="Перейти к оформлению заказа" onClick={() => submitRef.current?.scrollIntoView?.({ behavior: 'auto', block: 'center' })}>Оформить заказ</button></div>
   </main>
 }
 
@@ -132,6 +159,7 @@ export function CheckoutDeliveryPage() {
 export function CheckoutSuccessPage() {
   useDemoCart()
   const { cartItems, checkout } = useCommerce()
+  const { identity } = useAuth()
   const confirmedCheckout = checkout.confirmedOrder?.details ?? checkout
   const included = checkout.confirmedOrder?.lines ?? selectedCartLines(cartItems, checkout.selectedCartIds)
   const pricing = checkout.confirmedOrder?.pricing ?? getCartPricing(included, checkout.promoCode)
@@ -140,10 +168,13 @@ export function CheckoutSuccessPage() {
   const deliveryDetails = deliverySummary(confirmedCheckout)
   const cityPrefix = confirmedCheckout.delivery === 'pickup' && confirmedCheckout.pickupCity ? confirmedCheckout.pickupCity + ' — ' : ''
   const deliveryAddress = cityPrefix && deliveryDetails.startsWith(cityPrefix) ? deliveryDetails.slice(cityPrefix.length) : deliveryDetails
+  if (checkout.confirmedOrder?.ownerPhone && (!normalizePhoneIdentity(checkout.confirmedOrder.ownerPhone) || normalizePhoneIdentity(checkout.confirmedOrder.ownerPhone) !== normalizePhoneIdentity(identity?.phone ?? ''))) {
+    return <main className="checkout-page checkout-success-page"><h1>Заказ недоступен</h1><p>Войдите в профиль, из которого был оформлен этот заказ.</p><Link className="button" to="/profile/orders">Мои заказы</Link></main>
+  }
   return <main className="checkout-page checkout-success-page">
     <header className="checkout-success-heading">
       <span className="success-status-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m6 12 4 4 8-8"/></svg></span>
-      <div><h1>Заказ принят</h1><p className="order-number">Номер заказа: GR-2026-091</p></div>
+      <div><h1>Заказ принят</h1><p className="order-number">Номер заказа: {checkout.confirmedOrder?.number ?? 'GR-2026-091'}</p></div>
     </header>
     <div className="checkout-layout">
       <div className="success-order-content">
@@ -162,7 +193,7 @@ export function CheckoutSuccessPage() {
           <h2 id="success-delivery-title">Получение и оплата</h2>
           <dl><div><dt>Получение</dt><dd className="success-delivery-address"><strong>{deliveryTitle}</strong><span>{deliveryAddress}</span></dd></div><div><dt>Оплата</dt><dd>{paymentLabels[confirmedCheckout.payment]}</dd></div></dl>
         </section>
-        <nav className="success-actions" aria-label="Дальнейшие действия"><Link className="button" to="/profile/orders">Активные заказы</Link><Link className="success-catalog" to="/catalog">Вернуться в каталог</Link></nav>
+        <nav className="success-actions" aria-label="Дальнейшие действия"><Link className="button" to={checkout.confirmedOrder?.id ? `/profile/orders/${encodeURIComponent(checkout.confirmedOrder.id)}` : '/profile/orders'}>{checkout.confirmedOrder?.id ? 'Посмотреть заказ' : 'Активные заказы'}</Link><Link className="success-catalog" to="/catalog">Вернуться в каталог</Link></nav>
       </div>
       <aside className="order-summary" aria-label="Итоги заказа"><h2>Итог заказа</h2><CartPricingView pricing={pricing} count={count}/></aside>
     </div>

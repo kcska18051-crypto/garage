@@ -24,3 +24,9 @@
 .app-shell[data-approved-chrome] .style-check-footer .footer-socials :is(a,button) { width:38px; height:38px; padding:8px; display:grid; place-items:center; }
 .app-shell[data-approved-chrome] .style-check-footer .footer-socials button:disabled { color:#555f52; }
 .footer-socials svg { display:block; width:22px; height:22px; }
+
+/* Readability pass only: the deferred footer composition is retained. */
+.app-shell[data-approved-chrome] .site-footer.style-check-footer { background:var(--palette-surface); color:var(--palette-ink); }
+.app-shell[data-approved-chrome] .site-footer.style-check-footer :is(.site-footer__top p,.footer-email,.footer-pending,.footer-yandex small,.site-footer__bottom,.site-footer__bottom a,.footer-groups a) { color:var(--palette-muted); }
+.app-shell[data-approved-chrome] .site-footer.style-check-footer .footer-phone { color:var(--palette-ink); }
+.app-shell[data-approved-chrome] .site-footer.style-check-footer .footer-groups a:hover { color:var(--palette-red); }

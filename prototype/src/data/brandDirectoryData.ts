@@ -28,5 +28,6 @@ export const brandDirectory: BrandDirectoryItem[] = [
   { id: 'remeza', name: 'Remeza', popular: true, categories: ['Компрессорное оборудование'] },
   { id: 'rupes', name: 'Rupes', popular: true, categories: ['Кузовной ремонт', 'Покраска и подготовка'] },
   { id: 'sivik', name: 'Sivik', categories: ['Кузовной ремонт'] },
+  { id: 'trommelberg', name: 'Trommelberg', categories: [] },
   { id: 'wiederkraft', name: 'WiederKraft', categories: ['Кузовной ремонт', 'Инструмент'] },
 ]

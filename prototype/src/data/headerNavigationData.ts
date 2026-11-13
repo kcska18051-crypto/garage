@@ -22,9 +22,9 @@ export const headerQuickLinksConfig: HeaderQuickLinksConfig = {
   items: [
     { id: 'actions', label: 'Акции', href: '/actions', order: 0, tone: 'accent' },
     { id: 'compressors', label: 'Компрессоры', href: '/catalog/compressor-equipment', order: 10 },
-    { id: 'lifting', label: 'Подъёмное оборудование', href: '/catalog/lifting', order: 20 },
-    { id: 'body', label: 'Кузовной ремонт', href: '/catalog/body', order: 30 },
-    { id: 'paint', label: 'Покраска', href: '/catalog/paint', order: 40 },
+    { id: 'lifting', label: 'Подъёмное оборудование', href: '/catalog/lifting-equipment', order: 20 },
+    { id: 'body', label: 'Кузовной ремонт', href: '/catalog/body-repair', order: 30 },
+    { id: 'paint', label: 'Покраска', href: '/catalog/painting', order: 40 },
     { id: 'tools', label: 'Инструмент', href: '/catalog/tools', order: 50 },
     { id: 'new', label: 'Новинки', href: '/new', order: 60 },
     { id: 'workshop', label: 'Оснащение автосервиса', href: '/services/workshop', order: 80, visibleOnMobile: false },

@@ -58,6 +58,11 @@ a {
   outline-offset: 0.2rem;
 }
 
+/* Empty editable fields must remain identifiable before hover or focus. */
+body :where(.app-shell,.approved-dialog) :where(input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select):not(:disabled):not([readonly]):not([aria-invalid=true]):not(:focus):not(:hover) {
+  border-color: var(--palette-field-border) !important;
+}
+
 .app-shell {
   min-height: 100vh;
   min-height: 100dvh;

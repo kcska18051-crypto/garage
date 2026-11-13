@@ -6,6 +6,20 @@ import { seedDemoSession } from '../../test/auth'
 beforeEach(seedDemoSession)
 
 describe('profile orders', () => {
+  it('returns from a corporate order to the corporate history tab', async () => {
+    render(<MemoryRouter initialEntries={['/profile/orders/order-org-31']}><App /></MemoryRouter>)
+    await userEvent.setup().click(screen.getByRole('link', { name: /Все заказы/ }))
+    expect(screen.getByRole('button', { name: 'От организаций' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByTestId('order-order-org-31')).toBeInTheDocument()
+    expect(screen.queryByTestId('order-order-102')).not.toBeInTheDocument()
+  })
+
+  it('keeps the ordered quantity when repeating a corporate order', async () => {
+    render(<MemoryRouter initialEntries={['/profile/orders/order-org-31']}><App /></MemoryRouter>)
+    await userEvent.setup().click(screen.getByRole('button', { name: 'Повторить заказ' }))
+    expect(screen.getAllByRole('link', { name: 'Корзина: 2' }).length).toBeGreaterThan(0)
+    expect(screen.getByRole('status')).toHaveTextContent('2 товара добавлены в корзину')
+  })
   it('switches personal and organization orders and repeats only available items', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter initialEntries={['/profile/orders']}><App /></MemoryRouter>)

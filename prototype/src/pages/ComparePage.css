@@ -43,7 +43,7 @@ html:has(.compare-page),body:has(.compare-page),.app-shell:has(.compare-page){ba
 .compare-card__name:hover{color:var(--palette-red-hover)}
 .compare-card .compare-card__sku{font-size:10px;line-height:18px;color:var(--palette-muted);margin:8px 0}
 .compare-card .compare-card__availability{font-size:11px;line-height:18px;color:var(--palette-muted);margin:auto 0 10px}
-.compare-card__availability[data-in-stock=true]{color:#38884b}
+.compare-card__availability[data-in-stock=true]{color:var(--palette-success)}
 .compare-card__cart{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:8px 14px;border:0;border-radius:9px;background:var(--palette-red);color:var(--palette-white);font-size:13px;line-height:20px;font-weight:600;text-decoration:none;cursor:pointer}
 .compare-card__cart:hover{background:var(--palette-red-hover)}
 .compare-swipe-hint{font-size:11px;line-height:20px;color:var(--palette-muted);margin:12px 0 0}

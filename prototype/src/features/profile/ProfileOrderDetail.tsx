@@ -1,3 +1,4 @@
+import { formatProductCount } from '../../data/catalogData'
 import { ProfileStatus } from './ProfileStatus'
 import {CartProductImage} from '../cart/CartProductImage'
 import {getDemoProduct} from '../../data/productRegistry'
@@ -20,17 +21,17 @@ export function ProfileOrderDetail() {
   const [address, setAddress] = useState(order?.address ?? '')
 
   if (!order || !recipient) return <div className="profile-section"><h1>Заказ не найден</h1><Link to="/profile/orders">Вернуться к заказам</Link></div>
-  const repeat = () => { const ids = order.items.filter((item) => item.available).map((item) => item.productId); commerce.addManyToCart(ids); notify(`${ids.length} товара добавлены в корзину. Цена и наличие будут пересчитаны.`) }
+  const repeat = () => { const available = order.items.filter((item) => item.available); available.forEach(item => commerce.addToCart(item.productId, item.quantity)); const count = available.reduce((sum, item) => sum + item.quantity, 0); notify(count ? `${formatProductCount(count)} ${count === 1 ? 'добавлен' : 'добавлены'} в корзину. Цена и наличие будут пересчитаны.` : 'В этом заказе нет доступных товаров для повтора.') }
   const saveRecipient = () => { updateRecipient(order.id, recipient); setRecipientEdit(false) }
   const saveAddress = () => { if (!address.trim()) return; updateAddress(order.id, address); setAddressEdit(false) }
 
   return <div className="profile-section profile-order-detail">
-    <Link className="profile-back" to="/profile/orders">← Все заказы</Link>
+    <Link className="profile-back" to={order.kind === 'organization' ? '/profile/orders?kind=organization' : '/profile/orders'}>← Все заказы</Link>
     <header className="profile-section__heading"><div><h1>Заказ № {order.number}</h1><span className="profile-heading-meta">{order.date}</span></div><div className="profile-order-total"><ProfileStatus>{order.status}</ProfileStatus><strong>{order.total}</strong></div></header>
     {notification && <p className="profile-message profile-message--success" role="status">{notification}</p>}
     <section className="profile-panel"><h2>Статус заказа</h2><ol className="profile-timeline">{order.timeline.map((step) => <li className={step.complete ? 'complete' : ''} aria-current={step.current ? 'step' : undefined} key={step.label}><i aria-hidden="true" /><span>{step.label}</span></li>)}</ol></section>
     <div className="profile-detail-grid">
-      <section className="profile-panel"><div className="profile-panel-heading"><h2>Товары</h2><span>{order.items.length} позиции</span></div><div className="profile-order-products">{order.items.map((item) => <div key={item.productId}><span className="profile-order-photo" aria-hidden="true"><CartProductImage product={getDemoProduct(item.productId)??{id:item.productId,name:item.name}}/></span><div><strong>{item.name}</strong><small>{item.quantity} шт. · {item.available ? 'Доступно' : 'Недоступно для повтора'}</small></div></div>)}</div></section>
+      <section className="profile-panel"><div className="profile-panel-heading"><h2>Товары</h2><span>{formatProductCount(order.items.length)}</span></div><div className="profile-order-products">{order.items.map((item) => <div key={item.productId}><span className="profile-order-photo" aria-hidden="true"><CartProductImage product={getDemoProduct(item.productId)??{id:item.productId,name:item.name}}/></span><div><strong>{item.name}</strong><small>{item.quantity} шт. · {item.available ? 'Доступно' : 'Недоступно для повтора'}</small></div></div>)}</div></section>
       <section className="profile-panel profile-order-summary"><h2>Получение и оплата</h2><dl><div><dt>Способ получения</dt><dd>{order.delivery}</dd></div><div><dt>Оплата</dt><dd>{order.payment}</dd></div></dl></section>
     </div>
     <div className="profile-detail-grid">

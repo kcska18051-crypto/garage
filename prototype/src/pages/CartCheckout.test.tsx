@@ -108,7 +108,7 @@ describe('cart and checkout', () => {
     expect(screen.getByLabelText('Имя получателя')).toBeRequired()
     expect(screen.getByLabelText('Фамилия получателя')).toBeRequired()
     expect(screen.getByLabelText('Телефон получателя')).toBeRequired()
-    expect(screen.getByText(/код подтверждения/i)).toBeInTheDocument()
+    expect(screen.getByText('Укажите имя и телефон человека, который получит заказ.')).toBeInTheDocument()
     await user.click(screen.getByRole('tab', { name: 'Купить как юридическое лицо' }))
     expect(screen.getByLabelText('Организация')).toBeInTheDocument()
     expect(screen.getByLabelText('Поиск организации по ИНН')).toBeInTheDocument()

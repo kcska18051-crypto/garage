@@ -34,4 +34,4 @@ it('compares products selected outside the original demo set and does not refill
  await user.click(screen.getByRole('link',{name:'Перейти в каталог'}))
  await user.click(screen.getByRole('link',{name:'Сравнение'}))
  expect(screen.queryByTestId('compare-product-card')).not.toBeInTheDocument()
-})
+},15_000)

@@ -1,3 +1,4 @@
+import { ProfileStatus } from './ProfileStatus'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { ProfileOrder, ProfileOrderKind } from '../../data/profileData'
@@ -5,7 +6,7 @@ import { useCommerce } from '../../state/CommerceState'
 import { useProfile } from '../../state/ProfileState'
 import { ProfileDialog } from './ProfileDialog'
 
-function Status({ children }: { children: string }) { return <span className="profile-status"><i aria-hidden="true" />{children}</span> }
+
 
 export function ProfileOrders() {
   const { orders, notification, notify } = useProfile()
@@ -27,7 +28,7 @@ export function ProfileOrders() {
     <div className="profile-tabs" role="group" aria-label="Тип заказов"><button type="button" aria-pressed={kind === 'personal'} onClick={() => setKind('personal')}>Личные</button><button type="button" aria-pressed={kind === 'organization'} onClick={() => setKind('organization')}>От организаций</button></div>
     {notification && <p className="profile-message profile-message--success" role="status">{notification}</p>}
     <div className="profile-order-list">{visible.map((order) => <article className="profile-order-card" data-testid={`order-${order.id}`} key={order.id}>
-      <div className="profile-order-card__top"><div><span>Заказ № {order.number}</span><small>{order.date}</small></div><Status>{order.status}</Status><strong>{order.total}</strong></div>
+      <div className="profile-order-card__top"><div><span>Заказ № {order.number}</span><small>{order.date}</small></div><ProfileStatus>{order.status}</ProfileStatus><strong>{order.total}</strong></div>
       {order.kind === 'organization' && <div className="profile-order-card__organization"><strong>{order.organization}</strong><span>ИНН {order.inn}</span></div>}
       <dl><div><dt>Получение</dt><dd>{order.delivery}</dd></div><div><dt>Состав</dt><dd>{order.items.length} товара</dd></div><div><dt>Тип</dt><dd>{order.kind === 'personal' ? 'Личный' : 'Организация'}</dd></div></dl>
       <div className="profile-actions"><Link className="profile-button profile-button--primary" to={`/profile/orders/${order.id}`}>Подробнее</Link><button className="profile-button" type="button" onClick={() => setRepeatOrder(order)}>Повторить заказ</button></div>

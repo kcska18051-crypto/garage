@@ -1,3 +1,4 @@
+import { ProfileStatus } from './ProfileStatus'
 import {CartProductImage} from '../cart/CartProductImage'
 import {getDemoProduct} from '../../data/productRegistry'
 import { useState } from 'react'
@@ -25,7 +26,7 @@ export function ProfileOrderDetail() {
 
   return <div className="profile-section profile-order-detail">
     <Link className="profile-back" to="/profile/orders">← Все заказы</Link>
-    <header className="profile-section__heading"><div><h1>Заказ № {order.number}</h1><span className="profile-heading-meta">{order.date}</span></div><div className="profile-order-total"><span className="profile-status"><i aria-hidden="true" />{order.status}</span><strong>{order.total}</strong></div></header>
+    <header className="profile-section__heading"><div><h1>Заказ № {order.number}</h1><span className="profile-heading-meta">{order.date}</span></div><div className="profile-order-total"><ProfileStatus>{order.status}</ProfileStatus><strong>{order.total}</strong></div></header>
     {notification && <p className="profile-message profile-message--success" role="status">{notification}</p>}
     <section className="profile-panel"><h2>Статус заказа</h2><ol className="profile-timeline">{order.timeline.map((step) => <li className={step.complete ? 'complete' : ''} aria-current={step.current ? 'step' : undefined} key={step.label}><i aria-hidden="true" /><span>{step.label}</span></li>)}</ol></section>
     <div className="profile-detail-grid">

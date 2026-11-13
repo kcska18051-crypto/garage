@@ -74,6 +74,14 @@ body :where(
 }
 
 /* Purchase is the only persistent red filled action. */
+/* Promotional labels use opaque brand red, including in the cart/account. */
+body :where(.promotion-badge,.catalog-rich-card__badge,.cart-promotion,.cart-line__discount-percent) {
+  background: var(--palette-red) !important;
+  color: var(--palette-white) !important;
+  border-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
 body :where(
   .product-teaser__cart,.catalog-rich-card__cart,.compare-card__cart,
   .extra-card__cart,.line-accessories article>button,

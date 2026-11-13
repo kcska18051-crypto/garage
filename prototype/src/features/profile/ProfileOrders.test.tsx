@@ -32,9 +32,11 @@ describe('profile orders', () => {
     render(<MemoryRouter initialEntries={['/profile/orders/order-102']}><App /></MemoryRouter>)
 
     expect(screen.getByRole('heading', { name: 'Заказ № GR-1024' })).toBeInTheDocument()
+    expect(document.querySelector('.profile-order-total .profile-status')).toHaveAttribute('data-status-tone', 'warning')
     await user.click(screen.getByRole('button', { name: 'Отменить заказ' }))
     await user.click(within(screen.getByRole('dialog', { name: 'Отменить заказ' })).getByRole('button', { name: 'Отправить заявку' }))
     expect(screen.getByText('Заявка на отмену отправлена')).toBeInTheDocument()
+    expect(document.querySelector('.profile-order-total .profile-status')).toHaveAttribute('data-status-tone', 'attention')
     expect(screen.queryByRole('button', { name: 'Отменить заказ' })).not.toBeInTheDocument()
   }, 15_000)
 

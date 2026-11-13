@@ -36,7 +36,7 @@ describe('unified auth dialog', () => {
     expect(screen.queryByRole('dialog', { name: 'Вход и регистрация' })).not.toBeInTheDocument()
     expect(screen.getByText(/Вы вошли в демонстрационный профиль/)).toBeInTheDocument()
     expect(screen.getByRole('status', { name: 'Текущий маршрут' })).toHaveTextContent('/profile')
-    expect(screen.getAllByRole('link', { name: 'Профиль' })[0]).toHaveAttribute('href', '/profile')
+    expect(within(document.querySelector('.header-actions') as HTMLElement).getByRole('link', { name: 'Алексей' })).toHaveAttribute('href', '/profile')
   }, 20000)
 
   it('opens the personal account from the demo password tab without credentials', async () => {

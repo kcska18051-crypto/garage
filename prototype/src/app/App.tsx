@@ -19,7 +19,7 @@ function AppContent() {
   const usesApprovedStyles = isStyleCheck || pathname.replace(/\/$/, '') === '/about'
   const commerce = useCommerce()
   const {identity}=useAuth()
-  const {claimServiceRequests}=useProfile()
+  const {claimServiceRequests,user}=useProfile()
   useEffect(()=>{if(identity)claimServiceRequests(identity)},[identity,claimServiceRequests])
   return (
     <div
@@ -31,7 +31,7 @@ function AppContent() {
       <link rel="stylesheet" href="/garage/style-check/approved-chrome.css?v=20261113-palette" />
       <link rel="stylesheet" href="/garage/style-check/interface-palette.css?v=20261113-client-demo" />
       <link rel="stylesheet" href="/garage/style-check/interaction-feedback.css?v=20261113-tabs-spacing" />
-      <Header counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
+      <Header customerName={user.firstName} counts={{ favorites: commerce.favoriteIds.size, compare: commerce.compareIds.size, cart: commerce.cartCount }} />
       <AppRoutes />
       <Footer />
       <CookieBanner />

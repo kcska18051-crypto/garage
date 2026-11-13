@@ -218,3 +218,7 @@
 .profile-page .profile-overview .profile-welcome h2{font-size:22px;line-height:31px}.profile-page .profile-overview .profile-status{font-size:11px;line-height:18px;padding:3px 7px}@media(max-width:767px){.profile-page .profile-overview .profile-welcome h2{font-size:20px;line-height:28px}}
 
 .profile-page .profile-form .form-legal-consents__check label{display:block;font-size:12px;line-height:20px;font-weight:400}
+
+/* Explicit profile destination replaces the ambiguous arrow in the user card. */
+.profile-page .profile-user-card { grid-template-columns:44px minmax(0,1fr); gap:12px; }
+.profile-page .profile-user-card .profile-user-card__action { grid-column:2; justify-self:start; }

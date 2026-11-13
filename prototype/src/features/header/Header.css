@@ -165,3 +165,4 @@
 .catalog-button[aria-expanded=true] .catalog-button__icon i:nth-child(2) { opacity: 0; transform: scaleX(.5); }
 .catalog-button[aria-expanded=true] .catalog-button__icon i:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
 @media (prefers-reduced-motion: reduce) { .catalog-button__icon i { transition: none; } }
+.site-header .header-actions > a[href$="/profile"] small { max-width:76px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }

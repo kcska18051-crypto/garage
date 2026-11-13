@@ -14,7 +14,7 @@ import { ThirdLevelNavigation } from './ThirdLevelNavigation'
 import { compactHeaderScrollThreshold } from '../../data/headerNavigationData'
 import './Header.css'
 
-export function Header({ counts }: { counts: HeaderCounts }) {
+export function Header({ counts, customerName }: { counts: HeaderCounts; customerName?: string }) {
   const { region, setRegion, needsConfirmation } = useRegion()
   const [regionOpen, setRegionOpen] = useState(false)
   const [catalogOpen, setCatalogOpen] = useState(false)
@@ -69,7 +69,7 @@ export function Header({ counts }: { counts: HeaderCounts }) {
   useEffect(() => { keepCatalogOpen(); setCatalogHovered(false); setCatalogOpen(false); setMenuOpen(false); setRegionOpen(false) }, [location, keepCatalogOpen])
   return <>
     <header className="site-header" ref={header} onFocusCapture={event => { if ((event.target as HTMLElement).closest('.search-box')) { closeCatalog(false); setRegionOpen(false); setMenuOpen(false) } }}>
-      <DesktopHeader region={region} onRegion={openRegion} counts={counts} compact={compact} catalogOpen={catalogOpen} onCatalog={toggleCatalog} onCatalogHover={hoverCatalog} onCatalogLeave={leaveCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
+      <DesktopHeader customerName={customerName} region={region} onRegion={openRegion} counts={counts} compact={compact} catalogOpen={catalogOpen} onCatalog={toggleCatalog} onCatalogHover={hoverCatalog} onCatalogLeave={leaveCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
       <MobileHeader compact={compact} compareCount={counts.compare} region={region} onRegion={openRegion} menuOpen={menuOpen} onMenu={toggleMenu} onCatalog={toggleCatalog} searchSuspended={catalogOpen || regionOpen || menuOpen} />
       <ThirdLevelNavigation compact={compact} />
       {needsConfirmation && !regionOpen && !catalogOpen && !menuOpen && <RegionConfirmation onChoose={openRegion} />}

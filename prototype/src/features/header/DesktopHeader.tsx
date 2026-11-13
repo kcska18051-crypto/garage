@@ -16,7 +16,7 @@ function ActionLink({ to, label, symbol, count }: { to: string; label: string; s
   return <Link className="header-action" to={to} aria-label={`${label}${count ? `: ${count}` : ''}`}><span aria-hidden="true">{symbol}</span><small>{label}</small>{count ? <b>{count}</b> : null}</Link>
 }
 
-export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, onCatalog, onCatalogHover, onCatalogLeave, searchSuspended = false }: { region: string; onRegion(): void; counts: HeaderCounts; compact: boolean; catalogOpen: boolean; onCatalog(): void; onCatalogHover?(opener: HTMLButtonElement): void; onCatalogLeave?(): void; searchSuspended?: boolean }) {
+export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, onCatalog, onCatalogHover, onCatalogLeave, searchSuspended = false, customerName }: { customerName?: string; region: string; onRegion(): void; counts: HeaderCounts; compact: boolean; catalogOpen: boolean; onCatalog(): void; onCatalogHover?(opener: HTMLButtonElement): void; onCatalogLeave?(): void; searchSuspended?: boolean }) {
   const { isAuthenticated, openAuth } = useAuth()
   const [callbackOpen, setCallbackOpen] = useState(false)
   const isStyleCheck = isApprovedChrome(useLocation().pathname)
@@ -30,7 +30,7 @@ export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, 
         {isStyleCheck && <nav className="reference-desktop-services" aria-label="Услуги и подбор автоэмали">{compact && <Link to="/services"><RoundedIcon name="service" /><span>Услуги</span></Link>}<Link to="/services/paint-matching"><RoundedIcon name="paint" /><span>{compact ? 'Подбор' : 'Подбор автоэмалей'}</span></Link></nav>}
         {!isStyleCheck && !compact && <Link className="service-link" to="/services">Услуги</Link>}
         {!isStyleCheck && (compact || !headerQuickLinksConfig.enabled) && <PaintServiceLink className="paint-service-link--fallback" />}
-        <div className="header-actions">{isAuthenticated ? <ActionLink to="/profile" label="Профиль" symbol="○" /> : <button className="header-action" type="button" aria-label="Профиль" onClick={() => openAuth('login', { returnTo: '/profile' })}><span aria-hidden="true">○</span><small>Профиль</small></button>}<ComparePreview count={counts.compare} /><ActionLink to="/favorites" label="Избранное" symbol="♡" count={counts.favorites} /><ActionLink to="/cart" label="Корзина" symbol="▱" count={counts.cart} /></div>
+        <div className="header-actions">{isAuthenticated ? <ActionLink to="/profile" label={customerName?.trim() || "Профиль"} symbol="○" /> : <button className="header-action" type="button" aria-label="Профиль" onClick={() => openAuth('login', { returnTo: '/profile' })}><span aria-hidden="true">○</span><small>Профиль</small></button>}<ComparePreview count={counts.compare} /><ActionLink to="/favorites" label="Избранное" symbol="♡" count={counts.favorites} /><ActionLink to="/cart" label="Корзина" symbol="▱" count={counts.cart} /></div>
         {isStyleCheck && compact && <Link className="reference-compact-contact reference-contact-tile" to="/contacts"><RoundedIcon name="phone" /><span><strong>Связаться с нами</strong><span>+7 (000) 000-00-00</span></span></Link>}
       </div>
       {isStyleCheck && callbackOpen && <ContactDialog mode="callback" onClose={() => setCallbackOpen(false)} />}

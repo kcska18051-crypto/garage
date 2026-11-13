@@ -65,9 +65,15 @@ describe('profile secondary sections', () => {
 
   it('updates profile data and shows address management', async () => {
     const user = userEvent.setup(); open('/profile/data')
+    const headerActions = within(document.querySelector('.header-actions') as HTMLElement)
+    expect(headerActions.getByRole('link', { name: 'Алексей' })).toHaveAttribute('href', '/profile')
+    const profileAction = within(document.querySelector('.profile-user-card') as HTMLElement).getByRole('link', { name: 'Перейти в профиль' })
+    expect(profileAction).toHaveTextContent('Профиль')
+    expect(profileAction).toHaveAttribute('href', '/profile/data')
     await user.clear(screen.getByLabelText('Имя')); await user.type(screen.getByLabelText('Имя'), 'Иван')
     await user.click(screen.getByRole('button', { name: 'Сохранить данные' }))
     expect(screen.getByRole('status')).toHaveTextContent('Данные профиля сохранены')
+    expect(headerActions.getByRole('link', { name: 'Иван' })).toHaveAttribute('href', '/profile')
     expect(screen.getByRole('link', { name: 'Управлять' })).toHaveAttribute('href', '/profile/addresses')
     expect(screen.getByLabelText('Телефон')).toHaveAttribute('readonly')
   })

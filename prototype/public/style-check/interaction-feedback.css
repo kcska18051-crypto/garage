@@ -1,0 +1,103 @@
+/* Shared desktop feedback. No geometry changes or text underlines. */
+body :where(a[href],button,summary,[role=button],[role=tab]) {
+  cursor: pointer;
+}
+body :where(button:disabled,[aria-disabled=true]) { cursor: not-allowed; }
+
+@media (hover:hover) and (pointer:fine) {
+  /* Text navigation, including breadcrumbs and return links. */
+  body main a[href]:not([class]):not(:has(img,svg)):hover,
+  body .approved-dialog a[href]:not([class]):not(:has(img,svg)):hover,
+  body :is(.rental-equipment__text-link,.brand-back,.material-back,.action-back,
+    .profile-back,.actions-secondary-link,.product-identity__brand,.product-all-specs,
+    .store-contact-email,.map-attribution,.pickup-details__route,.footer-phone,.footer-email,
+    .site-footer__legal a,.site-footer__legal button,.service-hub__text-action):hover {
+    color: var(--palette-red) !important;
+  }
+  body main a.active:hover { background-color: var(--palette-border) !important; }
+  body .site-header .third-level-nav__link--accent:hover {
+    background-color: var(--palette-surface) !important;
+  }
+
+  /* Small neutral actions: rails, icon controls, clear/reset and disclosure. */
+  body :is(button:not([class]):not([type=submit]),
+    .review-brand-prev,.review-brand-next,.useful-rail__control,
+    .catalog-listing__filter-reset,.catalog-tags__more,.catalog-tags__groups-toggle,
+    .catalog-pagination__more,.product-gallery__arrow,.product-purchase__proposal,
+    .material-video__action,.compare-clear-category,.compare-card__remove,
+    .favorites-clear,.approved-dialog__close,.region-close,
+    .profile-link-button,.search-results__clear):hover:not(:disabled):not([aria-disabled=true]) {
+    background-color: var(--palette-border) !important;
+    border-color: var(--palette-border-hover);
+  }
+  body summary:hover { color: var(--palette-red) !important; }
+  body :is(.promotion-badge,.catalog-rich-card__badge):hover {
+    background-color: var(--palette-red-hover) !important;
+    color: var(--palette-white) !important;
+  }
+
+  /* Card/media actions respond on the card, without fading product photos. */
+  body :is(.product-teaser,.catalog-rich-card):has(:is(a[href],button):hover),
+  body :is(.brand-directory-card--link,.contact-point__page-link,
+    .profile-order-row,.accessory-mini):hover {
+    border-color: var(--palette-border-hover) !important;
+    box-shadow: 0 4px 14px rgb(36 36 36 / .10) !important;
+  }
+  body :is(.compare-card__media,.cart-line__image,.success-product-photo,
+    .rental-equipment__card-image,.service-hub__compressor-photo,
+    .product-gallery__main):hover {
+    box-shadow: inset 0 0 0 2px var(--palette-border-hover) !important;
+    outline: 1px solid var(--palette-border-hover);
+    outline-offset: -1px;
+  }
+  body :is(.logo,.brand-grid>a,.footer-agency-credit):hover { opacity: .76; }
+
+  /* Native fields retain their value, validation and selection states. */
+  body :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),
+    select,textarea):hover:not(:disabled):not([readonly]):not([aria-invalid=true]) {
+    border-color: var(--palette-border-hover) !important;
+  }
+  body input:is([type=checkbox],[type=radio]):hover:not(:disabled) {
+    box-shadow: 0 0 0 3px rgb(36 36 36 / .12);
+  }
+  body input[type=range]:hover:not(:disabled) { filter: brightness(1.12); }
+  body .coordinate-map g[role=button]:hover {
+    filter: drop-shadow(0 2px 3px rgb(36 36 36 / .55));
+  }
+
+  /* Dots respond as dots, rather than gaining rectangular button surfaces. */
+  body :is(.product-teaser__dots,.catalog-rich-card__gallery) button:hover {
+    background: transparent !important;
+  }
+  body :is(.product-teaser__dots,.catalog-rich-card__gallery) button:hover::before,
+  body :is(.product-teaser__dots,.catalog-rich-card__gallery) button:hover::after {
+    background: var(--palette-yellow) !important;
+    transform: scale(1.25);
+  }
+
+  /* Pending social destinations stay non-clickable, with an explanatory tooltip. */
+  body .about-social li:hover {
+    background: #fafafa;
+    border-color: var(--palette-border-hover);
+  }
+  body .about-social li:hover .about-social-icon {
+    background: var(--palette-yellow);
+    color: var(--palette-ink);
+  }
+}
+
+body :where(summary,[role=button],[role=tab]):focus-visible {
+  outline: 2px solid var(--palette-ink);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion:no-preference) {
+  body :where(a[href],button,input,select,textarea,summary,.about-social li,.about-social-icon) {
+    transition: color .15s ease, background-color .15s ease, border-color .15s ease,
+      box-shadow .15s ease, opacity .15s ease, transform .15s ease;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  body :where(a[href],button,input,select,textarea,summary,.about-social li,.about-social-icon) {
+    transition: none !important;
+  }
+}

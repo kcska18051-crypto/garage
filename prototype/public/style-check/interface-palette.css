@@ -134,9 +134,9 @@ body :where(.screw-service__closing,.service-hub__closing,.compressor-overview__
   background: var(--palette-surface) !important;
   border-color: var(--palette-border) !important;
 }
-/* Home/company feature cards use white, without the old beige diagonal. */
+/* Very light neutral feature surfaces; retain the established card design. */
 body :where(.review-benefits[data-benefit-style] article,.review-about-fact) {
-  background: var(--palette-white) !important;
+  background: #fafafa !important;
   border-color: var(--palette-border) !important;
 }
 body :where(.review-benefits[data-benefit-style] article,.review-about-fact)::before {

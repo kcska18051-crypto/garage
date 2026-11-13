@@ -14,7 +14,10 @@
 .profile-page .profile-button--primary{background:var(--palette-yellow);border-color:transparent;color:var(--palette-ink);font-weight:600}
 .profile-page .profile-button--primary:hover{background:var(--palette-yellow-hover)}
 .profile-page .profile-button--danger{border-color:var(--palette-border);background:var(--palette-white);color:var(--palette-red)}
-.profile-page .profile-button--danger:hover{background:var(--palette-surface)}
+@media (hover:hover) and (pointer:fine) {
+ .profile-page .profile-button--danger:hover:not(:disabled){background:var(--palette-red);border-color:transparent;color:var(--palette-white)}
+}
+.profile-page .profile-button--danger:active:not(:disabled){background:var(--palette-red-hover);border-color:transparent;color:var(--palette-white)}
 .profile-page button:disabled{opacity:.45;cursor:not-allowed}
 .profile-page .profile-link-button{font-size:12px;line-height:20px;font-weight:500;color:var(--palette-ink);padding:5px 0;min-height:30px;text-decoration:none}
 .profile-page .profile-link-button:hover{text-decoration:underline}

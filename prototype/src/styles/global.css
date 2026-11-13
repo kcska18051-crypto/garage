@@ -77,14 +77,35 @@ body :where(.app-shell,.approved-dialog) :where(input:not([type=checkbox]):not([
 /* One outer page contract, including empty/search/error states. Home sections
    keep their own full-width surfaces and existing inner containers. */
 .container,
-.app-shell > main[class] {
+.app-shell > main.review-home-v2:not(.about-page) {
   margin-inline: auto;
   max-width: var(--container);
   min-height: 0;
   padding-inline: var(--gutter);
   width: 100%;
 }
-.app-shell > main[class] { padding-block: clamp(1rem, 2vw, 2rem); }
+.app-shell > main.review-home-v2:not(.about-page) { padding-block: clamp(1rem, 2vw, 2rem); }
+
+/* Inner pages follow the approved homepage's section grid. Keep each page's
+   own bottom clearance (especially checkout and the mobile navigation). */
+.app-shell[data-approved-chrome] > main:not(.review-home-v2),
+.app-shell[data-approved-chrome][data-style-check] > main.about-page.review-home-v2 {
+  --gutter: 24px;
+  width: 100%;
+  max-width: 1440px;
+  min-height: 0;
+  margin-inline: auto;
+  padding-inline: 24px;
+  padding-top: 24px;
+}
+@media (max-width: 767px) {
+  .app-shell[data-approved-chrome] > main:not(.review-home-v2),
+  .app-shell[data-approved-chrome][data-style-check] > main.about-page.review-home-v2 {
+    --gutter: 12px;
+    padding-inline: 12px;
+    padding-top: 20px;
+  }
+}
 .app-shell > main h1 { overflow-wrap: anywhere; }
 
 .prototype-bar,

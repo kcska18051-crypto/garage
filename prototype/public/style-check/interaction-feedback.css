@@ -20,7 +20,7 @@ body :where(button:disabled,[aria-disabled=true]) { cursor: not-allowed; }
   }
 
   /* Small neutral actions: rails, icon controls, clear/reset and disclosure. */
-  body :is(button:not([class]):not([type=submit]),
+  body :is(button:not([class]):not([type=submit]):not([role=tab]),
     .review-brand-prev,.review-brand-next,.useful-rail__control,
     .catalog-listing__filter-reset,.catalog-tags__more,.catalog-tags__groups-toggle,
     .catalog-pagination__more,.product-gallery__arrow,.product-purchase__proposal,
@@ -29,6 +29,17 @@ body :where(button:disabled,[aria-disabled=true]) { cursor: not-allowed; }
     .profile-link-button,.search-results__clear):hover:not(:disabled):not([aria-disabled=true]) {
     background-color: var(--palette-border) !important;
     border-color: var(--palette-border-hover);
+  }
+  /* Editorial tabs stay on white; only the text responds on hover.
+     Selection keeps its yellow indicator. No gray slab or neutral border. */
+  body .section-heading--with-tabs [role=tab]:hover,
+  body .materials-nav a:hover {
+    background-color: transparent !important;
+    color: var(--palette-ink) !important;
+    border-color: transparent !important;
+  }
+  body .section-heading--with-tabs [role=tab][aria-selected=true]:hover {
+    border-bottom-color: var(--palette-yellow) !important;
   }
   body summary:hover { color: var(--palette-red) !important; }
   body :is(.promotion-badge,.catalog-rich-card__badge):hover {

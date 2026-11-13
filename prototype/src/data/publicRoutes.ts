@@ -8,7 +8,7 @@ import {serviceRoutes} from './servicesData'
 
 // Only implemented routes and existing records, not wildcard placeholders.
 export const publicRoutes = [...new Set([
-  '/','/catalog','/brands','/brand/remeza','/compare','/search','/favorites','/cart',
+  '/','/catalog','/new','/brands','/brand/remeza','/compare','/search','/favorites','/cart',
   ...serviceRoutes,
   '/about','/contacts','/delivery','/payment','/warranty','/actions','/actions/completed',
   '/checkout/review','/checkout/delivery','/checkout/success','/profile','/profile/auth','/profile/recovery',

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../../app/App'
@@ -8,7 +8,7 @@ describe('lower homepage sections', () => {
   it('shows confirmed content, omits conditional blocks and validates consultation', async () => {
     const user = userEvent.setup()
     render(<MemoryRouter><App /></MemoryRouter>)
-    expect(screen.getByRole('heading', { name: 'Услуги' })).toBeVisible()
+    expect(within(screen.getByRole('main')).getByRole('heading', { name: 'Услуги' })).toBeVisible()
     expect(screen.queryByRole('heading', { name: 'Новости, статьи, обзоры' })).not.toBeInTheDocument()
     expect(screen.getByRole('tab', { name: 'Новости' })).toHaveAttribute('aria-selected', 'true')
     expect(screen.queryByRole('heading', { name: 'Подписка' })).not.toBeInTheDocument()

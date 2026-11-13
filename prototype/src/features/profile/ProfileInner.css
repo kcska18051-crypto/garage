@@ -221,4 +221,4 @@
 
 /* Explicit profile destination replaces the ambiguous arrow in the user card. */
 .profile-page .profile-user-card { grid-template-columns:44px minmax(0,1fr); gap:12px; }
-.profile-page .profile-user-card .profile-user-card__action { grid-column:2; justify-self:start; }
+.profile-page .profile-user-card .profile-user-card__action { grid-column:2; justify-self:start; width:auto; height:auto; }

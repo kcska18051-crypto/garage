@@ -40,7 +40,7 @@ export function PickupDetails({ point, onClose: onCloseImmediately }: { point: C
       <div className="pickup-details__photos">{['Фасад', 'Вход'].map(label => <figure key={label}><div role="img" aria-label={`Место для фотографии: ${label}`}>{label}</div><figcaption>Демозаглушка · {label}</figcaption></figure>)}</div>
       <dl><div><dt>Адрес</dt><dd>{point.city}, {point.address}</dd></div><div><dt>Часы работы</dt><dd>{point.hours}</dd></div><div><dt>Контакты</dt><dd><a href={`tel:${point.phone.replace(/[^+\d]/g, '')}`}>{point.phone}</a><br/><a href={`mailto:${point.email}`}>{point.email}</a></dd></div></dl>
       <h3>Как добраться</h3><p>Вход и ориентиры уточняются. Карта показывает демонстрационную точку.</p>
-      <CoordinateMap center={point.coordinates} value={point.coordinates}/>
+      <CoordinateMap pinMarkers center={point.coordinates} value={point.coordinates}/>
       <a className="pickup-details__route" href={`https://www.openstreetmap.org/directions?to=${point.coordinates.lat},${point.coordinates.lng}`} target="_blank" rel="noreferrer">Построить маршрут к демо-точке ↗</a>
       <p>Маршрут откроется в новой вкладке. Оформление заказа останется на месте.</p>
     </div>

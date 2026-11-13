@@ -54,3 +54,18 @@ it('preserves authentication protection on direct request creation URLs', () => 
  expect(screen.getByRole('heading',{name:'Войдите, чтобы открыть профиль'})).toBeInTheDocument()
  expect(screen.queryByLabelText('Услуга')).not.toBeInTheDocument()
 })
+
+it('retains guest contacts when switching service direction', async () => {
+ const user=userEvent.setup(); open('/services/request?kind=repair&item=screw')
+ await user.type(screen.getByLabelText('Ваше имя'),'Мария')
+ await user.type(screen.getByLabelText('Телефон'),'+79001234567')
+ await user.click(screen.getByRole('button',{name:'Изменить услугу'}))
+ await user.click(screen.getByRole('button',{name:'Подбор автоэмали'}))
+ await user.selectOptions(screen.getByLabelText('Услуга'),'paint-automotive')
+ expect(screen.getByLabelText('Имя')).toHaveValue('Мария')
+ expect(screen.getByLabelText('Телефон')).toHaveValue('+79001234567')
+ await user.click(screen.getByRole('button',{name:'Аренда оборудования'}))
+ await user.selectOptions(screen.getByLabelText('Оборудование для аренды'),'hydraulic-jack')
+ expect(screen.getByLabelText('Ваше имя')).toHaveValue('Мария')
+ expect(screen.getByLabelText('Телефон')).toHaveValue('+79001234567')
+},15_000)

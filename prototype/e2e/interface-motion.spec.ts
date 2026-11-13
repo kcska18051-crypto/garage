@@ -25,3 +25,16 @@ test('mobile filter dismissal restores its opener',async({page})=>{
  await page.setViewportSize({width:390,height:900});await page.goto('/catalog/compressor-equipment/screw-compressors')
  const opener=page.getByRole('button',{name:'Фильтры',exact:true});await opener.click();const dialog=page.getByRole('dialog',{name:'Фильтры каталога'});await expect(dialog).toBeVisible();await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);await expect(opener).toBeFocused()
 })
+
+for(const motion of ['no-preference','reduce'] as const){
+ test(`product gallery keeps keyboard focus inside and returns it: ${motion}`,async({page})=>{
+  await page.emulateMedia({reducedMotion:motion});await page.goto('/product/remeza-vk-10-gr-0001')
+  const opener=page.getByRole('button',{name:'Увеличить изображение',exact:true});await opener.click()
+  const dialog=page.getByRole('dialog',{name:'Увеличенный просмотр товара'})
+  const close=dialog.getByRole('button',{name:'Закрыть изображение'});await expect(close).toBeFocused()
+  await page.keyboard.press('Shift+Tab')
+  expect(await dialog.evaluate(e=>e.contains(document.activeElement))).toBe(true)
+  await page.keyboard.press('Tab');await expect(close).toBeFocused()
+  await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);await expect(opener).toBeFocused()
+ })
+}

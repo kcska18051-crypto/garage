@@ -22,3 +22,5 @@
 .profile-page .service-request-inline input,.profile-page .service-request-inline textarea { font-size:14px; line-height:22px; padding:10px 12px; border-radius:9px; }
 .profile-page .service-request-inline label { font-size:13px; line-height:21px; font-weight:600; }
 .profile-page .service-request-inline .button { min-height:42px; border-radius:9px; padding:10px 16px; font-size:13px; line-height:20px; justify-self:start; }
+
+.profile-new-service .profile-section__heading > h1[tabindex="-1"]:focus { outline: none; }

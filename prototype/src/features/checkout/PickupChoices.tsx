@@ -18,7 +18,7 @@ export function PickupChoices({ city, points, selectedId, onSelect }: { city: st
         <button className="pickup-card__details" type="button" aria-label={`Фото и как добраться: ${point.name}`} onClick={() => setDetails(point)}>Фото и как добраться</button>
       </article>)}
     </div>
-    <CoordinateMap center={selected?.coordinates ?? cityCenters[city]} selectedMarkerId={selected?.id} markers={points.map(point => ({ id: point.id, label: point.name, point: point.coordinates }))} onMarker={onSelect}/>
+    <CoordinateMap pinMarkers center={selected?.coordinates ?? cityCenters[city]} selectedMarkerId={selected?.id} markers={points.map(point => ({ id: point.id, label: point.name, point: point.coordinates }))} onMarker={onSelect}/>
     {details && <PickupDetails point={details} onClose={closeDetails}/>}
   </>
 }

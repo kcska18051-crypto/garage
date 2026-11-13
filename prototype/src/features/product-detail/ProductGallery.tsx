@@ -1,5 +1,5 @@
 import { useAnimatedClose } from '../../hooks/useAnimatedClose'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { GalleryItem, ProductOffer } from '../../data/productDetailData'
 import { GalleryPurchasePanel, type CommercialState } from './ProductPurchase'
 import { Link } from 'react-router-dom'
@@ -8,7 +8,8 @@ import { promotionHref } from '../../data/promotionPricing'
 type Props = { images: GalleryItem[]; name: string; offer: ProductOffer; state: CommercialState; quantity:number }
 
 export function ProductGallery({ name, offer, state, quantity }: Props) {
-  const closeGallery = useAnimatedClose(() => setOpen(false), () => document.querySelector('.product-gallery-modal'))
+  const modalRef = useRef<HTMLDivElement>(null)
+  const closeGallery = useAnimatedClose(() => setOpen(false), () => modalRef.current)
   const photos = [1,2,3].map(index => '/garage/style-check/review-assets/catalog-gallery/screw-' + index + '.webp')
   const [active, setActive] = useState(offer.galleryIndex)
   const [open, setOpen] = useState(false)
@@ -16,11 +17,22 @@ export function ProductGallery({ name, offer, state, quantity }: Props) {
   useEffect(() => setActive(offer.galleryIndex), [offer.galleryIndex])
   useEffect(() => {
     if (!open) return
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && closeGallery()
+    modalRef.current?.querySelector<HTMLButtonElement>('[aria-label="Закрыть изображение"]')?.focus({ preventScroll: true })
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); closeGallery(); return }
+      if (event.key !== 'Tab') return
+      const controls = Array.from(modalRef.current?.querySelectorAll<HTMLElement>('a[href],button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex="0"]') ?? []).filter(element => element.getClientRects().length > 0)
+      const first = controls[0], last = controls[controls.length - 1]
+      if (!first) return
+      if (!modalRef.current?.contains(document.activeElement) || (!event.shiftKey && document.activeElement === last) || (event.shiftKey && document.activeElement === first)) {
+        event.preventDefault(); (event.shiftKey ? last : first).focus()
+      }
+    }
     window.addEventListener('keydown', onKey)
-    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener('keydown', onKey) }
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener('keydown', onKey); if (opener?.isConnected) opener.focus({ preventScroll: true }) }
   }, [open])
   const move = (direction: number) => setActive((index) => (index + direction + photos.length) % photos.length)
   const art = <img className="product-gallery__photo" src={photos[active]} alt={name + ', фото ' + (active + 1)} />
@@ -31,5 +43,5 @@ export function ProductGallery({ name, offer, state, quantity }: Props) {
     <button className="product-gallery__arrow product-gallery__arrow--prev" type="button" aria-label="Предыдущее изображение" onClick={() => move(-1)}>←</button><button className="product-gallery__arrow product-gallery__arrow--next" type="button" aria-label="Следующее изображение" onClick={() => move(1)}>→</button>
     <span className="product-gallery__counter">{active + 1} из {photos.length}</span>
   </div>
-  return <section className="product-gallery" aria-label="Галерея товара"><div className="product-gallery__layout">{thumbs()}{stage()}</div>{open && <div className="product-gallery-modal" role="dialog" aria-modal="true" aria-label="Увеличенный просмотр товара" onMouseDown={(event) => event.target === event.currentTarget && closeGallery()}><div className="product-gallery-modal__content"><button className="product-modal__close approved-dialog__close" type="button" aria-label="Закрыть изображение" onClick={() => closeGallery()}>×</button><div className="product-gallery-modal__viewer">{thumbs(true)}{stage()}</div><GalleryPurchasePanel offer={offer} state={state} quantity={quantity} /></div></div>}</section>
+  return <section className="product-gallery" aria-label="Галерея товара"><div className="product-gallery__layout">{thumbs()}{stage()}</div>{open && <div ref={modalRef} className="product-gallery-modal" role="dialog" aria-modal="true" aria-label="Увеличенный просмотр товара" onMouseDown={(event) => event.target === event.currentTarget && closeGallery()}><div className="product-gallery-modal__content"><button className="product-modal__close approved-dialog__close" type="button" aria-label="Закрыть изображение" onClick={() => closeGallery()}>×</button><div className="product-gallery-modal__viewer">{thumbs(true)}{stage()}</div><GalleryPurchasePanel offer={offer} state={state} quantity={quantity} /></div></div>}</section>
 }

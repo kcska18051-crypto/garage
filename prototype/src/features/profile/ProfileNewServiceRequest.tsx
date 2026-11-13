@@ -31,6 +31,7 @@ export function ProfileNewServiceRequest() {
   const request = choices[kind].find(item => item.itemId === itemId)
   const { identity, isAuthenticated } = useAuth()
   const { user } = useProfile()
+  const [contactDraft, setContactDraft] = useState(() => isAuthenticated ? { name: user.firstName, phone: identity?.phone ? `+${identity.phone}` : user.phone } : { name: '', phone: '' })
   return <div className="profile-section profile-new-service">
     <header className="profile-section__heading"><h1 ref={heading} tabIndex={-1}>{submitted ? 'Заявка на услугу' : 'Новая заявка на услугу'}</h1></header>
     <p className="profile-new-service__lead">{submitted ? 'Сохраните номер заявки. Стоимость и сроки будут согласованы отдельно.' : 'Выберите услугу и расскажите о задаче. Стоимость и сроки согласуем после рассмотрения заявки; оплата на этом этапе не требуется.'}</p>
@@ -49,7 +50,7 @@ export function ProfileNewServiceRequest() {
       </>}
       <p id="service-choice-help" className="profile-new-service__help">{kind === 'repair' ? 'В форме понадобятся модель оборудования и описание неисправности. Стоимость ремонта зависит от диагностики и согласованных работ.' : kind === 'paint' ? 'Укажите контакты; при наличии добавьте марку автомобиля и код краски. Состав материалов и стоимость согласуем отдельно.' : 'Укажите желаемые даты и количество. Заявка не является бронью: наличие, стоимость и условия аренды требуют подтверждения.'}</p>
     </section>}
-    {request && <ServiceRequestDialog key={kind} inline request={request} contact={isAuthenticated ? { name: user.firstName, phone: identity?.phone ? `+${identity.phone}` : user.phone } : undefined} onCreated={() => setSubmitted(true)} onClose={() => {}} />}
+    {request && <ServiceRequestDialog key={kind} inline request={request} contact={contactDraft} onContactChange={setContactDraft} onCreated={() => setSubmitted(true)} onClose={() => {}} />}
     {!submitted && <Link className="profile-link-button" to={returnTo}>{from ? 'Вернуться к услуге' : 'Все заявки'}</Link>}
 
   </div>

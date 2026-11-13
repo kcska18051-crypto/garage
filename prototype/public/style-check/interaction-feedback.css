@@ -17,7 +17,8 @@ body :where(button:disabled,[aria-disabled=true]) { cursor: not-allowed; }
   /* Inline actions respond as text, never as square gray buttons. */
   body :is(.profile-link-button,.rental-equipment__text-link,.brand-back,
     .material-back,.action-back,.profile-back,.actions-secondary-link,
-    .product-identity__brand,.product-all-specs,.service-hub__text-action,.about-more):hover:not(:disabled):not([aria-disabled=true]) {
+    .product-identity__brand,.product-all-specs,.service-hub__text-action,.about-more,
+    .catalog-tags__more,.catalog-tags__groups-toggle):hover:not(:disabled):not([aria-disabled=true]) {
     color: var(--palette-red) !important;
     background-color: transparent !important;
     text-decoration: none !important;
@@ -30,7 +31,7 @@ body :where(button:disabled,[aria-disabled=true]) { cursor: not-allowed; }
   /* Small neutral actions: rails, icon controls, clear/reset and disclosure. */
   body :is(button:not([class]):not([type=submit]):not([role=tab]),
     .review-brand-prev,.review-brand-next,.useful-rail__control,
-    .catalog-listing__filter-reset,.catalog-tags__more,.catalog-tags__groups-toggle,
+    .catalog-listing__filter-reset,
     .catalog-pagination__more,.product-gallery__arrow,.product-purchase__proposal,
     .material-video__action,.compare-clear-category,.compare-card__remove,
     .favorites-clear,.approved-dialog__close,.region-close,

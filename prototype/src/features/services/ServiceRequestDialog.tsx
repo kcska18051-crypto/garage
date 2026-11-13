@@ -13,7 +13,7 @@ import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} fro
 const emptyFields = { name: '', phone: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1' }
 type Field = keyof typeof emptyFields
 
-export function ServiceRequestDialog({ request, onClose: onCloseImmediately, contact, inline = false, onCreated }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string }; inline?: boolean; onCreated?(): void }) {
+export function ServiceRequestDialog({ request, onClose: onCloseImmediately, contact, inline = false, onCreated, onContactChange }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string }; inline?: boolean; onContactChange?(contact: { name: string; phone: string }): void; onCreated?(): void }) {
   const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
   const [fields, setFields] = useState(() => ({ ...emptyFields, ...contact }))
   const [personalDataAccepted,setPersonalDataAccepted]=useState(false)
@@ -70,7 +70,11 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
     const props = {
       id: inputId, name: key, value: fields[key], required: !options.optional,
       'aria-label': label,
-      onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setFields((current) => ({ ...current, [key]: event.target.value })),
+      onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const value = event.target.value
+        setFields(current => ({ ...current, [key]: value }))
+        if (key === 'name' || key === 'phone') onContactChange?.({ name: key === 'name' ? value : fields.name, phone: key === 'phone' ? value : fields.phone })
+      },
       'aria-invalid': Boolean(errors[key]), 'aria-describedby': [key==='phone'?`${inputId}-hint`:null,errors[key]?`${inputId}-error`:null].filter(Boolean).join(' ') || undefined,
     }
     return <div className="form-field" key={key}>

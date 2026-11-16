@@ -81,7 +81,7 @@ describe('Remeza product detail redesign', () => {
     renderPage()
 
     await user.click(screen.getByText('Состояния товара · демонстрация'))
-    await user.click(screen.getByRole('button', { name: state }))
+    await user.click(within(screen.getByRole('group',{name:'Демонстрация статуса товара'})).getByRole('button', { name: state }))
 
     expect(screen.getAllByText(state === 'В наличии' ? /В наличии в 2 магазинах/ : state).length).toBeGreaterThan(0)
     expect(screen.getAllByRole('button', { name: action }).length).toBeGreaterThan(0)

@@ -1,3 +1,5 @@
+import { productDetail } from '../../data/productDetailData'
+import { useRegion } from '../../state/RegionState'
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { DemoLink as Link } from '../../app/DemoLink'
@@ -22,24 +24,31 @@ export function ProfileNewServiceRequest() {
   const heading = useRef<HTMLHeadingElement>(null)
   useEffect(() => { window.scrollTo(0,0); heading.current?.focus({preventScroll:true}) }, [])
   const [params] = useSearchParams()
+  const selectedOffer = params.get('kind') === 'rental' && params.get('item') === 'screw-compressor' ? productDetail.offers.find(offer=>offer.id===params.get('product')) : undefined
+  const {region} = useRegion()
   const from = params.get('from')
-  const returnTo = from === '/services' || from?.startsWith('/services/') ? from : '/profile/services'
+  const returnTo = from === '/services' || from?.startsWith('/services/') || (!!selectedOffer && from === '/product/'+selectedOffer.id) ? from : '/profile/services'
   const initialKind = params.get('kind')
   const [kind, setKind] = useState<ServiceRequest['kind']>(initialKind === 'paint' || initialKind === 'rental' ? initialKind : 'repair')
   const [itemId, setItemId] = useState(params.get('item') ?? '')
   const [showChoice, setShowChoice] = useState(!choices[kind].some(item => item.itemId === params.get('item')))
   const [submitted, setSubmitted] = useState(false)
-  const request = choices[kind].find(item => item.itemId === itemId)
+  const baseRequest = choices[kind].find(item => item.itemId === itemId)
+  const directRental = selectedOffer && kind === 'rental' && itemId === 'screw-compressor' && !showChoice ? selectedOffer : undefined
+  const variant = directRental ? `${directRental.options.voltage} · ${directRental.options.power} · Артикул ${directRental.sku}` : ''
+  const request = baseRequest && directRental ? {...baseRequest, itemId:directRental.id, title:`${productDetail.name} · ${directRental.options.voltage} · ${directRental.options.power}`} : baseRequest
   const { identity, isAuthenticated } = useAuth()
   const { user } = useProfile()
   const [contactDraft, setContactDraft] = useState(() => isAuthenticated ? { name: user.firstName, phone: identity?.phone ? `+${identity.phone}` : user.phone } : { name: '', phone: '' })
   return <div className="profile-section profile-new-service">
-    <header className="profile-section__heading"><h1 ref={heading} tabIndex={-1}>{submitted ? 'Заявка на услугу' : 'Новая заявка на услугу'}</h1></header>
-    <p className="profile-new-service__lead">{submitted ? 'Сохраните номер заявки. Стоимость и сроки будут согласованы отдельно.' : 'Выберите услугу и расскажите о задаче. Стоимость и сроки согласуем после рассмотрения заявки; оплата на этом этапе не требуется.'}</p>
+    <header className="profile-section__heading"><h1 ref={heading} tabIndex={-1}>{submitted ? 'Заявка на услугу' : directRental ? 'Заявка на аренду' : 'Новая заявка на услугу'}</h1></header>
+    <p className="profile-new-service__lead">{submitted ? 'Сохраните номер заявки. Стоимость и сроки будут согласованы отдельно.' : directRental ? 'Оборудование уже выбрано. Укажите даты, количество и контакты. Наличие, стоимость и условия согласуем отдельно; заявка не подтверждает бронь.' : 'Выберите услугу и расскажите о задаче. Стоимость и сроки согласуем после рассмотрения заявки; оплата на этом этапе не требуется.'}</p>
 
-    {!submitted && <section className="profile-panel profile-new-service__choice" aria-labelledby="service-choice-heading">
+    {!submitted && <section className={`profile-panel profile-new-service__choice${directRental?' profile-new-service__choice--product':''}`} aria-labelledby="service-choice-heading">
+      {directRental && <img className="profile-new-service__equipment-photo" src="/garage/style-check/review-assets/catalog-gallery/screw-1.webp" alt={productDetail.name}/>}
       <h2 id="service-choice-heading">{request && !showChoice ? request.title : 'Что вам нужно?'}</h2>
-      {request && !showChoice && <button className="profile-link-button" type="button" onClick={() => setShowChoice(true)}>Изменить услугу</button>}
+      {directRental && <small className="profile-new-service__equipment-sku">Артикул: {directRental.sku}</small>}
+      {request && !showChoice && !directRental && <button className="profile-link-button" type="button" onClick={() => setShowChoice(true)}>Изменить услугу</button>}
       {showChoice && <>
       <div className="profile-tabs" role="group" aria-label="Направление услуги">{directions.map(item => <button className="profile-new-service__direction" key={item.kind} type="button" aria-pressed={kind === item.kind} onClick={() => { if(kind !== item.kind) { setKind(item.kind); setItemId('') } }}>{item.label}</button>)}</div>
       <label className="profile-new-service__field">{kind === 'rental' ? 'Оборудование для аренды' : 'Услуга'}
@@ -49,10 +58,10 @@ export function ProfileNewServiceRequest() {
         </select>
       </label>
       </>}
-      <p id="service-choice-help" className="profile-new-service__help">{kind === 'repair' ? 'В форме понадобятся модель оборудования и описание неисправности. Стоимость ремонта зависит от диагностики и согласованных работ.' : kind === 'paint' ? 'Укажите контакты; при наличии добавьте марку автомобиля и код краски. Состав материалов и стоимость согласуем отдельно.' : 'Укажите желаемые даты и количество. Заявка не является бронью: наличие, стоимость и условия аренды требуют подтверждения.'}</p>
+      {!directRental && <p id="service-choice-help" className="profile-new-service__help">{kind === 'repair' ? 'В форме понадобятся модель оборудования и описание неисправности. Стоимость ремонта зависит от диагностики и согласованных работ.' : kind === 'paint' ? 'Укажите контакты; при наличии добавьте марку автомобиля и код краски. Состав материалов и стоимость согласуем отдельно.' : 'Укажите желаемые даты и количество. Заявка не является бронью: наличие, стоимость и условия аренды требуют подтверждения.'}</p>}
     </section>}
-    {request && <ServiceRequestDialog key={kind} inline request={request} contact={contactDraft} onContactChange={setContactDraft} onCreated={() => setSubmitted(true)} onClose={() => {}} />}
-    {!submitted && <Link className="profile-link-button" to={returnTo}>{from ? 'Вернуться к услуге' : 'Все заявки'}</Link>}
+    {request && <ServiceRequestDialog key={kind+(directRental?.id??'')} rentalContext={directRental ? {model:variant,city:region} : undefined} inline request={request} contact={contactDraft} onContactChange={setContactDraft} onCreated={() => setSubmitted(true)} onClose={() => {}} />}
+    {!submitted && <Link className="profile-link-button" to={returnTo}>{directRental ? 'Вернуться к товару' : from ? 'Вернуться к услуге' : 'Все заявки'}</Link>}
 
   </div>
 }

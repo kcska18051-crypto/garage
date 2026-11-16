@@ -29,40 +29,37 @@ it.each([
   expect(screen.getByRole('navigation', {name: 'Хлебные крошки'})).toHaveTextContent('Аренда оборудования и инструмента')
 })
 
-it('uses the approved sale → message → compressor category → direct form path without changing purchase cart', async () => {
-  sessionStorage.setItem('garage-auth-demo-session-v1', 'active')
-  sessionStorage.setItem('garage-auth-demo-identity-v1', JSON.stringify({phone: '79991234567', phoneConfirmed: true}))
-  localStorage.setItem('garage-cart-v2', JSON.stringify([{id: 'product-2', quantity: 2}]))
-  const user = userEvent.setup(); const view = open('/product/remeza-vk-10-gr-0001/')
-  const before = localStorage.getItem('garage-cart-v2')
-  const trigger = screen.getByRole('button', {name: 'Взять в аренду'})
-  await user.click(trigger)
-  const info = within(screen.getByRole('dialog', {name: 'Можно взять в аренду'}))
-  expect(info.queryByLabelText('Дата начала')).not.toBeInTheDocument()
-  expect(info.getByRole('link', {name: 'Компрессоры в аренду'})).toHaveAttribute('href', '/services/rental/compressors')
-  await user.keyboard('{Escape}'); expect(trigger).toHaveFocus()
-  await user.click(trigger)
-  await user.click(within(screen.getByRole('dialog')).getByRole('link', {name: 'Компрессоры в аренду'}))
-  const card = within(document.querySelector('[data-rental-id="screw-compressor"]') as HTMLElement)
-  expect(card.getByText('380 В')).toBeInTheDocument()
-  expect(card.getByText('7,5 кВт')).toBeInTheDocument()
-  await user.click(card.getByRole('button', {name: /Арендовать/}))
-  const form = within(screen.getByRole('region', {name: 'Заявка на аренду'}))
-  expect(form.getByText('Винтовой компрессор Remeza ВК 10-8 с ременным приводом', {exact: true})).toBeInTheDocument()
-  for (const [label, value] of [['Ваше имя', 'Демо аренда'], ['Телефон', '+79991234567']]) {await user.clear(form.getByLabelText(label)); await user.click(form.getByLabelText(label)); await user.paste(value)}
-  for (const label of ['Дата начала', 'Дата окончания']) fireEvent.change(form.getByLabelText(label), {target: {value: '2099-01-01'}})
-  await user.click(form.getByRole('button', {name: 'Отправить заявку'}))
-  const record = JSON.parse(localStorage.getItem('garage-service-requests-v1')!).find((r: {seed: boolean}) => !r.seed)
-  expect(record).toMatchObject({kind: 'rental', itemId: 'screw-compressor', title: 'Винтовой компрессор Remeza ВК 10-8 с ременным приводом', status: 'Ожидает подтверждения', ownerPhone: '79991234567'})
-  expect(localStorage.getItem('garage-cart-v2')).toBe(before)
-  await user.click(screen.getByRole('button', {name: 'Посмотреть заявку в личном кабинете'}))
-  expect(screen.getByRole('heading', {name: `Заявка № ${record.number}`})).toBeInTheDocument()
-  view.unmount(); open(`/profile/services/request/?id=${record.id}`)
-  expect(screen.getByText('Ожидает подтверждения', {selector: 'p.profile-status'})).toBeInTheDocument()
-  expect(localStorage.getItem('garage-cart-v2')).toBe(before)
-}, 20000)
+it.each([
+ ['remeza-vk-10-gr-0001','380 В','7,5 кВт','GR-0001'],
+ ['remeza-vk-10-380-55','380 В','5,5 кВт','GR-380-55'],
+ ['remeza-vk-10-220-55','220 В','5,5 кВт','GR-220-55'],
+])('rents the selected %s directly and retains it in account history', async (id, voltage, power, sku) => {
+ sessionStorage.setItem('garage-auth-demo-session-v1','active')
+ sessionStorage.setItem('garage-auth-demo-identity-v1',JSON.stringify({phone:'79991234567',phoneConfirmed:true}))
+ localStorage.setItem('garage-cart-v2',JSON.stringify([{id:'product-2',quantity:2}]))
+ const user=userEvent.setup(), view=open(`/product/${id}`), before=localStorage.getItem('garage-cart-v2')
+ await user.click(screen.getByRole('button',{name:'Взять в аренду'}))
+ expect(screen.queryByRole('combobox',{name:'Оборудование для аренды'})).not.toBeInTheDocument()
+ expect(screen.getByRole('link',{name:'Вернуться к товару'})).toHaveAttribute('href',`/product/${id}`)
+ const form=within(screen.getByRole('region',{name:'Заявка на аренду'}))
+ expect(screen.getByRole('heading',{level:2,name:new RegExp(voltage+' · '+power)})).toBeInTheDocument()
+ for(const [label,value] of [['Ваше имя','Демо аренда'],['Телефон','+79991234567'],['Город получения','Вологда']]) {await user.clear(form.getByLabelText(label));await user.click(form.getByLabelText(label));await user.paste(value)}
+ for(const label of ['Дата начала','Дата окончания']) fireEvent.change(form.getByLabelText(label),{target:{value:'2099-01-01'}})
+ await user.dblClick(form.getByRole('button',{name:'Отправить заявку на аренду'}))
+ const records=JSON.parse(localStorage.getItem('garage-service-requests-v1')!).filter((r:{seed:boolean})=>!r.seed)
+ expect(records).toHaveLength(1)
+ const record=records[0]
+ expect(record).toMatchObject({kind:'rental',itemId:id,status:'Ожидает подтверждения',ownerPhone:'79991234567',fields:{city:'Вологда',model:expect.stringContaining(sku)}})
+ expect(localStorage.getItem('garage-cart-v2')).toBe(before)
+ await user.click(screen.getByRole('button',{name:'Посмотреть заявку в личном кабинете'}))
+ expect(screen.getByRole('heading',{name:`Заявка № ${record.number}`})).toBeInTheDocument()
+ view.unmount();open(`/profile/services/request/?id=${record.id}`)
+ expect(screen.getByText('Вологда')).toBeInTheDocument()
+ expect(screen.getByText(new RegExp(sku))).toBeInTheDocument()
+ expect(screen.getByText('Ожидает подтверждения',{selector:'p.profile-status'})).toBeInTheDocument()
+},20000)
 
-it.each(['product-3', 'remeza-vk-10-220-55'])('does not mark an unlinked sale SKU %s as available for rental', id => {
+it.each(['product-3'])('does not mark an unlinked sale SKU %s as available for rental', id => {
   open(`/product/${id}`)
   expect(screen.queryByRole('button', {name: /^(Можно взять в аренду|Взять в аренду)$/})).not.toBeInTheDocument()
 })

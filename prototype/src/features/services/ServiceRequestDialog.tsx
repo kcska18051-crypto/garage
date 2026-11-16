@@ -10,12 +10,12 @@ import {useProfile} from '../../state/ProfileState'
 import {useAuth} from '../../state/AuthState'
 import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} from '../../state/serviceRequests'
 
-const emptyFields = { name: '', phone: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1' }
+const emptyFields = { name: '', phone: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1', city: '' }
 type Field = keyof typeof emptyFields
 
-export function ServiceRequestDialog({ request, onClose: onCloseImmediately, contact, inline = false, onCreated, onContactChange }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string }; inline?: boolean; onContactChange?(contact: { name: string; phone: string }): void; onCreated?(): void }) {
+export function ServiceRequestDialog({ request, onClose: onCloseImmediately, contact, inline = false, onCreated, onContactChange, rentalContext }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string }; rentalContext?: {model:string;city:string}; inline?: boolean; onContactChange?(contact: { name: string; phone: string }): void; onCreated?(): void }) {
   const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
-  const [fields, setFields] = useState(() => ({ ...emptyFields, ...contact }))
+  const [fields, setFields] = useState(() => ({ ...emptyFields, ...contact, ...(rentalContext ? {model:rentalContext.model,city:rentalContext.city} : {}) }))
   const [personalDataAccepted,setPersonalDataAccepted]=useState(false)
   const [agreementAccepted,setAgreementAccepted]=useState(false)
   const [consentsAttempted,setConsentsAttempted]=useState(false)
@@ -95,6 +95,7 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
     const next: Record<string, string> = {}
     if (!fields.name.trim()) next.name = 'Укажите имя'
     if (!isServicePhoneValid(fields.phone)) next.phone = 'Укажите телефон: от 10 до 15 цифр, без букв'
+    if (rentalContext && !fields.city.trim()) next.city = 'Укажите город получения'
     if (request.kind === 'repair') {
       if (!fields.model.trim()) next.model = 'Укажите модель оборудования'
       if (!fields.description.trim()) next.description = 'Опишите неисправность'
@@ -138,10 +139,11 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
         }}>Посмотреть заявку в личном кабинете</button>
         <button className="button" onClick={() => inline ? navigate('/profile/services') : closeRef.current()}>{inline ? 'Все заявки' : 'Закрыть'}</button>
       </div> : <form onSubmit={submit} noValidate>
-        <h2 ref={headingRef} tabIndex={-1}>{title}</h2>
-        <p className="service-request-selection">{request.title}</p>
+        <h2 ref={headingRef} tabIndex={-1}>{rentalContext ? 'Даты и контакты' : title}</h2>
+        {!rentalContext && <p className="service-request-selection">{request.title}</p>}
         {field('name', request.kind==='paint'?'Имя':'Ваше имя', { autoComplete: 'name' })}
         {field('phone', 'Телефон', { type: 'tel', autoComplete: 'tel' })}
+        {rentalContext && field('city','Город получения', {autoComplete:'address-level2'})}
         {request.kind === 'repair' && <>
           {field('model', 'Модель оборудования')}
           {field('description', 'Описание неисправности', { multiline: true })}
@@ -169,7 +171,7 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
         </>}
         {request.kind==='paint'&&<FormLegalConsents required personalDataAccepted={personalDataAccepted} agreementAccepted={agreementAccepted} onPersonalDataChange={setPersonalDataAccepted} onAgreementChange={setAgreementAccepted} showErrors={consentsAttempted}/>}
         {storageError&&<p className="field-error" role="alert">{storageError}</p>}
-        <button className="button button--dark" type="submit">{request.kind==='paint'&&!inline?'Узнать стоимость':'Отправить заявку'}</button>
+        <button className="button button--dark" type="submit">{rentalContext?'Отправить заявку на аренду':request.kind==='paint'&&!inline?'Узнать стоимость':'Отправить заявку'}</button>
       </form>}
   </>
   return inline ? <section className="service-request-inline service-request-dialog" role="region" aria-label={title} ref={dialogRef}>{content}</section> : <div className="overlay service-request-overlay" role="presentation" onMouseDown={event => { if(event.target === event.currentTarget) closeRef.current() }}><section className="dialog service-request-dialog approved-dialog" role="dialog" aria-modal="true" aria-label={title} ref={dialogRef} tabIndex={-1}>{content}</section></div>

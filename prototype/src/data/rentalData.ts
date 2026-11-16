@@ -19,4 +19,4 @@ export const rentalItems = [
   return {...item,title:isDetailed?productDetail.name:source.name,sku:source.sku,specs,href:`/services/rental/${item.id}`,art:index}
 })
 
-export const rentalForSaleProduct = (productId:string) => rentalItems.find(item=>item.sourceId===productId)
+export const rentalForSaleProduct = (productId:string) => rentalItems.find(item=>item.sourceId===productId || (item.id==='screw-compressor' && productDetail.offers.some(offer=>offer.id===productId)))

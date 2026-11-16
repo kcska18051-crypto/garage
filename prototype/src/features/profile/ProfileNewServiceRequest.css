@@ -24,3 +24,11 @@
 .profile-page .service-request-inline .button { min-height:42px; border-radius:9px; padding:10px 16px; font-size:13px; line-height:20px; justify-self:start; }
 
 .profile-new-service .profile-section__heading > h1[tabindex="-1"]:focus { outline: none; }
+
+.profile-new-service__equipment-photo { width:120px; height:90px; object-fit:contain; }
+
+.profile-page .profile-new-service__choice--product { display:grid; grid-template-columns:100px minmax(0,1fr); gap:6px 18px; align-items:center; }
+.profile-new-service__choice--product .profile-new-service__equipment-photo { grid-row:1/3; width:100px; height:84px; }
+.profile-new-service__choice--product h2 { font-size:17px; line-height:25px; }
+.profile-new-service__equipment-sku { color:var(--palette-muted); }
+@media(max-width:480px) { .profile-page .profile-new-service__choice--product { grid-template-columns:70px minmax(0,1fr); gap:6px 12px; } .profile-new-service__choice--product .profile-new-service__equipment-photo { width:70px; height:80px; } .profile-new-service__choice--product h2 { font-size:14px; line-height:21px; } }

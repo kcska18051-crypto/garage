@@ -30,7 +30,7 @@
 @media(hover:hover) and (pointer:fine) {
  .app-shell[data-approved-chrome] .style-check-footer :is(.footer-groups nav a,.footer-email,.footer-phone,.site-footer__legal a,.site-footer__legal button):hover { color:var(--palette-red); }
  .app-shell[data-approved-chrome] .style-check-footer a.footer-yandex:hover { background:#fff0ad; }
- .app-shell[data-approved-chrome] .style-check-footer .footer-socials a:hover { color:var(--palette-ink); background:var(--palette-yellow); border-color:transparent; }
+ .app-shell[data-approved-chrome] .style-check-footer .footer-socials :is(a,button):hover { color:var(--palette-ink); background:var(--palette-yellow); border-color:transparent; }
  .app-shell[data-approved-chrome] .style-check-footer :is(.footer-brand-logo,.footer-agency-credit):hover { opacity:.76; }
 }
 @media(max-width:1199px) {
@@ -53,3 +53,7 @@
  .app-shell[data-approved-chrome] .style-check-footer .site-footer__legal { grid-column:auto; grid-row:auto; gap:8px 16px; }
  .app-shell[data-approved-chrome] .style-check-footer .footer-agency-credit { grid-column:auto; grid-row:auto; justify-self:start; margin-top:0; }
 }
+
+.app-shell[data-approved-chrome] .style-check-footer .footer-socials :is(a,button) { transition: background-color 160ms ease,color 160ms ease,border-color 160ms ease; }
+.app-shell[data-approved-chrome] .style-check-footer .footer-socials a:focus-visible { color:var(--palette-ink); background:var(--palette-yellow); border-color:transparent; outline:2px solid var(--palette-ink); outline-offset:3px; }
+@media(prefers-reduced-motion:reduce) { .app-shell[data-approved-chrome] .style-check-footer .footer-socials :is(a,button) { transition:none; } }

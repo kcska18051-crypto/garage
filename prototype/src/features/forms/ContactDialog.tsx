@@ -26,7 +26,7 @@ export function ContactDialog({ mode, product, onClose: onCloseImmediately }: { 
   const contactValid = mode === 'preorder' ? isServicePhoneValid(contact) : mode === 'consultation' ? Boolean(contact.trim()) : reply === 'email' && mode === 'message' ? isEmailValid : isPhoneValid
   const messageValid = mode !== 'message' || Boolean(message.trim())
   const legalValid = personalDataAccepted && agreementAccepted
-  const title = mode === 'preorder' ? 'Заказать под заказ' : mode === 'message' ? 'Написать сообщение' : mode === 'callback' ? 'Заказать звонок' : 'Расскажите, с чем помочь'
+  const title = mode === 'preorder' ? 'Под заказ' : mode === 'message' ? 'Написать сообщение' : mode === 'callback' ? 'Заказать звонок' : 'Расскажите, с чем помочь'
 
   useEffect(() => {
     const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null

@@ -5,8 +5,8 @@ import {ProductOrderButton} from './ProductOrderButton'
 const product={id:'compressor-43',name:'Компрессор для заказа',sku:'GR-0043'}
 it('opens the selected product, validates phone and consent, and confirms without charging',async()=>{
  const user=userEvent.setup();render(<MemoryRouter><ProductOrderButton product={product}/></MemoryRouter>)
- const opener=screen.getByRole('button',{name:'Заказать под заказ'});await user.click(opener)
- const dialog=screen.getByRole('dialog',{name:'Заказать под заказ'}),form=within(dialog)
+ const opener=screen.getByRole('button',{name:'Под заказ'});await user.click(opener)
+ const dialog=screen.getByRole('dialog',{name:'Под заказ'}),form=within(dialog)
  expect(form.getByLabelText('Выбранный товар')).toHaveValue(`${product.name} · Артикул: ${product.sku}`)
  expect(form.getByLabelText('Выбранный товар')).toHaveAttribute('readonly')
  await user.click(form.getByRole('button',{name:'Отправить заявку'}));expect(form.getByLabelText('Ваше имя')).toHaveFocus()
@@ -22,6 +22,6 @@ it('opens the selected product, validates phone and consent, and confirms withou
 })
 it('closes on Escape and restores its own trigger',async()=>{
  const user=userEvent.setup();render(<MemoryRouter><ProductOrderButton product={product}/></MemoryRouter>)
- const opener=screen.getByRole('button',{name:'Заказать под заказ'});await user.click(opener)
+ const opener=screen.getByRole('button',{name:'Под заказ'});await user.click(opener)
  await user.keyboard('{Escape}');expect(screen.queryByRole('dialog')).not.toBeInTheDocument();expect(opener).toHaveFocus()
 })

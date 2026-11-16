@@ -20,7 +20,8 @@ describe('search experience', () => {
     expect(within(cards[0]).getByRole('img')).toHaveAttribute('src', '/garage/style-check/review-assets/product-remeza1.jpg')
     expect(within(cards[1]).getByRole('img')).toHaveAttribute('src', '/garage/style-check/review-assets/product-toolset.jpg')
     expect(cards[1]).not.toHaveTextContent('31 248')
-    expect(cards.every(card => card.getAttribute('href')?.startsWith('/product/'))).toBe(true)
+    expect(cards[0]).toHaveAttribute('href','/product/remeza-vk-10-gr-0001')
+    expect(cards.slice(1).every(card => !card.hasAttribute('href'))).toBe(true)
     expect(document.querySelector('.search-backdrop')).toBeInTheDocument()
   })
 

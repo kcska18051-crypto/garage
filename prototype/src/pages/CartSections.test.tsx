@@ -26,6 +26,7 @@ describe('remaining cart sections', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
   it('shows actual visited products, not a seeded recommendation list', async () => {
+    localStorage.setItem('garage-cart-v2', JSON.stringify([{id:'remeza-vk-10-gr-0001',quantity:1}]))
     const user = userEvent.setup()
     render(<MemoryRouter initialEntries={['/cart']}><App /></MemoryRouter>)
     expect(screen.queryByRole('region', { name: 'Просмотренные товары' })).not.toBeInTheDocument()

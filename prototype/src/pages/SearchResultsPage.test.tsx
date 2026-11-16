@@ -31,12 +31,12 @@ it('sorts without filters and ignores filter parameters from older search URLs',
 })
 it('paginates results while keeping query and returns focus to the result heading',async()=>{
  const user=userEvent.setup();open()
- const first=screen.getAllByRole('link',{name:/Открыть товар:/})[0].getAttribute('href')
+ const first=screen.getAllByLabelText(/Открыть товар:/)[0].getAttribute('aria-label')
  await user.click(screen.getByRole('button',{name:'Следующая страница'}))
  expect(screen.getByTestId('location')).toHaveTextContent('page=2')
  expect(screen.getByTestId('location')).toHaveTextContent('q=')
- expect(screen.getAllByRole('link',{name:/Открыть товар:/})).toHaveLength(15)
- expect(screen.getAllByRole('link',{name:/Открыть товар:/})[0]).not.toHaveAttribute('href',first)
+ expect(screen.getAllByLabelText(/Открыть товар:/)).toHaveLength(15)
+ expect(screen.getAllByLabelText(/Открыть товар:/)[0]).not.toHaveAttribute('aria-label',first)
  expect(screen.getByRole('heading',{name:/Найдено/})).toHaveFocus()
 })
 it('offers a new query and catalog navigation for an unmatched or blank search',async()=>{
@@ -49,5 +49,5 @@ it('offers a new query and catalog navigation for an unmatched or blank search',
  expect(screen.getByRole('heading',{name:'Что вы ищете для мастерской?'})).toBeInTheDocument()
  await user.click(screen.getByRole('button',{name:'Remeza'}))
  expect(screen.getByTestId('location')).toHaveTextContent('q=Remeza')
- expect(screen.getAllByRole('link',{name:/Открыть товар:/}).length).toBeGreaterThan(0)
+ expect(screen.getAllByLabelText(/Открыть товар:/).length).toBeGreaterThan(0)
 })

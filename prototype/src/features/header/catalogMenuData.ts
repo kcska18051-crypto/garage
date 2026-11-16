@@ -10,7 +10,7 @@ export function buildCatalogMenu(categories: CatalogRootCategory[], routes: Read
     id: category.id, name: category.name, href: category.href,
     children: category.subcategories.filter(item => routes.has(item.href)).map(item => ({
       id: item.id, name: item.name, href: item.href,
-      children: ((item as CatalogSubcategory).childSections ?? []).filter(child => routes.has(child.href)).map(child => ({
+      children: ((item as CatalogSubcategory).childSections ?? []).filter(child => routes.has(child.href.split('?')[0])).map(child => ({
         id: child.id, name: child.name, href: child.href, children: [],
       })),
     })),

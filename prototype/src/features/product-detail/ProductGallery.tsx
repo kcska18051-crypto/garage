@@ -2,7 +2,7 @@ import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useRef, useState } from 'react'
 import type { GalleryItem, ProductOffer } from '../../data/productDetailData'
 import { GalleryPurchasePanel, type CommercialState } from './ProductPurchase'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { promotionHref } from '../../data/promotionPricing'
 
 type Props = { images: GalleryItem[]; name: string; offer: ProductOffer; state: CommercialState; quantity:number }

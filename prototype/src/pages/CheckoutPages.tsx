@@ -1,4 +1,5 @@
-import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom'
+import { Navigate, useNavigate, useLocation } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { checkoutProducts, money } from '../data/checkoutData'
 import { getCartPricing, selectedCartLines } from '../features/cart/cartPricing'
 import { CartPricingView } from '../features/cart/CartPricingView'

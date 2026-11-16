@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { aboutAdvantages,aboutCities,aboutFigures,aboutRequisites } from '../data/aboutData'
 import { footerContacts } from '../data/footerContacts'

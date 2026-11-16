@@ -1,6 +1,7 @@
 import {ScrewRepairShowcase} from './ScrewRepairShowcase'
 import {useCallback,useState,type ReactNode} from 'react'
-import {Link,useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import {serviceDirections,repairDirections,repairServices,paintServices,rentalItems,rentalCategories,repairSteps,paintSteps,rentalSteps} from '../data/servicesData'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs,type BreadcrumbItem} from '../features/catalog/Breadcrumbs'

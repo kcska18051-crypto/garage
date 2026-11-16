@@ -1,6 +1,7 @@
 import { isApprovedHomepage } from '../../app/approvedHomepage'
 import { useRef } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import type { ProductCollection } from '../../data/types'
 import { ProductCard } from './ProductCard'
 import './ProductCard.css'

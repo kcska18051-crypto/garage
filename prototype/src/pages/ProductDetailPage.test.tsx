@@ -16,7 +16,7 @@ describe('Remeza product detail redesign', () => {
       const group = screen.getByRole('region', { name })
       expect(within(group).getAllByRole('article')).toHaveLength(4)
       expect(group.querySelectorAll('.catalog-rich-card')).toHaveLength(4)
-      expect(within(group).getAllByRole('link', { name: /Открыть товар:/ })).toHaveLength(4)
+      expect(within(group).getAllByLabelText(/Открыть товар:/)).toHaveLength(4)
       expect(group).not.toHaveTextContent('Информационная карточка прототипа')
     }
   })

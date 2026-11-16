@@ -9,7 +9,7 @@ it('shares favorites between public and account routes and synchronizes removal 
  localStorage.setItem('garage-favorites-v1',JSON.stringify(['product-1','compressor-30']))
  const view=open('/favorites')
  expect(document.querySelectorAll('.favorites-grid article')).toHaveLength(2)
- const first=screen.getByRole('link',{name:'Открыть товар: Домкрат подкатной профессиональный'}).closest('article')!
+ const first=screen.getByLabelText('Открыть товар: Домкрат подкатной профессиональный').closest('article')!
  expect(within(first).getByRole('img')).toHaveAttribute('src','/garage/style-check/review-assets/product-jack.jpg')
  await user.click(within(first).getByRole('button',{name:'Убрать из избранного: Домкрат подкатной профессиональный'}))
  expect(document.querySelectorAll('.favorites-grid article')).toHaveLength(1)

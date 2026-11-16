@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { catalogProducts } from '../../data/catalogData'
 import type { CatalogProduct } from '../../data/catalogTypes'
 import { CatalogProductCard } from '../catalog/CatalogProductCard'

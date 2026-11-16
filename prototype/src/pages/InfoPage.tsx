@@ -1,4 +1,5 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { infoPageEntries, infoPages, type InfoPageKey } from '../data/infoPagesData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import '../features/info/InfoPages.css'

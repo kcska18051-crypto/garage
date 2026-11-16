@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { publicRoutes } from '../../data/publicRoutes'
 
 const implemented = new Set(publicRoutes)

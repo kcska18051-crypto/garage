@@ -1,3 +1,4 @@
+import './demoNavigation.css'
 import { ApprovedHomepageStyles, isApprovedHomepage } from './approvedHomepage'
 import { BrowserRouter, useInRouterContext, useLocation } from 'react-router-dom'
 import { Header } from '../features/header/Header'

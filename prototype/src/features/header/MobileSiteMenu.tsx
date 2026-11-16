@@ -1,7 +1,7 @@
 import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { RoundedIcon } from './RoundedIcon'
 import { MobileMenuRegion } from './MobileMenuRegion'
 import './UnifiedMobileMenu.css'

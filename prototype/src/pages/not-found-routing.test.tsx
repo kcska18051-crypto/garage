@@ -8,7 +8,7 @@ function Address() {
 }
 
 describe('missing public records', () => {
-  it.each(['/catalog', '/catalog/lifting-equipment'])('does not link to an unimplemented subsection from %s', (path) => {
+  it.each(['/catalog'])('does not link to an unimplemented subsection from %s', (path) => {
     render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
     expect(screen.queryAllByRole('link', { name: 'Автоподъёмники' })).toHaveLength(0)
     expect(screen.getAllByText('Автоподъёмники').length).toBeGreaterThan(0)

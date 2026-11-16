@@ -1,3 +1,4 @@
+import { isRemovedDemoPath } from '../app/demoNavigation'
 import { catalogCategories, catalogBrands, compressorSubcategories } from './catalogData'
 import { prototypeData } from './prototypeData'
 import { demoProducts, matchesSearch, money } from './productRegistry'
@@ -37,11 +38,11 @@ export const searchPromoItems: SearchPromoItem[] = [
 })
 
 const productSuggestions: SearchSuggestion[] = [
-  ...demoProducts.map(item=>({id:item.id,kind:'Товар' as const,name:item.name,meta:`${item.sku} · ${item.brand??''} · ${item.searchTerms??''} · ${item.purchaseMode==='quote'?'Цена по запросу':money(item.price)}`,href:item.href,image:styleCheckProductPhotos[item.name]})),
+  ...demoProducts.map(item=>({id:item.id,kind:'Товар' as const,name:item.name,meta:`${item.sku} · ${item.brand??''} · ${item.searchTerms??''} · ${item.purchaseMode==='quote'?'Цена по запросу':money(item.price)}`,href:isRemovedDemoPath(item.href)?`/search?q=${encodeURIComponent(item.name)}`:item.href,image:styleCheckProductPhotos[item.name]})),
 ]
 
 const categorySuggestions: SearchSuggestion[] = [
-  ...catalogCategories.map((item) => ({ id: `category-${item.id}`, kind: 'Категория' as const, name: item.name, meta: 'Раздел каталога', href: item.href })),
+  ...catalogCategories.filter(item=>!isRemovedDemoPath(item.href)).map((item) => ({ id: `category-${item.id}`, kind: 'Категория' as const, name: item.name, meta: 'Раздел каталога', href: item.href })),
   ...compressorSubcategories.map((item) => ({ id: `subcategory-${item.id}`, kind: 'Категория' as const, name: item.name, meta: 'Категория оборудования', href: item.href })),
 ]
 

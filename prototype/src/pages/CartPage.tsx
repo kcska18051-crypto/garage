@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { checkoutProducts, money, optionParentLabel } from '../data/checkoutData'
 import { useCommerce } from '../state/CommerceState'
 import { formatAvailability } from '../utils/availability'

@@ -4,7 +4,7 @@ import { App } from '../app/App'
 
 it('opens a category from an older homepage URL instead of a missing page', async () => {
   render(<MemoryRouter initialEntries={['/catalog/lifting']}><App /></MemoryRouter>)
-  expect(await screen.findByRole('heading', { level: 1, name: 'Подъёмное оборудование' })).toBeInTheDocument()
+  expect(await screen.findByRole('heading', { level: 1, name: 'Каталог товаров' })).toBeInTheDocument()
   expect(screen.queryByText('Страница не найдена')).not.toBeInTheDocument()
 })
 

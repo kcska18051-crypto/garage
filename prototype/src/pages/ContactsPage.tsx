@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { contactPoints, primaryContacts } from '../data/contactsData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ContactDialog, type ContactDialogMode } from '../features/forms/ContactDialog'

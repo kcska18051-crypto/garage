@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import type { UsefulItem } from '../../data/types'
 
 export function UsefulSection({ items, showAllLink = true, title }: { items: UsefulItem[]; showAllLink?: boolean; title?: string }) {

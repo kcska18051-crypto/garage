@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import type { Brand } from '../../data/types'
 
 export function BrandGrid({ items }: { items: Brand[] }) {

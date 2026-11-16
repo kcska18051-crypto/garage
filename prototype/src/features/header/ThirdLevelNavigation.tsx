@@ -1,12 +1,15 @@
+import { isRemovedDemoPath } from '../../app/demoNavigation'
 import { isApprovedChrome } from '../../app/approvedHomepage'
 import { RoundedIcon } from './RoundedIcon'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { getVisibleHeaderQuickLinks, headerQuickLinksConfig, type HeaderQuickLink, type HeaderQuickLinksConfig } from '../../data/headerNavigationData'
 import { PaintServiceLink } from './PaintServiceLink'
 import { ActionsDropdown } from './ActionsDropdown'
 
 function QuickLink({ item, onClick, mobile = false }: { item: HeaderQuickLink; onClick?: () => void; mobile?: boolean }) {
+  if (isRemovedDemoPath(item.href)) return <Link className="third-level-nav__link" to={item.href}>{item.label}</Link>
   if (item.id === 'actions') return <ActionsDropdown mobile={mobile} onNavigate={onClick} />
   return <NavLink className={`third-level-nav__link${item.tone === 'accent' ? ' third-level-nav__link--accent' : ''}`} to={item.href} onClick={onClick}>{item.label}</NavLink>
 }

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { CatalogDestination } from './CatalogDestination'
 import { formatProductCount } from '../../data/catalogData'
 import type { CatalogRootSubcategory } from '../../data/catalogTypes'

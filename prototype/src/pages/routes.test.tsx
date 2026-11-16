@@ -25,14 +25,9 @@ describe('prototype routes', () => {
     expect(screen.getAllByTestId('catalog-root-card')).toHaveLength(6)
   })
 
-  it('uses one category landing template for a generic first-level section', () => {
-    render(<MemoryRouter initialEntries={['/catalog/lifting-equipment']}><App /></MemoryRouter>)
-
-    expect(screen.getByRole('heading', { level: 1, name: 'Подъёмное оборудование' })).toBeInTheDocument()
-    expect(document.querySelector('.catalog-page__header p')).toHaveTextContent('Подъёмники, домкраты и оборудование рабочих постов.')
-    expect(document.querySelector('.catalog-subcategory-grid')).toBeNull()
-    expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument()
-    expect(screen.getAllByTestId('catalog-section-row').length).toBeGreaterThan(5)
+  it.each(['lifting-equipment','body-repair','painting','tools','service-station-equipment'])('removes unfinished category %s', slug => {
+    render(<MemoryRouter initialEntries={[`/catalog/${slug}`]}><App /></MemoryRouter>)
+    expect(screen.getByRole('heading', { name: 'Страница не найдена' })).toBeInTheDocument()
   })
 
   it('shows 404 for an unknown first-level catalog slug', () => {

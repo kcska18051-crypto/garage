@@ -7,7 +7,7 @@ import { CatalogCategoryIcon } from './CatalogCategoryIcon'
 import './UnifiedMobileMenu.css'
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { createPortal } from 'react-dom'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { headerCatalogTree, type CatalogMenuNode } from './catalogMenuData'
 import './CatalogMenu.css'
 

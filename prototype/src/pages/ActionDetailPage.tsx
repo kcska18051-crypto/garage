@@ -1,5 +1,6 @@
 import {useState} from 'react'
-import {Link,useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import {formatActionPeriod,getActionBySlug,getActionDeadline,getActionState} from '../data/actionsData'
 import {catalogProducts,fullFilterGroups} from '../data/catalogData'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'

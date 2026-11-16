@@ -1,5 +1,5 @@
 import {useCallback,useState} from 'react'
-import {Link} from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import {repairDirections} from '../data/servicesData'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'

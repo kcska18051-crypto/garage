@@ -1,5 +1,6 @@
 import { ProfileStatus } from './ProfileStatus'
-import {Link,useLocation,useSearchParams} from 'react-router-dom'
+import {useLocation,useSearchParams} from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import {useAuth} from '../../state/AuthState'
 import {useProfile} from '../../state/ProfileState'
 import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} from '../../state/serviceRequests'

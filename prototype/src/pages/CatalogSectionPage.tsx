@@ -9,7 +9,7 @@ import '../features/catalog/CompressorLanding.css'
 
 export function CatalogSectionPage() {
   const { categorySlug } = useParams()
-  const category = getCatalogCategory(categorySlug)
+  const category = getCatalogCategory(categorySlug ?? 'compressor-equipment')
 
   if (!category) return <NotFoundPage />
 

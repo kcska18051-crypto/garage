@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import type { CatalogChildSection } from '../../data/catalogTypes'
 
 export function ChildCategoryGrid({ items }: { items?: CatalogChildSection[] }) {

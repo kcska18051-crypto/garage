@@ -1,6 +1,7 @@
 import { isApprovedChrome } from '../../app/approvedHomepage'
 import { StyleCheckHeaderSymbol } from './StyleCheckHeaderSymbol'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { SearchBox } from './SearchBox'
 import { useAuth } from '../../state/AuthState'
 import { headerQuickLinksConfig } from '../../data/headerNavigationData'

@@ -1,6 +1,6 @@
 import type {ReactNode} from 'react'
 import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import type { CatalogProduct } from '../../data/catalogTypes'
 import { productDetail } from '../../data/productDetailData'
 import { styleCheckProductPhotos } from '../../data/styleCheckAssets'

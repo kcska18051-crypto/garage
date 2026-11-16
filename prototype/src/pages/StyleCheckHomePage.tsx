@@ -1,6 +1,6 @@
 import { brandPictures } from '../features/home/brandPictures'
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { prototypeData } from '../data/prototypeData'
 import { ProductShowcase } from '../features/products/ProductShowcase'
 import { UsefulSection } from '../features/home/UsefulSection'

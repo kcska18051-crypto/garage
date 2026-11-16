@@ -1,4 +1,4 @@
-import { demoProducts } from './productRegistry'
+import { designedProductIds } from '../app/demoNavigation'
 import { catalogCategories, compressorSubcategories } from './catalogData'
 import { contactPoints } from './contactsData'
 import { materials, materialKinds } from './materialsData'
@@ -17,9 +17,9 @@ export const publicRoutes = [...new Set([
   '/profile/services/request','/profile/services/new',
   ...profileData.orders.map(order=>`/profile/orders/${order.id}`),
   ...contactPoints.flatMap(point=>[`/contacts/${point.id}`, `/contacts/${point.slug}`]),
-  ...catalogCategories.map(category=>category.href),
-  ...compressorSubcategories.flatMap(category=>[category.href,...(category.childSections??[]).map(child=>child.href)]),
-  ...demoProducts.map(product=>product.href),
+  ...catalogCategories.filter(category=>category.slug==='compressor-equipment').map(category=>category.href),
+  ...compressorSubcategories.map(category=>category.href),
+  ...designedProductIds.map(id=>`/product/${id}`),
   ...Object.values(materialKinds).map(kind=>kind.path),
   ...materials.map(material=>`${materialKinds[material.kind].path}/${material.slug}`),
   ...actions.filter(action=>action.published).map(action=>`/actions/${action.slug}`),

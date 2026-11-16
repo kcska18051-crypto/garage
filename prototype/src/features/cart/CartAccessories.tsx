@@ -1,6 +1,6 @@
 import {CartProductImage} from './CartProductImage'
 import { useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { companionProducts, relatedForCart } from '../../data/productRelations'
 import { money } from '../../data/checkoutData'
 import { useCommerce } from '../../state/CommerceState'

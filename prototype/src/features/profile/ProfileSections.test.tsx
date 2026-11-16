@@ -20,7 +20,7 @@ describe('profile secondary sections', () => {
 
   it('keeps favorites connected with the shared commerce state', async () => {
     const user = userEvent.setup(); open('/profile/favorites')
-    const card = screen.getByRole('link',{name:'Открыть товар: Домкрат подкатной профессиональный'}).closest('article')!
+    const card = screen.getByLabelText('Открыть товар: Домкрат подкатной профессиональный').closest('article')!
     await user.click(within(card).getByRole('button', { name: 'Убрать из избранного: Домкрат подкатной профессиональный' }))
     expect(screen.queryByRole('link',{name:'Открыть товар: Домкрат подкатной профессиональный'})).not.toBeInTheDocument()
   })
@@ -28,7 +28,7 @@ describe('profile secondary sections', () => {
   it('uses compact non-stretching favorite tiles without dropping commercial data or actions', () => {
     open('/profile/favorites')
     expect(document.querySelector('.favorites-grid')).toBeInTheDocument()
-    const card = screen.getByRole('link',{name:'Открыть товар: Домкрат подкатной профессиональный'}).closest('article')!
+    const card = screen.getByLabelText('Открыть товар: Домкрат подкатной профессиональный').closest('article')!
     expect(card).toHaveClass('catalog-rich-card')
     expect(card).toHaveTextContent('Артикул:')
     expect(card).toHaveTextContent('В наличии')
@@ -39,7 +39,7 @@ describe('profile secondary sections', () => {
 
   it('uses the shared availability wording in favorites and recently viewed', () => {
     const { unmount } = open('/profile/favorites')
-    expect(screen.getByRole('link',{name:'Открыть товар: Домкрат подкатной профессиональный'}).closest('article')!).toHaveTextContent('В наличии в 1 магазине')
+    expect(screen.getByLabelText('Открыть товар: Домкрат подкатной профессиональный').closest('article')!).toHaveTextContent('В наличии в 1 магазине')
     unmount(); open('/profile/recently-viewed')
     expect(screen.getByTestId('profile-product-product-5')).toHaveTextContent('Нет в наличии')
   })

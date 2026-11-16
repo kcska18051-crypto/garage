@@ -1,5 +1,6 @@
 import {useMemo,useRef,useState,type FormEvent} from 'react'
-import {Link,useSearchParams} from 'react-router-dom'
+import {useSearchParams} from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
 import {CatalogProductCard} from '../features/catalog/CatalogProductCard'
 import {paginateProducts,parseListingState,serializeListingState,sortCatalogProducts} from '../features/catalog/catalogFilters'

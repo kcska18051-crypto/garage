@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import type { SearchPromoItem, SearchSuggestion } from '../../data/searchData'
 import './SearchPanel.css'
 

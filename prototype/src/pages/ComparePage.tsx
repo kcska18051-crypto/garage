@@ -1,5 +1,5 @@
 import {useEffect,useMemo,useRef,useState,type CSSProperties} from 'react'
-import {Link} from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import {compareCategories,compareProducts,demoCompareIds,money,type CompareProduct} from '../data/compareData'
 import {catalogProducts} from '../data/catalogData'
 import {styleCheckProductPhotos} from '../data/styleCheckAssets'

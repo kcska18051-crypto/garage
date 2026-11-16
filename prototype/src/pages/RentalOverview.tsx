@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import {rentalCategories} from '../data/rentalData'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
 import './RentalOverview.css'

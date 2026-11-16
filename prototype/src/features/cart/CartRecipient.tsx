@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { useAuth } from '../../state/AuthState'
 import { useProfile } from '../../state/ProfileState'
 

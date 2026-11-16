@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { contactPoints } from '../../data/contactsData'
 import type { DemoProduct } from '../../data/productRegistry'
 import { useRegion } from '../../state/RegionState'

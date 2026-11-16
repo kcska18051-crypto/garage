@@ -59,8 +59,7 @@ export function AppRoutes() {
       <Route path="/services/*" element={<NotFoundPage/>}/>
       <Route path="/catalog" element={<CatalogPage />} />
       <Route path="/catalog/compressor-equipment/:subcategorySlug" element={<CatalogSubcategoryPage />} />
-      <Route path="/catalog/compressor-equipment/:subcategorySlug/:childSlug" element={<CatalogSubcategoryPage />} />
-      <Route path="/catalog/:categorySlug" element={<CatalogSectionPage />} />
+      <Route path="/catalog/compressor-equipment" element={<CatalogSectionPage />} />
       <Route path="/product/:slug" element={<DemoProductPage />} />
       <Route path="/brands" element={<BrandsPage />} />
       <Route path="/brand/remeza" element={<BrandDetailPage />} />

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import type { PromoBanner } from '../../data/types'
 
 export function DividerBanner({ item, index }: { item: PromoBanner; index: number }) {

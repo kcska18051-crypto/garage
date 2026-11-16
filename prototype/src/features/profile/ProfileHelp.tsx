@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { helpCategories, helpQuestions } from '../../data/profileSupportData'
 import { FormLegalConsents } from '../forms/FormLegalConsents'
 

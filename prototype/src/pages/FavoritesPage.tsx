@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
 import {CatalogProductCard} from '../features/catalog/CatalogProductCard'
 import {RoundedIcon} from '../features/header/RoundedIcon'

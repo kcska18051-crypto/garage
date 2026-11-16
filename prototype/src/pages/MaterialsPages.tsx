@@ -1,4 +1,5 @@
-import { Link, NavLink, useParams, useSearchParams } from 'react-router-dom'
+import { NavLink, useParams, useSearchParams } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { useEffect, useRef } from 'react'
 import { getMaterial, materialKinds, materialsByKind, type Material, type MaterialKind } from '../data/materialsData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'

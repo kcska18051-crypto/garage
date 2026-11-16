@@ -1,4 +1,5 @@
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { useEffect, useState } from 'react'
 import { contactPoints } from '../data/contactsData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'

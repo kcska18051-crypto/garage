@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { repairDirections, repairServices, paintServices, rentalItems } from '../../data/servicesData'
 import type { ServiceRequest } from '../../data/serviceTypes'
 import { ServiceRequestDialog } from '../services/ServiceRequestDialog'

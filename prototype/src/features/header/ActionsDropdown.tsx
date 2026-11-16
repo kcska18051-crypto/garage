@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type FocusEvent } from 'react'
 import { createPortal } from 'react-dom'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { activeActions } from '../../data/actionsData'
 import { RoundedIcon } from './RoundedIcon'
 import './ActionsDropdown.css'

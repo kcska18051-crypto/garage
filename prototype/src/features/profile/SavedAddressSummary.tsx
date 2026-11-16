@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { formatProfileAddress, useProfile } from '../../state/ProfileState'
 export function SavedAddressSummary() {
   const { addresses } = useProfile()

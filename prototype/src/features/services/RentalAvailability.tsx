@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import {rentalCategories,rentalForSaleProduct} from '../../data/rentalData'
 import {CartDialog} from '../cart/CartDialog'
 import './RentalAvailability.css'

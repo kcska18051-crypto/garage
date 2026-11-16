@@ -12,17 +12,21 @@ describe('existing demo SKU journey A-D',()=>{
     expect(screen.getAllByRole('link',{name:/Remeza/}).some(link=>link.getAttribute('href')==='/product/remeza-vk-10-gr-0001')).toBe(true)
   })
   it.each([
-    ['product-1','Домкрат подкатной профессиональный','GR-0001','18 900 ₽'],
-    ['product-2','Набор инструмента для мастерской','GR-0002','27 900 ₽'],
-    ['product-5','Стенд диагностический','GR-0005','54 900 ₽'],
-  ])('opens %s as its own product and adds its own SKU',async(id,name,sku,price)=>{
-    const user=userEvent.setup();open(`/product/${id}`)
-    expect(screen.getByRole('heading',{level:1,name})).toBeInTheDocument()
-    expect(screen.getByText(`Артикул: ${sku}`)).toBeInTheDocument()
-    expect(screen.getByRole('complementary',{name:'Покупка товара'})).toHaveTextContent(price)
-    expect(screen.getByText(/Подробные характеристики пока не предоставлены/)).toBeInTheDocument()
-    await user.click(screen.getByRole('button',{name:'Добавить в корзину'}))
+    ['product-1','Домкрат подкатной профессиональный','GR-0001'],
+    ['product-2','Набор инструмента для мастерской','GR-0002'],
+    ['product-5','Стенд диагностический','GR-0005'],
+  ])('keeps %s purchasable in listings without exposing its old detail',async(id,name,sku)=>{
+    const user=userEvent.setup();open(`/search?q=${encodeURIComponent(name)}`)
+    const media=screen.getByLabelText(`Открыть товар: ${name}`)
+    expect(media).not.toHaveAttribute('href')
+    const card=media.closest('article')!
+    expect(card).toHaveTextContent(sku)
+    await user.click(within(card).getByRole('button',{name:`Добавить в корзину: ${name}`}))
     expect(JSON.parse(localStorage.getItem('garage-cart-v2')!)).toEqual([{id,quantity:1}])
+  })
+  it.each(['product-1','product-2','product-5'])('does not expose the removed detail %s',id=>{
+    open(`/product/${id}`)
+    expect(screen.getByRole('heading',{name:'Страница не найдена'})).toBeInTheDocument()
   })
   it('uses the same demonstration performance in comparison and product data',()=>{
     expect(compareProducts.find(p=>p.id==='remeza-vk-10-gr-0001')?.specs['Производительность']).toBe('10 л/мин')

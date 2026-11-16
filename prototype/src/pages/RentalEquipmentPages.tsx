@@ -1,5 +1,6 @@
 import {useCallback,useState} from 'react'
-import {Link,useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import {rentalCategories,rentalItems} from '../data/rentalData'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'

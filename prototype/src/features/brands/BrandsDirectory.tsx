@@ -1,6 +1,7 @@
 import { brandPictures } from '../home/brandPictures'
 import { useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import { brandCategories, brandDirectory, type BrandDirectoryItem } from '../../data/brandDirectoryData'
 
 const ALL_CATEGORIES = 'Все направления'

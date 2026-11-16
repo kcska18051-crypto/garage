@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { DemoLink as Link } from '../app/DemoLink'
 import { defaultOffer, findOffer, offerSelections, productDetail } from '../data/productDetailData'
 import { Breadcrumbs } from '../features/catalog/Breadcrumbs'
 import { ProductGallery } from '../features/product-detail/ProductGallery'

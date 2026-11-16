@@ -1,3 +1,4 @@
+import { isRemovedDemoPath } from '../app/demoNavigation'
 import { demoProducts,findSearchProducts } from './productRegistry'
 import { findSearchSuggestions } from './searchData'
 import { compareProducts } from './compareData'
@@ -8,7 +9,7 @@ it('retains distinct demo IDs with a repeated article in both search consumers',
   const results=findSearchProducts('GR-0001')
   expect(results.map(p=>p.id)).toEqual(expect.arrayContaining(['product-1','remeza-vk-10-gr-0001']))
   expect(new Set(demoProducts.map(p=>p.id)).size).toBe(demoProducts.length)
-  for(const p of results) expect(findSearchSuggestions('GR0001',100).some(item=>item.kind==='Товар' && item.href===p.href)).toBe(true)
+  for(const p of results) expect(findSearchSuggestions('GR0001',100).some(item=>item.kind==='Товар' && item.href===(isRemovedDemoPath(p.href)?`/search?q=${encodeURIComponent(p.name)}`:p.href))).toBe(true)
 })
 it('normalizes joined model names and searches known category names without inventing stock',()=>{
   expect(findSearchProducts('вк10').map(p=>p.id)).toContain('remeza-vk-10-gr-0001')

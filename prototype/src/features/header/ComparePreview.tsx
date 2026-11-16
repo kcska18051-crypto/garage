@@ -1,5 +1,5 @@
 import {useEffect,useState} from 'react'
-import {Link} from 'react-router-dom'
+import { DemoLink as Link } from '../../app/DemoLink'
 import {useOptionalCommerce} from '../../state/CommerceState'
 import {compareProducts,money} from '../../data/compareData'
 import {styleCheckProductPhotos} from '../../data/styleCheckAssets'

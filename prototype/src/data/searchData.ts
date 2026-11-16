@@ -38,7 +38,7 @@ export const searchPromoItems: SearchPromoItem[] = [
 })
 
 const productSuggestions: SearchSuggestion[] = [
-  ...demoProducts.map(item=>({id:item.id,kind:'Товар' as const,name:item.name,meta:`${item.sku} · ${item.brand??''} · ${item.searchTerms??''} · ${item.purchaseMode==='quote'?'Цена по запросу':money(item.price)}`,href:isRemovedDemoPath(item.href)?`/search?q=${encodeURIComponent(item.name)}`:item.href,image:styleCheckProductPhotos[item.name]})),
+  ...demoProducts.map(item=>({id:item.id,kind:'Товар' as const,name:item.name,meta:`${item.sku} · ${item.brand??''} · ${item.searchTerms??''} · ${item.purchaseMode==='quote'?'Под заказ':money(item.price)}`,href:isRemovedDemoPath(item.href)?`/search?q=${encodeURIComponent(item.name)}`:item.href,image:styleCheckProductPhotos[item.name]})),
 ]
 
 const categorySuggestions: SearchSuggestion[] = [

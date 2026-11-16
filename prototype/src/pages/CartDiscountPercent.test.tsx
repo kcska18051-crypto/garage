@@ -41,5 +41,5 @@ it('does not invent a percentage for quote-only products', () => {
   localStorage.setItem('garage-checkout-v2', JSON.stringify({promoCode: '123'}))
   open()
   expect(screen.queryByTestId('line-discount-percent')).not.toBeInTheDocument()
-  expect(screen.getByText('Цена по запросу')).toBeInTheDocument()
+  expect(screen.getByText('Под заказ')).toBeInTheDocument()
 })

@@ -18,7 +18,7 @@ export function ComparePreview({count}:{count:number}) {
    {products.length?<ul>{products.map(product=>{
     const catalog=catalogProducts.find(item=>item.id===product.id)
     const image=styleCheckProductPhotos[product.name]||(catalog?compressorCategoryImages[catalog.subcategoryId]:undefined)
-    return <li key={product.id}><Link to={product.href} onClick={()=>setOpen(false)}>{image&&<img src={image} alt="" width="64" height="64"/>}<span><span className="compare-preview__name">{product.name}</span><strong>{product.purchaseMode==='quote'?'Цена по запросу':money(product.price)}</strong></span></Link></li>
+    return <li key={product.id}><Link to={product.href} onClick={()=>setOpen(false)}>{image&&<img src={image} alt="" width="64" height="64"/>}<span><span className="compare-preview__name">{product.name}</span><strong>{product.purchaseMode==='quote'?'Под заказ':money(product.price)}</strong></span></Link></li>
    })}</ul>:<p>Добавьте товары, чтобы сравнить их характеристики.</p>}
    <Link className="compare-preview__cta" to={products.length?'/compare':'/catalog'} onClick={()=>setOpen(false)}>{products.length?'Перейти к сравнению':'Выбрать товары'}</Link>
   </section>}

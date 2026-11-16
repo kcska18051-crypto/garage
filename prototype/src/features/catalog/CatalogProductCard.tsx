@@ -1,3 +1,4 @@
+import { ProductOrderButton } from '../products/ProductOrderButton'
 import type {ReactNode} from 'react'
 import { useRef, useState } from 'react'
 import { DemoLink as Link } from '../../app/DemoLink'
@@ -12,7 +13,7 @@ import { compressorCategoryImages } from './compressorCategoryImages'
 import './CatalogRichCard.css'
 
 const money = (value: number) => value.toLocaleString('ru-RU') + ' ₽'
-export function CatalogProductCard({ product, mediaFallback, quoteHref }: { product: CatalogProduct; index: number; mediaFallback?:ReactNode; quoteHref?:string }) {
+export function CatalogProductCard({ product, mediaFallback }: { product: CatalogProduct; index: number; mediaFallback?:ReactNode; quoteHref?:string }) {
   const commerce = useCommerce()
   const [frame, setFrame] = useState(0)
   const touchStart = useRef(0)
@@ -23,7 +24,7 @@ export function CatalogProductCard({ product, mediaFallback, quoteHref }: { prod
   const name = knownProduct ? productDetail.name : product.name
   const quantity = commerce.cartItems.find(item => item.id === product.id)?.quantity ?? 0
   const promo = promotionPrice(product.id, product.price, product.purchaseMode === 'quote')
-  const availability = formatAvailability(product.availabilityLabel, Math.min(3, Math.max(0, product.storeCount)))
+  const availability = product.purchaseMode === 'quote' ? 'Под заказ' : formatAvailability(product.availabilityLabel, Math.min(3, Math.max(0, product.storeCount)))
   return <article className="catalog-product-card catalog-rich-card">
     <Link className="catalog-rich-card__media" to={'/product/' + product.slug} aria-label={'Открыть товар: ' + name}
       onMouseMove={event => { if (images.length < 2) return; const bounds = event.currentTarget.getBoundingClientRect(); setFrame(Math.min(images.length - 1, Math.max(0, Math.floor((event.clientX - bounds.left) / bounds.width * images.length)))) }}
@@ -38,10 +39,10 @@ export function CatalogProductCard({ product, mediaFallback, quoteHref }: { prod
       <button type="button" aria-label={(commerce.compareIds.has(product.id) ? 'Убрать из сравнения: ' : 'Добавить в сравнение: ') + name} aria-pressed={commerce.compareIds.has(product.id)} onClick={() => commerce.toggleCompare(product.id)}><RoundedIcon name="compare" /></button>
     </div>
     <div className="catalog-rich-card__gallery" aria-label={'Фотографии: ' + name}>{images.length > 1 && images.map((_, index) => <button type="button" key={index} aria-label={'Фото ' + (index + 1) + ': ' + name} aria-pressed={activeFrame === index} onClick={() => setFrame(index)} />)}</div>
-    <div className="catalog-rich-card__price"><strong>{product.purchaseMode === 'quote' ? 'Цена по запросу' : money(product.price)}</strong>{promo.oldPrice && <del>{money(promo.oldPrice)}</del>}</div>
+    <div className="catalog-rich-card__price"><strong>{product.purchaseMode === 'quote' ? 'Под заказ' : money(product.price)}</strong>{promo.oldPrice && <del>{money(promo.oldPrice)}</del>}</div>
     <Link className="catalog-rich-card__name" to={'/product/' + product.slug}>{name}</Link>
     <div className="catalog-rich-card__meta">{knownProduct && <span className="catalog-rich-card__rating" aria-label={'Рейтинг ' + productDetail.rating + ', ' + productDetail.reviewCount}><span aria-hidden="true">★</span> {productDetail.rating} <small>({productDetail.reviewCount})</small></span>}<span className="catalog-rich-card__sku">Артикул: {product.sku}</span></div>
-    <p className="catalog-rich-card__availability" data-in-stock={product.availabilityLabel === 'available' && product.storeCount > 0}>{availability}</p>
-    {product.purchaseMode === 'quote' ? quoteHref ? <Link className="catalog-rich-card__cart" to={quoteHref}>Запросить цену</Link> : <button className="catalog-rich-card__cart" type="button">Запросить цену</button> : <button className="catalog-rich-card__cart" type="button" aria-label={(quantity ? 'Товар в корзине: ' : 'Добавить в корзину: ') + product.name} aria-pressed={quantity > 0} onClick={() => commerce.addToCart(product.id)}>{quantity ? 'В корзине · ' + quantity : 'В корзину'}</button>}
+    <p className="catalog-rich-card__availability" data-in-stock={product.purchaseMode !== 'quote' && product.availabilityLabel === 'available' && product.storeCount > 0}>{availability}</p>
+    {product.purchaseMode === 'quote' ? <ProductOrderButton className="catalog-rich-card__cart" product={{id:product.id,name,sku:product.sku}}/> : <button className="catalog-rich-card__cart" type="button" aria-label={(quantity ? 'Товар в корзине: ' : 'Добавить в корзину: ') + product.name} aria-pressed={quantity > 0} onClick={() => commerce.addToCart(product.id)}>{quantity ? 'В корзине · ' + quantity : 'В корзину'}</button>}
   </article>
 }

@@ -1,12 +1,13 @@
+import {isServicePhoneValid} from '../services/serviceRequestValidation'
 import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import {PhoneHint,PHONE_PLACEHOLDER} from './PhoneHint'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { FormLegalConsents } from './FormLegalConsents'
 import './ContactDialog.css'
 
-export type ContactDialogMode = 'consultation' | 'callback' | 'message'
+export type ContactDialogMode = 'consultation' | 'callback' | 'message' | 'preorder'
 
-export function ContactDialog({ mode, onClose: onCloseImmediately }: { mode: ContactDialogMode; onClose(): void }) {
+export function ContactDialog({ mode, product, onClose: onCloseImmediately }: { mode: ContactDialogMode; product?:{id:string;name:string;sku:string}; onClose(): void }) {
   const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
   const [name, setName] = useState('')
   const [contact, setContact] = useState('')
@@ -22,12 +23,13 @@ export function ContactDialog({ mode, onClose: onCloseImmediately }: { mode: Con
   const emailOnly = mode === 'message' && reply === 'email'
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)
   const isPhoneValid = contact.replace(/\D/g, '').length >= 10
-  const contactValid = mode === 'consultation' ? Boolean(contact.trim()) : reply === 'email' && mode === 'message' ? isEmailValid : isPhoneValid
+  const contactValid = mode === 'preorder' ? isServicePhoneValid(contact) : mode === 'consultation' ? Boolean(contact.trim()) : reply === 'email' && mode === 'message' ? isEmailValid : isPhoneValid
   const messageValid = mode !== 'message' || Boolean(message.trim())
   const legalValid = personalDataAccepted && agreementAccepted
-  const title = mode === 'message' ? 'Написать сообщение' : mode === 'callback' ? 'Заказать звонок' : 'Расскажите, с чем помочь'
+  const title = mode === 'preorder' ? 'Заказать под заказ' : mode === 'message' ? 'Написать сообщение' : mode === 'callback' ? 'Заказать звонок' : 'Расскажите, с чем помочь'
 
   useEffect(() => {
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
     headingRef.current?.focus()
     document.body.classList.add('contact-dialog-open')
     const key = (event: KeyboardEvent) => {
@@ -37,20 +39,23 @@ export function ContactDialog({ mode, onClose: onCloseImmediately }: { mode: Con
       if (!focusable.length) return
       const first = focusable[0]
       const last = focusable[focusable.length - 1]
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
+      if (!focusable.includes(document.activeElement as HTMLElement)) { event.preventDefault(); (event.shiftKey ? last : first).focus() } else if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
     }
     window.addEventListener('keydown', key)
-    return () => { document.body.classList.remove('contact-dialog-open'); window.removeEventListener('keydown', key) }
+    return () => { document.body.classList.remove('contact-dialog-open'); window.removeEventListener('keydown', key); if(opener?.isConnected)opener.focus({preventScroll:true}) }
   }, [onClose])
+
+  useEffect(()=>{if(submitted)headingRef.current?.focus()},[submitted])
 
   const submit = (event: FormEvent) => {
     event.preventDefault()
     if (submitting) return
     setAttempted(true)
     if (name.trim() && contactValid && messageValid && legalValid) { setSubmitting(true); setSubmitted(true) }
+    else dialogRef.current?.querySelector<HTMLElement>(!name.trim()?'#contact-name':!contactValid?'#contact-value':!messageValid?'#contact-comment':'input[type=checkbox]:not(:checked)')?.focus()
   }
-  const success = mode === 'message' ? 'Сообщение сохранено в демонстрационном режиме' : mode === 'callback' ? 'Запрос звонка сохранён в демонстрационном режиме' : 'Спасибо! Ваше сообщение отправлено'
+  const success = mode === 'preorder' ? 'Заявка принята. Уточним возможность поставки, стоимость и сроки.' : mode === 'message' ? 'Сообщение сохранено в демонстрационном режиме' : mode === 'callback' ? 'Запрос звонка сохранён в демонстрационном режиме' : 'Спасибо! Ваше сообщение отправлено'
 
-  return <div className="overlay" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}><section ref={dialogRef} className="dialog contact-dialog approved-dialog" role="dialog" aria-modal="true" aria-label={title}><button className="dialog__close approved-dialog__close" aria-label="Закрыть форму" onClick={onClose}>×</button>{submitted ? <div className="contact-success"><span aria-hidden="true">✓</span><h2 tabIndex={-1} ref={headingRef}>Готово</h2><p role="status">{success}</p><p>Реальная отправка в прототипе не выполняется.</p><button className="button" onClick={onClose}>Закрыть</button></div> : <form onSubmit={submit} noValidate><h2 tabIndex={-1} ref={headingRef}>{title}</h2><div className="form-field"><label htmlFor="contact-name">Ваше имя</label><input id="contact-name" value={name} onChange={(event) => setName(event.target.value)} aria-describedby={attempted && !name.trim() ? 'name-error' : undefined} />{attempted && !name.trim() && <span id="name-error" className="field-error">Укажите имя</span>}</div>{mode === 'message' && <fieldset><legend>Как ответить</legend><div className="contact-dialog__reply"><label><input type="radio" name="reply" checked={reply === 'phone'} onChange={() => { setReply('phone'); setContact('') }} />Телефон</label><label><input type="radio" name="reply" checked={reply === 'email'} onChange={() => { setReply('email'); setContact('') }} />Email</label></div></fieldset>}<div className="form-field"><label htmlFor="contact-value">{mode === 'consultation' ? 'Телефон или электронная почта' : mode === 'message' && reply === 'email' ? 'Email для ответа' : 'Телефон'}</label><input id="contact-value" placeholder={emailOnly?'name@example.ru':mode==='consultation'?`${PHONE_PLACEHOLDER} или email`:PHONE_PLACEHOLDER} autoComplete={mode==='consultation'?undefined:emailOnly?'email':'tel'} type={mode === 'message' && reply === 'email' ? 'email' : 'tel'} value={contact} onChange={(event) => setContact(event.target.value)} aria-describedby={[!emailOnly?'contact-phone-hint':null,attempted&&!contactValid?'contact-error':null].filter(Boolean).join(' ') || undefined} />{!emailOnly&&<PhoneHint id="contact-phone-hint" allowEmail={mode==='consultation'}/>}
-{attempted && !contactValid && <span id="contact-error" className="field-error">{mode === 'message' && reply === 'email' ? 'Укажите корректный email' : 'Укажите корректный телефон'}</span>}</div>{mode === 'message' ? <div className="form-field"><label htmlFor="contact-comment">Сообщение</label><textarea id="contact-comment" rows={4} value={message} onChange={(event) => setMessage(event.target.value)} />{attempted && !messageValid && <span className="field-error">Введите сообщение</span>}</div> : <div className="form-field"><label htmlFor="contact-comment">Комментарий</label><textarea id="contact-comment" rows={3} /></div>}<FormLegalConsents personalDataAccepted={personalDataAccepted} agreementAccepted={agreementAccepted} onPersonalDataChange={setPersonalDataAccepted} onAgreementChange={setAgreementAccepted} showErrors={attempted} /><button className="button button--dark" type="submit" disabled={submitting}>{mode === 'message' ? 'Отправить сообщение' : 'Отправить запрос'}</button></form>}</section></div>
+  return <div className="overlay" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}><section ref={dialogRef} className="dialog contact-dialog approved-dialog" role="dialog" aria-modal="true" aria-label={title}><button className="dialog__close approved-dialog__close" aria-label="Закрыть форму" onClick={onClose}>×</button>{submitted ? <div className="contact-success"><span aria-hidden="true">✓</span><h2 tabIndex={-1} ref={headingRef}>Готово</h2><p role="status">{success}</p><p>Реальная отправка в прототипе не выполняется.</p>{product&&<p>{product.name} · Артикул: {product.sku}</p>}<button className="button" onClick={onClose}>Закрыть</button></div> : <form onSubmit={submit} noValidate><h2 tabIndex={-1} ref={headingRef}>{title}</h2>{product&&<div className="form-field"><label htmlFor="contact-product">Выбранный товар</label><textarea id="contact-product" readOnly rows={2} value={`${product.name} · Артикул: ${product.sku}`} data-product-id={product.id}/></div>}<div className="form-field"><label htmlFor="contact-name">Ваше имя</label><input id="contact-name" value={name} onChange={(event) => setName(event.target.value)} aria-describedby={attempted && !name.trim() ? 'name-error' : undefined} />{attempted && !name.trim() && <span id="name-error" className="field-error">Укажите имя</span>}</div>{mode === 'message' && <fieldset><legend>Как ответить</legend><div className="contact-dialog__reply"><label><input type="radio" name="reply" checked={reply === 'phone'} onChange={() => { setReply('phone'); setContact('') }} />Телефон</label><label><input type="radio" name="reply" checked={reply === 'email'} onChange={() => { setReply('email'); setContact('') }} />Email</label></div></fieldset>}<div className="form-field"><label htmlFor="contact-value">{mode === 'consultation' ? 'Телефон или электронная почта' : mode === 'message' && reply === 'email' ? 'Email для ответа' : 'Телефон'}</label><input id="contact-value" placeholder={emailOnly?'name@example.ru':mode==='consultation'?`${PHONE_PLACEHOLDER} или email`:PHONE_PLACEHOLDER} autoComplete={mode==='consultation'?undefined:emailOnly?'email':'tel'} type={mode === 'message' && reply === 'email' ? 'email' : 'tel'} value={contact} onChange={(event) => setContact(event.target.value)} aria-describedby={[!emailOnly?'contact-phone-hint':null,attempted&&!contactValid?'contact-error':null].filter(Boolean).join(' ') || undefined} />{!emailOnly&&<PhoneHint id="contact-phone-hint" allowEmail={mode==='consultation'}/>}
+{attempted && !contactValid && <span id="contact-error" className="field-error">{mode === 'message' && reply === 'email' ? 'Укажите корректный email' : 'Укажите корректный телефон'}</span>}</div>{mode === 'message' ? <div className="form-field"><label htmlFor="contact-comment">Сообщение</label><textarea id="contact-comment" rows={4} value={message} onChange={(event) => setMessage(event.target.value)} />{attempted && !messageValid && <span className="field-error">Введите сообщение</span>}</div> : <div className="form-field"><label htmlFor="contact-comment">{mode==='preorder'?'Комментарий (необязательно)':'Комментарий'}</label><textarea id="contact-comment" rows={3} value={message} onChange={event=>setMessage(event.target.value)}/></div>}<FormLegalConsents personalDataAccepted={personalDataAccepted} agreementAccepted={agreementAccepted} onPersonalDataChange={setPersonalDataAccepted} onAgreementChange={setAgreementAccepted} showErrors={attempted} /><button className="button button--dark" type="submit" disabled={submitting}>{mode === 'preorder' ? 'Отправить заявку' : mode === 'message' ? 'Отправить сообщение' : 'Отправить запрос'}</button></form>}</section></div>
 }

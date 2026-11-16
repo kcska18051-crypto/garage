@@ -32,7 +32,7 @@ export function DesktopHeader({ region, onRegion, counts, compact, catalogOpen, 
         {!isStyleCheck && !compact && <Link className="service-link" to="/services">Услуги</Link>}
         {!isStyleCheck && (compact || !headerQuickLinksConfig.enabled) && <PaintServiceLink className="paint-service-link--fallback" />}
         <div className="header-actions">{isAuthenticated ? <ActionLink to="/profile" label={customerName?.trim() || "Профиль"} symbol="○" /> : <button className="header-action" type="button" aria-label="Профиль" onClick={() => openAuth('login', { returnTo: '/profile' })}><span aria-hidden="true">○</span><small>Профиль</small></button>}<ComparePreview count={counts.compare} /><ActionLink to="/favorites" label="Избранное" symbol="♡" count={counts.favorites} /><ActionLink to="/cart" label="Корзина" symbol="▱" count={counts.cart} /></div>
-        {isStyleCheck && compact && <Link className="reference-compact-contact reference-contact-tile" to="/contacts"><RoundedIcon name="phone" /><span><strong>Связаться с нами</strong><span>+7 (000) 000-00-00</span></span></Link>}
+        {isStyleCheck && compact && <button type="button" className="reference-compact-contact reference-contact-tile" onClick={() => setCallbackOpen(true)}><RoundedIcon name="phone" /><span><strong>Связаться с нами</strong><span>+7 (000) 000-00-00</span></span></button>}
       </div>
       {isStyleCheck && callbackOpen && <ContactDialog mode="callback" onClose={() => setCallbackOpen(false)} />}
     </div>

@@ -1,3 +1,4 @@
+import {additionalServiceDirections,serviceCenterRequest} from '../../data/serviceCenterData'
 import { productDetail } from '../../data/productDetailData'
 import { useRegion } from '../../state/RegionState'
 import { useEffect, useRef, useState } from 'react'
@@ -14,7 +15,7 @@ const directions = [
   { kind: 'rental', label: 'Аренда оборудования' },
 ] as const
 const choices: Record<ServiceRequest['kind'], ServiceRequest[]> = {
-  repair: [hoseService, ...repairServices, ...repairDirections, {id:'workshop',title:'Оснащение автосервиса'}].map(item => ({ kind: 'repair', itemId: item.id, title: item.title })),
+  repair: [serviceCenterRequest, ...additionalServiceDirections, hoseService, ...repairServices, ...repairDirections, {id:'workshop',title:'Оснащение автосервиса'}].map(item => ({ kind: 'repair', itemId: item.id, title: item.title })),
   paint: [{itemId:'paint-matching',title:'Подбор автоэмали'}, ...paintServices].map(item => ({ kind: 'paint', itemId: item.itemId, title: item.title })),
   rental: rentalItems.map(item => ({ kind: 'rental', itemId: item.id, title: item.title })),
 }

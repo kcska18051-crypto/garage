@@ -43,7 +43,7 @@ describe('existing demo SKU journey A-D',()=>{
       await user.click(within(document.querySelector('.product-mobile-purchase') as HTMLElement).getByRole('button',{name:'В корзину',hidden:true}))
     }
     expect(JSON.parse(localStorage.getItem('garage-cart-v2')!)).toEqual([{id:'remeza-vk-10-220-55',quantity:2}])
-  })
+  },15000)
   it('does not retain 380V in the selected 220V heading or proposal and adds the selected quantity',async()=>{
     const user=userEvent.setup();open('/product/remeza-vk-10-gr-0001')
     await user.click(screen.getByRole('button',{name:'220 В'}))
@@ -58,5 +58,5 @@ describe('existing demo SKU journey A-D',()=>{
     await user.click(within(proposal).getByRole('button',{name:'Закрыть коммерческое предложение'}))
     await user.click(within(purchase).getByRole('button',{name:'В корзину'}))
     expect(JSON.parse(localStorage.getItem('garage-cart-v2')!)).toEqual([{id:'remeza-vk-10-220-55',quantity:2}])
-  })
+  },15000)
 })

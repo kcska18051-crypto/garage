@@ -1,5 +1,7 @@
 import {ProductSectionNav} from '../features/product-detail/ProductSectionNav'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import {useProfile} from '../state/ProfileState'
+import {ProductRecentlyViewed} from '../features/product-detail/ProductRecentlyViewed'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { DemoLink as Link } from '../app/DemoLink'
 import { defaultOffer, findOffer, offerSelections, productDetail } from '../data/productDetailData'
@@ -22,6 +24,8 @@ export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string }
   const initialOffer = productDetail.offers.find(offer=>offer.id===initialOfferId) ?? defaultOffer
   const requestedOfferId=new URLSearchParams(location.search).get('variant')
   const offer=productDetail.offers.find(candidate=>candidate.id===requestedOfferId) ?? initialOffer
+  const {recordRecentlyViewed}=useProfile()
+  useEffect(()=>{recordRecentlyViewed(offer.id)},[offer.id,recordRecentlyViewed])
   const selections=offerSelections(offer)
   const commerce = useCommerce()
   const favorite = commerce.favoriteIds.has(productDetail.id)
@@ -51,6 +55,7 @@ export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string }
     </section>
     <ProductSectionNav/>
     <ProductSections offer={offer} />
+    <ProductRecentlyViewed/>
     <ProductMobilePurchase offer={offer} state={commercialState} quantity={quantity} />
   </main>
 }

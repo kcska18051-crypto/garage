@@ -1,0 +1,22 @@
+import {test,expect} from '@playwright/test'
+test.beforeEach(async({page})=>{await page.route('**/garage/style-check/**',route=>route.continue({url:route.request().url().replace('/garage/style-check/','/style-check/')}))})
+for(const width of [320,1440])test(`real recent product history at ${width}`,async({page})=>{
+ await page.setViewportSize({width,height:900});await page.emulateMedia({reducedMotion:'reduce'})
+ await page.addInitScript(()=>{localStorage.setItem('garage-region-v1','Ярославль');localStorage.setItem('garage-cookie-preference',JSON.stringify({version:2,choice:'necessary'}))})
+ for(const id of ['remeza-vk-10-gr-0001','remeza-vk-10-380-55','remeza-vk-10-220-55']){await page.goto('/product/'+id);await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('garage-recent-products-v1')??'[]')[0])).toBe(id)}
+ const region=page.getByRole('region',{name:'Вы недавно смотрели'})
+ await expect(region.getByRole('article')).toHaveCount(3)
+ await expect(region.getByRole('article').first()).toContainText('GR-220-55')
+ await region.scrollIntoViewIfNeeded()
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+ const rail=region.locator('.product-recently-viewed__rail')
+ const geometry=await rail.evaluate(e=>({client:e.clientWidth,scroll:e.scrollWidth}))
+ expect(geometry.scroll>geometry.client).toBe(width<768)
+ await region.screenshot({path:`C:/Users/Admin/garage-audit/recent-${width}.png`})
+ await region.getByRole('article').first().getByRole('button',{name:/Добавить в корзину:/}).click()
+ expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('garage-cart-v2')!))).toContainEqual({id:'remeza-vk-10-220-55',quantity:1})
+ await page.reload();await expect(region.getByRole('article')).toHaveCount(3)
+ await region.getByRole('article').nth(1).getByRole('link',{name:/Открыть товар:/}).click()
+ await expect(page).toHaveURL(/product\/remeza-vk-10-380-55/)
+ await expect(region.getByRole('article').first()).toContainText('GR-380-55')
+})

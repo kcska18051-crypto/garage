@@ -10,6 +10,7 @@ for(const width of [320,1440])test(`real recent product history at ${width}`,asy
  await region.scrollIntoViewIfNeeded()
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
  const rail=region.locator('.product-recently-viewed__rail')
+ await expect.poll(()=>rail.evaluate(e=>e.scrollLeft)).toBe(0)
  const geometry=await rail.evaluate(e=>({client:e.clientWidth,scroll:e.scrollWidth}))
  expect(geometry.scroll>geometry.client).toBe(width<768)
  await region.screenshot({path:`C:/Users/Admin/garage-audit/recent-${width}.png`})

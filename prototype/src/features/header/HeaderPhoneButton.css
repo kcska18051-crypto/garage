@@ -19,3 +19,8 @@ dialog.cart-dialog.header-phone-dialog { width:min(480px,calc(100% - 24px)); max
 
 .header-phone-dialog li[data-primary=true] { background:#fff7d6; border-radius:10px; padding:14px 12px; border-bottom-color:transparent; }
 .header-phone-dialog__common[data-primary=true] { background:#fff7d6; }
+
+.header-phone-dialog .header-phone-dialog__callback { display:flex; align-items:center; justify-content:center; width:100%; min-height:44px; margin-top:16px; padding:10px 16px; border:0; border-radius:10px; background:var(--palette-yellow); color:var(--palette-ink); font-size:14px; line-height:22px; font-weight:600; cursor:pointer; transition:background-color 150ms ease; }
+.header-phone-dialog .header-phone-dialog__callback:hover { background:var(--palette-yellow-hover); }
+.header-phone-dialog .header-phone-dialog__callback:focus-visible { outline:2px solid var(--palette-ink); outline-offset:3px; }
+@media(prefers-reduced-motion:reduce){ .header-phone-dialog .header-phone-dialog__callback { transition:none; } }

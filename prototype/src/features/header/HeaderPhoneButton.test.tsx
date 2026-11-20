@@ -1,3 +1,4 @@
+import {MemoryRouter} from 'react-router-dom'
 import {regionalPhoneLabel} from '../../data/regionalPhones'
 import {render,screen,within} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -31,4 +32,16 @@ it('puts the national contact first for another Russian city without inventing a
  expect(common.compareDocumentPosition(dialog.querySelector('ul')!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
  expect(regionalPhoneLabel('Москва')).toBe('8 (800) 000 00 00')
  expect(common.querySelector('a')).toBeNull()
+})
+
+it('switches from store phones to callback without stacking dialogs and returns focus',async()=>{
+ const user=userEvent.setup();render(<MemoryRouter><HeaderPhoneButton ariaLabel="Выбрать телефон магазина">Телефон</HeaderPhoneButton></MemoryRouter>)
+ const trigger=screen.getByRole('button',{name:'Выбрать телефон магазина'});await user.click(trigger)
+ await user.click(screen.getByRole('button',{name:'Заказать обратный звонок'}))
+ expect(screen.queryByRole('dialog',{name:'Телефоны магазинов'})).not.toBeInTheDocument()
+ const dialog=screen.getByRole('dialog',{name:'Заказать звонок'})
+ expect(screen.getAllByRole('dialog')).toHaveLength(1)
+ expect(within(dialog).getByLabelText('Телефон')).toBeInTheDocument()
+ await user.keyboard('{Escape}')
+ expect(screen.queryByRole('dialog')).not.toBeInTheDocument();expect(trigger).toHaveFocus()
 })

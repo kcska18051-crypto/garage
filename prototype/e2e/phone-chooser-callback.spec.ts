@@ -1,0 +1,18 @@
+import {test,expect} from '@playwright/test'
+test.beforeEach(async({page})=>{await page.route('**/garage/style-check/**',route=>route.continue({url:route.request().url().replace('/garage/style-check/','/style-check/')}))})
+for(const width of [390,1440])for(const compact of [false,true])test(`phone chooser callback ${width} compact=${compact}`,async({page})=>{
+ await page.setViewportSize({width,height:900})
+ await page.addInitScript(()=>{localStorage.setItem('garage-region-v1','Ярославль');localStorage.setItem('garage-cookie-preference',JSON.stringify({version:2,choice:'necessary'}))})
+ await page.goto('/about');if(compact)await page.evaluate(()=>scrollTo(0,900))
+ const trigger=page.getByRole('button',{name:'Выбрать телефон магазина',exact:true}).filter({visible:true}).first()
+ await trigger.click();const phones=page.getByRole('dialog',{name:'Телефоны магазинов'})
+ await phones.getByRole('button',{name:'Заказать обратный звонок'}).click()
+ const form=page.getByRole('dialog',{name:'Заказать звонок'})
+ await expect(phones).toHaveCount(0);await expect(form).toBeVisible();await expect(page.getByRole('dialog')).toHaveCount(1)
+ await form.getByLabel('Ваше имя').fill('Мария');await form.getByLabel('Телефон',{exact:true}).fill('+79991234567')
+ for(const box of await form.getByRole('checkbox').all())await box.check()
+ await form.getByRole('button',{name:'Отправить запрос'}).click();await expect(form.getByRole('status')).toContainText('Запрос звонка')
+ await form.getByRole('button',{name:'Закрыть',exact:true}).click();await expect(form).toHaveCount(0)
+ await expect(page).toHaveURL(/\/about$/)
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+})

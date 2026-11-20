@@ -20,10 +20,10 @@ export function MobileHeader({ compact = false, compareCount = 0, region, onRegi
   }, [menuOpen, onMenu])
   if (isStyleCheck) {
     const search = <button type="button" aria-label="Открыть поиск" onClick={() => document.querySelector<HTMLInputElement>('.mobile-header .search-box input')?.focus({preventScroll:true})}><RoundedIcon name="search" /></button>
-    const main = (showSearch: boolean) => <div className="reference-mobile-main"><button type="button" aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'} aria-expanded={menuOpen} onClick={onMenu}><RoundedIcon name="menu" /></button><Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link>{showSearch && search}<HeaderPhoneButton onOpen={()=>setPhoneOpen(true)} ariaLabel="Выбрать телефон магазина"><RoundedIcon name="phone" /></HeaderPhoneButton></div>
+    const main = (showSearch: boolean) => <div className="reference-mobile-main"><button type="button" aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'} aria-expanded={menuOpen} onClick={onMenu}><RoundedIcon name="menu" /></button><Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link>{showSearch && search}<HeaderPhoneButton region={region} onOpen={()=>setPhoneOpen(true)} ariaLabel="Выбрать телефон магазина"><RoundedIcon name="phone" /></HeaderPhoneButton></div>
     return <div className="mobile-header review-mobile-header reference-mobile-header">
       {compact && <div className="review-mobile-pinned">{main(true)}</div>}
-      {main(false)}{phoneOpen&&<HeaderPhoneDialog onClose={()=>setPhoneOpen(false)}/>}<SearchBox suspended={searchSuspended} />
+      {main(false)}{phoneOpen&&<HeaderPhoneDialog region={region} onClose={()=>setPhoneOpen(false)}/>}<SearchBox suspended={searchSuspended} />
       {menuOpen && <MobileSiteMenu region={region} onRegion={onRegion} onClose={onMenu} onCatalog={onCatalog} />}
     </div>
   }

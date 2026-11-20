@@ -4,7 +4,7 @@
 .header-phone-dialog ul { list-style:none; padding:0; margin:20px 0; }
 .header-phone-dialog li { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0; border-bottom:1px solid var(--palette-border); }
 .header-phone-dialog li span,.header-phone-dialog__common span { color:var(--palette-muted); font-size:13px; }
-.header-phone-dialog__common { display:grid; gap:8px; background:#fff7d6; border-radius:12px; padding:16px; }
+.header-phone-dialog__common { display:grid; gap:8px; background:var(--palette-surface); border-radius:12px; padding:16px; }
 .header-phone-dialog .header-phone-dialog__note { font-size:12px; line-height:19px; }
 .site-header .reference-contact-tile button { background:none; border:0; color:inherit; font:inherit; padding:0; text-align:left; }
 .site-header .reference-contact-tile .compact-callback { font-weight:650; }
@@ -16,3 +16,6 @@
 
 dialog.cart-dialog.header-phone-dialog { width:min(480px,calc(100% - 24px)); max-width:calc(100% - 24px); box-sizing:border-box; }
 @media(max-width:480px) { .header-phone-dialog li { flex-direction:column; align-items:flex-start; gap:6px; } }
+
+.header-phone-dialog li[data-primary=true] { background:#fff7d6; border-radius:10px; padding:14px 12px; border-bottom-color:transparent; }
+.header-phone-dialog__common[data-primary=true] { background:#fff7d6; }

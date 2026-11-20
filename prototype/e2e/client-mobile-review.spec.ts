@@ -25,3 +25,11 @@ test('signed-in mobile Profile opens the account directly',async({page})=>{
  await page.getByRole('navigation',{name:'Мобильная навигация'}).getByRole('link',{name:'Профиль',exact:true}).click();await expect(page).toHaveURL(/\/profile\/?$/)
  await expect(page.getByRole('dialog',{name:'Вход и регистрация'})).toHaveCount(0)
 })
+
+for(const [city,phone] of [['Ярославль','+7 (4852) 59-59-80'],['Вологда','+7 (8172) 55-66-50'],['Череповец','+7 (8202) 73-02-01'],['Москва','8 800 · номер уточняется']])test(`phone priority follows selected region ${city}`,async({page})=>{
+ await page.setViewportSize({width:1440,height:900});await page.addInitScript(city=>localStorage.setItem('garage-region-v1',city),city);await page.goto('/')
+ const trigger=page.getByRole('button',{name:'Выбрать телефон магазина'});await expect(trigger).toContainText(phone);await trigger.click()
+ const dialog=page.getByRole('dialog',{name:'Телефоны магазинов'})
+ if(city==='Москва')await expect(dialog.locator('.header-phone-dialog__common')).toHaveAttribute('data-primary','true')
+ else await expect(dialog.getByRole('link').first()).toContainText(phone)
+})

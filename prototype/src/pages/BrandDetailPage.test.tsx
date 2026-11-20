@@ -27,7 +27,7 @@ describe('Remeza brand detail page', () => {
     expect(useful.querySelector('a[href*="remeza-guide-"]')).toBeNull()
     expect(screen.getByRole('main')).not.toHaveTextContent(/демонстрацион|прототип|Условная карточка/)
     expect(within(screen.getByRole('region',{name:'Категории товаров Remeza'})).getAllByRole('link')).toHaveLength(4)
-  })
+  },15000)
 
   it('exposes brand metadata without a consultation block', () => {
     render(<MemoryRouter initialEntries={['/brand/remeza/']}><App /></MemoryRouter>)

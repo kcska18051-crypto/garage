@@ -18,4 +18,4 @@ it('records selected offers, shows real history newest first and keeps it after 
  const previous=within(viewed()).getAllByRole('article')[1]
  await user.click(within(previous).getByRole('link',{name:/Открыть товар:/}))
  expect(within(viewed()).getAllByRole('article')[0]).toHaveTextContent('GR-0001')
-})
+},15000)

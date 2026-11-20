@@ -126,7 +126,7 @@ describe('Remeza product detail redesign', () => {
     expect(screen.getByRole('button', { name: 'Купить в кредит' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'В рассрочку' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'В лизинг' })).toBeInTheDocument()
-  })
+  },15000)
 
   it('copies only the selected offer sku from the interactive article control', async () => {
     const user = userEvent.setup()

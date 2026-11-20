@@ -32,7 +32,7 @@ jobs:
         run: npm ci
         working-directory: prototype
       - name: Run unit tests
-        run: npm test -- --run
+        run: npm test -- --run --maxWorkers=2
         working-directory: prototype
       - name: Build GitHub Pages artifact
         run: npm run build:pages

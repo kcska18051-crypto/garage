@@ -35,3 +35,21 @@
 .product-page-approved .product-description > div > :is(p,h3,ul) { max-width:960px; }
 
 @media(max-width:767px){ .product-page-approved .product-anchor-nav a[aria-current=location]::after { bottom:-14px; } }
+
+.product-page-approved .product-description > .product-description__layout { display:grid; grid-template-columns:minmax(0,1fr) 310px; gap:32px; align-items:start; }
+.product-description__body { min-width:0; }
+.product-description__body > :is(p,h3,ul) { max-width:960px; }
+.product-assurance { padding:20px; border:1px solid var(--palette-border); border-radius:14px; background:var(--palette-white); }
+.product-assurance header { display:flex; align-items:center; gap:12px; padding-bottom:18px; border-bottom:1px solid var(--palette-border); }
+.product-assurance .product-assurance__icon { display:grid; place-items:center; width:42px; height:42px; border-radius:12px; background:var(--palette-yellow); flex-shrink:0; }
+.product-page-approved .product-assurance h3 { margin:0 0 4px; font-size:16px; line-height:23px; }
+.product-assurance small { font-size:11px; line-height:17px; color:var(--palette-muted); }
+.product-assurance__item { display:grid; grid-template-columns:22px minmax(0,1fr); gap:12px; padding-top:18px; }
+.product-assurance__item > svg { color:var(--palette-ink); margin-top:2px; }
+.product-assurance h4 { margin:0 0 6px; font-size:13px; line-height:20px; font-weight:600; }
+.product-assurance p { margin:0; color:var(--palette-muted); font-size:12px; line-height:20px; }
+.product-assurance a { display:inline-block; margin-top:8px; color:var(--palette-ink); font-size:12px; line-height:20px; text-underline-offset:3px; }
+.product-assurance a:hover { color:var(--palette-red); }
+.product-page-approved .product-assurance__request { margin-top:20px; width:100%; min-height:40px; border:1px solid var(--palette-border); background:var(--palette-white); color:var(--palette-ink); font-size:12px; }
+.product-page-approved .product-assurance__request:hover { border-color:var(--palette-border-hover); background:var(--palette-surface); }
+@media(max-width:1023px){ .product-page-approved .product-description > .product-description__layout { grid-template-columns:minmax(0,1fr); gap:20px; } .product-assurance { max-width:640px; padding:16px; } }

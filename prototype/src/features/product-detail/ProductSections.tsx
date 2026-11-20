@@ -1,3 +1,4 @@
+import {ProductDocumentRequest} from './ProductDocumentRequest'
 import {ProductDescription} from './ProductDescription'
 import {productSpecLink} from './productSpecLinks'
 import { DemoLink as Link } from '../../app/DemoLink'
@@ -22,7 +23,7 @@ export function ProductSections({ offer }: { offer?: ProductOffer }) {
     <section id="equipment" className="product-content-section"><h2>Комплектация</h2><ul className="product-check-list"><li>Компрессорный модуль</li><li>Панель управления</li><li>Комплект сопроводительных материалов</li><li>Точный состав поставки уточняется для выбранного варианта</li></ul></section>
     <ProductExtras offer={offer}/>
     <section id="video" className="product-content-section product-video"><h2>Видео</h2><button type="button" aria-label="Воспроизвести демонстрационное видео"><span aria-hidden="true">▶</span><strong>Обзор оборудования</strong><small>Демонстрационный видеоблок</small></button></section>
-    <section id="documents" className="product-content-section"><h2>Документы</h2><div className="product-documents"><button type="button">Паспорт изделия <span>PDF · прототип</span></button><button type="button">Техническая карточка <span>PDF · прототип</span></button><button type="button">Сертификаты <span>Состав уточняется</span></button></div></section>
+    <section id="documents" className="product-content-section"><h2>Документы</h2><div className="product-documents"><ProductDocumentRequest offer={offer} documentName="Паспорт изделия" label={<>Паспорт изделия <span>Запросить копию</span></>}/><ProductDocumentRequest offer={offer} documentName="Техническая карточка" label={<>Техническая карточка <span>Запросить копию</span></>}/><ProductDocumentRequest offer={offer} documentName="Сертификаты" label={<>Сертификаты <span>Уточнить комплект</span></>}/></div></section>
     <section id="reviews" className="product-content-section product-conditional"><h2>Отзывы</h2><p>Демонстрационный блок. Публикуется после подтверждения источника и модерации.</p><button className="button" type="button">Оставить отзыв</button></section>
     <section id="questions" className="product-content-section product-conditional"><h2>Вопросы</h2><p>Здесь будут ответы специалиста по выбору и эксплуатации оборудования.</p><button className="button" type="button">Задать вопрос</button></section>
     <section id="delivery" className="product-content-section product-delivery"><h2>Доставка и оплата</h2><div><strong>{region}</strong><p>Ожидаемый способ и срок получения уточняются с учётом выбранного варианта и адреса. Внутренняя складская логика пользователю не показывается.</p><div className="product-info-links"><Link to="/delivery">Подробнее о доставке</Link><Link to="/payment">Подробнее об оплате</Link></div></div></section>

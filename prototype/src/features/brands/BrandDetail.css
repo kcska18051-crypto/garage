@@ -154,3 +154,8 @@ html:has(.brand-detail-page),body:has(.brand-detail-page),.app-shell:has(.brand-
  .brand-detail-hero__identity .brand-certificate { margin-top:12px; }
  .brand-detail-hero--identity .brand-detail-hero__copy > p,.brand-hero-description p { font-size:13px; line-height:22px; }
 }
+
+@media(max-width:767px){
+ .brand-detail-page .brand-category-grid > a > span { display:none; }
+ .brand-detail-page .brand-popular-products > .brand-popular-products__grid { grid-auto-columns:calc((100% - 24px)/2.2); }
+}

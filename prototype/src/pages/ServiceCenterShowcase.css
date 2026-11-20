@@ -76,3 +76,8 @@ html:has(.service-hub),body:has(.service-hub),.app-shell:has(.service-hub){backg
  .service-hub__section-description br,.service-hub__lead br{display:none}
 }
 @media(prefers-reduced-motion:reduce){.service-hub__button{transition:none}}
+
+.service-hub__hose{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 28px;margin-top:24px;border-radius:14px;background:#FFF9E7;text-decoration:none;color:var(--palette-ink);transition:background-color .18s}
+.service-hub__hose h2{font-size:22px;margin-bottom:8px}.service-hub__hose p{font-size:13px;line-height:1.8;color:var(--palette-muted);margin:0;max-width:650px}.service-hub__hose>span{display:flex;align-items:center;gap:16px;flex-shrink:0;font-size:13px;font-weight:600}.service-hub__hose svg{width:20px;height:20px}.service-hub__hose:hover{background:#FFF3CA;color:var(--palette-ink);text-decoration:none}
+@media(max-width:767px){.service-hub__hose{align-items:flex-start;flex-direction:column;gap:12px;padding:20px}.service-hub__hose h2{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.service-hub__hose{transition:none}}

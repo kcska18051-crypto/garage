@@ -42,7 +42,8 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
   const photoInputRef = useRef<HTMLInputElement>(null)
   const closeRef = useRef(onClose)
   const id = useId()
-  const title = request.kind === 'repair' ? 'Заявка на ремонт' : request.kind === 'paint' ? 'Узнать стоимость' : 'Заявка на аренду'
+  const hose = request.itemId === 'pressure-washer-hoses'
+  const title = hose ? 'Заявка на изготовление шланга' : request.kind === 'repair' ? 'Заявка на ремонт' : request.kind === 'paint' ? 'Узнать стоимость' : 'Заявка на аренду'
   const today = localDateString()
 
   useEffect(() => { closeRef.current = onClose }, [onClose])
@@ -108,8 +109,8 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
     if (fields.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.trim())) next.email = 'Укажите корректный email или оставьте поле пустым'
     if (rentalContext && !fields.city.trim()) next.city = 'Укажите город получения'
     if (request.kind === 'repair') {
-      if (!fields.model.trim()) next.model = 'Укажите модель оборудования'
-      if (!fields.description.trim()) next.description = 'Опишите неисправность'
+      if (!fields.model.trim()) next.model = hose ? 'Укажите модель мойки' : 'Укажите модель оборудования'
+      if (!fields.description.trim()) next.description = hose ? 'Укажите длину и тип подключения или опишите задачу' : 'Опишите неисправность'
     } else if (request.kind === 'rental') Object.assign(next, validateRental(fields.start, fields.end, fields.quantity, localDateString()))
     if (photoError) next.photo = photoError
     if(request.kind==='paint'){
@@ -137,7 +138,7 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
         <p role="status">{request.kind === 'rental' ? 'Заявка на аренду отправлена' : 'Демонстрационная заявка создана'}</p>
         <p className="service-request-number">Номер: {demoNumber}</p>
         <p>Статус: {created?.status}</p>
-        {inline && <p className="service-request-next">{request.kind === 'repair' ? 'Следующий шаг — уточнение неисправности и согласование диагностики. Стоимость и сроки ремонта определяются после оценки оборудования.' : request.kind === 'paint' ? 'Следующий шаг — уточнение цвета, способа подбора и состава материалов. Затем согласуются стоимость и сроки.' : 'Следующий шаг — подтверждение доступности на выбранные даты, тарифа и условий передачи. До согласования оборудование не забронировано.'}</p>}
+        {inline && <p className="service-request-next">{hose ? 'Следующий шаг — подбор рукава и соединений, согласование стоимости и сроков изготовления.' : request.kind === 'repair' ? 'Следующий шаг — уточнение неисправности и согласование диагностики. Стоимость и сроки ремонта определяются после оценки оборудования.' : request.kind === 'paint' ? 'Следующий шаг — уточнение цвета, способа подбора и состава материалов. Затем согласуются стоимость и сроки.' : 'Следующий шаг — подтверждение доступности на выбранные даты, тарифа и условий передачи. До согласования оборудование не забронировано.'}</p>}
         <p>Реальная отправка менеджеру не выполняется. Текстовые данные сохранены локально в этом браузере и доступны в истории после входа в соответствующий демопрофиль.</p>
         {created?.photoAttached&&<p>Фото было приложено к форме, но сам файл не сохранён. После закрытия или перезагрузки предпросмотр недоступен.</p>}
         {request.kind === 'rental' && <p>Это демонстрация, не бронь. Доступность оборудования не изменяется.</p>}
@@ -157,8 +158,8 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
         {field('email', 'Электронная почта (необязательно)', { type: 'email', autoComplete: 'email', optional: true })}
         {rentalContext && field('city','Город получения', {autoComplete:'address-level2'})}
         {request.kind === 'repair' && <>
-          {field('model', 'Модель оборудования')}
-          {field('description', 'Описание неисправности', { multiline: true })}
+          {field('model', hose ? 'Модель мойки' : 'Модель оборудования')}
+          {field('description', hose ? 'Длина и тип подключения' : 'Описание неисправности', { multiline: true })}
           <div className="form-field">
             <label htmlFor={`${id}-photo`}>Фото неисправности (необязательно)</label>
             <input id={`${id}-photo`} name="photo" ref={photoInputRef} type="file" accept="image/jpeg,image/png,image/webp" aria-invalid={Boolean(photoError)} aria-describedby={photoError ? `${id}-photo-error` : `${id}-photo-help`} onChange={(event) => {

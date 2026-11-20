@@ -6,6 +6,7 @@ export const serviceDirections=[
   {id:'paint-matching',title:'Подбор автоэмали',href:'/services/paint-matching',text:'Знакомство с обращением по подбору цвета и материалов для ремонта покрытия.'},
   {id:'rental',title:'Аренда оборудования и инструмента',href:'/services/rental',text:'Демонстрационные позиции для временных задач. Условия аренды уточняются.'},
 ]
+export const hoseService={id:'pressure-washer-hoses',title:'Изготовление шлангов высокого давления для моек',href:'/services/service-center/pressure-washer-hoses'}
 const repairBase='/services/service-center/compressor-repair'
 export const repairDirections=[
   {id:'compressor-repair',title:'Ремонт компрессоров',href:repairBase,text:'Винтовые, поршневые и дизельные установки — три примера детализации категории.'},
@@ -26,4 +27,4 @@ export const repairServices=[
 export const repairSteps=['Опишите оборудование и неисправность','Передайте исходные данные для обсуждения','Согласуйте диагностику и возможные работы','Уточните стоимость, сроки и дальнейшие действия']
 export const paintSteps=['Оставьте имя и телефон для связи','При желании добавьте марку авто, код краски и комментарий','Обсудите исходные данные и способ подбора','Уточните стоимость, материалы и условия получения']
 export const rentalSteps=['Выберите демонстрационную позицию','Укажите желаемые даты и количество','Уточните наличие, тариф и условия с менеджером','Отдельно согласуйте передачу и возврат']
-export const serviceRoutes=['/services',...serviceDirections.map(item=>item.href),...paintServices.map(item=>item.href),repairBase,...repairServices.map(item=>item.href),...rentalCategories.map(item=>item.href),...rentalItems.map(item=>item.href),'/services/workshop']
+export const serviceRoutes=['/services',hoseService.href,...serviceDirections.map(item=>item.href),...paintServices.map(item=>item.href),repairBase,...repairServices.map(item=>item.href),...rentalCategories.map(item=>item.href),...rentalItems.map(item=>item.href),'/services/workshop']

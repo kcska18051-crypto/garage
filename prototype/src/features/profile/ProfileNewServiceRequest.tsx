@@ -3,7 +3,7 @@ import { useRegion } from '../../state/RegionState'
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { DemoLink as Link } from '../../app/DemoLink'
-import { repairDirections, repairServices, paintServices, rentalItems } from '../../data/servicesData'
+import { hoseService, repairDirections, repairServices, paintServices, rentalItems } from '../../data/servicesData'
 import type { ServiceRequest } from '../../data/serviceTypes'
 import { ServiceRequestDialog, type ServiceRequestContact } from '../services/ServiceRequestDialog'
 import './ProfileNewServiceRequest.css'
@@ -14,7 +14,7 @@ const directions = [
   { kind: 'rental', label: 'Аренда оборудования' },
 ] as const
 const choices: Record<ServiceRequest['kind'], ServiceRequest[]> = {
-  repair: [...repairServices, ...repairDirections, {id:'workshop',title:'Оснащение автосервиса'}].map(item => ({ kind: 'repair', itemId: item.id, title: item.title })),
+  repair: [hoseService, ...repairServices, ...repairDirections, {id:'workshop',title:'Оснащение автосервиса'}].map(item => ({ kind: 'repair', itemId: item.id, title: item.title })),
   paint: [{itemId:'paint-matching',title:'Подбор автоэмали'}, ...paintServices].map(item => ({ kind: 'paint', itemId: item.itemId, title: item.title })),
   rental: rentalItems.map(item => ({ kind: 'rental', itemId: item.id, title: item.title })),
 }

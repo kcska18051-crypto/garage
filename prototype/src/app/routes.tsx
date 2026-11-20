@@ -1,3 +1,4 @@
+import {HoseServicePage} from '../pages/HoseServicePage'
 import {ProfileNewServiceRequest} from '../features/profile/ProfileNewServiceRequest'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { HomePage } from '../pages/HomePage'
@@ -46,6 +47,7 @@ export function AppRoutes() {
       <Route path="/style-check" element={<StyleCheckHomePage />} />
       <Route path="/services/request" element={<main className="profile-page service-application-page"><ProfileNewServiceRequest /></main>}/>
       <Route path="/services" element={<ServicesIndexPage/>}/>
+      <Route path="/services/service-center/pressure-washer-hoses" element={<HoseServicePage/>}/>
       <Route path="/services/service-center" element={<ServiceCenterPage/>}/>
       <Route path="/services/service-center/compressor-repair" element={<CompressorRepairPage/>}/>
       <Route path="/services/service-center/compressor-repair/:repairSlug" element={<RepairDetailPage/>}/>

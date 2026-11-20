@@ -1,6 +1,6 @@
 import {useCallback,useState} from 'react'
 import { DemoLink as Link } from '../app/DemoLink'
-import {repairDirections} from '../data/servicesData'
+import {hoseService,repairDirections} from '../data/servicesData'
 import type {ServiceRequest} from '../data/serviceTypes'
 import {Breadcrumbs} from '../features/catalog/Breadcrumbs'
 import {ServiceRequestEntry} from '../features/services/ServiceRequestEntry'
@@ -28,6 +28,7 @@ export function ServiceCenterShowcase(){
     {repairDirections.slice(1).map(item=><article className="service-hub__direction" key={item.id}><ToolArt id={item.id}/><h3>{item.title}</h3><p>{tools[item.id].description}</p><button className="service-hub__button" type="button" aria-label={`Оставить заявку: ${item.title}`} onClick={()=>setRequest({kind:'repair',title:item.title,itemId:item.id})}>Оставить заявку<Arrow/></button></article>)}
    </div>
   </section>
+  <Link className="service-hub__hose" to={hoseService.href}><div><h2>Шланги для моек высокого давления</h2><p>Изготовление под ваш аппарат, ремонт и замена соединений. Опрессовка и проверка давлением.</p></div><span>Подробнее об услуге<Arrow/></span></Link>
   <section className="service-hub__process" aria-labelledby="service-hub-process"><h2 id="service-hub-process">Как проходит ремонт</h2><p className="service-hub__section-description">От первого обращения до получения оборудования. <br/>Условия каждого этапа согласовываются с сервисом.</p><ol>{steps.map((step,i)=><li key={step.title}><span>{String(i+1).padStart(2,'0')}</span><h3>{step.title}</h3><p>{step.text}</p></li>)}</ol></section>
   <Link className="service-hub__back" to="/services">← Все услуги</Link>
   {request&&<ServiceRequestEntry key={request.itemId} request={request} onClose={close}/>}

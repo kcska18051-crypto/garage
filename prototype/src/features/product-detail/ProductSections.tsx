@@ -1,3 +1,4 @@
+import {ProductVideos} from './ProductVideos'
 import {ProductDocumentRequest} from './ProductDocumentRequest'
 import {ProductDescription} from './ProductDescription'
 import {productSpecLink} from './productSpecLinks'
@@ -22,7 +23,7 @@ export function ProductSections({ offer }: { offer?: ProductOffer }) {
     <section id="characteristics" className="product-content-section"><h2>Характеристики</h2><p className="product-data-note">Параметры демонстрационные и требуют проверки по документации поставщика.</p><div className="product-spec-groups">{productDetail.specGroups.map((group) => <article key={group.title}><h3>{group.title}</h3><dl>{group.items.map(([name, value]) => { const spec=productSpecLink(name,value,offer); return <div key={name}><dt>{name}</dt><dd>{spec.href?<Link className="product-spec-link" to={spec.href} aria-label={`Показать компрессоры: ${name} — ${spec.value}`}>{spec.value}</Link>:spec.value}</dd></div> })}</dl></article>)}</div></section>
     <section id="equipment" className="product-content-section"><h2>Комплектация</h2><ul className="product-check-list"><li>Компрессорный модуль</li><li>Панель управления</li><li>Комплект сопроводительных материалов</li><li>Точный состав поставки уточняется для выбранного варианта</li></ul></section>
     <ProductExtras offer={offer}/>
-    <section id="video" className="product-content-section product-video"><h2>Видео</h2><button type="button" aria-label="Воспроизвести демонстрационное видео"><span aria-hidden="true">▶</span><strong>Обзор оборудования</strong><small>Демонстрационный видеоблок</small></button></section>
+    <ProductVideos/>
     <section id="documents" className="product-content-section"><h2>Документы</h2><div className="product-documents"><ProductDocumentRequest offer={offer} documentName="Паспорт изделия" label={<>Паспорт изделия <span>Запросить копию</span></>}/><ProductDocumentRequest offer={offer} documentName="Техническая карточка" label={<>Техническая карточка <span>Запросить копию</span></>}/><ProductDocumentRequest offer={offer} documentName="Сертификаты" label={<>Сертификаты <span>Уточнить комплект</span></>}/></div></section>
     <section id="reviews" className="product-content-section product-conditional"><h2>Отзывы</h2><p>Демонстрационный блок. Публикуется после подтверждения источника и модерации.</p><button className="button" type="button">Оставить отзыв</button></section>
     <section id="questions" className="product-content-section product-conditional"><h2>Вопросы</h2><p>Здесь будут ответы специалиста по выбору и эксплуатации оборудования.</p><button className="button" type="button">Задать вопрос</button></section>

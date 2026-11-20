@@ -23,7 +23,7 @@ export function useCatalogListing({ products, pageSize = 12 }: { products: Catal
   const state = useMemo(() => parseListingState(params, specKeys), [params, specKeys])
   const results = useMemo(() => sortCatalogProducts(filterCatalogProducts(products, state), state.sort), [products, state])
   const pagination = useMemo(() => paginateProducts(results, state.page, pageSize), [pageSize, results, state.page])
-  const commit = (next: ListingState) => setParams(serializeListingState(next))
+  const commit = (next: ListingState) => { const query=serializeListingState(next); if(params.get('listing')==='all')query.set('listing','all'); setParams(query) }
 
   const toggleFilter = (group: string, value: string) => {
     const current = valuesForGroup(state, group)

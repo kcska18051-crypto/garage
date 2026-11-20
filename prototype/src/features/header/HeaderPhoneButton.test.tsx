@@ -10,7 +10,7 @@ it('offers verified regional phone links and keeps the unconfirmed 8800 non-clic
  expect(dialog.getByRole('link',{name:/Вологда/})).toHaveAttribute('href','tel:+78172556650')
  expect(dialog.getByRole('link',{name:/Череповец/})).toHaveAttribute('href','tel:+78202730201')
  expect(dialog.getAllByRole('link')).toHaveLength(3)
- expect(dialog.getByText('Единый номер уточняется')).toBeInTheDocument()
+ expect(dialog.getByText('Временный номер для макета')).toBeInTheDocument()
  await user.click(dialog.getByRole('button',{name:'Закрыть диалог'}))
  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();expect(trigger).toHaveFocus()
 })
@@ -29,6 +29,6 @@ it('puts the national contact first for another Russian city without inventing a
  const common=dialog.querySelector('.header-phone-dialog__common')!
  expect(common).toHaveAttribute('data-primary','true')
  expect(common.compareDocumentPosition(dialog.querySelector('ul')!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
- expect(regionalPhoneLabel('Москва')).toBe('8 800 · номер уточняется')
+ expect(regionalPhoneLabel('Москва')).toBe('8 (800) 000 00 00')
  expect(common.querySelector('a')).toBeNull()
 })

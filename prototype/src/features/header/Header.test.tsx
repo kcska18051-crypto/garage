@@ -62,7 +62,7 @@ describe('responsive header', () => {
       renderHeader()
       expect(document.querySelector('.main-header-row a[href="/services/paint-matching"]')).toHaveTextContent('Подбор автоэмалей')
       expect(document.querySelector('.reference-bottom-nav a[href="/services/paint-matching"]')).toHaveTextContent('Подбор')
-      expect(document.querySelector('.reference-bottom-nav a[href="/services"]')).toHaveTextContent('Услуги')
+      expect(document.querySelector('.reference-bottom-nav button[aria-label="Профиль"]')).toHaveTextContent('Профиль')
     } finally { headerQuickLinksConfig.enabled = enabled }
   })
 

@@ -1,14 +1,16 @@
+import { HeaderPhoneButton, HeaderPhoneDialog } from './HeaderPhoneButton'
 import { isApprovedChrome } from '../../app/approvedHomepage'
 import { MobileSiteMenu } from './MobileSiteMenu'
 import { StyleCheckHeaderSymbol } from './StyleCheckHeaderSymbol'
 import { RoundedIcon } from './RoundedIcon'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { DemoLink as Link } from '../../app/DemoLink'
 import { SearchBox } from './SearchBox'
 import { PaintServiceLink } from './PaintServiceLink'
 
 export function MobileHeader({ compact = false, compareCount = 0, region, onRegion, menuOpen, onMenu, onCatalog, searchSuspended = false }: { compact?: boolean; compareCount?: number; region: string; onRegion(): void; menuOpen: boolean; onMenu(): void; onCatalog(): void; searchSuspended?: boolean }) {
+  const [phoneOpen,setPhoneOpen]=useState(false)
   const isStyleCheck = isApprovedChrome(useLocation().pathname)
   useEffect(() => {
     if (!menuOpen) return
@@ -18,10 +20,10 @@ export function MobileHeader({ compact = false, compareCount = 0, region, onRegi
   }, [menuOpen, onMenu])
   if (isStyleCheck) {
     const search = <button type="button" aria-label="Открыть поиск" onClick={() => document.querySelector<HTMLInputElement>('.mobile-header .search-box input')?.focus({preventScroll:true})}><RoundedIcon name="search" /></button>
-    const main = (showSearch: boolean) => <div className="reference-mobile-main"><button type="button" aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'} aria-expanded={menuOpen} onClick={onMenu}><RoundedIcon name="menu" /></button><Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link>{showSearch && search}<a href="tel:+70000000000" aria-label="Позвонить: +7 (000) 000-00-00"><RoundedIcon name="phone" /></a></div>
+    const main = (showSearch: boolean) => <div className="reference-mobile-main"><button type="button" aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'} aria-expanded={menuOpen} onClick={onMenu}><RoundedIcon name="menu" /></button><Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link>{showSearch && search}<HeaderPhoneButton onOpen={()=>setPhoneOpen(true)} ariaLabel="Выбрать телефон магазина"><RoundedIcon name="phone" /></HeaderPhoneButton></div>
     return <div className="mobile-header review-mobile-header reference-mobile-header">
       {compact && <div className="review-mobile-pinned">{main(true)}</div>}
-      {main(false)}<SearchBox suspended={searchSuspended} />
+      {main(false)}{phoneOpen&&<HeaderPhoneDialog onClose={()=>setPhoneOpen(false)}/>}<SearchBox suspended={searchSuspended} />
       {menuOpen && <MobileSiteMenu region={region} onRegion={onRegion} onClose={onMenu} onCatalog={onCatalog} />}
     </div>
   }

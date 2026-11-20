@@ -1,0 +1,12 @@
+/* Client review: compact mobile hero and consistent six-item navigation. */
+@media(max-width:767px) {
+ .app-shell[data-style-check] main.review-home-v2 .review-hero.review-hero .hero__slide { height:152px; }
+ .app-shell[data-style-check] main.review-home-v2 .review-hero.review-hero .hero__slide > a { height:152px; min-height:0; overflow:hidden; }
+ .app-shell[data-style-check] main.review-home-v2 .review-hero.review-hero picture { position:relative; height:152px; overflow:hidden; }
+ .app-shell[data-style-check] main.review-home-v2 .review-hero.review-hero img { position:absolute; top:50%; transform:translateY(-50%); width:100%; height:184px; object-fit:cover; object-position:center; }
+ .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav > :is(a,button) { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; min-width:0; min-height:48px; padding:5px 2px; border:0; border-radius:10px; background:var(--palette-surface); color:var(--palette-ink); font-size:9px; line-height:13px; text-decoration:none; }
+ .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav { gap:4px; padding-inline:8px; }
+ .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav > :is(a[aria-current=page],button[aria-expanded=true]) { background:var(--palette-yellow); }
+ .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav > :is(a,button):active { background:var(--palette-yellow-hover); }
+ .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav .review-rounded-icon { width:22px; height:22px; }
+}

@@ -14,7 +14,7 @@ it('keeps both service destinations before the desktop account actions', () => {
 it('keeps calling and search in the pinned mobile header without service buttons', () => {
   render(<MemoryRouter initialEntries={['/style-check/']}><MobileHeader compact region="Ярославль" onRegion={()=>{}} menuOpen={false} onMenu={()=>{}} onCatalog={()=>{}} /></MemoryRouter>)
   const pinned=within(document.querySelector<HTMLElement>('.review-mobile-pinned')!)
-  expect(pinned.getByRole('link',{name:'Позвонить: +7 (000) 000-00-00'})).toHaveAttribute('href','tel:+70000000000')
+  expect(pinned.getByRole('button',{name:'Выбрать телефон магазина'})).toHaveAttribute('aria-haspopup','dialog')
   expect(pinned.queryByRole('link',{name:'Услуги'})).not.toBeInTheDocument()
   expect(pinned.getByRole('button',{name:'Открыть поиск'})).toBeInTheDocument()
   expect(pinned.getByRole('button',{name:'Открыть меню'})).toBeInTheDocument()
@@ -27,8 +27,8 @@ it('uses the approved compact desktop header on internal pages', () => {
 it('orders the six bottom destinations and highlights both services', () => {
  render(<MemoryRouter initialEntries={['/style-check/']}><AuthProvider><MobileBottomNav favorites={2} cart={0} catalogOpen={false} onCatalog={()=>{}} /></AuthProvider></MemoryRouter>)
  const nav=screen.getByRole('navigation',{name:'Мобильная навигация'})
- expect([...nav.children].map(e=>e.textContent?.replace('2',''))).toEqual(['Главная','Каталог','Услуги','Подбор','Избранное','Корзина'])
- expect(within(nav).getByRole('link',{name:'Услуги'})).toHaveClass('reference-bottom-service')
+ expect([...nav.children].map(e=>e.textContent?.replace('2',''))).toEqual(['Главная','Каталог','Профиль','Подбор','Избранное','Корзина'])
+ expect(within(nav).getByRole('button',{name:'Профиль'})).toBeInTheDocument()
  expect(within(nav).getByRole('link',{name:'Подбор'})).toHaveAttribute('href','/services/paint-matching')
 })
 it('hides the mobile search shortcut until the search row scrolls away', () => {

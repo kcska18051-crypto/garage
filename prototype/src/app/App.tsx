@@ -1,3 +1,4 @@
+import '../styles/client-mobile-20261120.css'
 import './demoNavigation.css'
 import { ApprovedHomepageStyles, isApprovedHomepage } from './approvedHomepage'
 import { BrowserRouter, useInRouterContext, useLocation } from 'react-router-dom'

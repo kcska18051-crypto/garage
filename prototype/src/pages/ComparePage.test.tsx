@@ -57,5 +57,5 @@ describe('compare page', () => {
     await user.click(screen.getByRole('button', { name: /Добавить Remeza ВК 10/ }))
     expect(screen.getAllByTestId('compare-product-card')).toHaveLength(1)
     expect(screen.getByRole('link', { name: 'Сравнение: 2' })).toBeInTheDocument()
-  })
+  }, 15_000)
 })

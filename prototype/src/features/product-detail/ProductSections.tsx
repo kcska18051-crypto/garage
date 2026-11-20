@@ -1,3 +1,4 @@
+import {ProductDescription} from './ProductDescription'
 import {productSpecLink} from './productSpecLinks'
 import { DemoLink as Link } from '../../app/DemoLink'
 import { catalogProducts } from '../../data/catalogData'
@@ -16,10 +17,10 @@ const Rail = ({ title, id, items }: { title: string; id?: string; items: Catalog
 export function ProductSections({ offer }: { offer?: ProductOffer }) {
   const { region } = useRegion()
   return <div className="product-sections">
-    <section id="description" className="product-content-section product-description"><h2>Описание</h2><div><p>Винтовой компрессор Remeza ВК 10-8 предназначен для подготовки сжатого воздуха в мастерских и производственных линиях с продолжительными рабочими циклами.</p><h3>Назначение и применение</h3><p>Ременной привод упрощает регламентное обслуживание, а напольное исполнение позволяет включать оборудование в существующую пневмосеть. Конкретная комплектация и эксплуатационные параметры зависят от выбранного торгового предложения.</p><h3>Что важно учесть</h3><ul><li>Проверьте доступное напряжение на объекте.</li><li>Сопоставьте производительность с пиковым расходом потребителей.</li><li>Заранее уточните требования к подготовке воздуха и сервисному доступу.</li></ul></div></section>
-    <ProductExtras offer={offer}/>
+    <ProductDescription offer={offer}/>
     <section id="characteristics" className="product-content-section"><h2>Характеристики</h2><p className="product-data-note">Параметры демонстрационные и требуют проверки по документации поставщика.</p><div className="product-spec-groups">{productDetail.specGroups.map((group) => <article key={group.title}><h3>{group.title}</h3><dl>{group.items.map(([name, value]) => { const spec=productSpecLink(name,value,offer); return <div key={name}><dt>{name}</dt><dd>{spec.href?<Link className="product-spec-link" to={spec.href} aria-label={`Показать компрессоры: ${name} — ${spec.value}`}>{spec.value}</Link>:spec.value}</dd></div> })}</dl></article>)}</div></section>
     <section id="equipment" className="product-content-section"><h2>Комплектация</h2><ul className="product-check-list"><li>Компрессорный модуль</li><li>Панель управления</li><li>Комплект сопроводительных материалов</li><li>Точный состав поставки уточняется для выбранного варианта</li></ul></section>
+    <ProductExtras offer={offer}/>
     <section id="video" className="product-content-section product-video"><h2>Видео</h2><button type="button" aria-label="Воспроизвести демонстрационное видео"><span aria-hidden="true">▶</span><strong>Обзор оборудования</strong><small>Демонстрационный видеоблок</small></button></section>
     <section id="documents" className="product-content-section"><h2>Документы</h2><div className="product-documents"><button type="button">Паспорт изделия <span>PDF · прототип</span></button><button type="button">Техническая карточка <span>PDF · прототип</span></button><button type="button">Сертификаты <span>Состав уточняется</span></button></div></section>
     <section id="reviews" className="product-content-section product-conditional"><h2>Отзывы</h2><p>Демонстрационный блок. Публикуется после подтверждения источника и модерации.</p><button className="button" type="button">Оставить отзыв</button></section>

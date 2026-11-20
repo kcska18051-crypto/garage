@@ -1,3 +1,4 @@
+import {ProductSectionNav} from '../features/product-detail/ProductSectionNav'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { DemoLink as Link } from '../app/DemoLink'
@@ -11,6 +12,7 @@ import { ProductVariants } from '../features/product-detail/ProductVariants'
 import { useCommerce } from '../state/CommerceState'
 import '../features/product-detail/ProductDetail.css'
 import '../features/product-detail/ProductDetailApproved.css'
+import '../features/product-detail/ProductRichContent.css'
 
 export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string } = {}) {
   const [commercialState, setCommercialState] = useState<CommercialState>('available')
@@ -47,7 +49,7 @@ export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string }
       <div className="product-identity"><Link className="product-identity__brand" to="/brand/remeza/">{productDetail.brand}</Link><ProductVariants groups={productDetail.variantGroups} selections={selections} offers={productDetail.offers} onChange={selectVariant} /><h2>Ключевые характеристики</h2><dl className="product-key-specs">{productDetail.keySpecs.map(([name, value]) => <div key={name}><dt>{name}</dt><dd>{value}</dd></div>)}</dl><a className="product-all-specs" href="#characteristics">Все характеристики ↓</a></div>
       <ProductPurchase offer={offer} state={commercialState} onStateChange={setCommercialState} quantity={quantity} onQuantityChange={setQuantity} />
     </section>
-    <nav className="product-anchor-nav" aria-label="Разделы товара">{productDetail.sections.map((section) => <a key={section.id} href={`#${section.id}`}>{section.label}</a>)}</nav>
+    <ProductSectionNav/>
     <ProductSections offer={offer} />
     <ProductMobilePurchase offer={offer} state={commercialState} quantity={quantity} />
   </main>

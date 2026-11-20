@@ -1,0 +1,17 @@
+import {test,expect} from '@playwright/test'
+test.beforeEach(async({page})=>{await page.route('**/garage/style-check/**',route=>route.continue({url:route.request().url().replace('/garage/style-check/','/style-check/')}))})
+for(const width of [320,390,1440])test(`description table photos and compact accessories at ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:1000});await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/product/remeza-vk-10-gr-0001')
+ const nav=page.getByRole('navigation',{name:'Разделы товара'})
+ await nav.getByRole('link',{name:'Характеристики',exact:true}).click();await expect(nav.getByRole('link',{name:'Характеристики',exact:true})).toHaveAttribute('aria-current','location')
+ await page.evaluate(()=>document.getElementById('description')!.scrollIntoView())
+ await expect(nav.getByRole('link',{name:'Описание',exact:true})).toHaveAttribute('aria-current','location')
+ await expect(page.getByRole('table',{name:'Варианты Remeza ВК 10-8'})).toBeVisible();await expect(page.locator('.product-description__photos img')).toHaveCount(2)
+ const accessories=page.getByRole('region',{name:'Сопутствующие товары'})
+ await expect(accessories.locator('[data-companion-id]')).toHaveCount(4);await accessories.getByRole('button',{name:'Показать ещё 4'}).click()
+ await expect(accessories.locator('[data-companion-id]')).toHaveCount(8)
+ const columns=await accessories.locator('.companion-products').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length)
+ expect(columns).toBe(width<768?2:4)
+ await accessories.getByRole('button',{name:'Добавить в корзину: Сварочная проволока'}).click();await expect(accessories.getByRole('status')).toContainText('Сварочная проволока')
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+})

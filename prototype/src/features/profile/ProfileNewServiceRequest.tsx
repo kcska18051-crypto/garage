@@ -5,9 +5,7 @@ import { useSearchParams } from 'react-router-dom'
 import { DemoLink as Link } from '../../app/DemoLink'
 import { repairDirections, repairServices, paintServices, rentalItems } from '../../data/servicesData'
 import type { ServiceRequest } from '../../data/serviceTypes'
-import { ServiceRequestDialog } from '../services/ServiceRequestDialog'
-import { useAuth } from '../../state/AuthState'
-import { useProfile } from '../../state/ProfileState'
+import { ServiceRequestDialog, type ServiceRequestContact } from '../services/ServiceRequestDialog'
 import './ProfileNewServiceRequest.css'
 
 const directions = [
@@ -37,9 +35,7 @@ export function ProfileNewServiceRequest() {
   const directRental = selectedOffer && kind === 'rental' && itemId === 'screw-compressor' && !showChoice ? selectedOffer : undefined
   const variant = directRental ? `${directRental.options.voltage} · ${directRental.options.power} · Артикул ${directRental.sku}` : ''
   const request = baseRequest && directRental ? {...baseRequest, itemId:directRental.id, title:`${productDetail.name} · ${directRental.options.voltage} · ${directRental.options.power}`} : baseRequest
-  const { identity, isAuthenticated } = useAuth()
-  const { user } = useProfile()
-  const [contactDraft, setContactDraft] = useState(() => isAuthenticated ? { name: user.firstName, phone: identity?.phone ? `+${identity.phone}` : user.phone } : { name: '', phone: '' })
+  const [contactDraft, setContactDraft] = useState<ServiceRequestContact>()
   return <div className="profile-section profile-new-service">
     <header className="profile-section__heading"><h1 ref={heading} tabIndex={-1}>{submitted ? 'Заявка на услугу' : directRental ? 'Заявка на аренду' : 'Новая заявка на услугу'}</h1></header>
     <p className="profile-new-service__lead">{submitted ? 'Сохраните номер заявки. Стоимость и сроки будут согласованы отдельно.' : directRental ? 'Оборудование уже выбрано. Укажите даты, количество и контакты. Наличие, стоимость и условия согласуем отдельно; заявка не подтверждает бронь.' : 'Выберите услугу и расскажите о задаче. Стоимость и сроки согласуем после рассмотрения заявки; оплата на этом этапе не требуется.'}</p>
@@ -60,7 +56,7 @@ export function ProfileNewServiceRequest() {
       </>}
       {!directRental && <p id="service-choice-help" className="profile-new-service__help">{kind === 'repair' ? 'В форме понадобятся модель оборудования и описание неисправности. Стоимость ремонта зависит от диагностики и согласованных работ.' : kind === 'paint' ? 'Укажите контакты; при наличии добавьте марку автомобиля и код краски. Состав материалов и стоимость согласуем отдельно.' : 'Укажите желаемые даты и количество. Заявка не является бронью: наличие, стоимость и условия аренды требуют подтверждения.'}</p>}
     </section>}
-    {request && <ServiceRequestDialog key={kind+(directRental?.id??'')} rentalContext={directRental ? {model:variant,city:region} : undefined} inline request={request} contact={contactDraft} onContactChange={setContactDraft} onCreated={() => setSubmitted(true)} onClose={() => {}} />}
+    {request && <ServiceRequestDialog key={kind+(directRental?.id??'')} rentalContext={directRental ? {model:variant,city:region} : undefined} inline request={request} contact={contactDraft} preserveEmptyContact={contactDraft !== undefined} onContactChange={setContactDraft} onCreated={() => setSubmitted(true)} onClose={() => {}} />}
     {!submitted && <Link className="profile-link-button" to={returnTo}>{directRental ? 'Вернуться к товару' : from ? 'Вернуться к услуге' : 'Все заявки'}</Link>}
 
   </div>

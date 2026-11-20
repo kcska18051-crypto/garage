@@ -13,6 +13,18 @@ function readRecentProducts(): string[] {
 }
 
 type UserData = typeof profileData.user
+export const profileUserStorageKey = 'garage-profile-users-v1'
+function readProfileUsers(): Record<string, UserData> {
+  try {
+    const parsed: unknown = JSON.parse(localStorage.getItem(profileUserStorageKey) ?? '{}')
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {}
+    return Object.fromEntries(Object.entries(parsed).filter(([phone, value]) => {
+      if (!normalizePhoneIdentity(phone) || !value || typeof value !== 'object') return false
+      const user = value as Partial<UserData>
+      return ['firstName', 'lastName', 'phone', 'email'].every(key => typeof user[key as keyof UserData] === 'string') && typeof user.phoneVerified === 'boolean'
+    }))
+  } catch { return {} }
+}
 type Recipient = ProfileOrder['recipient']
 export type ProfileAddress = { id: string; label: string; city: string; street: string; house: string; building: string; unit: string; postalCode: string; comment: string; isPrimary: boolean }
 export const formatProfileAddress = (address: ProfileAddress) => [address.city, `ул. ${address.street}`, `д. ${address.house}`, address.building && `корп. ${address.building}`, address.unit && `кв./офис ${address.unit}`].filter(Boolean).join(', ')
@@ -81,7 +93,18 @@ const ProfileContext = createContext<ProfileContextValue | null>(null)
 
 export function ProfileProvider({ children, ownerPhone = null }: { children: ReactNode; ownerPhone?: string | null }) {
   const commerce = useCommerce()
-  const [user, setUser] = useState(profileData.user)
+  const [profileUsers, setProfileUsers] = useState(readProfileUsers)
+  const activeUserKey = normalizePhoneIdentity(ownerPhone ?? '')
+  const [unboundUser, setUnboundUser] = useState(profileData.user)
+  const user = activeUserKey ? profileUsers[activeUserKey] ?? profileData.user : unboundUser
+  const updateUser = useCallback((next: UserData) => {
+    if (!activeUserKey) { setUnboundUser(next); return }
+    setProfileUsers(current => {
+      const updated = { ...current, [activeUserKey]: next }
+      try { localStorage.setItem(profileUserStorageKey, JSON.stringify(updated)) } catch { /* Keep in-memory edits. */ }
+      return updated
+    })
+  }, [activeUserKey])
   const [seedOrders, setSeedOrders] = useState<ProfileOrder[]>(profileData.orders)
   const [localOrders, setLocalOrders] = useState<LocalProfileOrder[]>(readOrderHistory)
   const localOrdersRef = useRef(localOrders)
@@ -173,11 +196,11 @@ export function ProfileProvider({ children, ownerPhone = null }: { children: Rea
     removeAddress: (id) => { const target = addresses.find(item => item.id === id); if (!target) return; if (commerce.checkout.savedAddressId === id || commerce.checkout.address === formatProfileAddress(target)) commerce.updateCheckout({ address: '', savedAddressId: '' }); setAddresses(current => { const remaining = current.filter(item => item.id !== id); return target.isPrimary ? remaining.map((item,index) => ({ ...item, isPrimary: index === 0 })) : remaining }) },
     setPrimaryAddress: (id) => setAddresses((current) => current.map((item) => ({ ...item, isPrimary: item.id === id }))),
     clearRecentlyViewed: () => setRecentProductIds([]),
-    updateUser: setUser,
+    updateUser,
     notify: setNotification,
     deleteProfile: () => setProfileDeleted(true),
     restoreProfile: () => setProfileDeleted(false),
-  }), [addresses, commerce, notification, orders, organizations, profileDeleted, recentProductIds, user,serviceRequests,serviceStorageError,createServiceRequest,claimServiceRequests,createCheckoutOrder,updateOrder])
+  }), [addresses, commerce, notification, orders, organizations, profileDeleted, recentProductIds, user,updateUser,serviceRequests,serviceStorageError,createServiceRequest,claimServiceRequests,createCheckoutOrder,updateOrder])
 
   return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
 }
@@ -187,3 +210,5 @@ export function useProfile() {
   if (!value) throw new Error('useProfile must be used inside ProfileProvider')
   return value
 }
+
+export function useOptionalProfile() { return useContext(ProfileContext) }

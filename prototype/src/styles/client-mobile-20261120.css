@@ -10,3 +10,15 @@
  .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav > :is(a,button):active { background:var(--palette-yellow-hover); }
  .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav .review-rounded-icon { width:22px; height:22px; }
 }
+
+/* Client clarification: a distinct, double-width account action. */
+@media(max-width:767px){
+ .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav > .mobile-bottom-nav__profile { grid-column:span 2; flex-direction:row; gap:8px; font-size:12px; font-weight:650; background:var(--palette-surface); }
+ .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav > .mobile-bottom-nav__profile--guest { color:#B85000; background:#FFF3E5; }
+ .app-shell[data-approved-chrome] nav.mobile-bottom-nav.reference-bottom-nav > .mobile-bottom-nav__profile--guest:active { background:#FFE6CB; }
+ .app-shell[data-approved-chrome] .mobile-contact-line { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:30px; margin-bottom:6px; }
+ .app-shell[data-approved-chrome] .mobile-contact-line > button { display:inline-flex; align-items:center; gap:5px; min-height:30px; padding:2px 0; background:none; border:0; color:var(--palette-ink); font-size:11px; line-height:18px; }
+ .app-shell[data-approved-chrome] .mobile-contact-line > button:first-child { min-width:0; }
+ .mobile-contact-line > button:first-child span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+ .app-shell[data-approved-chrome] .mobile-contact-line > button:last-child { flex-shrink:0; font-weight:600; }
+}

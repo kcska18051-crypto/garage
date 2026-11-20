@@ -1,3 +1,4 @@
+import {PRODUCT_DEMO_REVIEW_COUNT,PRODUCT_DEMO_QUESTION_COUNT} from '../features/product-detail/ProductCommunity'
 import {ProductSectionNav} from '../features/product-detail/ProductSectionNav'
 import { useEffect, useState } from 'react'
 import {useProfile} from '../state/ProfileState'
@@ -45,7 +46,7 @@ export function ProductDetailPage({ initialOfferId }: { initialOfferId?:string }
       <h1>{productDetail.name}</h1>
       <p className="product-data-note" aria-live="polite">Выбранный вариант: {Object.values(offer.options).join(' · ')}. Параметры демонстрационные, не подтверждены поставщиком.</p>
       <ProductHeadingTools sku={offer.sku} favorite={favorite} compared={compared} onToggleFavorite={() => commerce.toggleFavorite(productDetail.id)} onToggleCompare={() => commerce.toggleCompare(productDetail.id)} productPath={`/product/${offer.id}/`}>
-        <strong>★ {productDetail.rating}</strong><button type="button" onClick={() => document.querySelector('#reviews')?.scrollIntoView()}>{productDetail.reviewCount}</button><button type="button" onClick={() => document.querySelector('#questions')?.scrollIntoView()}>{productDetail.questionCount}</button><span>{productDetail.warranty}</span>
+        <strong title="Демонстрационная оценка">★ {productDetail.rating}</strong><button type="button" onClick={() => document.querySelector('#reviews')?.scrollIntoView()}>{PRODUCT_DEMO_REVIEW_COUNT} примера отзывов</button><button type="button" onClick={() => document.querySelector('#questions')?.scrollIntoView()}>{PRODUCT_DEMO_QUESTION_COUNT} примера вопросов</button><span>{productDetail.warranty}</span>
       </ProductHeadingTools>
     </header>
     <section className="product-hero">

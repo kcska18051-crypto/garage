@@ -1,4 +1,5 @@
 import { HeaderPhoneButton, HeaderPhoneDialog } from './HeaderPhoneButton'
+import {regionalPhoneLabel} from '../../data/regionalPhones'
 import { isApprovedChrome } from '../../app/approvedHomepage'
 import { MobileSiteMenu } from './MobileSiteMenu'
 import { StyleCheckHeaderSymbol } from './StyleCheckHeaderSymbol'
@@ -23,7 +24,7 @@ export function MobileHeader({ compact = false, compareCount = 0, region, onRegi
     const main = (showSearch: boolean) => <div className="reference-mobile-main"><button type="button" aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'} aria-expanded={menuOpen} onClick={onMenu}><RoundedIcon name="menu" /></button><Link className="logo" to="/" aria-label="Гараж, главная"><span aria-hidden="true" />ГАРАЖ</Link>{showSearch && search}<HeaderPhoneButton region={region} onOpen={()=>setPhoneOpen(true)} ariaLabel="Выбрать телефон магазина"><RoundedIcon name="phone" /></HeaderPhoneButton></div>
     return <div className="mobile-header review-mobile-header reference-mobile-header">
       {compact && <div className="review-mobile-pinned">{main(true)}</div>}
-      {main(false)}{phoneOpen&&<HeaderPhoneDialog region={region} onClose={()=>setPhoneOpen(false)}/>}<SearchBox suspended={searchSuspended} />
+      {main(false)}{!compact&&<div className="mobile-contact-line"><button type="button" onClick={onRegion} aria-label={`Ваш город: ${region}. Изменить город`}><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>{region}</span><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button><HeaderPhoneButton region={region} onOpen={()=>setPhoneOpen(true)} ariaLabel="Телефоны магазинов">{regionalPhoneLabel(region)}</HeaderPhoneButton></div>}{phoneOpen&&<HeaderPhoneDialog region={region} onClose={()=>setPhoneOpen(false)}/>}<SearchBox suspended={searchSuspended} />
       {menuOpen && <MobileSiteMenu region={region} onRegion={onRegion} onClose={onMenu} onCatalog={onCatalog} />}
     </div>
   }

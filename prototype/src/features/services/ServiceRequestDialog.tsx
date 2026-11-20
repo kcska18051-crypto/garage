@@ -1,3 +1,4 @@
+import { useCustomerField, useCustomerFormDefaults } from '../../hooks/useCustomerFormDefaults'
 import { useAnimatedClose } from '../../hooks/useAnimatedClose'
 import {PhoneHint,PHONE_PLACEHOLDER} from '../forms/PhoneHint'
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
@@ -10,12 +11,18 @@ import {useProfile} from '../../state/ProfileState'
 import {useAuth} from '../../state/AuthState'
 import {canViewServiceRequest,serviceRequestHref,type ProfileServiceRequest} from '../../state/serviceRequests'
 
-const emptyFields = { name: '', phone: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1', city: '' }
+const emptyFields = { name: '', phone: '', email: '', model: '', description: '', car: '', paintCode: '', comment: '', start: '', end: '', quantity: '1', city: '' }
+export type ServiceRequestContact = { name: string; phone: string; email?: string }
 type Field = keyof typeof emptyFields
 
-export function ServiceRequestDialog({ request, onClose: onCloseImmediately, contact, inline = false, onCreated, onContactChange, rentalContext }: { request: ServiceRequest; onClose(): void; contact?: { name: string; phone: string }; rentalContext?: {model:string;city:string}; inline?: boolean; onContactChange?(contact: { name: string; phone: string }): void; onCreated?(): void }) {
+export function ServiceRequestDialog({ request, onClose: onCloseImmediately, contact, inline = false, onCreated, onContactChange, rentalContext, preserveEmptyContact = false }: { request: ServiceRequest; onClose(): void; contact?: ServiceRequestContact; preserveEmptyContact?: boolean; rentalContext?: {model:string;city:string}; inline?: boolean; onContactChange?(contact: ServiceRequestContact): void; onCreated?(): void }) {
   const onClose = useAnimatedClose(onCloseImmediately, () => dialogRef.current)
-  const [fields, setFields] = useState(() => ({ ...emptyFields, ...contact, ...(rentalContext ? {model:rentalContext.model,city:rentalContext.city} : {}) }))
+  const customer = useCustomerFormDefaults()
+  const [name, setName] = useCustomerField(customer.name, contact?.name, preserveEmptyContact)
+  const [phone, setPhone] = useCustomerField(customer.phone, contact?.phone, preserveEmptyContact)
+  const [email, setEmail] = useCustomerField(customer.email, contact?.email, preserveEmptyContact)
+  const [fieldValues, setFields] = useState(() => ({ ...emptyFields, ...contact, ...(rentalContext ? {model:rentalContext.model,city:rentalContext.city} : {}) }))
+  const fields = { ...fieldValues, name, phone, email }
   const [personalDataAccepted,setPersonalDataAccepted]=useState(false)
   const [agreementAccepted,setAgreementAccepted]=useState(false)
   const [consentsAttempted,setConsentsAttempted]=useState(false)
@@ -72,8 +79,11 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
       'aria-label': label,
       onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = event.target.value
-        setFields(current => ({ ...current, [key]: value }))
-        if (key === 'name' || key === 'phone') onContactChange?.({ name: key === 'name' ? value : fields.name, phone: key === 'phone' ? value : fields.phone })
+        if (key === 'name') setName(value)
+        else if (key === 'phone') setPhone(value)
+        else if (key === 'email') setEmail(value)
+        else setFields(current => ({ ...current, [key]: value }))
+        if (key === 'name' || key === 'phone' || key === 'email') onContactChange?.({ name: key === 'name' ? value : fields.name, phone: key === 'phone' ? value : fields.phone, email: key === 'email' ? value : fields.email })
       },
       'aria-invalid': Boolean(errors[key]), 'aria-describedby': [key==='phone'?`${inputId}-hint`:null,errors[key]?`${inputId}-error`:null].filter(Boolean).join(' ') || undefined,
     }
@@ -95,6 +105,7 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
     const next: Record<string, string> = {}
     if (!fields.name.trim()) next.name = 'Укажите имя'
     if (!isServicePhoneValid(fields.phone)) next.phone = 'Укажите телефон: от 10 до 15 цифр, без букв'
+    if (fields.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.trim())) next.email = 'Укажите корректный email или оставьте поле пустым'
     if (rentalContext && !fields.city.trim()) next.city = 'Укажите город получения'
     if (request.kind === 'repair') {
       if (!fields.model.trim()) next.model = 'Укажите модель оборудования'
@@ -143,6 +154,7 @@ export function ServiceRequestDialog({ request, onClose: onCloseImmediately, con
         {!rentalContext && <p className="service-request-selection">{request.title}</p>}
         {field('name', request.kind==='paint'?'Имя':'Ваше имя', { autoComplete: 'name' })}
         {field('phone', 'Телефон', { type: 'tel', autoComplete: 'tel' })}
+        {field('email', 'Электронная почта (необязательно)', { type: 'email', autoComplete: 'email', optional: true })}
         {rentalContext && field('city','Город получения', {autoComplete:'address-level2'})}
         {request.kind === 'repair' && <>
           {field('model', 'Модель оборудования')}

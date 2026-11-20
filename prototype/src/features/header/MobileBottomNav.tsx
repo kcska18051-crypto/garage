@@ -8,11 +8,11 @@ const links = [['⌂', 'Главная', '/'], ['▦', 'Каталог', '/catal
 export function MobileBottomNav({ favorites, cart, catalogOpen, onCatalog }: { favorites: number; cart: number; catalogOpen: boolean; onCatalog(): void }) {
   const { isAuthenticated, openAuth } = useAuth()
   const isStyleCheck = isApprovedChrome(useLocation().pathname)
-  if (isStyleCheck) return <nav className="mobile-bottom-nav reference-bottom-nav" aria-label="Мобильная навигация">{[['home','Главная','/'],['catalog','Каталог','/catalog'],['profile','Профиль','/profile'],['paint','Подбор','/services/paint-matching'],['favorite','Избранное','/favorites'],['cart','Корзина','/cart']].map(([icon,label,href]) => {
+  if (isStyleCheck) return <nav className="mobile-bottom-nav reference-bottom-nav" aria-label="Мобильная навигация">{[['home','Главная','/'],['catalog','Каталог','/catalog'],['profile',isAuthenticated?'Профиль':'Войти','/profile'],['favorite','Избранное','/favorites'],['cart','Корзина','/cart']].map(([icon,label,href]) => {
     const count = icon === 'favorite' ? favorites : icon === 'cart' ? cart : 0
     const content = <><span className="mobile-bottom-nav__icon" aria-hidden="true"><RoundedIcon name={icon} />{count > 0 && <b key={count}>{count}</b>}</span><span>{label}</span></>
-    if (icon === 'profile' && !isAuthenticated) return <button key={icon} type="button" aria-label="Профиль" onClick={()=>openAuth('login',{returnTo:'/profile'})}>{content}</button>
-    return icon === 'catalog' ? <button key={icon} type="button" aria-label="Каталог" aria-haspopup="dialog" aria-expanded={catalogOpen} onClick={onCatalog}>{content}</button> : <NavLink key={icon} to={href} aria-label={count ? `${label}: ${count}` : label} className="reference-bottom-service" end={href==='/'}>{content}</NavLink>
+    if (icon === 'profile' && !isAuthenticated) return <button key={icon} type="button" className="mobile-bottom-nav__profile mobile-bottom-nav__profile--guest" aria-label="Войти" onClick={()=>openAuth('login',{returnTo:'/profile'})}>{content}</button>
+    return icon === 'catalog' ? <button key={icon} type="button" aria-label="Каталог" aria-haspopup="dialog" aria-expanded={catalogOpen} onClick={onCatalog}>{content}</button> : <NavLink key={icon} to={href} aria-label={count ? `${label}: ${count}` : label} className={icon==='profile'?'reference-bottom-service mobile-bottom-nav__profile':'reference-bottom-service'} end={href==='/'}>{content}</NavLink>
   })}</nav>
   return (
     <nav className="mobile-bottom-nav" aria-label="Мобильная навигация">

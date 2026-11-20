@@ -46,18 +46,18 @@ function ReviewHero() {
   </section>
 }
 const categoryArtCards = [
-  { id: 'body', name: 'Материалы для кузовного ремонта', href: '/catalog/body-repair' },
-  { id: 'tools', name: 'Инструмент', href: '/catalog/tools' },
-  { id: 'detailing', name: 'Материалы для мойки и детейлинга', href: '/catalog?q=мойка' },
-  { id: 'lifts', name: 'Подъёмники', href: '/catalog/lifting-equipment' },
-  { id: 'compressors', name: 'Компрессоры', href: '/catalog/compressor-equipment' },
-  { id: 'tools-extra', name: 'Инструмент', href: '/catalog/tools' },
+  { id: 'body', width: 1350, height: 1165, name: 'Материалы для кузовного ремонта', href: '/catalog/body-repair' },
+  { id: 'tools', width: 1353, height: 1163, name: 'Инструмент', href: '/catalog/tools' },
+  { id: 'detailing', width: 1351, height: 1164, name: 'Материалы для мойки и детейлинга', href: '/catalog?q=мойка' },
+  { id: 'lifts', width: 1351, height: 1164, name: 'Подъёмники', href: '/catalog/lifting-equipment' },
+  { id: 'compressors', width: 1350, height: 1165, name: 'Компрессоры', href: '/catalog/compressor-equipment' },
+  { id: 'tools-extra', width: 1350, height: 1165, name: 'Инструмент', href: '/catalog/tools' },
 ]
 function ReviewCategories() {
   const [variant, setVariant] = useState<'calm' | 'expressive'>('calm')
   return <section className="home-section popular-categories" data-category-style="calm">
     <Heading title="Популярные категории" href="/catalog" all="Весь каталог" />
-    <div className="category-grid category-art-grid">{categoryArtCards.map(item => <Link className="category-card category-art-card" key={item.id} to={item.href} aria-label={`Перейти в категорию ${item.name}`}><img src={`${assets}category-cards-v38/calm-${item.id}.webp`} alt={item.name} loading="lazy" /></Link>)}</div>
+    <div className="category-grid category-art-grid">{categoryArtCards.map(item => <Link className="category-card category-art-card" key={item.id} to={item.href} aria-label={`Перейти в категорию ${item.name}`}><img src={`${assets}category-cards-v38/calm-${item.id}.webp`} alt={item.name} width={item.width} height={item.height} loading="lazy" /></Link>)}</div>
   </section>
 }
 

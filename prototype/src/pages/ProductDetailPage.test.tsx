@@ -31,7 +31,7 @@ describe('Remeza product detail redesign', () => {
     expect(within(screen.getByRole('button', { name: 'Скопировать артикул GR-0001' })).getByText(/Артикул GR-0001/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'В избранное' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Сравнить' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Поделиться' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Поделиться ссылкой' })).toBeInTheDocument()
     expect(screen.getAllByText('В наличии в 2 магазинах').length).toBeGreaterThan(0)
     expect(container).not.toHaveTextContent(/\d+\s*шт\./)
   })
@@ -104,7 +104,9 @@ describe('Remeza product detail redesign', () => {
     expect(print).toHaveBeenCalledOnce()
     print.mockRestore()
     await user.click(within(modal).getByRole('button', { name: 'Отправить на e-mail' }))
-    expect(within(modal).getByRole('status')).toHaveTextContent('Отправка показана в демонстрационном режиме')
+    await user.type(within(modal).getByRole('textbox',{name:'Email получателя'}),'client@example.ru')
+    await user.click(within(modal).getByRole('button',{name:'Предпросмотр письма'}))
+    expect(within(modal).getByRole('status')).toHaveTextContent('Сервис отправки не подключён')
   })
 
   it('shares the product with visible feedback and keeps separate financing actions', async () => {
@@ -113,7 +115,7 @@ describe('Remeza product detail redesign', () => {
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } })
     renderPage()
 
-    await user.click(screen.getByRole('button', { name: 'Поделиться' }))
+    await user.click(screen.getByRole('button', { name: 'Поделиться ссылкой' }))
     expect(writeText).not.toHaveBeenCalled()
     const shareMenu = screen.getByRole('menu', { name: 'Способы поделиться' })
     expect(within(shareMenu).getByRole('menuitem', { name: 'Отправить в Telegram' })).toBeInTheDocument()

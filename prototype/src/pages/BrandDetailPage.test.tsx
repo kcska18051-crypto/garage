@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { App } from '../app/App'
 
@@ -8,10 +8,12 @@ describe('Remeza brand detail page', () => {
 
     expect(screen.getByRole('heading', { level: 1, name: 'Оборудование Remeza' })).toBeInTheDocument()
     expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toHaveTextContent('ГлавнаяБрендыRemeza')
-    expect(screen.getByRole('link', { name: 'Перейти к товарам' })).toHaveAttribute('href', '#brand-products')
+    expect(screen.queryByRole('link', { name: 'Перейти к товарам' })).not.toBeInTheDocument()
+    const toggle=screen.getByRole('button',{name:'Развернуть описание'});expect(toggle).toHaveAttribute('aria-expanded','false');fireEvent.click(toggle);expect(toggle).toHaveAttribute('aria-expanded','true')
     expect(screen.getByRole('region', { name: 'Категории товаров Remeza' })).toBeInTheDocument()
     const popular = screen.getByRole('region', { name: 'Популярные товары Remeza' })
-    expect(within(popular).getAllByRole('article')).toHaveLength(4)
+    expect(within(popular).getAllByRole('article')).toHaveLength(8)
+    expect(within(popular).getByRole('group',{name:'Карусель популярных товаров Remeza'})).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Все товары бренда' })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Быстрый выбор по параметрам' })).not.toBeInTheDocument()
     expect(screen.queryByText(/Поможем подобрать оборудование Remeza/)).not.toBeInTheDocument()

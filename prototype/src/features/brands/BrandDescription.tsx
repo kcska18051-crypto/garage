@@ -1,0 +1,5 @@
+import {useState} from 'react'
+export function BrandDescription(){
+ const [expanded,setExpanded]=useState(false)
+ return <section className="brand-about" aria-label="О бренде Remeza"><div><h2>О бренде Remeza</h2><p>Remeza — компрессорное оборудование и системы подготовки сжатого воздуха. В каталоге представлены винтовые и поршневые компрессоры, ресиверы и осушители.</p><div id="brand-description-details" hidden={!expanded}><p>Для выбора оборудования учитывайте рабочие задачи, требования инструмента и условия размещения. Характеристики конкретной модели можно посмотреть в карточке товара.</p></div><button className="brand-description-toggle" type="button" aria-expanded={expanded} aria-controls="brand-description-details" onClick={()=>setExpanded(value=>!value)}>{expanded?'Свернуть':'Развернуть описание'}</button></div><dl><div><dt>Оборудование</dt><dd>Винтовые и поршневые компрессоры</dd></div><div><dt>Подготовка воздуха</dt><dd>Ресиверы и осушители</dd></div><div><dt>Подбор</dt><dd>По параметрам и задачам мастерской</dd></div></dl></section>
+}

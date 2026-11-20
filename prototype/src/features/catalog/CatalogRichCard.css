@@ -31,3 +31,25 @@
 .catalog-results--list :is(.catalog-rich-card__price,.catalog-rich-card__cart) { grid-column: 3; align-self: center; }
 @media(max-width:1100px) { .catalog-results--list .catalog-rich-card { grid-template-columns: 120px minmax(0,1fr); } .catalog-results--list :is(.catalog-rich-card__price,.catalog-rich-card__cart) { grid-column: 2; } }
 @media(max-width:767px) { .catalog-results .catalog-rich-card { padding: 10px; border-radius: 12px; } .catalog-rich-card__media { height: 120px; padding: 10px 6px 0; } .catalog-rich-card__price strong { font-size: 17px; line-height: 24px; } .catalog-rich-card__price del { font-size: 10px; } .catalog-rich-card__name { font-size: 12px; line-height: 18px; min-height: 36px; } .catalog-rich-card__availability { font-size: 11px; } .catalog-rich-card__cart { padding: 8px 12px; font-size: 12px; } .catalog-results--list .catalog-rich-card__media { height: 140px; } }
+
+.catalog-rich-card__specs { display: grid; gap: 0; margin: 4px 0 6px; font-size: 11px; line-height: 18px; }
+.catalog-rich-card__specs > div { display: flex; gap: 4px; min-width: 0; }
+.catalog-rich-card__specs dt { color: var(--palette-muted); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.catalog-rich-card__specs dt::after { content: ':'; }
+.catalog-rich-card__specs dd { margin: 0; flex-shrink: 0; color: var(--palette-ink); }
+.catalog-rich-card__announcement { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; margin: 4px 0 6px; font-size: 11px; line-height: 18px; color: var(--palette-muted); }
+.catalog-results--list :is(.catalog-rich-card__specs,.catalog-rich-card__announcement) { grid-column: 2; grid-row: 3 / 6; }
+.catalog-results--list .catalog-rich-card__availability { grid-column: 3; }
+@media(max-width:1100px) { .catalog-results--list :is(.catalog-rich-card__specs,.catalog-rich-card__announcement) { grid-row: auto; } .catalog-results--list .catalog-rich-card__availability { grid-column: 2; } }
+@media(max-width:767px) {
+  .catalog-results .catalog-rich-card { border: 1.5px solid #d8d8d8; box-shadow: 0 2px 5px rgb(0 0 0 / 3%); }
+  body .catalog-listing .catalog-mobile-filter-button { display: flex; align-items: center; justify-content: center; gap: 8px; background: #f5f5f5 !important; color: var(--palette-ink) !important; border: 1px solid #e1e1e1 !important; }
+  body .catalog-listing .catalog-mobile-filter-button:hover:not(:disabled) { background: #ededed !important; border-color: #d8d8d8 !important; }
+  .catalog-mobile-filter-button svg { width: 22px; height: 22px; fill: none; stroke: #ffcc00; stroke-width: 2.5; stroke-linecap: round; }
+}
+
+/* Reset generic catalog definition-list rules inside compact product cards. */
+.catalog-results .catalog-rich-card > .catalog-rich-card__specs { margin:5px 0 8px; padding:0; border:0; gap:0; font-size:11px; line-height:18px; }
+.catalog-results .catalog-rich-card .catalog-rich-card__specs > div { display:flex; align-items:baseline; justify-content:space-between; min-height:0; padding:0; border:0; gap:5px; }
+.catalog-results .catalog-rich-card .catalog-rich-card__specs :is(dt,dd) { margin:0; padding:0; font-size:11px; line-height:18px; }
+@media(max-width:767px){ body .catalog-results .catalog-rich-card { border:2px solid #D8D8D8; } }

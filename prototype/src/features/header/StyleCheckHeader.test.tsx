@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { AuthProvider } from '../../state/AuthState'
 import { DesktopHeader } from './DesktopHeader'
@@ -24,12 +24,12 @@ it('uses the approved compact desktop header on internal pages', () => {
   expect(screen.getByRole('link',{name:'Услуги'})).toHaveAttribute('href','/services')
   expect(screen.getByRole('link',{name:'Подбор'})).toBeInTheDocument()
 })
-it('orders the six bottom destinations and highlights both services', () => {
+it('gives the account a distinct double-width destination without paint matching', () => {
  render(<MemoryRouter initialEntries={['/style-check/']}><AuthProvider><MobileBottomNav favorites={2} cart={0} catalogOpen={false} onCatalog={()=>{}} /></AuthProvider></MemoryRouter>)
  const nav=screen.getByRole('navigation',{name:'Мобильная навигация'})
- expect([...nav.children].map(e=>e.textContent?.replace('2',''))).toEqual(['Главная','Каталог','Профиль','Подбор','Избранное','Корзина'])
- expect(within(nav).getByRole('button',{name:'Профиль'})).toBeInTheDocument()
- expect(within(nav).getByRole('link',{name:'Подбор'})).toHaveAttribute('href','/services/paint-matching')
+ expect([...nav.children].map(e=>e.textContent?.replace('2',''))).toEqual(['Главная','Каталог','Войти','Избранное','Корзина'])
+ expect(within(nav).getByRole('button',{name:'Войти'})).toHaveClass('mobile-bottom-nav__profile')
+ expect(within(nav).queryByRole('link',{name:'Подбор'})).not.toBeInTheDocument()
 })
 it('hides the mobile search shortcut until the search row scrolls away', () => {
  render(<MemoryRouter initialEntries={['/style-check/']}><MobileHeader region="Ярославль" onRegion={()=>{}} menuOpen={false} onMenu={()=>{}} onCatalog={()=>{}} /></MemoryRouter>)
@@ -41,11 +41,12 @@ it('keeps the full paint matching label in the expanded desktop row', () => {
  expect(screen.getByRole('link',{name:'Подбор автоэмалей'})).toHaveAttribute('href','/services/paint-matching')
  expect(document.querySelector('.reference-desktop-services a[href="/services"]')).not.toBeInTheDocument()
 })
-it('shows the selected city and telephone in the shared mobile menu panel', () => {
+it('exposes the city outside the burger and removes the old placeholder contact panel', () => {
  const onRegion=vi.fn()
  render(<MemoryRouter initialEntries={['/style-check/']}><MobileHeader region="Вологда" onRegion={onRegion} menuOpen onMenu={()=>{}} onCatalog={()=>{}} /></MemoryRouter>)
  const menu=within(screen.getByRole('dialog',{name:'Мобильное меню'}))
- expect(menu.getByRole('button',{name:'Ваш город: Вологда. Изменить город'})).toBeInTheDocument()
- expect(menu.getByRole('link',{name:/Позвонить нам/})).toHaveAttribute('href','tel:+70000000000')
+ const city=screen.getByRole('button',{name:'Ваш город: Вологда. Изменить город'});expect(menu.queryByRole('button',{name:'Ваш город: Вологда. Изменить город'})).not.toBeInTheDocument()
+ fireEvent.click(city);expect(onRegion).toHaveBeenCalledOnce()
+ expect(menu.queryByRole('link',{name:/Позвонить нам/})).not.toBeInTheDocument()
  expect(menu.getByRole('navigation',{name:'Разделы сайта'})).toBeInTheDocument()
 })

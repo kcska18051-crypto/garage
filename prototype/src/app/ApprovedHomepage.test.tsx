@@ -12,7 +12,7 @@ describe('approved homepage promotion', () => {
     expect(document.querySelector('.product-carousel')).toBeInTheDocument()
     expect(document.querySelector('.style-check-product-photo')).toBeInTheDocument()
     expect(document.querySelector('link[href*="approved-layout-v43.css"]')).toBeInTheDocument()
-    expect(document.querySelector('.reference-bottom-nav button[aria-label="Профиль"]')).toHaveTextContent('Профиль')
+    expect(document.querySelector('.reference-bottom-nav button[aria-label="Войти"]')).toHaveTextContent('Войти')
   })
 
   it.each(['/catalog', '/contacts', '/services', '/cart'])('shares approved navigation at %s without changing the page design', (path) => {

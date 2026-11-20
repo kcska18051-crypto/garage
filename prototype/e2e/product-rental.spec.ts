@@ -1,10 +1,13 @@
 import {test,expect} from '@playwright/test'
+test.beforeEach(async({page})=>{await page.route('**/garage/style-check/**',route=>route.continue({url:route.request().url().replace('/garage/style-check/','/style-check/')}))})
 for(const width of [1440,390]){
  test(`rental from selected Remeza variant retains equipment and city at ${width}px`,async({page})=>{
   await page.setViewportSize({width,height:1000})
   await page.addInitScript(()=>{sessionStorage.setItem('garage-auth-demo-session-v1','active');sessionStorage.setItem('garage-auth-demo-identity-v1',JSON.stringify({phone:'79000000000',phoneConfirmed:true}))})
   await page.goto('/product/remeza-vk-10-gr-0001')
   await page.getByRole('button',{name:'220 В',exact:true}).click()
+  await expect(page.getByRole('button',{name:'220 В',exact:true})).toHaveAttribute('aria-pressed','true')
+  await expect(page).toHaveURL(/variant=remeza-vk-10-220-55/)
   await page.getByRole('button',{name:'Взять в аренду',exact:true}).click()
   await expect(page).toHaveURL(/services\/request.*product=remeza-vk-10-220-55/)
   await expect(page.getByRole('combobox',{name:'Оборудование для аренды'})).toHaveCount(0)

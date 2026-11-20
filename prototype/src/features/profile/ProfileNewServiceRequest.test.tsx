@@ -69,3 +69,16 @@ it('retains guest contacts when switching service direction', async () => {
  expect(screen.getByLabelText('Ваше имя')).toHaveValue('Мария')
  expect(screen.getByLabelText('Телефон')).toHaveValue('+79001234567')
 },15_000)
+
+it('preserves intentionally cleared authenticated contacts when switching service direction', async () => {
+ login();const user=userEvent.setup();open('/services/request?kind=repair&item=screw')
+ await user.clear(screen.getByLabelText('Ваше имя'))
+ await user.clear(screen.getByLabelText('Телефон'))
+ await user.clear(screen.getByLabelText('Электронная почта (необязательно)'))
+ await user.click(screen.getByRole('button',{name:'Изменить услугу'}))
+ await user.click(screen.getByRole('button',{name:'Подбор автоэмали'}))
+ await user.selectOptions(screen.getByLabelText('Услуга'),'paint-automotive')
+ expect(screen.getByLabelText('Имя',{exact:true})).toHaveValue('')
+ expect(screen.getByLabelText('Телефон')).toHaveValue('')
+ expect(screen.getByLabelText('Электронная почта (необязательно)')).toHaveValue('')
+},15_000)

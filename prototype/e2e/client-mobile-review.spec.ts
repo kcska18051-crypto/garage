@@ -8,7 +8,7 @@ for(const width of [320,390,767])test(`compact hero, profile and phones work at 
  await expect(page.locator('.hero__slide:not([hidden])')).toHaveCSS('height','152px')
  const nav=page.getByRole('navigation',{name:'Мобильная навигация'})
  await expect(nav.getByRole('link',{name:'Услуги',exact:true})).toHaveCount(0)
- await nav.getByRole('button',{name:'Профиль',exact:true}).click();await expect(page.getByRole('dialog',{name:'Вход и регистрация'})).toBeVisible();await page.keyboard.press('Escape')
+ await nav.getByRole('button',{name:'Войти',exact:true}).click();await expect(page.getByRole('dialog',{name:'Вход и регистрация'})).toBeVisible();await page.keyboard.press('Escape')
  await page.getByRole('button',{name:'Выбрать телефон магазина'}).first().click()
  const dialog=page.getByRole('dialog',{name:'Телефоны магазинов'})
  await expect(dialog.getByRole('link',{name:/Ярославль/})).toHaveAttribute('href','tel:+74852595980')

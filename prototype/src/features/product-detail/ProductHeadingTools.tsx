@@ -1,3 +1,4 @@
+import './ProductHeadingTools.css'
 import { RoundedIcon } from '../header/RoundedIcon'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
@@ -54,10 +55,10 @@ export function ProductHeadingTools({ sku, favorite, compared, onToggleFavorite,
         {children}
       </div>
       <div className="product-heading__actions">
-        <button type="button" title="В избранное" aria-label="В избранное" aria-pressed={favorite} onClick={onToggleFavorite}><RoundedIcon name="favorite" /></button>
-        <button type="button" title="Сравнить" aria-label="Сравнить" aria-pressed={compared} onClick={onToggleCompare}><RoundedIcon name="compare" /></button>
+        <button type="button" title="В избранное" aria-label="В избранное" aria-pressed={favorite} onClick={onToggleFavorite}><RoundedIcon name="favorite" /><span>В избранное</span></button>
+        <button type="button" title="Сравнить" aria-label="Сравнить" aria-pressed={compared} onClick={onToggleCompare}><RoundedIcon name="compare" /><span>Сравнить</span></button>
         <div className="product-share" ref={shareRoot}>
-          <button type="button" title="Поделиться" aria-label="Поделиться" aria-expanded={shareOpen} aria-haspopup="menu" onClick={() => setShareOpen((open) => !open)}><span aria-hidden="true">↗</span></button>
+          <button type="button" title="Поделиться ссылкой" aria-label="Поделиться ссылкой" aria-expanded={shareOpen} aria-haspopup="menu" onClick={() => setShareOpen((open) => !open)}><span aria-hidden="true">↗</span><span>Поделиться ссылкой</span></button>
           {shareOpen && <div className="product-share__menu" role="menu" aria-label="Способы поделиться">
             <button type="button" role="menuitem" onClick={() => { void copy(shareUrl, 'Ссылка на товар скопирована'); setShareOpen(false) }}>Скопировать ссылку</button>
             <button type="button" role="menuitem" onClick={() => { setFeedback('Отправка в Telegram показана в демонстрационном режиме'); setShareOpen(false) }}>Отправить в Telegram</button>

@@ -1,3 +1,4 @@
+import {ProductCommunity} from './ProductCommunity'
 import {ProductVideos} from './ProductVideos'
 import {ProductDocumentRequest} from './ProductDocumentRequest'
 import {ProductDescription} from './ProductDescription'
@@ -25,8 +26,7 @@ export function ProductSections({ offer }: { offer?: ProductOffer }) {
     <ProductExtras offer={offer}/>
     <ProductVideos/>
     <section id="documents" className="product-content-section"><h2>Документы</h2><div className="product-documents"><ProductDocumentRequest offer={offer} documentName="Паспорт изделия" label={<>Паспорт изделия <span>Запросить копию</span></>}/><ProductDocumentRequest offer={offer} documentName="Техническая карточка" label={<>Техническая карточка <span>Запросить копию</span></>}/><ProductDocumentRequest offer={offer} documentName="Сертификаты" label={<>Сертификаты <span>Уточнить комплект</span></>}/></div></section>
-    <section id="reviews" className="product-content-section product-conditional"><h2>Отзывы</h2><p>Демонстрационный блок. Публикуется после подтверждения источника и модерации.</p><button className="button" type="button">Оставить отзыв</button></section>
-    <section id="questions" className="product-content-section product-conditional"><h2>Вопросы</h2><p>Здесь будут ответы специалиста по выбору и эксплуатации оборудования.</p><button className="button" type="button">Задать вопрос</button></section>
+    <ProductCommunity/>
     <section id="delivery" className="product-content-section product-delivery"><h2>Доставка и оплата</h2><div><strong>{region}</strong><p>Ожидаемый способ и срок получения уточняются с учётом выбранного варианта и адреса. Внутренняя складская логика пользователю не показывается.</p><div className="product-info-links"><Link to="/delivery">Подробнее о доставке</Link><Link to="/payment">Подробнее об оплате</Link></div></div></section>
     <section id="service" className="product-content-section"><h2>Сервис и гарантия</h2><p>Условия гарантии, пусконаладки и сервисного обслуживания уточняются для конкретной комплектации. Здесь будут опубликованы подтверждённые регламенты и контакты поддержки.</p><div className="product-info-links"><Link to="/warranty">Подробнее о гарантии</Link></div></section>
 

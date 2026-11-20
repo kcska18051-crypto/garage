@@ -24,3 +24,21 @@ dialog.cart-dialog.header-phone-dialog { width:min(480px,calc(100% - 24px)); max
 .header-phone-dialog .header-phone-dialog__callback:hover { background:var(--palette-yellow-hover); }
 .header-phone-dialog .header-phone-dialog__callback:focus-visible { outline:2px solid var(--palette-ink); outline-offset:3px; }
 @media(prefers-reduced-motion:reduce){ .header-phone-dialog .header-phone-dialog__callback { transition:none; } }
+
+/* Fit available browser height; keep the close control visible during inner scrolling. */
+@media(max-width:767px){
+body dialog.cart-dialog.header-phone-dialog.approved-dialog { max-height:calc(100dvh - 24px); overflow-y:auto; overscroll-behavior:contain; }
+body .header-phone-dialog.approved-dialog > header { position:sticky; top:-24px; z-index:2; margin-top:-8px; padding:8px 0; background:var(--palette-white); }
+
+ body dialog.cart-dialog.header-phone-dialog.approved-dialog { padding:16px; }
+ body .header-phone-dialog.approved-dialog > header { top:-16px; }
+ body .header-phone-dialog.approved-dialog h2 { margin-bottom:8px; font-size:21px; line-height:28px; }
+ body .header-phone-dialog.approved-dialog > p { margin:8px 0; font-size:12px; line-height:19px; }
+ .header-phone-dialog ul { margin:12px 0; }
+ .header-phone-dialog li { padding-block:10px; }
+ .header-phone-dialog li[data-primary=true] { padding-block:10px; }
+ .header-phone-dialog__common { padding:12px; gap:6px; }
+ .header-phone-dialog li strong,.header-phone-dialog li a { font-size:13px; }
+ .header-phone-dialog .header-phone-dialog__callback { margin-top:12px; }
+}
+@media(min-width:320px) and (max-width:767px){ .header-phone-dialog li { flex-direction:row; align-items:center; gap:8px; } }

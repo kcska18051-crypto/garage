@@ -61,8 +61,8 @@ describe('responsive header', () => {
     try {
       renderHeader()
       expect(document.querySelector('.main-header-row a[href="/services/paint-matching"]')).toHaveTextContent('Подбор автоэмалей')
-      expect(document.querySelector('.reference-bottom-nav a[href="/services/paint-matching"]')).toHaveTextContent('Подбор')
-      expect(document.querySelector('.reference-bottom-nav button[aria-label="Профиль"]')).toHaveTextContent('Профиль')
+      expect(document.querySelector('.reference-bottom-nav a[href="/services/paint-matching"]')).toBeNull()
+      expect(document.querySelector('.reference-bottom-nav button[aria-label="Войти"]')).toHaveTextContent('Войти')
     } finally { headerQuickLinksConfig.enabled = enabled }
   })
 
@@ -93,11 +93,11 @@ describe('responsive header', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('exposes the six approved mobile destinations and closes its menu with Escape', async () => {
+  it('exposes five destinations with a double-width account action and closes its menu with Escape', async () => {
     const user = userEvent.setup()
     renderHeader()
     const mobileNav = document.querySelector<HTMLElement>('[aria-label="Мобильная навигация"]')!
-    expect(mobileNav.querySelectorAll('a,button')).toHaveLength(6)
+    expect(mobileNav.querySelectorAll('a,button')).toHaveLength(5)
     await user.click(screen.getByLabelText('Открыть меню'))
     expect(document.querySelector('[aria-label="Мобильное меню"]')).toBeInTheDocument()
     await user.keyboard('{Escape}')

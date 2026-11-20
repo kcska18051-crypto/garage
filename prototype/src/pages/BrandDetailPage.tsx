@@ -1,4 +1,4 @@
-import {BrandCertificate} from '../features/brands/BrandCertificate'
+import {BrandHero} from '../features/brands/BrandHero'
 import {BrandPopularProducts} from '../features/brands/BrandPopularProducts'
 import {BrandDescription} from '../features/brands/BrandDescription'
 import { getMaterial } from '../data/materialsData'
@@ -46,10 +46,7 @@ export function BrandDetailPage() {
   useBrandMetadata()
   return <main className="brand-detail-page">
     <Breadcrumbs items={[{label:'Главная',to:'/'},{label:'Бренды',to:'/brands'},{label:'Remeza'}]}/>
-    <header className="brand-detail-hero"><div className="brand-detail-hero__copy">
-      <img className="brand-detail-logo" src="/garage/style-check/review-assets/logo-remeza.svg" alt="Remeza" width="201" height="54"/>
-      <h1>Оборудование Remeza</h1><p>Компрессоры, ресиверы и решения для подготовки сжатого воздуха. Выберите категорию оборудования под вашу задачу.</p><BrandCertificate/>
-    </div><div className="brand-detail-hero__art"><img src={compressorCategoryImages['screw-compressors']} alt="Винтовой компрессор Remeza" width="600" height="600"/></div></header>
+    <BrandHero/>
 
     <section className="brand-detail-section" aria-label="Категории товаров Remeza"><div className="brand-detail-heading"><h2>Категории товаров Remeza</h2></div>
       <div className="brand-category-grid">{remezaCategories.filter(category=>category.href).map(category=><Link key={category.id} to={category.href!}><img src={categoryPictures[category.id]} alt="" width="160" height="110"/><div><h3>{category.name}</h3><p>{category.description}</p></div><span aria-hidden="true">↗</span></Link>)}</div>

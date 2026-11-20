@@ -139,3 +139,18 @@ html:has(.brand-detail-page),body:has(.brand-detail-page),.app-shell:has(.brand-
 .brand-certificate svg { color:var(--palette-ink); }
 
 .brand-certificate,.brand-certificate:hover,.brand-description-toggle,.brand-description-toggle:hover { text-decoration:none; }
+
+/* Brand identity replaces the compressor photo on every screen size. */
+.brand-detail-page .brand-detail-hero.brand-detail-hero--identity { display:grid; grid-template-columns:minmax(0,1fr) 280px; align-items:start; gap:48px; margin-bottom:24px; }
+.brand-detail-hero__identity { display:flex; flex-direction:column; align-items:center; padding-top:6px; }
+.brand-detail-page .brand-detail-hero__identity .brand-detail-logo { width:220px; height:auto; max-width:100%; margin:0; }
+.brand-detail-hero__identity .brand-certificate { margin-top:16px; }
+.brand-detail-hero--identity .brand-detail-hero__copy > p,.brand-hero-description p { max-width:780px; margin:0 0 12px; font-size:14px; line-height:24px; color:var(--palette-muted); }
+.brand-detail-hero--identity .brand-description-toggle { margin-top:0; }
+@media(max-width:767px){
+ .brand-detail-page .brand-detail-hero.brand-detail-hero--identity { grid-template-columns:minmax(0,1fr); gap:20px; }
+ .brand-detail-hero__identity { grid-row:1; align-items:flex-start; padding-top:0; }
+ .brand-detail-page .brand-detail-hero__identity .brand-detail-logo { width:180px; }
+ .brand-detail-hero__identity .brand-certificate { margin-top:12px; }
+ .brand-detail-hero--identity .brand-detail-hero__copy > p,.brand-hero-description p { font-size:13px; line-height:22px; }
+}

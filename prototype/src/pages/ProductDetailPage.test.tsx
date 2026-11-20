@@ -28,7 +28,7 @@ describe('Remeza product detail redesign', () => {
 
     expect(hero).toBeInTheDocument()
     expect(heading.compareDocumentPosition(hero as Node) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
-    expect(screen.getByText(/Артикул GR-0001/)).toBeInTheDocument()
+    expect(within(screen.getByRole('button', { name: 'Скопировать артикул GR-0001' })).getByText(/Артикул GR-0001/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'В избранное' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Сравнить' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Поделиться' })).toBeInTheDocument()
@@ -48,7 +48,7 @@ describe('Remeza product detail redesign', () => {
     await user.click(within(variants).getByRole('button', { name: '220 В' }))
 
     expect(within(variants).getByText((_, element) => element?.tagName === 'P' && element.textContent === 'Напряжение: 220 В')).toBeInTheDocument()
-    expect(screen.getByText(/Артикул GR-220-55/)).toBeInTheDocument()
+    expect(within(screen.getByRole('button', { name: 'Скопировать артикул GR-220-55' })).getByText(/Артикул GR-220-55/)).toBeInTheDocument()
     expect(screen.getAllByText('169 000 ₽').length).toBeGreaterThan(0)
   })
 
